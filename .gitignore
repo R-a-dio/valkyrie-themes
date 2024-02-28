@@ -1,2 +1,3 @@
 # ignore bulma
 assets/sass/bulma
+assets/css/bulma.min.css
