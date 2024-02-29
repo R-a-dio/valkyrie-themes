@@ -8,7 +8,7 @@
             {{range $news := $.News}}
                 {{template "news-post" $news}}
             {{end}}
-            {{with .Page.Next 1}}
+            {{with .Page}}{{with .Next 1}}
             <div id="news-scroll"
                 hx-push-url="false"
                 hx-trigger="intersect once"
@@ -16,7 +16,7 @@
                 hx-select="#news-content>div"
                 hx-target="#news-content"
                 hx-swap="beforeend"></div>
-            {{end}}
+            {{end}}{{end}}
         </div>
         <div class="is-hidden-with-js">
             {{template "pagination" .Page}}

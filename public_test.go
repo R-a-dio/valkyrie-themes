@@ -3,6 +3,7 @@ package themes
 import (
 	"io"
 	"net/http/httptest"
+	"strings"
 	"testing"
 
 	"github.com/R-a-dio/valkyrie/templates"
@@ -40,6 +41,9 @@ func TestPublicZeroInput(t *testing.T) {
 	req := httptest.NewRequest("GET", "/", nil)
 
 	for _, theme := range tmpl.ThemeNames() {
+		if strings.HasPrefix(theme, templates.ADMIN_PREFIX) {
+			continue
+		}
 		req = req.WithContext(templates.SetTheme(req.Context(), theme))
 		t.Run(theme, func(t *testing.T) {
 			for _, in := range templateInputs {
