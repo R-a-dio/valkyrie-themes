@@ -1,8 +1,2 @@
-# ignore bulma and bulma outputs
-*/*/*/bulma
-default-dark/assets/css/bulma.min.css
-
-# ignore these until wessie adds loading from default-light if something doesn't exist on another theme
-default-dark/*tmpl
-default-dark/partials/*tmpl
-default-dark/assets
+# ignore bulma
+bulma
