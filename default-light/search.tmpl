@@ -17,7 +17,11 @@
             {{else}}
                 <div class="block has-text-centered is-size-5">
                     <p>Search for something! You can click on the songs to show some additional information.</p>
-                    <p>You can request once every two hours.</p>
+                    {{if eq .RequestCooldown 0}}
+                    <p>The request cooldown is one hour. You are currently not on cooldown!</p>
+                    {{else}}
+                    <p>The request cooldown is one hour. You can request again {{.RequestCooldown | PrettyDuration}}.</p>
+                    {{end}}
                 </div>
             {{end}}
             {{template "search-results" .Songs}}
