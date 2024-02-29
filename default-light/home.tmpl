@@ -89,7 +89,7 @@
 <div class="notification">
     <ul id="lastplayed">
         {{range $song := .}}
-        <li class="lp-item columns is-mobile is-vcentered">
+        <li class="lp-item columns is-mobile is-vcentered word-break-ellipsis">
             <time datetime="{{$song.LastPlayed.Unix}}" class="lp-time column is-4 has-text-left">{{Until $song.LastPlayed | PrettyDuration}}</time>
             <span class="lp-meta column is-8 has-text-centered">{{$song.Metadata}}</span>
         </li>
@@ -100,9 +100,9 @@
 {{define "queue"}}
 <p class="title is-4 has-text-centered">Queue</p>
 <div class="notification">
-    <ul>
+    <ul id="queue">
         {{range $song := .}}
-        <li class="columns is-mobile is-vcentered">
+        <li class="columns is-mobile is-vcentered word-break-ellipsis">
             <span class="column is-8 has-text-centered">{{$song.Metadata}}</span>
             <time datetime="{{$song.ExpectedStartTime.Unix}}" class="column is-4 has-text-right">{{Until $song.ExpectedStartTime | PrettyDuration}}</time>
         </li>
