@@ -22,10 +22,9 @@
                             <button id="stream-play-pause" class="is-hidden-without-js button is-info is-fullwidth">Play Stream</button>
                         </div>
                         <div class="field has-addons">
-                                <button class="button is-width-90">Direct Stream Link</button>
-                                <button class="button is-width-10">?</button>
+                                <button class="button is-width-80">Direct Stream Link</button>
+                                <button class="button is-width-20 ml-3" style="font-weight: 900;">⚙</button>
                         </div>
-                        <button class="button is-fullwidth">More Options<span class="caret"></span></button>
                     </div>
                 </div>
                 <div sse-swap="metadata">
@@ -49,7 +48,7 @@
             <div class="column">
                 <article class="message">
                     <div class="message-header">
-                        <a href="/news/{{.ID}}">
+                        <a href="/news/{{.ID}}" hx-boost="true" hx-push-url="true" hx-target="#content">
                             <span>{{.Title}}</span>
                         </a>
                             <span>~{{.User.Username}}</span>

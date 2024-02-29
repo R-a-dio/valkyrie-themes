@@ -69,7 +69,7 @@
     {{with .Result}}
         <div id="search-bar-popup" class="box has-text-centered">
                 {{range .Songs}}
-                <div class="columns">
+                <div class="columns is-vcentered">
                     <div class="column">{{.Metadata}}</div>
                     <div class="column is-narrow">
                         <form method="POST" action="/request/{{.TrackID}}" hx-post="/request/{{.TrackID}}">

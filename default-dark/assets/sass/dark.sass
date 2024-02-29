@@ -50,11 +50,16 @@ $notification-background-color: $dark-darkest
 
 $message-background-color:          $dark-darkest
 $message-header-background-color:   $dark-lighter
-$message-header-color:              $blue
 $message-body-border-width:         0 0 0 0
 
 .message-header
     border: 1px solid $dark-darkest
+
+.message-header span:not(.message-header a span)
+    color: $text
+
+.message-header a
+    color: $blue !important
 
 $button-background-color: $dark-lighter
 $button-color: $text

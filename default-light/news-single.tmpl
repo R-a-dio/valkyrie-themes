@@ -12,7 +12,7 @@
 {{define "news-post"}}
 <div class="columns block has-background-white-ter mb-5">
     <article class="message column is-12 disable-message-hover">
-        <a href="/news">
+        <a href="/news" hx-boost="true" hx-push-url="true" hx-target="#content">
             <div class="block message-header">
                 <span>{{.Title}}</span>
                 <span>{{with .User}}{{or .Username "Anonymous"}}{{else}}Anonymous{{end}}</span>
