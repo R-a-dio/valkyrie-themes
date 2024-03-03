@@ -1,6 +1,7 @@
 {{block "full-page" .}}
 <!DOCTYPE html>
 <html>
+{{block "full-head" .}}
 <head>
     <meta charset="utf-8">
     <title>{{block "title" .}}R/a/dio{{end}}</title>
@@ -8,12 +9,14 @@
     <link rel="icon" href="/assets/images/logo_image_small.png" type="image/png">
     <script src="/assets/js/htmx.min.js"></script>
     <script src="/assets/js/htmx-sse.js"></script>
+    <script src="/assets/js/htmx-head.js"></script>
     <script src="/assets/js/radio.js"></script>
     {{ block "head" . }}{{end}}
     {{ block "scripts" . }}{{end}}
     {{ block "styles" .}}{{end}}
 </head>
-<body style="padding-bottom: 60px;">
+{{end}}
+<body style="padding-bottom: 60px;" hx-ext="head-support">
     {{with .StreamURL}}
     <div id="player" style="display: none;">
         <audio id="stream-audio" preload="none">
@@ -21,12 +24,14 @@
         </audio>
     </div>
     {{end}}
+    <div id="content" hx-history-elt>
     {{block "partial-page" .}}
-        <div id="content" hx-history-elt>
-            {{ block "navbar" . }}{{end}}
-            {{ block "content" . }}{{end}}
-        </div>
+        {{ block "navbar" . }}{{end}}
+        {{ block "content" . }}{{end}}
     {{end}}
+    </div>
+    <a hx-boost="true" hx-push-url="false" href="/set-theme?theme=default-light">Light</a>
+    <a hx-boost="true" hx-push-url="false" href="/set-theme?theme=default-dark">Dark</a>
 </body>
 </html>
 {{end}}
