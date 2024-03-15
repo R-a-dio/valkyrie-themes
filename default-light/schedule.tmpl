@@ -5,38 +5,104 @@
             <div class="title has-text-centered mb-6 is-hidden-mobile">
                 <h3>Schedule</h3>
             </div>
-            <div class="block">
-            {{/*range $day := $.Schedule*/}}
-                {{template "day" .}}
-                {{template "day" .}}
-                {{template "day" .}}
-                {{template "day" .}}
-                {{template "day" .}}
-                {{template "day" .}}
-                {{template "day" .}}
-            {{/*end*/}}
+
+            <div class="columns block has-background-white-ter has-text-centered">
+                <div class="column">{{"Times are in EST. All times and days are subject to change. Any stream can be cancelled without prior notice. If you're wondering if a stream will be held, don't hesitate to ask in chat. "}}</div>
             </div>
+
+            {{/*range $day := $.Schedule*/}}
+            <div class="tile is-ancestor block m-2">
+                {{template "day1" .}}
+                {{template "day2" .}}
+            </div>
+            <div class="tile is-ancestor block m-2">
+                {{template "day1" .}}
+                {{template "day2" .}}
+            </div>
+            <div class="tile is-ancestor block m-2">
+                {{template "friday" .}} 
+            </div>
+            <div class="tile is-ancestor block m-2">
+                {{template "day1" .}}
+                {{template "day2" .}}
+            </div>
+            {{/*end*/}}
         </div>
     </div>
 </section>
-{{printjson .}}
 {{end}}
 
-{{define "day"}}
-<div class="block">
-    <div class="columns block has-background-white-ter is-flex-mobile has-text-centered mb-4">
-        <div class="column is-narrow" style="width: 128px;"><h6 class="p-0 m-0">{{.User.DJ.Name}}</h6></div>
-        <div class="column is-hidden-mobile"></div>
-        <div class="column is-2"><h6 class="p-0 m-0">$weekday</h6></div>
+{{define "day1"}}
+    <div class="tile is-parent is-6 pr-5 pl-5 pb-5 pt-4">
+        <div class="tile is-child">
+    
+            <div class="columns block has-background-white-ter is-flex-mobile has-text-centered is-9 is-6-touch mb-4">
+                <div class="column is-3 is-6-touch">
+                    <h6 class="p-0 m-0">{{.User.DJ.Name}}</h6>
+                </div>
+                <div class="column">
+                    <h6 class="p-0 m-0">$weekday</h6>
+                </div>
+            </div>
+    
+            <div class="tile is-ancestor" style="height: calc(100% - 1.5rem);">
+                <div class="tile is-parent block has-background-white-ter has-text-centered is-hidden-touch is-3 mr-1 mb-0">
+                    <div class="tile is-child" style="margin:auto !important;">
+                        <div class="image is-square" style="min-width:88px;min-height:88px;">
+                            <img class="dj-image" src="https://r-a-d.io/api/dj-image/53-dade8ac2.png" />
+                        </div>
+                    </div>
+                </div>
+                <div class="tile is-parent block has-background-white-ter has-text-centered m-0">
+                    <div class="tile is-child" style="margin:auto !important;">{{.User.DJ.Text}} {{"To train in Kendo one must subjugate the self, bear the pain of gruelling practise, and cultivate a the code of honour of the samurai elite."}}</div>
+                </div>
+            </div>
+    
+        </div>
     </div>
-    <div class="columns block has-background-white-ter has-text-centered is-vcentered mb-6">
-        <div class="column is-hidden-mobile is-narrow p-0 m-0 mr-6">
-            <div class="image is-128x128 fill-sides">
-                <img class="dj-image" src="https://r-a-d.io/api/dj-image/53-dade8ac2.png" />
+{{end}}
+
+{{define "day2"}}
+    <div class="tile is-parent is-6 pr-5 pl-5 pb-5 pt-4">
+        <div class="tile is-child">
+    
+            <div class="columns block has-background-white-ter is-flex-mobile has-text-centered is-9 is-6-touch mb-4">
+                <div class="column">
+                    <h6 class="p-0 m-0">$weekday</h6>
+                </div>
+                <div class="column is-3 is-6-touch">
+                    <h6 class="p-0 m-0">{{.User.DJ.Name}}</h6>
+                </div>
+            </div>
+    
+            <div class="tile is-ancestor" style="height: calc(100% - 1.5rem);">
+                <div class="tile is-parent block has-background-white-ter has-text-centered m-0">
+                    <div class="tile is-child" style="margin:auto !important;">{{.User.DJ.Text}} {{"To train in Kendo one must subjugate the self, bear the pain of gruelling practise, pain of gruelling practise, and cultivate a level mind in the face of peril. But the Way of the sword means not only fencing training but also living by the code of honour of the samurai elite."}}</div>
+                </div>
+                <div class="tile is-parent block has-background-white-ter has-text-centered is-hidden-touch is-3 ml-1">
+                    <div class="tile is-child" style="margin:auto !important;">
+                        <div class="image is-square" style="min-width:88px;min-height:88px;">
+                            <img class="dj-image" src="https://r-a-d.io/api/dj-image/53-dade8ac2.png" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+{{end}}
+
+{{define "friday"}}
+<div id="friday" class="tile is-parent pr-5 pl-5 pb-5 pt-4">
+    <div class="tile is-child">
+        <div class="columns block has-background-white-ter has-text-centered mb-4">
+            <div class="column">
+                <h6 class="p-0 m-0">FRIDAY!</h6>
             </div>
         </div>
-        <div class="column">{{.User.DJ.Text}} {{"To train in Kendo one must subjugate the self, bear the pain of gruelling practise, and cultivate a level mind in the face of peril. But the Way of the sword means not only fencing training but also living by the code of honour of the samurai elite."}}</div>
-        <div class="column is-2">$timeslot</div>
+        <div class="columns block has-background-white-ter has-text-centered">
+            <div class="column">{{"Friday Night Faggotry! Nobody knows who will be streaming, but you can be sure someone will do it (apply today!). Usually starts around 8PM."}}</div>
+        </div>
     </div>
 </div>
 {{end}}

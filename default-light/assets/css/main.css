@@ -118,6 +118,10 @@ span {
     margin: auto;
 }
 
+.force-fill-sides {
+    margin: auto !important;
+}
+
 .block {
     border-radius: 4px;
 }
