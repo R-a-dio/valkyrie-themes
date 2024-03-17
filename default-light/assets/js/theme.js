@@ -1,4 +1,4 @@
-function toggleSongInfoDropdown(div) {
+function toggleDropdown(div) {
     div.nextElementSibling.classList.toggle("is-hidden");
 }
 

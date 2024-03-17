@@ -14,7 +14,7 @@
 {{end}}
 
 {{define "song"}}
-<div class="block has-background-white-ter song-info" onclick=toggleSongInfoDropdown(this)>
+<div class="block has-background-white-ter song-info" onclick=toggleDropdown(this)>
     <div class="columns is-vcentered has-text-centered">
         <div class="column is-2"><time datetime="{{$.ExpectedStartTime.Unix}}">{{Until $.ExpectedStartTime | PrettyDuration}}</time></div>
         <div class="column">{{$.Metadata}}</div>

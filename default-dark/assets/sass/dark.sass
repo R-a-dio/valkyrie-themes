@@ -2,63 +2,67 @@
 
 // base colours
 
-$black: hsl(0, 0%, 47%)
-$white: hsl(0, 0%, 96%)
+$black:                             hsl(0, 0%, 47%)
+$white:                             hsl(0, 0%, 96%)
 
-$orange:       hsl(14,  27%, 39%)
-$yellow:       hsl(44,  27%, 39%)
-$green:        hsl(153, 27%, 39%)
-$turquoise:    hsl(171, 27%, 39%)
-$cyan:         hsl(207, 27%, 39%)
-$blue:         hsl(208, 27%, 39%)
-$purple:       hsl(271, 27%, 39%)
-$red:          hsl(348, 27%, 39%)
+$orange:                            hsl(14,  27%, 39%)
+$yellow:                            hsl(44,  27%, 39%)
+$green:                             hsl(153, 27%, 39%)
+$turquoise:                         hsl(171, 27%, 39%)
+$cyan:                              hsl(207, 27%, 39%)
+$blue:                              hsl(208, 27%, 39%)
+$purple:                            hsl(271, 27%, 39%)
+$red:                               hsl(348, 27%, 39%)
 
-$text:                      $black
-$text-invert:               $white
-$text-lighter:              hsl(0, 0%, 67%)
+$text:                              $black
+$text-invert:                       $white
+$text-lighter:                      hsl(0, 0%, 67%)
 
-$content-heading-color:     $text
-$strong-color: $text
+$content-heading-color:             $text
+$strong-color:                      $text
 
-$grey-dark: $text
+$grey-dark:                         $text
 
-$dark-darkest:              hsl(0, 0%, 10%)
-$dark-dark:                 hsl(0, 0%, 11%)
-$dark-light:                hsl(0, 0%, 13%)
-$dark-lighter:              hsl(0, 0%, 16%)
-$dark-lightest:             hsl(0, 0%, 24%)
+$dark-darkest:                      hsl(0, 0%, 7%)
+$dark-darker:                       hsl(0, 0%, 10%)
+$dark-dark:                         hsl(0, 0%, 11%)
+$dark-light:                        hsl(0, 0%, 13%)
+$dark-lighter:                      hsl(0, 0%, 16%)
+$dark-lightest:                     hsl(0, 0%, 24%)
 
-$dark:                      $dark-lighter
-$dark-invert:               hsl(0, 0%, 47%)
+$dark:                              $dark-lighter
+$dark-invert:                       hsl(0, 0%, 47%)
 
-$scheme-main: $dark-light
+$scheme-main:                       $dark-light
 
-$is-primary: $blue
+$is-primary:                        $blue
 
-$input-background-color:    $dark-lightest
-$input-border-color:        $dark-dark
-$input-color:               hsl(0, 0%, 100%)
-$input-hover-border-color:  $dark-lightest
+$input-background-color:            $dark-lightest
+$input-border-color:                $dark-dark
+$input-color:                       hsl(0, 0%, 100%)
+$input-hover-border-color:          $dark-lightest
 
-$white-ter:                 $dark-darkest
-$white-bis:                 $dark-lighter
+$white-ter:                         $dark-darker
+$white-bis:                         $dark-lighter
 
-$title-color:               $text
+$title-color:                       $text
 
-$notification-background-color: $dark-darkest
+$notification-background-color:     $dark-darker
 
-$message-background-color:          $dark-darkest
+$message-background-color:          $dark-darker
 $message-header-background-color:   $dark-lighter
 $message-body-border-width:         0 0 0 0
 
 .message-header
-    border: 1px solid $dark-darkest
+    border: 1px solid $dark-darker
 
 .message-header span:not(.message-header a span)
     color: $text
 
 .message-header a
+    color: $blue !important
+
+.news-title
     color: $blue !important
 
 $button-background-color: $dark-lighter
@@ -99,7 +103,7 @@ hr
     background-color: $button-background-color
 
 #current-song-progress
-    background-color: $dark-darkest
+    background-color: $dark-darker
 
 .song-info
     color: $text !important
@@ -109,8 +113,22 @@ hr
     transition: 0.125s all ease-in-out
 
 .message:hover, .message:hover > .message-header:nth-child(2)
-    background-color: $dark-darkest !important
+    background-color: $dark-darker !important
     transition: 0.125s all ease-in-out
+
+// misc or wip
+
+#search-bar-popup > .columns:nth-child(even)
+    background-color: hsl(0, 0%, 16%)
+
+#search-bar-popup
+    border: 2px solid hsl(0, 0%, 10%)
+
+.box
+    box-shadow: unset !important
+
+#options-button-dropdown
+    border: 1px solid $dark-darkest
 
 @import "../../../bulma/sass/utilities/_all"
 @import "../../../bulma/sass/base/_all"

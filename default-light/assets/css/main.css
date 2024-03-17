@@ -215,3 +215,8 @@ span {
 #lastplayed, #queue {
     min-height: calc(256px - 2.5rem)
 }
+
+#options-button-dropdown {
+    position: absolute;
+    margin-top: calc(40px + 0.75rem);
+}
