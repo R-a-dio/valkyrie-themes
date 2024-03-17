@@ -23,7 +23,12 @@
                         </div>
                         <div class="field has-addons">
                                 <button class="button is-width-80">Direct Stream Link</button>
-                                <button class="button is-width-20 ml-3" style="font-weight: 900;">⚙</button>
+                                <button class="button is-width-20 ml-3" style="font-weight: 900;" onclick=toggleDropdown(this)>⚙</button>
+                                <div id="options-button-dropdown" class="box is-hidden" style="width:calc(25% + 1rem);">
+                                    <div class="mb-2"><button class="button is-fullwidth"><input id="volume" class="is-fullwidth" type="range" min="0" max="100" step="1" value="80"></button></div>
+                                    <div class="mb-2"><a href="/help" hx-boost="true" hx-push-url="true" hx-target="#content"><button class="button is-fullwidth">Help</button></a></div>
+                                    <div class="mb-2"><a><button class="button is-fullwidth">$preferences</button></a></div>
+                                </div>
                         </div>
                     </div>
                 </div>
@@ -45,34 +50,21 @@
         </div>
         <div class="columns">
             {{range .News}}
-            <div class="column">
-                <article class="message">
-                    <div class="message-header">
-                        <a href="/news/{{.ID}}" hx-boost="true" hx-push-url="true" hx-target="#content">
-                            <span>{{.Title}}</span>
-                        </a>
-                            <span>~{{.User.Username}}</span>
-                        </div>
-                        <div class="message-header has-background-white-ter has-text-grey-dark m-1 p-1">
-                            <span class="has-text-left"></span>
-                            <time datetime="{{.CreatedAt.Unix}}" data-type="absolute">{{.CreatedAt | AbsoluteDate}}</time>
-                        </div>
-                        <div class="message-body pt-0 disable-message-border">{{.Header}}</div>
-                </article>
-            </div>
+            {{template "news-post-home" .}}
             {{end}}
         </div>
     </div>
 </section>
+{{template "scripts"}}
 {{end}}
 {{define "nowplaying"}}
 <h2 id="current-song">
     {{if gt (len .Song.Metadata) 35}}
-    <p id="metadata" class="title is-3 has-text-centered" style="cursor: pointer;" onclick=toggleSongInfoDropdown(this)>{{.Song.Metadata}}</p>
+    <p id="metadata" class="title is-3 has-text-centered" style="cursor: pointer;" onclick=toggleDropdown(this)>{{.Song.Metadata}}</p>
     {{else}}
-    <p id="metadata" class="title is-2 has-text-centered" style="cursor: pointer;" onclick=toggleSongInfoDropdown(this)>{{.Song.Metadata}}</p>
+    <p id="metadata" class="title is-2 has-text-centered" style="cursor: pointer;" onclick=toggleDropdown(this)>{{.Song.Metadata}}</p>
     {{end}}
-    <p class="subtitle is-4 has-text-centered is-hidden" style="font-size: 14px;">{{if .Song.DatabaseTrack}}{{.Song.Tags}}{{end}}</p>
+    <p class="subtitle has-text-centered is-hidden" style="font-size: 14px;">{{if .Song.DatabaseTrack}}{{.Song.Tags}}{{end}}</p>
 </h2>
 <progress id="current-song-progress" class="progress is-large mb-0" value="0" max="{{.Song.Length.Seconds}}"></progress>
 <div class="columns mt-2">
@@ -124,4 +116,15 @@
         <div class="title is-4 word-break-ellipsis">{{.DJ.Name}}</div>
     </div>
 </div>
+{{end}}
+{{define "scripts"}}
+<script>
+var volume_input = document.getElementById('volume');
+volume_input.value = localStorage.getItem('volume');
+volume_input.addEventListener("input", function(ev) {
+    vol = parseFloat(this.value) / 100.0;
+    stream.setVolume(vol, true);
+    console.log(vol);
+});
+</script>
 {{end}}
