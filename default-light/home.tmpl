@@ -25,7 +25,7 @@
                                 <button class="button is-width-80">Direct Stream Link</button>
                                 <button class="button is-width-20 ml-3" style="font-weight: 900;" onclick=toggleDropdown(this)>⚙</button>
                                 <div id="options-button-dropdown" class="dropdown-container box is-hidden">
-                                    <div class="p-0 mb-2"><button class="button is-fullwidth"><input id="volume" class="is-fullwidth" type="range" min="0" max="100" step="1" value="80"></button></div>
+                                    <div class="p-0 mb-2"><button class="button is-fullwidth"><input id="stream-volume" class="is-fullwidth" type="range" min="0" max="100" step="1" value="80"></button></div>
                                     <div class="p-0 mb-2"><a href="/help#stream-help" hx-boost="true" hx-push-url="true" hx-target="#content"><button class="button is-fullwidth">Help</button></a></div>
                                     <div class="p-0 mb-2"><a><button class="button is-fullwidth">$preferences</button></a></div>
                                 </div>
@@ -116,16 +116,4 @@
         <div class="title is-4 word-break-ellipsis">{{.DJ.Name}}</div>
     </div>
 </div>
-{{end}}
-{{define "scripts"}}
-<script>
-/// not meant to stay here indefinitely
-    var volume_input = document.getElementById('volume');
-    volume_input.value = localStorage.getItem('volume');
-    volume_input.addEventListener("input", function(ev) {
-        vol = parseFloat(this.value) / 100.0;
-        stream.setVolume(vol, true);
-        console.log(vol);
-    });
-</script>
 {{end}}
