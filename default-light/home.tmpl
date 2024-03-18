@@ -21,13 +21,13 @@
                             {{end}}
                             <button id="stream-play-pause" class="is-hidden-without-js button is-info is-fullwidth">Play Stream</button>
                         </div>
-                        <div class="field has-addons">
+                        <div class="field has-addons dropdown-parent">
                                 <button class="button is-width-80">Direct Stream Link</button>
                                 <button class="button is-width-20 ml-3" style="font-weight: 900;" onclick=toggleDropdown(this)>⚙</button>
-                                <div id="options-button-dropdown" class="box is-hidden" style="width:calc(25% + 1rem);">
-                                    <div class="mb-2"><button class="button is-fullwidth"><input id="volume" class="is-fullwidth" type="range" min="0" max="100" step="1" value="80"></button></div>
-                                    <div class="mb-2"><a href="/help" hx-boost="true" hx-push-url="true" hx-target="#content"><button class="button is-fullwidth">Help</button></a></div>
-                                    <div class="mb-2"><a><button class="button is-fullwidth">$preferences</button></a></div>
+                                <div id="options-button-dropdown" class="dropdown-container box is-hidden">
+                                    <div class="p-0 mb-2"><button class="button is-fullwidth"><input id="volume" class="is-fullwidth" type="range" min="0" max="100" step="1" value="80"></button></div>
+                                    <div class="p-0 mb-2"><a href="/help#stream-help" hx-boost="true" hx-push-url="true" hx-target="#content"><button class="button is-fullwidth">Help</button></a></div>
+                                    <div class="p-0 mb-2"><a><button class="button is-fullwidth">$preferences</button></a></div>
                                 </div>
                         </div>
                     </div>
@@ -119,12 +119,13 @@
 {{end}}
 {{define "scripts"}}
 <script>
-var volume_input = document.getElementById('volume');
-volume_input.value = localStorage.getItem('volume');
-volume_input.addEventListener("input", function(ev) {
-    vol = parseFloat(this.value) / 100.0;
-    stream.setVolume(vol, true);
-    console.log(vol);
-});
+/// not meant to stay here indefinitely
+    var volume_input = document.getElementById('volume');
+    volume_input.value = localStorage.getItem('volume');
+    volume_input.addEventListener("input", function(ev) {
+        vol = parseFloat(this.value) / 100.0;
+        stream.setVolume(vol, true);
+        console.log(vol);
+    });
 </script>
 {{end}}

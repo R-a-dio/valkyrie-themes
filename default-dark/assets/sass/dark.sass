@@ -92,10 +92,25 @@ a.navbar-item:hover
     background-color: $navbar-background-color !important
     color: $text-lighter !important
 
+@import "../../../bulma/sass/utilities/_all"
+@import "../../../bulma/sass/base/_all"
+@import "../../../bulma/sass/elements/_all"
+@import "../../../bulma/sass/form/_all"
+@import "../../../bulma/sass/components/_all"
+@import "../../../bulma/sass/grid/_all"
+@import "../../../bulma/sass/helpers/_all"
+@import "../../../bulma/sass/layout/_all"
+
 // generic elements
 
 hr
     background-color: $dark-lightest !important
+
+a:hover, a:active, a:focus
+    color: $text !important
+
+button:hover, button:active, button:focus
+    color: $text !important
 
 // other elements
 
@@ -124,17 +139,10 @@ hr
 #search-bar-popup
     border: 2px solid hsl(0, 0%, 10%)
 
-.box
-    box-shadow: unset !important
-
 #options-button-dropdown
     border: 1px solid $dark-darkest
 
-@import "../../../bulma/sass/utilities/_all"
-@import "../../../bulma/sass/base/_all"
-@import "../../../bulma/sass/elements/_all"
-@import "../../../bulma/sass/form/_all"
-@import "../../../bulma/sass/components/_all"
-@import "../../../bulma/sass/grid/_all"
-@import "../../../bulma/sass/helpers/_all"
-@import "../../../bulma/sass/layout/_all"
+
+.box
+    background-color: $dark-darker
+    box-shadow: unset !important
