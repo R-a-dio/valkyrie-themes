@@ -26,6 +26,7 @@
     {{end}}
     <div id="content" hx-history-elt>
     {{block "partial-page" .}}
+        {{if .IsHTMX}}{{template "full-head" .}}{{end}}
         {{ block "navbar" . }}{{end}}
         {{ block "content" . }}{{end}}
     {{end}}

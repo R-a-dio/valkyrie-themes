@@ -15,6 +15,11 @@
                         Welcome {{.User.Username}}.
                     </article>
                 </div>
+                <div class="tile is-parent is-3">
+                    <article class="tile is-child notification">
+                        <button class="button" hx-trigger="click" hx-post="/admin/api/streamer/stop" hx-confirm="Are you sure?">Kill Hanyuu-sama</a>
+                    </article>
+                </div>
             </div>
         </div>
     </div>
