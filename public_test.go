@@ -44,7 +44,7 @@ func TestPublicZeroInput(t *testing.T) {
 		if strings.HasPrefix(theme, templates.ADMIN_PREFIX) {
 			continue
 		}
-		req = req.WithContext(templates.SetTheme(req.Context(), theme))
+		req = req.WithContext(templates.SetTheme(req.Context(), theme, true))
 		t.Run(theme, func(t *testing.T) {
 			for _, in := range templateInputs {
 				t.Run(in.TemplateBundle(), func(t *testing.T) {
