@@ -1,6 +1,6 @@
 {{define "pagination"}}
 {{with .}}{{if gt .Total 1}}
-<div class="columns">
+<div class="columns m-0">
     <nav class="column pagination is-left is-flex mb-0" hx-boost="true" hx-push-url="true" hx-target="#content" role="navigation">
         {{with .Prev 1}}
         <a class="pagination-previous" href="{{.URL}}">Previous</a>

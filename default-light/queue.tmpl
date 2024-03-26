@@ -5,24 +5,32 @@
             <div class="title has-text-centered mb-6 is-hidden-mobile">
                 <h3>Queue</h3>
             </div>
-            {{range $song := $.Queue}}
-                {{template "song" $song}}
-            {{end}}
+            <div class="fixed-grid has-1-cols">
+                <div class="grid">
+                    {{range $song := $.Queue}}
+                    {{template "song" $song}}
+                    {{end}}
+                </div>
+            </div>
         </div>
     </div>
 </section>
+{{printjson .}}
 {{end}}
 
 {{define "song"}}
-<div class="block has-background-white-ter song-info" onclick=toggleDropdown(this)>
-    <div class="columns is-vcentered has-text-centered">
-        <div class="column is-2"><time datetime="{{$.ExpectedStartTime.Unix}}">{{Until $.ExpectedStartTime | PrettyDuration}}</time></div>
-        <div class="column">{{$.Metadata}}</div>
-        {{if not $.IsUserRequest}}
-        <div class="column is-narrow"></div>
-        {{else}}
-        <div class="column is-narrow mr-4">/r/</div>
-        {{end}}
+<div class="cell song-info" onclick="toggleDropdown(this)">
+    <div class="fixed-grid has-12-cols">
+        <div class="grid">
+            {{if not $.IsUserRequest}}
+            <div class="cell is-col-span-2 has-background-radio-secondary-1 is-col-span-0-mobile is-align-content-center has-text-centered is-hidden-mobile p-4"><time datetime="{{$.ExpectedStartTime.Unix}}">{{Until $.ExpectedStartTime | PrettyDuration}}</time></div>
+            <div class="cell is-col-span-10 is-col-span-12-mobile has-background-radio-secondary-1 is-align-content-center has-text-centered p-4">{{$.Metadata}}</div>
+            {{else}}
+            <div class="cell is-col-span-2 has-background-radio-secondary-1 is-align-content-center has-text-centered p-4 is-hidden-mobile is-request"><time datetime="{{$.ExpectedStartTime.Unix}}">{{Until $.ExpectedStartTime | PrettyDuration}}</time></div>
+            <div class="cell is-col-span-9 is-col-span-12-mobile has-background-radio-secondary-1 is-align-content-center has-text-centered p-4 is-request" style="color:var(--blue)">{{$.Metadata}}</div>
+            <div class="cell is-col-span-1 column has-background-radio-secondary-1 is-align-content-center has-text-centered ml-2 is-hidden-mobile is-request">/r/</div>
+            {{end}}
+        </div>
     </div>
 </div>
 {{template "song-info-extra" .}}

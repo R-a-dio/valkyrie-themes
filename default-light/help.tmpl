@@ -17,80 +17,82 @@
                     </a>
                 </div>
             </div>
-            <div class="tile is-ancestor">
-                <div id="stream-help" class="tile is-4 is-vertical is-parent">
-                    <div id="stream-help-title" class="tile is-child box is-justify-content-center is-align-content-center is-flex-0">
-                        <p class="title has-text-centered">Stream Help</p>
+            <div class="fixed-grid has-3-cols has-1-cols-mobile">
+                <div class="grid">
+                    <div id="stream-help" class="cell is-flex is-flex-direction-column is-4 is-vertical">
+                        <div id="stream-help-title" class="box is-align-content-center is-flex-0 is-hidden-mobile">
+                            <p class="title has-text-centered">Stream Help</p>
+                        </div>
+                        <div class="cell box">
+                            <p class="title is-4 has-text-centered">Playing the Stream</p>
+                            <p>Simply click the</p>
+                            <p><button id="stream-play-pause" class="button is-info is-fullwidth" data-hasclick="true">Play Stream</button></p>
+                            <p>button in your browser.</p>
+                            <p>A volume slider will appear, and the slider will change the volume. This is remembered between page loads.</p>
+                            <p>To play the stream in your media player, you can use any of the following links:</p>
+                            <button class="button is-fullwidth"><a href="https://stream.r-a-d.io/main">Direct Stream Link</a></button>
+                            <button class="button is-fullwidth"><a href="/assets/main.mp3.m3u">Stream .m3u Playlist</a></button>
+                            <button class="button is-fullwidth"><a href="/assets/main.pls">Stream .pls Playlist</a></button>
+                        </div>
+                        <div class="cell box">
+                            <p class="title is-4 has-text-centered">Requesting Songs</p>
+                            <p>Search for a song first, by entering something into the searchbox at the top (or clicking "Search" in the navbar).</p>
+                            <p>Then, click on </p>
+                            <p><button type="submit" class="button is-fullwidth is-primary"></p>Request</button></p>
+                            <p>The request cooldown is one hour.</p>
+                        </div>
+                        <div class="cell box">
+                            <p class="title is-4 has-text-centered">Submitting Songs</p>
+                            <p>Head over to the <a href="/submit" hx-boost="true" hx-push-url="true" hx-target="#content">submit page</a> and read the instructions on the left <b>very carefully</b> before submitting a song.</p>
+                            <p>It can take some time for your submission to be reviewed and accepted (or declined).</p>
+                            <p>Your submission may be declined for a number of reasons including low quality, missing tags (meaning artist name, song name, source, etc.), but also sometimes because it's simply too niche and the majority of the listeners would likely rather not listen to it.</p>
+                        </div>
                     </div>
-                    <div class="tile is-child box">
-                        <p class="title is-4 has-text-centered">Playing the Stream</p>
-                        <p>Simply click the</p>
-                        <p><button id="stream-play-pause" class="button is-info is-fullwidth" data-hasclick="true">Play Stream</button></p>
-                        <p>button in your browser.</p>
-                        <p>A volume slider will appear, and the slider will change the volume. This is remembered between page loads.</p>
-                        <p>To play the stream in your media player, you can use any of the following links:</p>
-                        <button class="button is-fullwidth"><a href="https://stream.r-a-d.io/main">Direct Stream Link</a></button>
-                        <button class="button is-fullwidth"><a href="/assets/main.mp3.m3u">Stream .m3u Playlist</a></button>
-                        <button class="button is-fullwidth"><a href="/assets/main.pls">Stream .pls Playlist</a></button>
-                    </div>
-                    <div class="tile is-child box">
-                        <p class="title is-4 has-text-centered">Requesting Songs</p>
-                        <p>Search for a song first, by entering something into the searchbox at the top (or clicking "Search" in the navbar).</p>
-                        <p>Then, click on </p>
-                        <p><button type="submit" class="button is-fullwidth is-primary"></p>Request</button></p>
-                        <p>The request cooldown is one hour.</p>
-                    </div>
-                    <div class="tile is-child box">
-                        <p class="title is-4 has-text-centered">Submitting Songs</p>
-                        <p>Head over to the <a href="/submit" hx-boost="true" hx-push-url="true" hx-target="#content">submit page</a> and read the instructions on the left <b>very carefully</b> before submitting a song.</p>
-                        <p>It can take some time for your submission to be reviewed and accepted (or declined).</p>
-                        <p>Your submission may be declined for a number of reasons including low quality, missing tags (meaning artist name, song name, source, etc.), but also sometimes because it's simply too niche and the majority of the listeners would likely rather not listen to it.</p>
-                    </div>
-                </div>
-                <!--  <div id="help-separator" class="tile box"></div> -->
-                <div id="song-submission-guidelines" class="tile is-vertical is-parent is-hidden-mobile">
-                    <div id="song-submission-guidelines-title" class="tile is-child box is-justify-content-center is-align-content-center is-flex-0">
-                        <p class="title has-text-centered">Song Submission Guidelines</p>
-                    </div>
-                    <div class="tile is-child box is-justify-content-center is-align-content-center is-flex-3">
-                        <p class="title is-4 has-text-centered">Your submission got declined because of one or more of the following:</p>
-                        <ul>
-                            <li>It wasn't from a Japanese anime, game, or other media production.</li>
-                            <li>Nobody involved in the production of the song was from Japan.</li>
-                            <li>It was TV size; we only accept full size releases.</li>
-                            <li>It was low quality and/or a youtube/soundcloud/other bad source rip. Note that bitrate is not always indicative of quality. Anything below 192kbps is rejected either way.</li>
-                            <li>It was already in the database. Sometimes songs are mistagged, and that's our fault. You should still search as thoroughly as possible to make sure what you're uploading isn't a duplicate</li>
-                            <li>Someone had uploaded the same song, but it wasn't accepted yet, in which case the submission that's highest quality gets accepted and the others declined.</li>
-                        </ul>
-                    </div>
-                    <div class="tile is-child box is-justify-content-center is-align-content-center is-flex-2">
-                        <p class="title is-4 has-text-centered">Your submission <u>might</u> have gotten declined because of one or more of the following:</p>
-                        <ul>
-                            <li>It had a bitrate below at least 256kbps.</li>
-                            <li>It was a bad transcode (for example, from 192kbps mp3 to 320kbps mp3).</li>
-                            <li>It's too niche (nobody wants to listen to it except you).</li>
-                            <li>If tags are in Japanese: you didn't mention source, artist, song title, etc.</li>
-                        </ul>
-                    </div>
-                    <div class="tile is-child box is-justify-content-center is-align-content-center is-flex-1">
-                        <p class="title is-4 has-text-centered">"But there are songs in the database that don't follow these rules!"</p>
-                        <p>Yes, and those won't be removed. They were accepted when there were not really any rules for accepting submissions. We just won't accept stuff like that anymore.</p>
-                    </div>
-                    <div class="tile is-child box is-justify-content-center is-align-content-center is-flex-2">
-                        <p class="title is-4 has-text-centered">So what can I upload?</p>
-                        <p>Any high quality music that's /a/ or /jp/ related, including doujin music, remixes, mashups, video game music, jpop, etc. <u>Simply having Japanese influence doesn't make something /a/ or /jp/</u>, and any such submissions will be declined.
-                        </p>
-                        <p><b>Remixes and mashups are exempt from the "nobody involved in production is from Japan" rule</b>, and are ok to upload, as long as the original song that was remixed or mashed up would have been accepted. There's a little more scrutiny with these, however; bad mashups or remixes might get declined even if otherwise acceptable.</p>
+                    <!--  <div id="help-separator" class="tile box"></div> -->
+                    <div id="song-submission-guidelines" class="cell is-flex is-flex-direction-column is-col-span-2 is-col-span-1-mobile is-vertical is-hidden-mobile">
+                        <div id="song-submission-guidelines-title" class="cell box is-align-content-center is-flex-0 is-hidden-mobile">
+                            <p class="title has-text-centered">Song Submission Guidelines</p>
+                        </div>
+                        <div class="cell box is-align-content-center is-flex-3">
+                            <p class="title is-4 has-text-centered">Your submission got declined because of one or more of the following:</p>
+                            <ul>
+                                <li>It wasn't from a Japanese anime, game, or other media production.</li>
+                                <li>Nobody involved in the production of the song was from Japan.</li>
+                                <li>It was TV size; we only accept full size releases.</li>
+                                <li>It was low quality and/or a youtube/soundcloud/other bad source rip. Note that bitrate is not always indicative of quality. Anything below 192kbps is rejected either way.</li>
+                                <li>It was already in the database. Sometimes songs are mistagged, and that's our fault. You should still search as thoroughly as possible to make sure what you're uploading isn't a duplicate</li>
+                                <li>Someone had uploaded the same song, but it wasn't accepted yet, in which case the submission that's highest quality gets accepted and the others declined.</li>
+                            </ul>
+                        </div>
+                        <div class="cell box is-align-content-center is-flex-2">
+                            <p class="title is-4 has-text-centered">Your submission <u>might</u> have gotten declined because of one or more of the following:</p>
+                            <ul>
+                                <li>It had a bitrate below at least 256kbps.</li>
+                                <li>It was a bad transcode (for example, from 192kbps mp3 to 320kbps mp3).</li>
+                                <li>It's too niche (nobody wants to listen to it except you).</li>
+                                <li>If tags are in Japanese: you didn't mention source, artist, song title, etc.</li>
+                            </ul>
+                        </div>
+                        <div class="cell box is-align-content-center is-flex-1">
+                            <p class="title is-4 has-text-centered">"But there are songs in the database that don't follow these rules!"</p>
+                            <p>Yes, and those won't be removed. They were accepted when there were not really any rules for accepting submissions. We just won't accept stuff like that anymore.</p>
+                        </div>
+                        <div class="cell box is-align-content-center is-flex-2">
+                            <p class="title is-4 has-text-centered">So what can I upload?</p>
+                            <p>Any high quality music that's /a/ or /jp/ related, including doujin music, remixes, mashups, video game music, jpop, etc. <u>Simply having Japanese influence doesn't make something /a/ or /jp/</u>, and any such submissions will be declined.
+                            </p>
+                            <p><b>Remixes and mashups are exempt from the "nobody involved in production is from Japan" rule</b>, and are ok to upload, as long as the original song that was remixed or mashed up would have been accepted. There's a little more scrutiny with these, however; bad mashups or remixes might get declined even if otherwise acceptable.</p>
+                        </div>
                     </div>
                 </div>
                 <!-- The below duplication is needed for phones without javascript -->
-                <div class="tile is-vertical is-parent is-hidden-touch is-hidden-with-js">
-                    <div class="tile is-child box is-justify-content-center is-align-content-center is-flex-0">
+                <div class="grid is-vertical is-hidden-touch is-hidden-with-js">
+                    <div class="cell box is-align-content-center is-flex-0">
                         <p class="title has-text-centered">Song Submission Guidelines</p>
                     </div>
-                    <div class="tile is-child">
-                        <div class="tile is-vertical is-parent p-0">
-                            <div class="tile is-child box is-justify-content-center is-align-content-center">
+                    <div class="cell">
+                        <div class="grid is-vertical p-0">
+                            <div class="cell box is-align-content-center">
                                 <p class="title is-4 has-text-centered">Your submission got declined because of one or more of the following:</p>
                                 <ul>
                                     <li>It wasn't from a Japanese anime, game, or other media production.</li>
@@ -101,7 +103,7 @@
                                     <li>Someone had uploaded the same song, but it wasn't accepted yet, in which case the submission that's highest quality gets accepted and the others declined.</li>
                                 </ul>
                             </div>
-                            <div class="tile is-child box is-justify-content-center is-align-content-center">
+                            <div class="cell box is-align-content-center">
                                 <p class="title is-4 has-text-centered">Your submission <u>might</u> have gotten declined because of one or more of the following:</p>
                                 <ul>
                                     <li>It had a bitrate below at least 256kbps.</li>
@@ -110,11 +112,11 @@
                                     <li>If tags are in Japanese: you didn't mention source, artist, song title, etc.</li>
                                 </ul>
                             </div>
-                            <div class="tile is-child box is-justify-content-center is-align-content-center">
+                            <div class="cell box is-align-content-center">
                                 <p class="title is-4 has-text-centered">"But there are songs in the database that don't follow these rules!"</p>
                                 <p>Yes, and those won't be removed. They were accepted when there were not really any rules for accepting submissions. We just won't accept stuff like that anymore.</p>
                             </div>
-                            <div class="tile is-child box is-justify-content-center is-align-content-center">
+                            <div class="cell box is-align-content-center">
                                 <p class="title is-4 has-text-centered">So what can I upload?</p>
                                 <p>Any high quality music that's /a/ or /jp/ related, including doujin music, remixes, mashups, video game music, jpop, etc. <u>Simply having Japanese influence doesn't make something /a/ or /jp/</u>, and any such submissions will be declined.
                                 </p>

@@ -10,13 +10,13 @@
 {{end}}
 
 {{define "news-post"}}
-<div class="columns block has-background-white-ter mb-5">
+<div class="columns block has-background-radio-secondary-1 mb-5">
     <article class="message column is-12 disable-message-hover">
         <div class="block message-header">
             <a href="/news" hx-boost="true" hx-push-url="true" hx-target="#content">{{.Title}}</a>
             <span>{{with .User}}{{or .Username "Anonymous"}}{{else}}Anonymous{{end}}</span>
         </div>
-        <div class="block message-header has-background-white-ter has-text-grey-dark m-1 p-1 disable-message-hover">
+        <div class="block message-header has-background-radio-secondary-1 has-text-grey-dark m-1 p-1 disable-message-hover">
             <span class="has-text-left"></span>
             <time datetime="{{.CreatedAt.Unix}}" data-type="absolute">{{.CreatedAt | AbsoluteDate}}</time>
         </div>
@@ -29,7 +29,7 @@
 
 {{define "news-comments"}}
 <div class="columns">
-    <div class="column is-hidden-tablet has-background-white-ter is-align-self-flex-start mb-4">
+    <div class="column is-hidden-tablet has-background-radio-secondary-1 is-align-self-flex-start mb-4">
         <textarea name="comment" rows="4" class="textarea mb-4" placeholder="Enter a comment..."></textarea>
         <div class="columns">
             <div class="column is-8 has-text-centered">
@@ -44,13 +44,13 @@
     </div>
     <div class="column is-8 m-0 p-0">
         {{range $comment := .}}
-        <div id="{{.ID}}" class="column block has-background-white-ter mb-4">
+        <div id="{{.ID}}" class="column block has-background-radio-secondary-1 mb-4">
             <div class="columns is-flex-mobile">
                 <div class="column is-narrow pb-0 ml-2">{{with .User}}{{.Username}}{{else}}Anonymous ({{.Identifier}}){{end}} #{{.ID}}</div>
                 <div class="column is-hidden-mobile"></div>
                 <div class="column is-narrow pb-0 mr-2" style="text-align:end">{{.CreatedAt | AbsoluteDate}}</div>
             </div>
-            <div class="block has-background-white-bis message-body">
+            <div class="block has-background-radio-primary-1 message-body">
                 <div class="">
                     {{.Body}}
                 </div>
@@ -58,7 +58,7 @@
         </div>
         {{end}}
     </div>
-    <div class="column is-hidden-mobile has-background-white-ter is-align-self-flex-start ml-4">
+    <div class="column is-hidden-mobile has-background-radio-secondary-1 is-align-self-flex-start ml-4">
         <textarea name="comment" rows="4" class="textarea mb-4" placeholder="Enter a comment..."></textarea>
         <button class="submit button is-primary" style="position:relative;float:right;">Submit</button>
         <p>Logged in (as $user)</p>

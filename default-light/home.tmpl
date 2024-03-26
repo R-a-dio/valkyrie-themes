@@ -97,8 +97,13 @@
     <ul id="queue">
         {{range $song := .}}
         <li class="columns is-mobile is-vcentered word-break-ellipsis">
-            <span class="column is-8 has-text-centered">{{$song.Metadata}}</span>
-            <time datetime="{{$song.ExpectedStartTime.Unix}}" class="column is-4 has-text-right">{{Until $song.ExpectedStartTime | PrettyDuration}}</time>
+        {{if not $song.IsUserRequest}}
+        <span class="column is-8 has-text-centered">{{$song.Metadata}}</span>
+        <time datetime="{{$song.ExpectedStartTime.Unix}}" class="column is-4 has-text-right">{{Until $song.ExpectedStartTime | PrettyDuration}}</time>
+        {{else}}
+        <span class="column is-8 has-text-centered is-request">{{$song.Metadata}}</span>
+        <time datetime="{{$song.ExpectedStartTime.Unix}}" class="column is-4 has-text-right is-request">{{Until $song.ExpectedStartTime | PrettyDuration}}</time>
+        {{end}}
         </li>
         {{end}}
     </ul>

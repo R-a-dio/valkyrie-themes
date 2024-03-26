@@ -6,9 +6,9 @@
                 <h3>Last Played</h3>
             </div>
             {{template "pagination" .Page}}
-            {{range $song := $.Songs}}
-            {{template "song" $song}}
-            {{end}}
+                    {{range $song := $.Songs}}
+                    {{template "song" $song}}
+                    {{end}}
             {{template "pagination" .Page}}
         </div>
     </div>
@@ -16,25 +16,21 @@
 {{end}}
 
 {{define "song"}}
-<div class="block has-background-white-ter song-info disable-pointer">
-    <a href="/search?q={{.Title}}" hx-boost="true" hx-push-url="true" hx-target="#content" style="color: unset;">
-        <div class="columns is-vcentered has-text-centered">
-            <div class="column is-hidden-mobile is-narrow py-0 my-0">
-                <div class="image is-64x64">
-                    {{if .LastPlayedBy}}
-                    {{with .LastPlayedBy}}
-                    <img class="dj-image" src="/api/dj-image/{{.DJ.Image}}" />
-                    <div class="dj-image-name-64">{{.DJ.Name}}</div>
-                    {{end}}
-                    {{else}}
-                    <img class="dj-image" src="/assets/images/mystery-dj.png" />
-                    <div class="dj-image-name-64">Unknown</div>
-                    {{end}}
-                </div>
-            </div>
-            <div class="column word-break-all">{{.Metadata}}</div>
-            <time datetime="{{.LastPlayed.Unix}}" data-type="absolute" class="column is-2">{{.LastPlayed | AbsoluteDate}}</time>
+<div class="block song-info my-0 py-4">
+    <div class="columns is-flex-mobile">
+        <div class="column is-narrow is-hidden-mobile image is-64x64 is-square mr-2 lp-dj-image">
+            {{if .LastPlayedBy}}
+            {{with .LastPlayedBy}}
+            <img class="dj-image" src="/api/dj-image/{{.DJ.Image}}" />
+            <div class="dj-image-name-64">{{.DJ.Name}}</div>
+            {{end}}
+            {{else}}
+            <img class="dj-image" src="/assets/images/mystery-dj.png" />
+            <div class="dj-image-name-64">Unknown</div>
+            {{end}}
         </div>
-    </a>
+        <div class="column is-9 has-background-radio-secondary-1 is-align-content-center has-text-centered">{{.Metadata}}</div>
+        <time datetime="{{.LastPlayed.Unix}}" data-type="absolute" class="column has-background-radio-secondary-1 is-align-content-center has-text-centered ml-2">{{.LastPlayed | AbsoluteDate}}</time>
+    </div>
 </div>
 {{end}}

@@ -1,3 +1,7 @@
+.is-fullheight {
+    height: 100%;
+}
+
 .is-fullwidth {
     width: 100%;
 }
@@ -52,6 +56,10 @@
 
 .is-flex-0 {
     flex: 0 !important;
+}
+
+.no-wrap-whitespace {
+    white-space: nowrap;
 }
 
 .caret {
@@ -184,7 +192,7 @@ span {
 }
 
 .message:hover, .message:hover > .message-header:nth-child(2) {
-    background-color: hsl(0, 0%, 90%) !important;
+    background-color: hsl(0, 0%, 90%);
     transition: 0.125s all ease-in-out;
 }
 
@@ -257,4 +265,8 @@ span {
     max-width: 0px !important;
     padding: 0 !important;
     margin: 0 !important;
+}
+
+.schedule-tile {
+    word-wrap: anywhere;
 }

@@ -11,10 +11,10 @@
                 </form>
             </div>
             <div id="search-content">
-            {{if len .Songs}}
-            {{template "search-header"}}
-            {{template "pagination" .Page}}
-            {{else}}
+                {{if len .Songs}}
+                {{template "search-header"}}
+                {{template "pagination" .Page}}
+                {{else}}
                 <div class="block has-text-centered is-size-5">
                     <p>Search for something! You can click on the songs to show some additional information.</p>
                     {{if eq .RequestCooldown 0}}
@@ -23,11 +23,13 @@
                     <p>The request cooldown is one hour. You can request again <time datetime="{{(.Now.Add .RequestCooldown).Unix}}">{{.RequestCooldown | PrettyDuration}}</time>.</p>
                     {{end}}
                 </div>
-            {{end}}
-            {{template "search-results" .Songs}}
-            {{if gt (len .Songs) 10 }}
-            {{template "pagination" .Page}}
-            {{end}}
+                {{end}}
+                <div class="fixed-grid has-1-cols">
+                    {{template "search-results" .Songs}}
+                </div>
+                {{if gt (len .Songs) 10 }}
+                {{template "pagination" .Page}}
+                {{end}}
             </div>
         </div>
     </div>
@@ -35,12 +37,14 @@
 {{end}}
 
 {{define "search-results"}}
+<div class="grid">
     {{with .}}
-        {{range .}}
-        <div class="block has-background-white-ter song-info" onclick=toggleDropdown(this)>
-            <div class="columns is-vcentered has-text-centered">
-                <div class="column">{{.Metadata}}</div>
-                <div class="column is-2">
+    {{range .}}
+    <div class="cell song-info" onclick=toggleDropdown(this)>
+        <div class="fixed-grid has-12-cols">
+            <div class="grid">
+                <div class="cell is-col-span-11 has-background-radio-secondary-1 is-align-content-center has-text-centered p-4">{{.Metadata}}</div>
+                <div class="cell is-col-span-1 has-background-radio-secondary-1 is-align-content-center p-4">
                     <form method="POST" action="/request/{{.TrackID}}" hx-post="/request/{{.TrackID}}">
                         {{if not .Requestable}}
                         <button type="submit" class="button is-danger" name="id" value="{{.TrackID}}" onclick=event.stopPropagation() disabled>Request</button>
@@ -51,9 +55,11 @@
                 </div>
             </div>
         </div>
-        {{template "song-info-extra" .}}
-        {{end}}
+    </div>
+    {{template "song-info-extra" .}}
     {{end}}
+    {{end}}
+</div>
 {{end}}
 
 {{define "search-header"}}
@@ -66,22 +72,22 @@
 {{end}}
 
 {{define "search-api"}}
-    {{with .Result}}
-        <div id="search-bar-popup" class="box has-text-centered">
-                {{range .Songs}}
-                <div class="columns is-vcentered">
-                    <div class="column">{{.Metadata}}</div>
-                    <div class="column is-narrow">
-                        <form method="POST" action="/request/{{.TrackID}}" hx-post="/request/{{.TrackID}}">
-                            {{if not .Requestable}}
-                            <button type="submit" class="button is-danger" name="id" value="{{.TrackID}}" disabled>Request</button>
-                            {{else}}
-                            <button type="submit" class="button is-primary" name="id" value="{{.TrackID}}">Request</button>
-                            {{end}}
-                        </form>
-                    </div>
-                </div>
+{{with .Result}}
+<div id="search-bar-popup" class="box has-text-centered">
+    {{range .Songs}}
+    <div class="columns is-vcentered">
+        <div class="column">{{.Metadata}}</div>
+        <div class="column is-narrow">
+            <form method="POST" action="/request/{{.TrackID}}" hx-post="/request/{{.TrackID}}">
+                {{if not .Requestable}}
+                <button type="submit" class="button is-danger" name="id" value="{{.TrackID}}" disabled>Request</button>
+                {{else}}
+                <button type="submit" class="button is-primary" name="id" value="{{.TrackID}}">Request</button>
                 {{end}}
+            </form>
         </div>
+    </div>
     {{end}}
+</div>
+{{end}}
 {{end}}
