@@ -30,14 +30,14 @@
 
   --bulma-text: var(--text-primary);
   --bulma-text-strong: var(--bulma-text);
-  --bulma-link-text: var(--text-primary);
-
-  --bulma-message-background-color: var(--radio-primary-2);
-  --bulma-message-header-background-color: var(--radio-secondary-2);
+  --bulma-link-text: var(--blue);
 
   --bulma-block-spacing: 0.75rem;
 
-  .cell, .column {
+
+
+  .cell,
+  .column {
     border-radius: 4px;
   }
 
@@ -82,7 +82,7 @@
     border-color: var(--radio-border);
   }
 
-  .button-hover {
+  .button:hover {
     color: var(--text-primary);
     border-color: var(--radio-primary-3);
   }
@@ -91,20 +91,23 @@
     background-color: var(--radio-primary-1);
   }
 
-  // input
-
-  .input {
-    color: var(--text-secondary);
-    background-color: var(--radio-primary-3);
-    border-color: var(--radio-border);
-    text-align: center;
-  }
-
-  .input::placeholder {
+  a .button {
     color: var(--text-primary);
   }
 
-  .input:focus {
+  // input
+
+  .input, .textarea {
+    color: var(--text-secondary);
+    background-color: var(--radio-primary-3);
+    border-color: var(--radio-border);
+  }
+
+  .input::placeholder, .textarea::placeholder {
+    color: var(--text-primary);
+  }
+
+  .input:focus, .textarea:focus {
     box-shadow: var(--bulma-input-focus-shadow-size) hsla(208, 27%, 39%, var(--bulma-input-focus-shadow-alpha))
   }
 
@@ -120,6 +123,10 @@
 
   .message-header a {
     color: var(--blue) !important;
+  }
+
+  a .message-header:hover {
+    background-color: var(--radio-secondary-2);
   }
 
   .news-title {
@@ -148,12 +155,6 @@
     background-color: var(--radio-primary-3) !important;
   }
 
-  a:hover,
-  a:active,
-  a:focus {
-    color: var(--text-primary) !important;
-  }
-
   // other elements,
 
   .pagination-link,
@@ -180,7 +181,8 @@
     background-color: unset !important;
   }
 
-  .song-info:hover > .columns > .column, .song-info:hover > .fixed-grid > .grid > .cell {
+  .song-info:hover>.columns>.column,
+  .song-info:hover>.fixed-grid>.grid>.cell {
     background-color: var(--radio-secondary-2) !important;
     transition: 0.125s all ease-in-out;
   }
@@ -189,11 +191,6 @@
     background-color: var(--radio-secondary-1) !important;
   }
 
-  .message:hover,
-  .message:hover>.message-header:nth-child(2) {
-    background-color: var(--radio-primary-2) !important;
-    transition: 0.125s all ease-in-out;
-  }
 
   // misc or wip,
 
@@ -245,4 +242,13 @@
 
 .disable-message-border {
   border: none !important;
+}
+
+.progress {
+  --bulma-progress-value-background-color: var(--blue) !important;
+  --bulma-progress-border-radius: 4px !important;
+}
+
+.message, .message-header {
+  color: var(--text-primary);
 }

@@ -32,7 +32,7 @@ function toggleHelpDisplay(button) {
     if (typeof button === "undefined") {
         if (window.innerWidth >= 769) {
             Array.from(target.children).forEach(element => {
-                element.style.border = "2px dashed rgba(255, 255, 255, 0.33)";
+                htmx.addClass(element, "is-targeted");
             });
         }
     }

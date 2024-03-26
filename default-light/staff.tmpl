@@ -10,9 +10,9 @@
 
 {{define "staff-rows"}}
     {{range $role := .Roles}}
-        <div class="fixed-grid block has-4-cols">
+        <div class="fixed-grid block has-4-cols-desktop has-2-cols-touch has-1-cols-mobile mb-5">
             {{template "staff-row-title" $role}}
-            <div class="grid has-background-radio-secondary-1 px-4 py-3 content-border-top">
+            <div class="grid is-row-gap-6 is-column-gap-6">
                 {{range $user := $.Users}}
                     {{if and $user.DJ.Visible (eq $user.DJ.Role $role)}}
                         {{template "djcard" $user.DJ}}
@@ -25,25 +25,23 @@
 
 {{define "staff-row-title"}}
 	{{if eq . "staff"}}
-    	<div class="title">Staff</div>
+    	<div class="title pl-4">Staff</div>
 	{{else if eq . "dev"}}
-    	<div class="title">Developers</div>
+    	<div class="title pl-4">Developers</div>
 	{{else}}
-    	<div class="title">DJs</div>
+    	<div class="title pl-4">DJs</div>
 	{{end}}
 {{end}}
 
 {{define "djcard"}}
-<div class="cell">
-    <div class="p-4 m-2">
+<div class="cell has-background-radio-secondary-1 content-border-top p-4">
         <div class="card-image">
-	    <figure class="image is-square ml-0 mr-0">
+	    <figure class="image is-square fill-sides" style="max-width:192px;max-height:192px;">
 	    	<img src="/api/dj-image/{{.Image}}"/>
 	    </figure>
 	    </div>
         <div class="card-content has-text-centered pt-4 pb-0">
-            <div class="title is-4 word-break-ellipsis">{{.Name}}</div>
+            <div class="title is-5 word-break-ellipsis">{{.Name}}</div>
         </div>
-    </div>
 </div>
 {{end}}

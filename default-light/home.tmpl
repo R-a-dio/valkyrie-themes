@@ -59,11 +59,11 @@
 {{define "nowplaying"}}
 <h2 id="current-song">
     {{if gt (len .Song.Metadata) 35}}
-    <p id="metadata" class="title is-3 has-text-centered" style="cursor: pointer;" onclick=toggleDropdown(this)>{{.Song.Metadata}}</p>
+    <p id="metadata" class="title is-4 pb-3 has-text-centered" style="cursor:pointer;" onclick=toggleDropdown(this)>{{.Song.Metadata}}</p>
     {{else}}
-    <p id="metadata" class="title is-2 has-text-centered" style="cursor: pointer;" onclick=toggleDropdown(this)>{{.Song.Metadata}}</p>
+    <p id="metadata" class="title is-3 mb-3 has-text-centered" style="cursor:pointer;" onclick=toggleDropdown(this)>{{.Song.Metadata}}</p>
     {{end}}
-    <p class="subtitle has-text-centered is-hidden" style="font-size: 14px;">{{if .Song.DatabaseTrack}}{{.Song.Tags}}{{end}}</p>
+    <p class="subtitle has-text-centered pb-3 is-hidden" style="font-size: 14px;">{{if .Song.DatabaseTrack}}{{.Song.Tags}}{{end}}</p>
 </h2>
 <progress id="current-song-progress" class="progress is-large mb-0" value="0" max="{{.Song.Length.Seconds}}"></progress>
 <div class="columns mt-2">

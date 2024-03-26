@@ -58,10 +58,6 @@
     flex: 0 !important;
 }
 
-.no-wrap-whitespace {
-    white-space: nowrap;
-}
-
 .caret {
     width: 0;
     height: 0;
@@ -90,32 +86,38 @@
 }
 
 .content-border-top {
-	border-top: 2px rgba(0, 0, 0, .1) solid;
+    border-top: 2px rgba(0, 0, 0, .1) solid;
 }
 
 span {
-	word-break: unset;
-	overflow: hidden;
-	text-overflow: ellipsis;
+    word-break: unset;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-.message-header a, article a {
+.message-header a,
+article a {
     text-decoration: none !important;
 }
 
-.message-header a:hover, article a:hover {
-    text-decoration: underline !important;
+.on-hover-darken {
+    transition: filter 0.125s ease-in-out;
+}
+
+.on-hover-darken:hover {
+    filter: brightness(0.9);
 }
 
 .word-break-ellipsis {
-	overflow: hidden;
-	text-overflow: ellipsis;
+    overflow: hidden;
+    text-overflow: ellipsis;
     white-space: nowrap;
     max-height: 3rem;
     transition: max-height 0.4s ease-out;
 }
 
-.word-break-ellipsis:hover, .word-break-ellipsis:active {
+.word-break-ellipsis:hover,
+.word-break-ellipsis:active {
     max-height: 100px;
     white-space: normal;
     transition: max-height 0.4s ease-in-out;
@@ -186,17 +188,13 @@ span {
     border-radius: 4px;
 }
 
-.dj-image:hover + .dj-image-name-64 {
+.dj-image:hover+.dj-image-name-64 {
     left: calc(100% + 8px);
     opacity: 1;
 }
 
-.message:hover, .message:hover > .message-header:nth-child(2) {
-    background-color: hsl(0, 0%, 90%);
-    transition: 0.125s all ease-in-out;
-}
-
-.disable-message-hover:hover, .disable-message-hover:hover > .message-header:nth-child(2) {
+.disable-message-hover:hover,
+.disable-message-hover:hover>.message-header:nth-child(2) {
     background-color: initial !important;
 }
 
@@ -227,7 +225,7 @@ span {
     }
 }
 
-#search-bar-popup > .columns:nth-child(even) {
+#search-bar-popup>.columns:nth-child(even) {
     background-color: hsl(0, 0%, 96%);
     border-top: 2px solid hsl(0, 0%, 90%);
     border-radius: 4px;
@@ -237,7 +235,8 @@ span {
     color: #789922;
 }
 
-#lastplayed, #queue {
+#lastplayed,
+#queue {
     min-height: calc(256px - 2.5rem)
 }
 
@@ -257,8 +256,14 @@ span {
     right: 0;
 }
 
+@keyframes flash {
+    0% { filter: brightness(1); }
+    50% { filter: brightness(1.5); }
+    100% { filter: brightness(1); }
+}
+
 .is-targeted {
-    
+    animation: flash 0.5s ease-in-out 3;
 }
 
 #help-separator {

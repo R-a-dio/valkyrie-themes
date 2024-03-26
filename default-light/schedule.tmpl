@@ -11,7 +11,7 @@
             </div>
 
             <div class="fixed-grid has-1-cols-mobile block">
-                <div class="grid is-fullheight is-row-gap-5 is-column-gap-2">
+                <div class="grid is-fullheight is-row-gap-5 is-column-gap-5">
                     {{range $day := .Schedule}}
                     {{template "day" $day}}
                     {{end}}
@@ -20,7 +20,6 @@
         </div>
     </div>
 </section>
-{{ printjson . }}
 {{end}}
 
 {{define "day"}}
@@ -35,7 +34,7 @@
 
 {{define "day-left"}}
 <!-- desktop -->
-<div class="cell is-flex is-flex-direction-column mr-3 is-hidden-mobile">
+<div class="cell is-flex is-flex-direction-column is-hidden-touch">
     <div class="columns mb-1">
         <h6 class="column is-3 has-background-radio-secondary-1 is-align-content-center has-text-centered has-text-centered mr-2">{{if .Owner}}{{.Owner.DJ.Name}}{{else}}Nobody{{end}}</h6>
         <h6 class="column has-background-radio-secondary-1 is-align-content-center has-text-centered">{{.Weekday}}</h6>
@@ -50,7 +49,7 @@
     </div>
 </div>
 <!-- mobile -->
-<div class="cell is-flex is-flex-direction-column is-hidden-tablet">
+<div class="cell is-flex is-flex-direction-column is-hidden-desktop">
     <div class="columns is-flex-mobile mb-3">
         <h6 class="column has-background-radio-secondary-1 is-align-content-center has-text-centered mb-2 mr-1">{{.Weekday}}</h6>
         <h6 class="column has-background-radio-secondary-1 is-align-content-center has-text-centered has-text-centered mb-2 ml-1">{{if .Owner}}{{.Owner.DJ.Name}}{{else}}Nobody{{end}}</h6>
@@ -63,7 +62,7 @@
 
 {{define "day-right"}}
 <!-- desktop -->
-<div class="cell is-flex is-flex-direction-column ml-3 is-hidden-mobile">
+<div class="cell is-flex is-flex-direction-column is-hidden-touch">
     <div class="columns mb-1">
         <h6 class="column has-background-radio-secondary-1 is-align-content-center has-text-centered">{{.Weekday}}</h6>
         <h6 class="column is-3 has-background-radio-secondary-1 is-align-content-center has-text-centered has-text-centered ml-2">{{if .Owner}}{{.Owner.DJ.Name}}{{else}}Nobody{{end}}</h6>
@@ -78,7 +77,7 @@
     </div>
 </div>
 <!-- mobile -->
-<div class="cell is-flex is-flex-direction-column is-hidden-tablet">
+<div class="cell is-flex is-flex-direction-column is-hidden-desktop">
     <div class="columns is-flex-mobile mb-3">
         <h6 class="column has-background-radio-secondary-1 is-align-content-center has-text-centered mb-2 mr-1">{{.Weekday}}</h6>
         <h6 class="column has-background-radio-secondary-1 is-align-content-center has-text-centered has-text-centered mb-2 ml-1">{{if .Owner}}{{.Owner.DJ.Name}}{{else}}Nobody{{end}}</h6>
