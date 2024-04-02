@@ -1,25 +1,17 @@
 {{define "content"}}
 <div class="container">
     <div class="section">
-        <div class="tile is-ancestor">
-            <div class="tile">
-                <div class="tile is-parent is-3">
-                    <article class="tile is-child notification">
-                        <p class="title">Daypass</p>
-                        <p class="tag is-info">{{.Daypass.Value}}</p>
-                        <p class="is-size-7">Expires <time datetime="{{.Daypass.ValidUntil.Unix}}">{{Until .Daypass.ValidUntil | PrettyDuration}}</time></p>
-                    </article>
-                </div>
-                <div class="tile is-parent is-3">
-                    <article class="tile is-child notification">
-                        Welcome {{.User.Username}}.
-                    </article>
-                </div>
-                <div class="tile is-parent is-3">
-                    <article class="tile is-child notification">
-                        <button class="button" hx-trigger="click" hx-post="/admin/api/streamer/stop" hx-confirm="Are you sure?">Kill Hanyuu-sama</a>
-                    </article>
-                </div>
+        <div class="grid">
+            <div class="cell is-3 notification">
+                <p class="title">Daypass</p>
+                <p class="tag is-info">{{.Daypass}}</p>
+                <p class="is-size-7">Expires at midnight</p>
+            </div>
+            <div class="cell is-3 notification">
+                Welcome {{.User.Username}}.
+            </div>
+            <div class="cell is-3 notification">
+                <button class="button" hx-trigger="click" hx-post="/admin/api/streamer/stop" hx-confirm="Are you sure?">Kill Hanyuu-sama</a>
             </div>
         </div>
     </div>
