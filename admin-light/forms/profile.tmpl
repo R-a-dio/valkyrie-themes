@@ -52,7 +52,8 @@
         </div>
         <div class="field-body"><div class="field">
             <ul class="control tags" id="permissions">
-    {{range $perm, $checked := .Form.UserPermissions}}
+            {{range $perm := AllUserPermissions}}
+                {{$checked := $.Form.UserPermissions.HasExplicit $perm}}
                 <li class="tag">
                     <input class="checkbox mr-2" id="perm-{{$perm}}"
                         autocomplete="off"
