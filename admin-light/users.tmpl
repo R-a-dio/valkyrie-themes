@@ -1,0 +1,34 @@
+{{define "content"}}
+<section class="section">
+    <div class="container">
+    {{range .Users}}
+    <div class="block">
+        <form class="columns">
+            <div class="column is-narrow">
+                <span class="has-text-weight-bold">{{.ID}}</span>
+            </div>
+            <div class="column">
+                <input class="input" type="text" name="username" value="{{.Username}}" disabled>
+            </div>
+            <div class="column">
+                <input class="input" type="password" name="username" placeholder="Password">
+            </div>
+            <div class="column is-narrow">
+                <button class="button">Edit Profile</button>
+                <button class="button is-info">Save</button>
+            </div>
+        </form>
+        <ul class="tags">
+            {{$permissions := .UserPermissions}}
+            {{range AllUserPermissions}}
+                {{$has := $permissions.HasExplicit .}}
+            <li class="tag{{if $has}} is-info{{end}}">
+                {{.}}
+            </li>
+            {{end}}
+        </ul>
+    </div>
+    {{end}}
+    </div>
+</section>
+{{end}}

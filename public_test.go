@@ -13,7 +13,7 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-var templateInputs = []templates.TemplateSelectable{
+var publicInputs = []templates.TemplateSelectable{
 	public.HomeInput{},
 	public.ChatInput{},
 	public.LastPlayedInput{},
@@ -46,7 +46,7 @@ func TestPublicZeroInput(t *testing.T) {
 		}
 		req = req.WithContext(templates.SetTheme(req.Context(), theme, true))
 		t.Run(theme, func(t *testing.T) {
-			for _, in := range templateInputs {
+			for _, in := range publicInputs {
 				t.Run(in.TemplateBundle(), func(t *testing.T) {
 					err := exec.Execute(io.Discard, req, in)
 					assert.NoError(t, err)
