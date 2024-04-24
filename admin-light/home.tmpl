@@ -7,9 +7,11 @@
                 <p class="tag is-info">{{.Daypass}}</p>
                 <p class="is-size-7">Expires at midnight</p>
             </div>
+            {{with .User}}
             <div class="cell notification">
-                Welcome {{.User.Username}}.
+                Welcome {{.Username}}.
             </div>
+            {{end}}
             <div class="cell notification">
                 <button class="button" hx-trigger="click" hx-post="/admin/api/streamer/stop" hx-confirm="Are you sure?">Kill Hanyuu-sama</a>
             </div>
