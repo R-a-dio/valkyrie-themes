@@ -1,33 +1,52 @@
 {{define "content"}}
-<section class="section">
+<section class="section" hx-boost="true" hx-target="#content">
     <div class="container">
+        <div class="block">
+            <form class="columns" method="post" hx-post="/admin/profile?new=user">
+                <div class="column is-narrow">
+                    <span class="has-text-weight-bold">Add a new user:</span>
+                </div>
+                <div class="column">
+                    <input class="input" type="text" name="username" placeholder="Username">
+                </div>
+                <div class="column">
+                    <input class="input" type="password" name="password" placeholder="Password">
+                </div>
+                <div class="column is-narrow">
+                    <button class="button is-success" type="submit">Create User</button>
+                </div>
+            </form>
+        </div>
+        <hr>
     {{range .Users}}
-    <div class="block">
-        <form class="columns">
-            <div class="column is-narrow">
-                <span class="has-text-weight-bold">{{.ID}}</span>
-            </div>
-            <div class="column">
-                <input class="input" type="text" name="username" value="{{.Username}}" disabled>
-            </div>
-            <div class="column">
-                <input class="input" type="password" name="username" placeholder="Password">
-            </div>
-            <div class="column is-narrow">
-                <button class="button">Edit Profile</button>
-                <button class="button is-info">Save</button>
-            </div>
-        </form>
-        <ul class="tags">
-            {{$permissions := .UserPermissions}}
-            {{range AllUserPermissions}}
-                {{$has := $permissions.HasExplicit .}}
-            <li class="tag{{if $has}} is-info{{end}}">
-                {{.}}
-            </li>
-            {{end}}
-        </ul>
-    </div>
+        <div class="block">
+            <form class="columns">
+                <div class="column is-narrow">
+                    <span class="has-text-weight-bold">{{.ID}}</span>
+                </div>
+                <div class="column">
+                    <input class="input" type="text" name="username" value="{{.Username}}" disabled>
+                </div>
+                {{if .DJ.ID}}
+                <div class="column">
+                    <input class="input" type="text" name="dj.name" value="{{.DJ.Name}}" disabled>
+                </div>
+                {{end}}
+                <div class="column is-narrow">
+                    <a class="button" href="/admin/profile?username={{.Username}}">Edit Profile</a>
+                </div>
+            </form>
+            <ul class="tags">
+                {{$permissions := .UserPermissions}}
+                {{range AllUserPermissions}}
+                    {{$has := $permissions.HasExplicit .}}
+                <li class="tag{{if $has}} is-info{{end}}">
+                    {{.}}
+                </li>
+                {{end}}
+            </ul>
+        </div>
+        <hr>
     {{end}}
     </div>
 </section>

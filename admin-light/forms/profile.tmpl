@@ -1,8 +1,8 @@
-{{define "form_admin_profile"}}
-<form method="post" enctype="multipart/form-data">
-{{if .Form.Error}}
+{{define "form_profile"}}
+<form hx-post="{{.FormAction}}" {{.FormType}}>
+{{if .Errors}}
     <div class="notification is-warning">
-        {{.Form.Error.Error}}
+        {{.Errors}}
     </div>
 {{end}}
     <div class="field is-horizontal">
@@ -10,31 +10,26 @@
             <label class="field-label" for="username">Username:</label>
         </div>
         <div class="field-body"><div class="field"><div class="control">
-{{if .IsNew}}
-            <input class="input" type="text" name="Username" placeholder="username" required>
-{{else}}
-            <input class="input"  type="text" name="Username" value={{.Form.Username}} required disabled>
-            <input type="hidden" name="Username" value={{.Form.Username}}>
-{{end}}
+            <input class="input" type="text" name="username" value="{{.Username}}" required disabled>
+            <input type="hidden" name="username" value="{{.Username}}">
         </div></div></div>
     </div>
-{{if or (not .IsAdmin) (.IsNew)}}
+    {{if .IsSelf}}
     <div class="field is-horizontal">
         <div class="field-label">
-            <label class="label">{{if .IsNew}}New{{else}}Change{{end}} password:</label>
+            <label class="label">Change password:</label>
         </div>
         <div class="field-body"><div class="field"><div class="control">
-            <input class="input" type="password" name="Change.Password" placeholder="{{if not .IsNew}}current {{end}}password">
+            <input class="input" type="password" name="password.current" placeholder="current password">
         </div></div></div>
     </div>
-{{end}}
-{{if not .IsNew}}
+    {{end}}
     <div class="field is-horizontal">
         <div class="field-label">
-            <label class="label">{{if not (or (not .IsAdmin) (.IsNew))}}Change password:{{end}}</label>
+            <label class="label">{{if not .IsSelf}}Change password:{{end}}</label>
         </div>
         <div class="field-body"><div class="field"><div class="control">
-            <input class="input" type="password" name="Change.NewPassword" placeholder="new password">
+            <input class="input" type="password" name="password.new" placeholder="new password">
         </div></div></div>
     </div>
     <div class="field is-horizontal">
@@ -42,10 +37,9 @@
             <label class="label"></label>
         </div>
         <div class="field-body"><div class="field"><div class="control">
-            <input class="input" type="password" name="Change.RepeatedPassword" placeholder="repeated password">
+            <input class="input" type="password" name="password.repeated" placeholder="repeated password">
         </div></div></div>
     </div>
-{{end}}
     <div class="field is-horizontal">
         <div class="field-label">
             <label class="label">Permissions:</label>
@@ -53,12 +47,12 @@
         <div class="field-body"><div class="field">
             <ul class="control tags" id="permissions">
             {{range $perm := AllUserPermissions}}
-                {{$checked := $.Form.UserPermissions.HasExplicit $perm}}
+                {{$checked := $.UserPermissions.HasExplicit $perm}}
                 <li class="tag">
                     <input class="checkbox mr-2" id="perm-{{$perm}}"
                         autocomplete="off"
                         type="checkbox"
-                        name="Permissions"
+                        name="permissions"
                         value="{{$perm}}" 
         {{if $checked}}checked{{end}}
         {{if not $.IsAdmin}}disabled{{end}}>
@@ -70,50 +64,50 @@
     </div>
     <div class="field is-horizontal">
         <div class="field-label">
-            <label class="label" for="ip-address">IP Address:</label>
+            <label class="label" for="ip">IP Address:</label>
         </div>
         <div class="field-body"><div class="field has-addons">
             <div class="control is-expanded">
-                <input class="input" type="text" name="IP" value="{{.Form.IP}}">
+                <input class="input" type="text" name="ip" value="{{.IP}}">
             </div>
             <div class="control is-static">
-                <button class="button" type="button" onclick="document.querySelector('input[name=IP]').value = '{{.CurrentIP}}'">(You)</button>
+                <button class="button" type="button" onclick="document.querySelector('input[name=ip]').value = '{{.CurrentIP}}'">(You)</button>
             </div>
         </div></div>
     </div>
-{{if or (ne .Form.DJ.ID 0) (.IsNewProfile)}}
+{{if (ne .DJ.ID 0)}}
     <div></div>
     <div class="field is-horizontal">
         <div class="field-label">
-            <label class="label" for="visible">Visible?</label>
+            <label class="label" for="dj.visible">Visible?</label>
         </div>
         <div class="field-body"><div class="field"><div class="control">
-            <input class="checkbox" autocomplete="off" type="checkbox" name="DJ.Visible" {{if .Form.DJ.Visible}}checked{{end}}>
+            <input class="checkbox" autocomplete="off" type="checkbox" name="dj.visible" {{if .DJ.Visible}}checked{{end}}>
         </div></div></div>
     </div>
     <div class="field is-horizontal">
         <div class="field-label">
-            <label class="label" for="priority">Priority:</label>
+            <label class="label" for="dj.priority">Priority:</label>
         </div>
         <div class="field-body"><div class="field"><div class="control">
-            <input class="input" type="number" name="DJ.Priority" value={{.Form.DJ.Priority}}>
+            <input class="input" type="number" name="dj.priority" value={{.DJ.Priority}}>
         </div></div></div>
     </div>
     <div class="field is-horizontal">
         <div class="field-label">
-            <label class="label" for="dj-name">DJ name:</label>
+            <label class="label" for="dj.name">DJ name:</label>
         </div>
         <div class="field-body">
         <div class="field"><div class="control">
-            <input class="input" type="text" name="DJ.Name" value="{{.Form.DJ.Name}}">
+            <input class="input" type="text" name="dj.name" value="{{.DJ.Name}}">
         </div></div></div>
     </div>
     <div class="field is-horizontal">
         <div class="field-label">
-            <label class="label" for="dj-image">DJ Image:</label>
+            <label class="label" for="dj.image">DJ Image:</label>
         </div>
         <div class="field-body"><div class="field"><div class="control">
-            <input class="input" type="file" name="DJ.Image">
+            <input class="input" type="file" name="dj.image">
         </div></div></div>
     </div>
     <div class="field is-horizontal">
@@ -121,37 +115,37 @@
             <label class="label">Current image:</label>
         </div>
         <div class="field-body"><div class="field"><div class="control">
-            <img src="/api/dj-image/{{.Form.DJ.Image}}" alt="current DJ image">
+            <img src="/api/dj-image/{{.DJ.Image}}" alt="current DJ image">
         </div></div></div>
     </div>
     <div class="field is-horizontal">
         <div class="field-label">
-            <label class="label" for="regex">Nickname Regex:</label>
+            <label class="label" for="dj.regex">Nickname Regex:</label>
         </div>
         <div class="field-body"><div class="field"><div class="control">
-            <input class="input" type="text" name="DJ.Regex" value="{{.Form.DJ.Regex}}">
+            <input class="input" type="text" name="dj.regex" value="{{.DJ.Regex}}">
         </div></div></div>
     </div>
     <div class="field is-horizontal">
         <div class="field-label">
-            <label class="label" for="theme">Theme:</label>
+            <label class="label" for="dj.theme.name">Theme:</label>
         </div>
         <div class="field-body"><div class="field"><div class="control">
             <div class="select">
-                <select name="DJ.Theme.Name" value="{{.Form.DJ.Theme.Name}}">
+                <select name="dj.theme.name" value="{{.DJ.Theme.Name}}">
                     <option value="default">Default</option>
                 </select>
             </div>
         </div></div></div>
     </div>
     {{end}}
-    {{if and (and .IsAdmin (eq .Form.DJ.ID 0)) (and (not .IsNew) (not .IsNewProfile))}}
+    {{if (and .IsAdmin (eq .DJ.ID 0))}}
     <div class="field is-horizontal">
         <div class="field-label">
             <label></label>
         </div>
         <div class="field-body"><div class="field">
-            <button class="button" type="button" onclick="window.location.search += '&newprofile';">Add DJ profile</button>
+            <button class="button" type="button" hx-target="closest form" hx-post="{{.AddDJProfileURL}}">Add DJ Profile</button>
         </div></div>
     </div>
     {{end}}
@@ -160,7 +154,7 @@
             <label></label>
         </div>
         <div class="field-body"><div class="field">
-            <button class="button" type="submit">{{if .IsNew}}Create Account{{else}}Submit Changes{{end}}</button>
+            <button class="button" type="submit">Save Changes</button>
         </div></div>
     </div>
 </form>
