@@ -37,10 +37,9 @@
                 </div>
             </form>
             <ul class="tags">
-                {{$permissions := .UserPermissions}}
+                {{$user := .}}
                 {{range AllUserPermissions}}
-                    {{$has := $permissions.HasExplicit .}}
-                <li class="tag{{if $has}} is-info{{end}}">
+                <li class="tag{{if $user.UserPermissions.HasExplicit .}} is-info{{end}}">
                     {{.}}
                 </li>
                 {{end}}

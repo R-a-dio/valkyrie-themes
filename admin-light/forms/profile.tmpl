@@ -46,19 +46,18 @@
         </div>
         <div class="field-body"><div class="field">
             <ul class="control tags" id="permissions">
-            {{range $perm := AllUserPermissions}}
-                {{$checked := $.UserPermissions.HasExplicit $perm}}
+            {{range .PermissionList}}
                 <li class="tag">
-                    <input class="checkbox mr-2" id="perm-{{$perm}}"
+                    <input class="checkbox mr-2" id="perm-{{.Perm}}"
                         autocomplete="off"
                         type="checkbox"
                         name="permissions"
-                        value="{{$perm}}" 
-        {{if $checked}}checked{{end}}
-        {{if not $.IsAdmin}}disabled{{end}}>
-                    <label class="checkbox" for="perm-{{$perm}}">{{$perm}}</label>
+                        value="{{.Perm}}" 
+                {{if .Checked}}checked{{end}}
+                {{if .Disabled}}disabled{{end}}>
+                    <label class="checkbox" for="perm-{{.Perm}}">{{.Perm}}</label>
                 </li>
-    {{end}}
+            {{end}}
             </ul>
         </div></div>
     </div>
