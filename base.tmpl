@@ -16,7 +16,7 @@
     {{ block "styles" .}}{{end}}
 </head>
 {{end}}
-<body style="padding-bottom: 60px;" hx-ext="head-support">
+<body {{block "full-page-body" .}}{{end}} style="padding-bottom: 60px;" hx-ext="head-support">
     {{with .StreamURL}}
     <div id="player" style="display: none;">
         <audio id="stream-audio" preload="none">
