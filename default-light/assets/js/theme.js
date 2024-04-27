@@ -25,10 +25,15 @@ function toggleOptionsDropdown() {
 // Help page switch for mobiles & highlight for desktop
 function toggleHelpDisplay(button) {
     let target = htmx.find(window.location.hash);
-    let other_div = htmx.find((target.id === "#stream-help") ? "#song-submission-guidelines" : "#stream-help");
-    htmx.addClass(other_div, "is-hidden-mobile");
-    htmx.removeClass(target, "is-hidden-mobile");
+    if (url.pathname === "/help") {
+        let other_div = htmx.find((target.id === "#stream-help") ? "#song-submission-guidelines" : "#stream-help");
+        htmx.addClass(other_div, "is-hidden-mobile");
+        htmx.removeClass(target, "is-hidden-mobile");
+    }
+    showHighlightAnimation(target, button);
+}
 
+function showHighlightAnimation(target, button) {
     if (typeof button === "undefined") {
         if (window.innerWidth >= 769) {
             Array.from(target.children).forEach(element => {
@@ -41,7 +46,7 @@ function toggleHelpDisplay(button) {
 // Needed to display the right help page for mobile users
 htmx.onLoad((event) => {
     url = window.location;
-    if (url.pathname === "/help") {
+    if (url.pathname === "/help" || url.pathname === "/staff") {
         if (url.hash !== "") {
             toggleHelpDisplay()
         }
