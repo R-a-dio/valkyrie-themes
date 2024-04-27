@@ -12,9 +12,19 @@
                 Welcome {{.Username}}.
             </div>
             {{end}}
+            {{if .CanKillStreamer}}
             <div class="cell notification">
-                <button class="button" hx-trigger="click" hx-post="/admin/api/streamer/stop" hx-confirm="Are you sure?">Kill Hanyuu-sama</a>
+                <button class="button" hx-trigger="click" hx-post="/admin/api/streamer/stop" hx-confirm="Are you sure?">Kill Hanyuu-sama</button>
             </div>
+            {{end}}
+            {{if .CanTemplateReload}}
+            {{block "template-reload" .TemplateReload}}
+            <div id="template-reload" class="cell notification">
+                <button class="button" hx-target="#template-reload" hx-trigger="click" hx-post="/admin/api/website/reload-templates">Reload Templates</button>
+                {{if .Reloaded}}Successfully reloaded templates{{else if .Error}}Failed to reload templates: {{.Error}}{{end}}
+            </div>
+            {{end}}
+            {{end}}
             <div class="cell"></div>
         </div>
     </div>
