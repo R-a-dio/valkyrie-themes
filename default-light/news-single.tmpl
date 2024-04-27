@@ -12,15 +12,14 @@
 {{define "news-post"}}
 <div class="columns block has-background-radio-secondary-1 mb-5">
     <article class="message column is-12 disable-message-hover">
-        <div class="block message-header has-background-radio-primary-2 on-hover-darken">
-            <a href="/news" hx-boost="true" hx-push-url="true" hx-target="#content">{{.Title}}</a>
-            <span>{{with .User}}{{or .Username "Anonymous"}}{{else}}Anonymous{{end}}</span>
-        </div>
-        <div class="block message-header has-background-radio-secondary-1 m-1 p-1 disable-message-hover">
-            <span class="has-text-left"></span>
-            <time datetime="{{.CreatedAt.Unix}}" data-type="absolute">{{.CreatedAt | AbsoluteDate}}</time>
-        </div>
-        <div class="message-body pt-0 has-background-radio-secondary-1 disable-message-border">
+        <a href="/news" hx-boost="true" hx-push-url="true" hx-target="#content">
+            <div class="block message-header has-background-radio-primary-2 on-hover-darken mb-0">
+                <span class="news-title">{{.Title}}</span>
+                <span style="text-decoration:none;">{{with .User}}{{or .Username "Anonymous"}}{{else}}Anonymous{{end}}</span>
+            </div>
+        </a>
+        <div class="message-body has-background-radio-secondary-1 disable-message-border">
+            <strong><time class="is-inline-block is-fullwidth has-text-right" datetime="{{.CreatedAt.Unix}}" data-type="absolute">{{.CreatedAt | AbsoluteDate}}</time></strong>
             {{.Body}}
         </div>
     </article>
@@ -50,7 +49,7 @@
                 <div class="column is-hidden-mobile"></div>
                 <div class="column is-narrow pb-0 mr-2" style="text-align:end">{{.CreatedAt | AbsoluteDate}}</div>
             </div>
-            <div class="block has-background-radio-primary-2 message-body">
+            <div class="block has-background-radio-primary-2 content-border-top-light disable-border-radius">
                 <div class="p-4">
                     {{.Body}}
                 </div>

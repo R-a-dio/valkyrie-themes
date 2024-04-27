@@ -1,49 +1,52 @@
 {{define "content"}}
 <section class="section">
     <div class="container">
-        <div class="content">
+        <div class="content fixed-grid has-2-cols-fullhd has-1-cols-mobile ">
             {{$cooldown := CalculateSubmissionCooldown .Stats.LastSubmissionTime}}
             {{if or (or (eq $cooldown 0) (.IsUser)) (.Form.IsDaypass)}}
-            <div id="submit-cooldown" class="notification is-primary has-text-centered">
+            <div id="submit-cooldown" class="notification is-primary has-text-centered mb-6">
                 You can upload a song
             </div>
             {{else}}
-            <div id="submit-cooldown" class="notification is-danger has-text-centered">
+            <div id="submit-cooldown" class="notification is-danger has-text-centered mb-6">
                 You cannot upload another song just yet. You can upload <time datetime="{{(Now.Add $cooldown).Unix}}">{{PrettyDuration $cooldown}}</time>.
             </div>
             {{end}}
-            <div class="columns">
-                <div class="column is-6">
-                    <p>
-    					<strong>Uploading</strong>
-    				</p>
-                    <ul>
-                        <li>VERY IMPORTANT: Search first to make sure that the song isn't already in the database!</li>
-                        <li>Low quality uploads are likely to be declined if it's obvious better quality versions are available</li>
-                        <li>Anything below 192kbps is rejected. Do not upload YouTube rips.</li>
-                        <li>Please include as much information as possible in the comment field, especially source (name of the anime, VN, game). If there is no source work, please mention this.</li>
-                        <li><a href="/help#song-submission-guidelines" hx-boost="true" hx-push-url="true" hx-target="#content">Why did my submission get declined?</a></li>
-    				</ul>
-    				<p></p>
-    				<p>
-    					<strong>Tagging</strong>
-    				</p>
-                    <ul>
-                        <li>Artist and title are required; at least put them in the comment, if not in the artist and title tags.</li>
-                        <li>Avoid Japanese characters unless it's absolutely necessary. Uploads with too much kana/kanji may be declined.</li>
-                        <li>Do not include character names or "CV" notation; vocalists only.</li>
-                        <li>If you can remember, please include where you downloaded the file from</li>
-                        <li><a href="https://static.r-a-d.io/exci/good-comment.png">An example of a good comment</a></li>
-                    </ul>
+            <div class="grid">
+                <div class="cell">
+                    <div class="box has-background-radio-secondary-1 is-fullheight">
+                        <p>
+    		    			<strong>Uploading</strong>
+    		    		</p>
+                        <ul>
+                            <li>VERY IMPORTANT: Search first to make sure that the song isn't already in the database!</li>
+                            <li>Low quality uploads are likely to be declined if it's obvious better quality versions are available</li>
+                            <li>Anything below 192kbps is rejected. Do not upload YouTube rips.</li>
+                            <li>Please include as much information as possible in the comment field, especially source (name of the anime, VN, game). If there is no source work, please mention this.</li>
+                            <li><a href="/help#song-submission-guidelines" hx-boost="true" hx-push-url="true" hx-target="#content">Why did my submission get declined?</a></li>
+    		    		</ul>
+    		    		<p></p>
+    		    		<p>
+    		    			<strong>Tagging</strong>
+    		    		</p>
+                        <ul>
+                            <li>Artist and title are required; at least put them in the comment, if not in the artist and title tags.</li>
+                            <li>Avoid Japanese characters unless it's absolutely necessary. Uploads with too much kana/kanji may be declined.</li>
+                            <li>Do not include character names or "CV" notation; vocalists only.</li>
+                            <li>If you can remember, please include where you downloaded the file from</li>
+                            <li><a href="https://static.r-a-d.io/exci/good-comment.png">An example of a good comment</a></li>
+                        </ul>
+                    </div>
                 </div>
-                <div class="column is-6">
-                    {{template "form_submit" .Form}}
+                <div class="cell">
+                    <div class="box has-background-radio-secondary-1 is-fullheight">
+                        {{template "form_submit" .Form}}
+                    </div>
                 </div>
             </div>
-            <p class="has-text-centered">There are currently {{.Stats.CurrentPending}} pending tracks awaiting approval.</p>
-            <hr>
-            <div class="columns">
-                <div class="column is-6">
+            <div class="box has-background-radio-secondary-1 has-text-centered">There are currently {{.Stats.CurrentPending}} pending tracks awaiting approval.</div>
+            <div class="grid">
+                <div class="box has-background-radio-secondary-1 cell">
                     <div class="content has-text-success has-text-centered">
                         <h2>Accepts</h2>            
                         <br>
@@ -61,7 +64,7 @@
                         {{end}}
                     </div>
                 </div>
-                <div class="column is-6">
+                <div class="box has-background-radio-secondary-1 cell">
                     <div class="content has-text-danger has-text-centered">
                         <h2>Declines</h2>
                         <br>

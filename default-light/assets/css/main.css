@@ -58,6 +58,14 @@
     flex: 0 !important;
 }
 
+.has-background-radio-secondary-1 {
+    background-color: hsl(var(--bulma-scheme-h), var(--bulma-scheme-s), var(--bulma-scheme-main-ter-l));
+}
+
+.disable-border-radius {
+    border-radius: 0 !important;
+}
+
 .caret {
     width: 0;
     height: 0;
@@ -105,7 +113,7 @@ article a {
 }
 
 .on-hover-darken:hover {
-    filter: brightness(0.9);
+    filter: brightness(0.85);
 }
 
 .word-break-ellipsis {
@@ -198,6 +206,19 @@ article a {
     background-color: initial !important;
 }
 
+.disable-border {
+    border: none !important;
+}
+
+.disable-message-border {
+    border-left: none !important;
+}
+
+.content-border-top-light {
+    border-top: 2px solid rgba(0, 0, 0, .1);
+    border-radius: 0px 0px 4px 4px;
+  }
+
 #radio-logo:hover {
     background-color: initial;
 }
@@ -275,3 +296,7 @@ article a {
 .schedule-tile {
     word-wrap: anywhere;
 }
+
+.progress {
+    --bulma-progress-border-radius: 4px !important;
+  }
