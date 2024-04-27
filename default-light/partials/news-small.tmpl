@@ -7,11 +7,10 @@
                 <span style="text-decoration:none;">{{.User.Username}}</span>
             </div>
         </a>
-        <div class="message-header has-background-radio-secondary-1 m-0 pb-0 pr-2 pt-2 pl-0">
-            <span class="has-text-left"></span>
-            <time datetime="{{.CreatedAt.Unix}}" data-type="absolute">{{.CreatedAt | AbsoluteDate}}</time>
+        <div class="message-body has-background-radio-secondary-1 disable-message-border pt-2">
+            <strong><time class="is-inline-block is-fullwidth has-text-right" datetime="{{.CreatedAt.Unix}}" data-type="absolute">{{.CreatedAt | AbsoluteDate}}</time></strong>
+            {{.Header}}
         </div>
-        <div class="message-body has-background-radio-secondary-1 disable-message-border pt-2">{{.Header}}</div>
     </article>
 </div>
 {{end}}
@@ -25,11 +24,10 @@
             </a>
             <span>~{{.User.Username}}</span>
         </div>
-        <div class="message-header has-background-radio-secondary-1 m-0 pb-0 pr-2 pt-2 pl-0">
-            <span class="has-text-left"></span>
-            <time datetime="{{.CreatedAt.Unix}}" data-type="absolute">{{.CreatedAt | AbsoluteDate}}</time>
+        <div class="message-body has-background-radio-secondary-1 disable-message-border pt-2">
+            <strong><time class="is-inline-block is-fullwidth has-text-right" datetime="{{.CreatedAt.Unix}}" data-type="absolute">{{.CreatedAt | AbsoluteDate}}</time></strong>
+            {{.Header}}
         </div>
-        <div class="message-body has-background-radio-secondary-1 pt-0 disable-message-border">{{.Header}}</div>
     </article>
 </div>
 {{end}}
