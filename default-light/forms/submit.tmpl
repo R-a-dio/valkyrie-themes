@@ -14,7 +14,7 @@
             <input class="block input" type="file" name="track">
             <p>Upload a song to the R/a/dio database. We accept both MP3 (30MB max) and FLAC (90MB max).</p>
         </div>
-        <progress id="submit-progress" class="htmx-indicator progress" value="0" max="100"></progress>
+        <progress id="submit-progress" class="htmx-indicator progress mt-2" value="0" max="100"></progress>
     </div>
     <div class="field my-4">
         <div class="control">
@@ -41,7 +41,7 @@
             {{end}}
             <input class="input" type="text" name="daypass" placeholder="Daypass" {{with .Daypass}}value="{{.}}"{{end}}>
         </div>
-        <p>Enter the daypass and you can have unlimited uploads until midnight, UTC. Ask <a class="on-hover-darken" href="/staff#staff" hx-boost="true" hx-push-url="true" hx-target="#content">staff</a> in IRC for it (<a href="https://static.r-a-d.io/exci/daypass-guide.webm">guide</a>). USE WITH DISCRETION.
+        <p>Enter the daypass and you can have unlimited uploads until midnight, UTC. Ask <a class="on-hover-darken" href="/staff#staff">staff</a> in IRC for it (<a href="https://static.r-a-d.io/exci/daypass-guide.webm">guide</a>). USE WITH DISCRETION.
 Uploading full soundtracks or albums without asking for a daypass will probably end in everything being declined.</p>
     </div>
     <div class="field my-4">

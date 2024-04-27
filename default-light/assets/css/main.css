@@ -300,3 +300,10 @@ article a {
 .progress {
     --bulma-progress-border-radius: 4px !important;
   }
+
+  a.navbar-item:focus,
+  a.navbar-item:focus-within,
+  .navbar-link:focus,
+  .navbar-link:focus-within {
+    background-color: initial;
+  }
