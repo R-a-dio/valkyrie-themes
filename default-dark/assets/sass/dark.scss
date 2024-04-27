@@ -34,6 +34,8 @@
 
   --bulma-block-spacing: 0.75rem;
 
+  --bulma-card-shadow: hsl(0, 0%, 0%);
+
 
 
   .cell,
@@ -214,7 +216,7 @@
   }
 
   .content-border-top {
-    border-top: 2px solid var(--radio-primary-3);
+    border-top: 2px solid var(--radio-primary-3) !important;
     border-radius: 0px 0px 4px 4px;
   }
 
@@ -252,3 +254,12 @@
 .message, .message-header {
   color: var(--text-primary);
 }
+
+.message a {
+  color: var(--blue) !important;
+  text-decoration: none !important;
+}
+
+.card {
+  box-shadow: none !important;
+} 
