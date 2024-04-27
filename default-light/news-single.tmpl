@@ -43,13 +43,13 @@
     </div>
     <div class="column is-8 m-0 p-0">
         {{range $comment := .}}
-        <div id="{{.ID}}" class="column block message has-background-radio-secondary-1 mb-4">
+        <div id="{{.ID}}" class="column block has-background-radio-secondary-1 mb-4">
             <div class="columns is-flex-mobile">
                 <div class="column is-narrow pb-0 ml-2">{{with .User}}{{.Username}}{{else}}Anonymous ({{.Identifier}}){{end}} #{{.ID}}</div>
                 <div class="column is-hidden-mobile"></div>
                 <div class="column is-narrow pb-0 mr-2" style="text-align:end">{{.CreatedAt | AbsoluteDate}}</div>
             </div>
-            <div class="block has-background-radio-primary-2 message-body disable-message-border">
+            <div class="block has-background-radio-primary-2 content-border-top-light disable-border-radius">
                 <div class="p-4">
                     {{.Body}}
                 </div>
