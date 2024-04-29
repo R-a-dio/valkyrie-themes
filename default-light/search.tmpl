@@ -5,27 +5,58 @@
             <div class="title has-text-centered mb-6 is-hidden-mobile">
                 <h3>Search & Request</h3>
             </div>
+            <p class="has-text-centered">Search for something! You can click on the songs to show some additional information.</p>
             <div class="columns is-centered mb-5">
                 <form action="/search" class="column is-8 control is-flex" hx-boost="true" hx-push-url="true" hx-target="#search-content" hx-select="#search-content">
                     <input class="input" type="text" name="q" placeholder="Search" value="{{.Query}}" hx-get="/search" hx-target="#search-content" hx-select="#search-content" hx-trigger="keyup changed delay:500ms">
                 </form>
             </div>
             <div id="search-content">
-                {{if len .Songs}}
-                {{template "search-header"}}
-                {{template "pagination" .Page}}
-                {{else}}
                 <div class="block has-text-centered is-size-5">
-                    <p>Search for something! You can click on the songs to show some additional information.</p>
                     {{if eq .RequestCooldown 0}}
                     <p>The request cooldown is one hour. You are currently not on cooldown!</p>
                     {{else}}
                     <p>The request cooldown is one hour. You can request again <time datetime="{{(.Now.Add .RequestCooldown).Unix}}">{{.RequestCooldown | PrettyDuration}}</time>.</p>
                     {{end}}
                 </div>
+                {{if len .Songs}}
+                    {{template "pagination" .Page}}
                 {{end}}
+
                 <div class="fixed-grid has-1-cols">
-                    {{template "search-results" .Songs}}
+                    {{block "search-results" .Songs}}
+                    <div class="grid">
+                        {{with .}}{{range .}}
+                        <div class="cell song-info" onclick=toggleDropdown(this)>
+                            <div class="fixed-grid has-12-cols">
+                                <div class="grid">
+                                    <div class="cell is-col-span-11 has-background-radio-secondary-1 is-align-content-center has-text-centered p-4">{{.Metadata}}</div>
+                                    <div class="cell is-col-span-1 has-background-radio-secondary-1 is-align-content-center p-4">
+                                        <form method="POST" action="/v1/request?trackid={{.TrackID}}" hx-post="/v1/request?trackid={{.TrackID}}">
+                                            {{block "request-response" .}}
+                                            {{$buttonText := "Request"}}
+                                            {{if HasField . "Error"}}
+                                                {{if .Error}}
+                                                    {{$buttonText = .Error}}
+                                                {{else}}
+                                                    {{$buttonText = .Message}}
+                                                {{end}}
+                                            {{end}}
+                                            {{if not .Requestable}}
+                                            <button type="submit" class="button is-danger" name="id" value="{{.TrackID}}" onclick=event.stopPropagation() disabled>{{$buttonText}}</button>
+                                            {{else}}
+                                            <button type="submit" class="button is-primary" name="id" value="{{.TrackID}}" onclick=event.stopPropagation()>{{$buttonText}}</button>
+                                            {{end}}
+                                            {{end}}
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {{template "song-info-extra" .}}
+                        {{end}}{{end}}
+                    </div>
+                    {{end}}
                 </div>
                 {{if gt (len .Songs) 10 }}
                 {{template "pagination" .Page}}
@@ -34,32 +65,6 @@
         </div>
     </div>
 </section>
-{{end}}
-
-{{define "search-results"}}
-<div class="grid">
-    {{with .}}
-    {{range .}}
-    <div class="cell song-info" onclick=toggleDropdown(this)>
-        <div class="fixed-grid has-12-cols">
-            <div class="grid">
-                <div class="cell is-col-span-11 has-background-radio-secondary-1 is-align-content-center has-text-centered p-4">{{.Metadata}}</div>
-                <div class="cell is-col-span-1 has-background-radio-secondary-1 is-align-content-center p-4">
-                    <form method="POST" action="/request/{{.TrackID}}" hx-post="/request/{{.TrackID}}">
-                        {{if not .Requestable}}
-                        <button type="submit" class="button is-danger" name="id" value="{{.TrackID}}" onclick=event.stopPropagation() disabled>Request</button>
-                        {{else}}
-                        <button type="submit" class="button is-primary" name="id" value="{{.TrackID}}" onclick=event.stopPropagation()>Request</button>
-                        {{end}}
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-    {{template "song-info-extra" .}}
-    {{end}}
-    {{end}}
-</div>
 {{end}}
 
 {{define "search-header"}}
@@ -78,12 +83,8 @@
     <div class="columns is-vcentered">
         <div class="column">{{.Metadata}}</div>
         <div class="column is-narrow">
-            <form method="POST" action="/request/{{.TrackID}}" hx-post="/request/{{.TrackID}}">
-                {{if not .Requestable}}
-                <button type="submit" class="button is-danger" name="id" value="{{.TrackID}}" disabled>Request</button>
-                {{else}}
-                <button type="submit" class="button is-primary" name="id" value="{{.TrackID}}">Request</button>
-                {{end}}
+            <form method="POST" action="/v1/request?trackid={{.TrackID}}" hx-post="/v1/request?trackid={{.TrackID}}">
+                {{template "request-response" .}}
             </form>
         </div>
     </div>
