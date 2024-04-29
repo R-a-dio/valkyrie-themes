@@ -7,33 +7,19 @@ import (
 	"testing"
 
 	"github.com/R-a-dio/valkyrie/templates"
-	v1 "github.com/R-a-dio/valkyrie/website/api/v1"
-	"github.com/R-a-dio/valkyrie/website/public"
+	"github.com/R-a-dio/valkyrie/website/admin"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
 
-var publicInputs = []templates.TemplateSelectable{
-	public.HomeInput{},
-	public.ChatInput{},
-	public.LastPlayedInput{},
-	public.QueueInput{},
-	public.NewsInput{},
-	public.SubmitInput{},
-	public.SubmissionForm{},
-	public.FavesInput{},
-	public.ScheduleInput{},
-	public.StaffInput{},
-	public.SearchInput{},
-	v1.NowPlaying{},
-	v1.LastPlayed{},
-	v1.Queue{},
-	v1.SearchInput{},
-	v1.Listeners(0),
-	&v1.RequestInput{},
+var adminInputs = []templates.TemplateSelectable{
+	admin.HomeInput{},
+	admin.PendingInput{},
+	admin.SongsInput{},
+	admin.SongsForm{},
 }
 
-func TestPublicZeroInput(t *testing.T) {
+func TestAdminZeroInput(t *testing.T) {
 	tmpl, err := templates.FromDirectory(".")
 	require.NoError(t, err)
 	tmpl.Production = true
@@ -42,12 +28,12 @@ func TestPublicZeroInput(t *testing.T) {
 	req := httptest.NewRequest("GET", "/", nil)
 
 	for _, theme := range tmpl.ThemeNames() {
-		if strings.HasPrefix(theme, templates.ADMIN_PREFIX) {
+		if !strings.HasPrefix(theme, templates.ADMIN_PREFIX) {
 			continue
 		}
 		req = req.WithContext(templates.SetTheme(req.Context(), theme, true))
 		t.Run(theme, func(t *testing.T) {
-			for _, in := range publicInputs {
+			for _, in := range adminInputs {
 				t.Run(in.TemplateBundle(), func(t *testing.T) {
 					err := exec.Execute(io.Discard, req, in)
 					assert.NoError(t, err)

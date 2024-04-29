@@ -42,7 +42,9 @@
                                                     {{$buttonText = .Message}}
                                                 {{end}}
                                             {{end}}
-                                            {{if not .Requestable}}
+                                            {{if not .HasTrack}}
+                                            <button type="submit" class="button is-warning">Broken</button>
+                                            {{else if not .Requestable}}
                                             <button type="submit" class="button is-danger" name="id" value="{{.TrackID}}" onclick=event.stopPropagation() disabled>{{$buttonText}}</button>
                                             {{else}}
                                             <button type="submit" class="button is-primary" name="id" value="{{.TrackID}}" onclick=event.stopPropagation()>{{$buttonText}}</button>
