@@ -2,6 +2,7 @@
 <div class="pending-entry notification">
     <form class="{{if len .Errors}}is-warning {{end}}" method="post" hx-post="/admin/pending" hx-swap="outerHTML swap:1s">
         <input class="is-hidden" type="number" name="id" value="{{.ID}}">
+        {{.CSRFTokenInput}}
         <div class="columns is-desktop pending-controls">
             <div class="column py-1">
                 <span class="tag is-dark is-fullwidth py-1">{{.UserIdentifier}}</span>

@@ -3,6 +3,7 @@
     <div class="container">
         <div class="block">
             <form class="columns" method="post" hx-post="/admin/profile?new=user">
+                {{.CSRFTokenInput}}
                 <div class="column is-narrow">
                     <span class="has-text-weight-bold">Add a new user:</span>
                 </div>

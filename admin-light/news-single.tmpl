@@ -5,6 +5,7 @@
         <div class="notification is-info has-text-centered">This post has been deleted</div>
         {{end}}
         <form class="grid" autocomplete="off" hx-post="/admin/news/{{or .Raw.ID "new"}}" hx-target="#content">
+            {{.CSRFTokenInput}}
             {{block "news-post" .}}
             <div class="cell">
                 <input class="input" type="text" name="title" value="{{.Raw.Title}}"

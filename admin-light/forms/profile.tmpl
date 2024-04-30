@@ -1,5 +1,6 @@
 {{define "form_profile"}}
 <form hx-post="{{.FormAction}}" {{.FormType}}>
+    {{.CSRFTokenInput}}
 {{if .Errors}}
     <div class="notification is-warning">
         {{.Errors}}

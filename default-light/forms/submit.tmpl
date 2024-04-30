@@ -1,5 +1,6 @@
 {{define "form_submit"}}
 <form id="submit" class="is-fullheight is-align-content-space-evenly" method="post" enctype="multipart/form-data" hx-encoding="multipart/form-data" hx-post="/submit" hx-swap="outerHTML">
+    {{.CSRFTokenInput}}
     {{if .Success}}
     <div class="notification is-success">Thank you for your upload</div>
     {{end}}
