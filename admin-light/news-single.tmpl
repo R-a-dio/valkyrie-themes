@@ -1,6 +1,9 @@
 {{define "content"}}
 <section class="section">
     <div class="content fixed-grid">
+        {{if .Raw.DeletedAt}}
+        <div class="notification is-info has-text-centered">This post has been deleted</div>
+        {{end}}
         <form class="grid" autocomplete="off" hx-post="/admin/news/{{or .Raw.ID "new"}}" hx-target="#content">
             {{block "news-post" .}}
             <div class="cell">
@@ -74,7 +77,7 @@
             </div>
             <div class="cell">
                 {{if not .IsNew}}
-                <button class="button is-pulled-right is-danger" type="submit" name="action" value="delete">Delete</button>
+                <button class="button is-pulled-right is-danger" type="submit" name="action" value="delete">{{if .Raw.DeletedAt}}Undelete{{else}}Delete{{end}}</button>
                 {{end}}
             </div>
             {{end}}
