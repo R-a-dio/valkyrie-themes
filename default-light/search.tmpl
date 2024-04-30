@@ -34,7 +34,8 @@
                                     <div class="cell is-col-span-1 has-background-radio-secondary-1 is-align-content-center p-4">
                                     {{block "request-form" SongPair . $}}
                                         <form method="POST" action="/v1/request?trackid={{.TrackID}}&q={{.Data.Query}}&page={{.Data.Page.Nr}}"
-                                            hx-post="/v1/request?trackid={{.TrackID}}&q={{.Data.Query}}&page={{.Data.Page.Nr}}">
+                                            hx-post="/v1/request?trackid={{.TrackID}}&q={{.Data.Query}}&page={{.Data.Page.Nr}}"
+                                            hx-target="#content">
                                             {{.Data.CSRFTokenInput}}
                                             {{if not .HasTrack}}
                                                 <button type="submit" class="button is-warning">Broken</button>
