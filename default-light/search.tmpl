@@ -25,41 +25,33 @@
                 {{end}}
 
                 <div class="fixed-grid has-1-cols">
-                    {{block "search-results" .Songs}}
                     <div class="grid">
-                        {{with .}}{{range .}}
+                        {{range .Songs}}
                         <div class="cell song-info" onclick=toggleDropdown(this)>
                             <div class="fixed-grid has-12-cols">
                                 <div class="grid">
                                     <div class="cell is-col-span-11 has-background-radio-secondary-1 is-align-content-center has-text-centered p-4">{{.Metadata}}</div>
                                     <div class="cell is-col-span-1 has-background-radio-secondary-1 is-align-content-center p-4">
-                                        <form method="POST" action="/v1/request?trackid={{.TrackID}}" hx-post="/v1/request?trackid={{.TrackID}}">
-                                            {{block "request-response" .}}
-                                            {{$buttonText := "Request"}}
-                                            {{if HasField . "Error"}}
-                                                {{if .Error}}
-                                                    {{$buttonText = .Error}}
-                                                {{else}}
-                                                    {{$buttonText = .Message}}
-                                                {{end}}
-                                            {{end}}
+                                    {{block "request-form" SongPair . $}}
+                                        <form method="POST" action="/v1/request?trackid={{.TrackID}}&q={{.Data.Query}}&page={{.Data.Page.Nr}}"
+                                            hx-post="/v1/request?trackid={{.TrackID}}&q={{.Data.Query}}&page={{.Data.Page.Nr}}">
+                                            {{.Data.CSRFTokenInput}}
                                             {{if not .HasTrack}}
-                                            <button type="submit" class="button is-warning">Broken</button>
-                                            {{else if not .Requestable}}
-                                            <button type="submit" class="button is-danger" name="id" value="{{.TrackID}}" onclick=event.stopPropagation() disabled>{{$buttonText}}</button>
+                                                <button type="submit" class="button is-warning">Broken</button>
+                                            {{else if and .Data.CanRequest .Requestable}}
+                                                <button type="submit" class="button is-primary" name="id" value="{{.TrackID}}" onclick=event.stopPropagation()>Request</button>
                                             {{else}}
-                                            <button type="submit" class="button is-primary" name="id" value="{{.TrackID}}" onclick=event.stopPropagation()>{{$buttonText}}</button>
-                                            {{end}}
+                                                <button type="submit" class="button is-danger" name="id" value="{{.TrackID}}" onclick=event.stopPropagation() disabled>Request</button>
                                             {{end}}
                                         </form>
+                                    {{end}}
                                     </div>
                                 </div>
                             </div>
                         </div>
                         {{template "song-info-extra" .}}
-                        {{end}}{{end}}
+                        {{end}}
                     </div>
-                    {{end}}
                 </div>
                 {{if gt (len .Songs) 10 }}
                 {{template "pagination" .Page}}
@@ -80,15 +72,13 @@
 {{end}}
 
 {{define "search-api"}}
-{{with .Result}}
+{{with .Songs}}
 <div id="search-bar-popup" class="box has-text-centered">
-    {{range .Songs}}
+    {{range .}}
     <div class="columns is-vcentered">
         <div class="column">{{.Metadata}}</div>
         <div class="column is-narrow">
-            <form method="POST" action="/v1/request?trackid={{.TrackID}}" hx-post="/v1/request?trackid={{.TrackID}}">
-                {{template "request-response" .}}
-            </form>
+            {{template "request-form" SongPair . $}}
         </div>
     </div>
     {{end}}
