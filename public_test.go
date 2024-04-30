@@ -30,7 +30,7 @@ var publicInputs = []templates.TemplateSelectable{
 	v1.Queue{},
 	v1.SearchInput{},
 	v1.Listeners(0),
-	&v1.RequestInput{},
+	v1.SearchInput{},
 }
 
 func TestPublicZeroInput(t *testing.T) {
