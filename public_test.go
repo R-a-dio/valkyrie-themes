@@ -48,7 +48,7 @@ func TestPublicZeroInput(t *testing.T) {
 		req = req.WithContext(templates.SetTheme(req.Context(), theme, true))
 		t.Run(theme, func(t *testing.T) {
 			for _, in := range publicInputs {
-				t.Run(in.TemplateBundle(), func(t *testing.T) {
+				t.Run(in.TemplateBundle()+"/"+in.TemplateName(), func(t *testing.T) {
 					err := exec.Execute(io.Discard, req, in)
 					assert.NoError(t, err)
 				})

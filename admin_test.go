@@ -17,6 +17,14 @@ var adminInputs = []templates.TemplateSelectable{
 	admin.PendingInput{},
 	admin.SongsInput{},
 	admin.SongsForm{},
+	admin.NewsInput{},
+	admin.NewsInputPost{},
+	admin.SelectedNewsMarkdown{Name: "body-render"},
+	admin.SelectedNewsMarkdown{Name: "header-render"},
+	admin.TitleNewsRender{},
+	admin.ProfileInput{},
+	admin.ProfileForm{},
+	admin.UsersInput{},
 }
 
 func TestAdminZeroInput(t *testing.T) {
@@ -27,14 +35,14 @@ func TestAdminZeroInput(t *testing.T) {
 	exec := tmpl.Executor()
 	req := httptest.NewRequest("GET", "/", nil)
 
-	for _, theme := range tmpl.ThemeNames() {
+	for _, theme := range tmpl.ThemeNamesAdmin() {
 		if !strings.HasPrefix(theme, templates.ADMIN_PREFIX) {
 			continue
 		}
 		req = req.WithContext(templates.SetTheme(req.Context(), theme, true))
 		t.Run(theme, func(t *testing.T) {
 			for _, in := range adminInputs {
-				t.Run(in.TemplateBundle(), func(t *testing.T) {
+				t.Run(in.TemplateBundle()+"/"+in.TemplateName(), func(t *testing.T) {
 					err := exec.Execute(io.Discard, req, in)
 					assert.NoError(t, err)
 				})
