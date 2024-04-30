@@ -1,0 +1,39 @@
+{{define "content"}}
+<section class="section">
+  <div class="content" hx-boost="true" hx-push-url="true" hx-target="#content">
+        <div class="container">
+            <a class="button is-info is-pulled-left" href="/admin/news/new">New Post</a>
+            <div class="title has-text-centered mb-6 is-hidden-mobile">
+                <h3>News Archive</h3>
+            </div>
+        </div>
+        <div id="news-content" class="container">
+            {{range $news := $.News}}
+                {{block "news-post-index" .}}
+                    <article class="message m-3 p-0">
+                        <a href="/admin/news/{{.Raw.ID}}">
+                            <div class="message-header columns has-background-radio-primary-2 on-hover-darken">
+                                <span class="column news-title">{{.Raw.Title}}</span>
+                                <span class="column">{{.Raw.CreatedAt | AbsoluteDate}}</span>
+                                <span style="column text-decoration:none;">{{.Raw.User.Username}}</span>
+                            </div>
+                        </a>
+                    </article>
+                {{end}}
+            {{end}}
+            {{with .Page}}{{with .Next 1}}
+            <div id="news-scroll"
+                hx-push-url="false"
+                hx-trigger="intersect once"
+                hx-get="{{.URL}}"
+                hx-select="#news-content>div"
+                hx-target="#news-content"
+                hx-swap="beforeend"></div>
+            {{end}}{{end}}
+        </div>
+        <div class="is-hidden-with-js">
+            {{template "pagination" .Page}}
+        </div>
+    </div>
+</section>
+{{end}}

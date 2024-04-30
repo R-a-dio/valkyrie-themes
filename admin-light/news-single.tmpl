@@ -1,0 +1,84 @@
+{{define "content"}}
+<section class="section">
+    <div class="content fixed-grid">
+        <form class="grid" autocomplete="off" hx-post="/admin/news/{{or .Raw.ID "new"}}" hx-target="#content">
+            {{block "news-post" .}}
+            <div class="cell">
+                <input class="input" type="text" name="title" value="{{.Raw.Title}}"
+                    hx-post="/admin/news/render?part=title&id={{or .Raw.ID "new"}}"
+                    hx-trigger="input changed delay:500ms"
+                    hx-target="#title-render">
+            </div>
+            <div id="title-render" class="cell">
+                {{block "title-render" .Raw}}
+                <article class="message m-3 p-0">
+                    <a href="/admin/news/{{or .ID "new"}}">
+                        <div class="message-header columns has-background-radio-primary-2 on-hover-darken">
+                            <span class="column news-title">{{.Title}}</span>
+                            <span class="column">{{if not .CreatedAt.IsZero}}{{.CreatedAt | AbsoluteDate}}{{end}}</span>
+                            <span style="column text-decoration:none;">{{.User.Username}}</span>
+                        </div>
+                    </a>
+                </article>
+                {{end}}
+            </div>
+
+            <div class="cell">
+                <textarea class="textarea" name="header" placeholder="Header" cols="30" rows="10"
+                    hx-post="/admin/news/render?part=header"
+                    hx-trigger="input changed delay:500ms"
+                    hx-target="#header-render">{{.Header.Source}}</textarea>
+            </div>
+            <div id="header-render" class="cell">
+                {{block "header-render" .Header}}
+                {{if .HasHiddenHTML}}
+                <div class="notification is-danger">
+                    Your header contains HTML that is being removed by the markdown renderer.
+                </div>
+                {{end}}
+                <article class="message column is-12 disable-message-hover">
+                    <div class="message-body has-background-radio-secondary-1 disable-message-border">
+                    {{.Output}}
+                    </div>
+                </article>
+                {{end}}
+            </div>
+
+            <div class="cell">
+                <textarea class="textarea" name="body" placeholder="Body" cols="30" rows="20"
+                    hx-post="/admin/news/render?part=body"
+                    hx-trigger="input changed delay:500ms"
+                    hx-target="#body-render">{{.Body.Source}}</textarea>
+            </div>
+            <div id="body-render" class="cell">
+                {{block "body-render" .Body}}
+                {{if .HasHiddenHTML}}
+                <div class="notification is-danger">
+                    Your body contains HTML that is being removed by the markdown renderer.
+                </div>
+                {{end}}
+                <article class="message disable-message-hover">
+                    <div class="message-body has-background-radio-secondary-1 disable-message-border">
+                    {{.Output}}
+                    </div>
+                </article>
+                {{end}}
+            </div>
+
+            <div class="cell">
+                <button class="button is-info" type="submit" name="action" value="save">{{if .IsNew}}Create{{else}}Save Changes{{end}}</button>
+                <label class="checkbox">
+                    <input type="checkbox" name="private" {{if .Raw.Private}}checked{{end}}>
+                    Private
+                </label>
+            </div>
+            <div class="cell">
+                {{if not .IsNew}}
+                <button class="button is-pulled-right is-danger" type="submit" name="action" value="delete">Delete</button>
+                {{end}}
+            </div>
+            {{end}}
+        </form>
+    </div>
+</section>
+{{end}}
