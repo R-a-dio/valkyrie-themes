@@ -1,2 +1,17 @@
 @charset "utf-8";
-@use  "../../../bulma/versions/bulma-no-dark-mode.scss";
+@use "../../../bulma/versions/bulma-no-dark-mode.scss";
+
+.song-info:hover>.columns>.column,
+.song-info:hover>.fixed-grid>.grid>.cell {
+    background-color: var(--bulma-grey-lighter) !important;
+    transition: 0.125s all ease-in-out;
+}
+
+.pagination a.button:not(.is-current):not(.is-disabled):hover {
+    background-color: var(--bulma-grey-lighter) !important;
+    transition: 0.125s all ease-in-out;
+}
+
+input::placeholder {
+    color: var(--bulma-text-weak) !important;
+}

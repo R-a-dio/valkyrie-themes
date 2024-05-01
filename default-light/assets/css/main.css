@@ -58,6 +58,10 @@
     flex: 0 !important;
 }
 
+.is-half-height-minus-grid-gaps {
+    height: calc(50% - var(--bulma-grid-gap) / 2);
+}
+
 .has-background-radio-secondary-1 {
     background-color: hsl(var(--bulma-scheme-h), var(--bulma-scheme-s), var(--bulma-scheme-main-ter-l));
 }
@@ -165,11 +169,6 @@ article a {
     cursor: pointer;
 }
 
-.song-info:hover {
-    background-color: hsl(0, 0%, 90%) !important;
-    transition: 0.125s all ease-in-out;
-}
-
 .notification {
     padding: 1.25rem;
 }
@@ -212,6 +211,10 @@ article a {
 
 .disable-message-border {
     border-left: none !important;
+}
+
+.disable-link-color {
+    color: unset !important;
 }
 
 .content-border-top-light {
@@ -301,9 +304,10 @@ article a {
     --bulma-progress-border-radius: 4px !important;
   }
 
-  a.navbar-item:focus,
-  a.navbar-item:focus-within,
-  .navbar-link:focus,
-  .navbar-link:focus-within {
+  a.navbar-item:focus, a.navbar-item:focus-within, .navbar-link:focus, .navbar-link:focus-within {
     background-color: initial;
-  }
+}
+
+button.is-danger, button.is-info, button.is-primary, button.is-request, button.is-success, button.is-warning {
+    border: 1px solid hsla(0, 0%, 0%, 0);
+}

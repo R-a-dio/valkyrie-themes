@@ -1,18 +1,22 @@
 @charset "utf-8";
-@use "../../../bulma/sass";
+@use  "../../../bulma/sass";
+@use 'sass:color';
 
 :root {
-  --text-primary: hsl(0, 0%, 47%);
+  --text-primary: hsl(0, 0%, 50%);
   --text-secondary: hsl(0, 0%, 96%);
+  --text-input: hsla(0, 0%, 50%);
+  --text-link: hsl(208, 27%, 50%);
+  --text-link-hover: var(--blue);
 
   --orange: hsl(14, 27%, 39%);
   --yellow: hsl(44, 27%, 39%);
   --green: hsl(153, 27%, 39%);
-  --turquoise: hsl(171, 27%, 39%);
+  --turquoise: hsl(171, 27%, 50%);
   --cyan: hsl(207, 27%, 39%);
   --blue: hsl(208, 27%, 39%);
   --purple: hsl(271, 27%, 39%);
-  --red: hsl(348, 27%, 39%);
+  --red: hsl(348, 27%, 50%);
 
   --radio-primary-1: hsl(0, 0%, 13%);
   --radio-primary-2: hsl(0, 0%, 16%);
@@ -89,6 +93,12 @@
     border-color: var(--radio-primary-3);
   }
 
+  button.is-danger:hover, button.is-info:hover, button.is-primary:hover, button.is-request:hover, button.is-success:hover, button.is-warning:hover {
+    border-color: hsla(0, 0%, 100%, 25%);
+    color: hsl(0, 0%, 80%) !important;
+    transition: .125s all ease-in-out;
+  }
+
   #options-button-dropdown .button {
     background-color: var(--radio-primary-1);
   }
@@ -103,10 +113,6 @@
     color: var(--text-secondary);
     background-color: var(--radio-primary-3);
     border-color: var(--radio-border);
-  }
-
-  .input::placeholder, .textarea::placeholder {
-    color: var(--text-primary);
   }
 
   .input:focus, .textarea:focus {
@@ -151,22 +157,47 @@
     background-color: initial;
   }
 
-  // generic elements,
+  // generic elements
+
+  a {
+    color: var(--text-link);
+  }
+
+  a:hover {
+    color: var(--text-link-hover);
+  }
 
   hr {
     background-color: var(--radio-primary-3) !important;
   }
 
-  // other elements,
+  input::placeholder, textarea::placeholder {
+    color: var(--text-input) !important;
+  }
 
-  .pagination-link,
+  // other elements
+
+  .pagination-link:not(.is-current),
   .pagination-next,
   .pagination-previous {
     background-color: var(--radio-primary-3);
   }
 
   .pagination-link.is-current {
+    background-color: var(--blue);
     border-color: var(--blue);
+    color: var(--text-secondary);
+  }
+
+  .pagination-link.is-current:hover {
+    filter: brightness(0.8);
+    transition: 0.125s all ease-in-out;
+  }
+
+  .pagination a.button:not(.is-current):not(.is-disabled):hover {
+    filter: brightness(0.8);
+    color: var(--text-secondary);
+    transition: 0.125s all ease-in-out;
   }
 
   #current-song-progress {
@@ -213,6 +244,7 @@
   .box {
     background-color: var(--radio-secondary-1);
     box-shadow: unset !important;
+    color: unset;
   }
 
   .content-border-top {
@@ -224,7 +256,15 @@
     border: 6px solid var(--radio-secondary-1);
   }
 
-  // colors
+  .title {
+    color: var(--text-primary);
+  }
+
+  .content h1, .content h2, .content h3, .content h4, .content h5, .content h6 {
+    color: unset;
+  }
+
+  // button colors
 
   .is-primary {
     color: var(--text-secondary);
@@ -239,6 +279,38 @@
   .is-danger {
     color: var(--text-secondary);
     background-color: var(--red);
+  }
+
+  .is-warning {
+    color: var(--text-secondary);
+    background-color: (--orange);
+  }
+
+  .is-success {
+    color: var(--text-secondary);
+    background-color: var(--turquoise);
+  }
+
+  // text colors
+
+  .has-text-primary {
+    color: var(--green) !important;
+  }
+
+  .has-text-info {
+    color: var(--blue) !important;
+  }
+
+  .has-text-danger {
+    color: var(--red) !important;
+  }
+
+  .has-text-warning {
+    color: var(--orange) !important;
+  }
+
+  .has-text-success {
+    color: var(--turquoise) !important;
   }
 }
 
