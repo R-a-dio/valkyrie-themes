@@ -13,9 +13,9 @@
             </div>
             {{end}}
             <div class="grid">
-                <div class="cell">
-                    <div class="box has-background-radio-secondary-1 is-fullheight">
-                        <p>
+                <div class="cell is-flex is-flex-direction-column">
+                    <div class="box has-background-radio-secondary-1 is-flex-1">
+                        <p class="has-text-centered">
     		    			<strong>Uploading</strong>
     		    		</p>
                         <ul>
@@ -25,8 +25,9 @@
                             <li>Please include as much information as possible in the comment field, especially source (name of the anime, VN, game). If there is no source work, please mention this.</li>
                             <li><a href="/help#song-submission-guidelines" hx-boost="true" hx-push-url="true" hx-target="#content">Why did my submission get declined?</a></li>
     		    		</ul>
-    		    		<p></p>
-    		    		<p>
+    		    	</div>
+                    <div class="box has-background-radio-secondary-1 is-flex-1">
+    		    		<p class="has-text-centered">
     		    			<strong>Tagging</strong>
     		    		</p>
                         <ul>
@@ -39,14 +40,14 @@
                     </div>
                 </div>
                 <div class="cell">
-                    <div class="box has-background-radio-secondary-1 is-fullheight">
+                    <div class="fixed-grid box is-fullheight has-1-cols has-background-radio-secondary-1">
                         {{template "form_submit" .Form}}
                     </div>
                 </div>
             </div>
             <div class="box has-background-radio-secondary-1 has-text-centered">There are currently {{.Stats.CurrentPending}} pending tracks awaiting approval.</div>
             <div class="grid">
-                <div class="box has-background-radio-secondary-1 cell">
+                <div class="cell box has-background-radio-secondary-1 mb-0">
                     <div class="content has-text-success has-text-centered">
                         <h2>Accepts</h2>            
                         <br>
@@ -64,7 +65,7 @@
                         {{end}}
                     </div>
                 </div>
-                <div class="box has-background-radio-secondary-1 cell">
+                <div class="cell box has-background-radio-secondary-1 mb-0">
                     <div class="content has-text-danger has-text-centered">
                         <h2>Declines</h2>
                         <br>

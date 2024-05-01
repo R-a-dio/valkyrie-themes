@@ -1,5 +1,5 @@
 {{define "form_submit"}}
-<form id="submit" class="is-fullheight is-align-content-space-evenly" method="post" enctype="multipart/form-data" hx-encoding="multipart/form-data" hx-post="/submit" hx-swap="outerHTML">
+<form id="submit" class="grid is-fullheight" method="post" enctype="multipart/form-data" hx-encoding="multipart/form-data" hx-post="/submit" hx-swap="outerHTML">
     {{.CSRFTokenInput}}
     {{if .Success}}
     <div class="notification is-success">Thank you for your upload</div>
@@ -7,7 +7,7 @@
     {{with .Errors.cooldown}}
     <div id="submit-cooldown" class="notification is-danger has-text-centered" hx-swap-oob="true">Your cooldown has not expired.</div>
     {{end}}
-    <div class="field my-4">
+    <div class="cell field">
         <div class="control">
             {{with .Errors.track}}
             <div class="notification is-danger">{{.}}</div>
@@ -17,7 +17,7 @@
         </div>
         <progress id="submit-progress" class="htmx-indicator progress mt-2" value="0" max="100"></progress>
     </div>
-    <div class="field my-4">
+    <div class="cell field">
         <div class="control">
             {{with .Errors.comment}}
             <div class="notification is-warning">{{.}}</div>
@@ -26,16 +26,16 @@
             <p>Add the source, artist and title if tags are missing, etc. </p>
         </div>
     </div>
-    <div class="field my-4">
-        <div class="block select">
-            <select>
+    <div class="cell field">
+        <div class="block select is-fullwidth">
+            <select class="is-fullwidth">
                 <option value="0">No replacement</option>
                 <option value="100">Test File</option>
             </select>
         </div>
         <p>Sometimes, songs in the database aren't up to snuff. If you have a good copy of a track listed here, select the track in the list and upload it! </p>
     </div>
-    <div class="field my-4">
+    <div class="cell field">
         <div class="block control">
             {{with .Errors.daypass}}
             <div class="notification is-warning">{{.}}</div>
@@ -45,9 +45,9 @@
         <p>Enter the daypass and you can have unlimited uploads until midnight, UTC. Ask <a class="on-hover-darken" href="/staff#staff">staff</a> in IRC for it (<a href="https://static.r-a-d.io/exci/daypass-guide.webm">guide</a>). USE WITH DISCRETION.
 Uploading full soundtracks or albums without asking for a daypass will probably end in everything being declined.</p>
     </div>
-    <div class="field my-4">
-        <div class="control">
-            <button class="button" type="submit">Upload Song</button>
+    <div class="cell field">
+        <div class="control is-fullwidth">
+            <button class="button is-fullwidth" type="submit">Upload Song</button>
         </div>
     </div>
 </form>

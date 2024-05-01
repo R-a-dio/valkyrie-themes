@@ -16,21 +16,23 @@
 {{end}}
 
 {{define "song"}}
-<div class="block song-info my-0 py-4">
-    <div class="columns is-flex-mobile">
-        <div class="column is-narrow is-hidden-mobile image is-64x64 is-square mr-2 lp-dj-image">
-            {{if .LastPlayedBy}}
-            {{with .LastPlayedBy}}
-            <img class="dj-image" src="/api/dj-image/{{.DJ.Image}}" />
-            <div class="dj-image-name-64">{{.DJ.Name}}</div>
-            {{end}}
-            {{else}}
-            <img class="dj-image" src="/assets/images/mystery-dj.png" />
-            <div class="dj-image-name-64">Unknown</div>
-            {{end}}
+<a href="/search?q={{.Metadata}}">
+    <div class="block song-info my-0 py-4">
+        <div class="columns is-flex-mobile">
+            <div class="column is-narrow is-hidden-mobile image is-64x64 is-square mr-2 lp-dj-image">
+                {{if .LastPlayedBy}}
+                {{with .LastPlayedBy}}
+                <img class="dj-image" src="/api/dj-image/{{.DJ.Image}}" />
+                <div class="dj-image-name-64">{{.DJ.Name}}</div>
+                {{end}}
+                {{else}}
+                <img class="dj-image" src="/assets/images/mystery-dj.png" />
+                <div class="dj-image-name-64">Unknown</div>
+                {{end}}
+            </div>
+            <div class="column has-background-radio-secondary-1 is-align-content-center has-text-centered">{{.Metadata}}</div>
+            <div class="column is-narrow has-background-radio-secondary-1 is-align-content-center has-text-centered ml-2"><time datetime="{{.LastPlayed.Unix}}" data-type="absolute">{{.LastPlayed | AbsoluteDate}}</time></div>
         </div>
-        <div class="column is-9 has-background-radio-secondary-1 is-align-content-center has-text-centered">{{.Metadata}}</div>
-        <time datetime="{{.LastPlayed.Unix}}" data-type="absolute" class="column has-background-radio-secondary-1 is-align-content-center has-text-centered ml-2">{{.LastPlayed | AbsoluteDate}}</time>
     </div>
-</div>
+</a>
 {{end}}
