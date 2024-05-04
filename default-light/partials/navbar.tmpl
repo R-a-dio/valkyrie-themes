@@ -19,8 +19,8 @@
                 <a class="navbar-item" href="/news">News</a>
                 <a class="navbar-item" href="/help">Help</a>
                 <a class="navbar-item" href="/irc">Chat</a>
-                <a class="navbar-item is-hidden-without-js" onclick="toggleSearchForm()">Search</a>
-                <a class="navbar-item is-hidden-with-js" href="/search">Search</a>
+                <a class="navbar-item is-hidden-without-js" onclick="toggleSearchForm()">Request</a>
+                <a class="navbar-item is-hidden-with-js" href="/search">Request</a>
                 <a class="navbar-item" href="/schedule">Schedule</a>
                 <a class="navbar-item" href="/last-played">Last Played</a>
                 <a class="navbar-item" href="/queue">Queue</a>
@@ -32,7 +32,7 @@
     </div>
 </nav>
 <form id="search-form" class="is-hidden m-4" method="GET" action="/search" accept-charset="UTF-8">
-    <input id="navbarinput" hx-push-url="false" hx-get="/v1/search" hx-trigger="input changed delay:250ms" hx-target="#search-bar" class="input" type="text" name="q" placeholder="Request Song" role="search" onblur=clearNavbarSearchValue(event)>
+    <input id="navbarinput" hx-push-url="false" hx-get="/v1/search" hx-trigger="input changed delay:125ms" hx-target="#search-bar" class="input" type="text" name="q" placeholder="Search" role="search" onblur=clearNavbarSearchValue(event)>
 </form>
 <div id="search-bar"></div>
 {{if .IsUser}}{{template "admin-navbar" .}}{{end}}
