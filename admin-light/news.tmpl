@@ -2,15 +2,17 @@
 <section class="section">
   <div class="content" hx-boost="true" hx-push-url="true" hx-target="#content">
         <div class="container">
-            <a class="button is-info is-pulled-left" href="/admin/news/new">New Post</a>
             <div class="title has-text-centered mb-6 is-hidden-mobile">
-                <h3>News Archive</h3>
+                <h3>News</h3>
             </div>
         </div>
         <div id="news-content" class="container">
+            <div class="columns mb-6">
+                <a class="button column is-info is-pulled-left" href="/admin/news/new">New Post</a>
+            </div>
             {{range $news := $.News}}
                 {{block "news-post-index" .}}
-                    <article class="message m-3 p-0">
+                    <article class="block message">
                         <a href="/admin/news/{{.Raw.ID}}">
                             {{$color := "has-background-radio-primary-2"}}
                             {{if .Raw.DeletedAt}}
@@ -18,10 +20,10 @@
                             {{else if .Raw.Private}}
                                 {{$color = "has-background-radio-primary-1"}}
                             {{end}}
-                            <div class="message-header columns {{$color}} on-hover-darken">
-                                <span class="column news-title">{{.Raw.Title}}</span>
-                                <span class="column">{{.Raw.CreatedAt | AbsoluteDate}}</span>
-                                <span style="column text-decoration:none;">{{.Raw.User.Username}}</span>
+                            <div class="block message-header columns on-hover-darken">
+                                <span class="column {{$color}} news-title">{{.Raw.Title}}</span>
+                                <span class="column {{$color}} is-narrow">{{.Raw.CreatedAt | AbsoluteDate}}</span>
+                                <span class="column {{$color}} is-narrow" style="text-decoration:none;">{{.Raw.User.Username}}</span>
                             </div>
                         </a>
                     </article>
