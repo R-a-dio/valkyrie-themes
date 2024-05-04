@@ -1,31 +1,33 @@
 {{define "content"}}
 <div class="container">
     <div class="section">
-        <div class="grid">
-            <div class="cell notification">
-                <p class="title">Daypass</p>
-                <p class="tag is-info">{{.Daypass}}</p>
-                <p class="is-size-7">Expires at midnight</p>
+        <div class="fixed-grid has-4-cols">
+            <div class="grid">
+                <div class="cell is-align-content-center has-text-centered notification">
+                    <p class="title">Daypass</p>
+                    <p class="tag is-info">{{.Daypass}}</p>
+                    <p class="is-size-7">Expires at midnight</p>
+                </div>
+                {{with .User}}
+                <div class="cell is-align-content-center has-text-centered notification">
+                    Welcome {{.Username}}.
+                </div>
+                {{end}}
+                {{if .CanKillStreamer}}
+                <div class="cell is-align-content-center notification">
+                    <button class="button is-fullwidth" hx-trigger="click" hx-post="/admin/api/streamer/stop" hx-confirm="Are you sure?">Kill Hanyuu-sama</button>
+                </div>
+                {{end}}
+                {{if .CanTemplateReload}}
+                {{block "template-reload" .TemplateReload}}
+                <div id="template-reload" class="cell is-align-content-center notification">
+                    <button class="button is-fullwidth" hx-target="#template-reload" hx-trigger="click" hx-post="/admin/api/website/reload-templates">Reload Templates</button>
+                    {{if .Reloaded}}Successfully reloaded templates{{else if .Error}}Failed to reload templates: {{.Error}}{{end}}
+                </div>
+                {{end}}
+                {{end}}
+                <div class="cell"></div>
             </div>
-            {{with .User}}
-            <div class="cell notification">
-                Welcome {{.Username}}.
-            </div>
-            {{end}}
-            {{if .CanKillStreamer}}
-            <div class="cell notification">
-                <button class="button" hx-trigger="click" hx-post="/admin/api/streamer/stop" hx-confirm="Are you sure?">Kill Hanyuu-sama</button>
-            </div>
-            {{end}}
-            {{if .CanTemplateReload}}
-            {{block "template-reload" .TemplateReload}}
-            <div id="template-reload" class="cell notification">
-                <button class="button" hx-target="#template-reload" hx-trigger="click" hx-post="/admin/api/website/reload-templates">Reload Templates</button>
-                {{if .Reloaded}}Successfully reloaded templates{{else if .Error}}Failed to reload templates: {{.Error}}{{end}}
-            </div>
-            {{end}}
-            {{end}}
-            <div class="cell"></div>
         </div>
     </div>
 </div>
