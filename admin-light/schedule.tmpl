@@ -8,13 +8,13 @@
             <div class="fixed-grid has-1-cols block">
                 <div class="grid">
                     {{range .Schedule}}
-                    <div class="cell ">
+                    <div class="cell">
                         <div class="fixed-grid has-12-cols">
                             <div class="grid">
                                 <div class="cell is-col-span-2 has-background-radio-secondary-1 is-align-content-center has-text-centered has-rounded-corners p-2">{{.Weekday}}</div>
                                 <div class="cell is-fullheight has-background-radio-secondary-1 is-col-span-2 is-align-content-center has-text-centered has-rounded-corners p-2">
                                     <select class="is-fullwidth has-text-centered p-4">
-                                        {{if ne .Owner nil}}<option value="{{.Owner.DJ.ID}}">{{.Owner.DJ.Name}}</option>{{else}}<option>Nobody</option>{{end}}
+                                        {{if ne .Owner nil}}<option value="{{.Owner.DJ.ID}}">{{.Owner.DJ.Name}}</option>{{else}}<option value="0">Nobody</option>{{end}}
                                         {{range $.AvailableDJs}}
                                         <option value="{{.DJ.ID}}">{{.DJ.Name}}</option>
                                         {{end}}
