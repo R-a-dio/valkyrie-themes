@@ -23,7 +23,7 @@
                         </div>
                         <div class="field has-addons dropdown-parent">
                                 <button class="button is-width-80"><a class="disable-link-color" href="/main">Direct Stream Link</a></button>
-                                <button class="button is-width-20 ml-3" style="font-weight: 900;" onclick=toggleDropdown(this)>⚙</button>
+                                <button class="button is-width-20 ml-3" style="font-weight: 900;" onclick="toggleDropdown(this)">⚙</button>
                                 <div id="options-button-dropdown" class="dropdown-container box is-hidden">
                                     <div class="p-0 mb-2"><button class="button is-fullwidth"><input id="stream-volume" class="is-fullwidth" type="range" min="0" max="100" step="1" value="80"></button></div>
                                     <div class="p-0 mb-2"><a href="/help#stream-help" hx-boost="true" hx-push-url="true" hx-target="#content"><button class="button is-fullwidth">Help</button></a></div>
@@ -59,9 +59,9 @@
 {{define "nowplaying"}}
 <h2 id="current-song">
     {{if gt (len .Song.Metadata) 35}}
-    <p id="metadata" class="title is-4 pb-3 has-text-centered" style="cursor:pointer;" onclick=toggleDropdown(this)>{{.Song.Metadata}}</p>
+    <p id="metadata" class="title is-4 pb-3 has-text-centered" style="cursor:pointer;" onclick="toggleDropdown(this)">{{.Song.Metadata}}</p>
     {{else}}
-    <p id="metadata" class="title is-3 mb-3 has-text-centered" style="cursor:pointer;" onclick=toggleDropdown(this)>{{.Song.Metadata}}</p>
+    <p id="metadata" class="title is-3 mb-3 has-text-centered" style="cursor:pointer;" onclick="toggleDropdown(this)">{{.Song.Metadata}}</p>
     {{end}}
     <p class="subtitle has-text-centered mb-4 is-hidden" style="font-size: 14px;">{{if .Song.DatabaseTrack}}{{.Song.Tags}}{{end}}</p>
 </h2>

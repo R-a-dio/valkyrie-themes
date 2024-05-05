@@ -29,7 +29,7 @@
             </div>
             <div class="pl-3 navbar-end is-hidden-touch" style="max-width:131px;">
                 <form class="my-auto" method="GET" action="/search" accept-charset="UTF-8">
-                    <input id="navbarinput" hx-push-url="false" hx-get="/v1/search" hx-trigger="input changed delay:250ms" hx-target="#search-bar" class="input" type="text" name="q" placeholder="Request Song" role="search" onblur=clearNavbarSearchValue(event) style="font-size: 0.95rem;">
+                    <input id="navbarinput" hx-push-url="false" hx-get="/v1/search" hx-trigger="input changed delay:250ms" hx-target="#search-bar" class="input" type="text" name="q" placeholder="Request Song" role="search" onblur="clearNavbarSearchValue(event)" style="font-size: 0.95rem;">
                 </form>
                 <div id="search-bar" style="position: absolute;"></div>
             </div>

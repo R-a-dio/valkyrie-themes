@@ -27,7 +27,7 @@
                 <div class="fixed-grid has-1-cols">
                     <div class="grid">
                         {{range .Songs}}
-                        <div class="cell song-info" onclick=toggleDropdown(this)>
+                        <div class="cell song-info" onclick="toggleDropdown(this)">
                             <div class="fixed-grid has-12-cols">
                                 <div class="grid">
                                     <div class="cell is-col-span-11 has-background-radio-secondary-1 is-align-content-center has-text-centered p-4">{{.Metadata}}</div>
@@ -40,9 +40,9 @@
                                             {{if not .HasTrack}}
                                                 <button type="submit" class="button is-warning">Broken</button>
                                             {{else if and .Data.CanRequest .Requestable}}
-                                                <button type="submit" class="button is-primary" name="id" value="{{.TrackID}}" onclick=event.stopPropagation()>Request</button>
+                                                <button type="submit" class="button is-primary" name="id" value="{{.TrackID}}" onclick="event.stopPropagation()">Request</button>
                                             {{else}}
-                                                <button type="submit" class="button is-danger" name="id" value="{{.TrackID}}" onclick=event.stopPropagation() disabled>Request</button>
+                                                <button type="submit" class="button is-danger" name="id" value="{{.TrackID}}" onclick="event.stopPropagation()" disabled>Request</button>
                                             {{end}}
                                         </form>
                                     {{end}}
