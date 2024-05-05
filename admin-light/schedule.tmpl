@@ -7,32 +7,30 @@
             </div>
             <div class="fixed-grid has-1-cols block">
                 <div class="grid">
-                    {{range $day := .Schedule}}
-                    {{template "day" $day}}
+                    {{range .Schedule}}
+                    <div class="cell ">
+                        <div class="fixed-grid has-12-cols">
+                            <div class="grid">
+                                <div class="cell is-col-span-2 has-background-radio-secondary-1 is-align-content-center has-text-centered has-rounded-corners p-2">{{.Weekday}}</div>
+                                <div class="cell is-fullheight has-background-radio-secondary-1 is-col-span-2 is-align-content-center has-text-centered has-rounded-corners p-2">
+                                    <select class="is-fullwidth has-text-centered p-4">
+                                        {{if ne .Owner nil}}<option value="{{.Owner.DJ.ID}}">{{.Owner.DJ.Name}}</option>{{else}}<option>Nobody</option>{{end}}
+                                        {{range $.AvailableDJs}}
+                                        <option value="{{.DJ.ID}}">{{.DJ.Name}}</option>
+                                        {{end}}
+                                    </select>
+                                </div>
+                                <form class="cell is-col-span-7 has-background-radio-secondary-1 is-align-content-center has-text-centered has-rounded-corners p-2" style="word-wrap:anywhere;">
+                                    <textarea class="textarea is-fullheight" rows="2" type="text" name="schedule-djtext" disabled>{{if .Owner}}{{.Owner.DJ.Text}}{{else}}{{.Text}}{{end}}</textarea>
+                                </form>
+                                <button class="cell button is-success">Submit</button>
+                            </div>
+                        </div>
+                    </div>
                     {{end}}
                 </div>
             </div>
         </div>
     </div>
 </section>
-{{end}}
-
-{{define "day"}}
-<div class="cell ">
-    <div class="fixed-grid has-12-cols">
-        <div class="grid">
-            <div class="cell is-col-span-2 has-background-radio-secondary-1 is-align-content-center has-text-centered has-rounded-corners p-2">{{.Weekday}}</div>
-            <div class="cell is-fullheight has-background-radio-secondary-1 is-col-span-2 is-align-content-center has-text-centered has-rounded-corners p-2">
-                <select class="is-fullwidth has-text-centered p-4">
-                    <!-- range djs -->
-                    <option>djman</option>
-                </select>
-            </div>
-            <form class="cell is-col-span-7 has-background-radio-secondary-1 is-align-content-center has-text-centered has-rounded-corners p-2" style="word-wrap:anywhere;">
-                <textarea class="textarea is-fullheight" rows="2" type="text" name="schedule-djtext">{{if .Owner}}{{.Owner.DJ.Text}}{{else}}{{.Text}}{{end}}</textarea>
-            </form>
-            <button class="cell button is-success">Submit</button>
-        </div>
-    </div>
-</div>
 {{end}}
