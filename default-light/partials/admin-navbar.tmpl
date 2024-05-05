@@ -1,25 +1,24 @@
 {{define "admin-navbar"}}
 <nav class="navbar is-fixed-bottom is-dark" role="navigation" hx-boost="true" hx-push-url="true" hx-target="#content">
-    <div class="navbar-brand">
-        <a class="navbar-item" href="/admin">
-            <img src="/assets/images/logotitle_2.png" alt="r/a/dio logo">
-        </a>
+    <div class="navbar-brand is-hidden-desktop">
         <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="admin-navbar" onclick="this.classList.toggle('is-active'); document.getElementById(this.dataset.target).classList.toggle('is-active')">
             <span aria-hidden="true"></span>
             <span aria-hidden="true"></span>
             <span aria-hidden="true"></span>
         </a>
     </div>
-    <div id="admin-navbar" class="navbar-menu">
-        <div class="navbar-start">
-            <a class="navbar-item" href="/admin">Home</a>
-            {{if .User.UserPermissions.Has "news"}}<a class="navbar-item" href="/admin/news">News</a>{{end}}
-            {{if .User.UserPermissions.Has "admin"}}<a class="navbar-item" href="/admin/queue">Queue</a>{{end}}
-            {{if .User.UserPermissions.Has "admin"}}<a class="navbar-item" href="/admin/schedule">Schedule</a>{{end}}
-            {{if .User.UserPermissions.Has "pending_view"}}<a class="navbar-item" href="/admin/pending">Pending</a>{{end}}
-            {{if .User.UserPermissions.Has "database_view"}}<a class="navbar-item" href="/admin/songs">Song Database</a>{{end}}
-            {{if .User.UserPermissions.Has "admin"}}<a class="navbar-item" href="/admin/users">Users</a>{{end}}
-            <a class="navbar-item" href="/admin/profile">Profile</a>
+    <div id="admin-navbar" class="navbar-menu is-justify-content-center">
+        <div class="navbar-container is-flex is-justify-content-space-evenly">
+            <div class="navbar-start">
+                <a class="navbar-item" href="/admin">Admin</a>
+                {{if .User.UserPermissions.Has "news"}}<a class="navbar-item" href="/admin/news">News</a>{{end}}
+                {{if .User.UserPermissions.Has "admin"}}<a class="navbar-item" href="/admin/queue">Queue</a>{{end}}
+                {{if .User.UserPermissions.Has "admin"}}<a class="navbar-item" href="/admin/schedule">Schedule</a>{{end}}
+                {{if .User.UserPermissions.Has "pending_view"}}<a class="navbar-item" href="/admin/pending">Pending</a>{{end}}
+                {{if .User.UserPermissions.Has "database_view"}}<a class="navbar-item" href="/admin/songs">Song Database</a>{{end}}
+                {{if .User.UserPermissions.Has "admin"}}<a class="navbar-item" href="/admin/users">Users</a>{{end}}
+                <a class="navbar-item" href="/admin/profile">Profile</a>
+            </div>
         </div>
     </div>
 </nav>

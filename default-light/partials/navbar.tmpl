@@ -11,7 +11,7 @@
         </a>
     </div>
     <div id="public-navbar" class="navbar-menu is-justify-content-center">
-        <div class="navbar-container is-flex is-justify-content-space-evenly">
+        <div class="navbar-container has-background-radio-primary-2 is-flex is-justify-content-space-evenly">
             <a id="radio-logo" class="navbar-item is-hidden-touch" href="/">
                 <img src="/assets/images/logotitle_2.png" alt="r/a/dio logo">
             </a>
@@ -27,9 +27,9 @@
                 <a class="navbar-item" href="/staff">Staff</a>
                 <a class="navbar-item" href="/submit">Submit</a>
             </div>
-            <div class="navbar-end is-hidden-touch">
-                <form class="is-flex is-width-90 my-auto" method="GET" action="/search" accept-charset="UTF-8">
-                    <input id="navbarinput" hx-push-url="false" hx-get="/v1/search" hx-trigger="input changed delay:250ms" hx-target="#search-bar" class="input" type="text" name="q" placeholder="Request Song" role="search" onblur=clearNavbarSearchValue(event)>
+            <div class="pl-3 navbar-end is-hidden-touch" style="max-width:131px;">
+                <form class="my-auto" method="GET" action="/search" accept-charset="UTF-8">
+                    <input id="navbarinput" hx-push-url="false" hx-get="/v1/search" hx-trigger="input changed delay:250ms" hx-target="#search-bar" class="input" type="text" name="q" placeholder="Request Song" role="search" onblur=clearNavbarSearchValue(event) style="font-size: 0.95rem;">
                 </form>
                 <div id="search-bar" style="position: absolute;"></div>
             </div>
