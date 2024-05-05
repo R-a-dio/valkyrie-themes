@@ -227,15 +227,15 @@ article a {
 }
 
 #search-bar-popup {
-    z-index: 99;
     position: absolute;
-    margin-left: 1rem;
-    margin-right: 1rem;
-    width: calc(100% - 2rem);
+    z-index: 99;
     transition: 0.125s all ease-in-out;
     max-height: 33vh;
+    min-width: 30rem;
     overflow: scroll;
     border: 2px solid hsl(0, 0%, 90%);
+    right: -0.125rem;
+    top: calc(3.25rem + 1rem)
 }
 
 @media screen and (max-width:1023px) {

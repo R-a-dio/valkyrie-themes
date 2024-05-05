@@ -1,10 +1,10 @@
 // Clear navbar search if it loses focus. There's probably a better way to do this.
 function clearNavbarSearchValue(event) {
     parent = document.getElementById("search-bar");
-    originalTarget = event.target;
+    originalTarget = event.originalTarget;
 
     document.getElementById("content").addEventListener("click", (e) => {
-        if (!parent.contains(e.target)) {
+        if (!parent.contains(e.explicitOriginalTarget)) {
             originalTarget.value = "";
             htmx.trigger(originalTarget, "input");
             document.body.removeEventListener("click", this, true);
@@ -52,9 +52,3 @@ htmx.onLoad((event) => {
         }
     }
 })
-
-function toggleSearchForm() {
-    search_form = document.getElementById("search-form");
-    search_form.classList.toggle("is-flex");
-    search_form.classList.toggle("is-hidden");
-}
