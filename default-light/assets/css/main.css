@@ -311,3 +311,7 @@ article a {
 button.is-danger, button.is-info, button.is-primary, button.is-request, button.is-success, button.is-warning {
     border: 1px solid hsla(0, 0%, 0%, 0);
 }
+
+.has-rounded-corners {
+    border-radius: 4px;
+}
