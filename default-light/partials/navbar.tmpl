@@ -27,6 +27,7 @@
                 <a class="navbar-item" href="/faves">Favorites</a>
                 <a class="navbar-item" href="/staff">Staff</a>
                 <a class="navbar-item" href="/submit">Submit</a>
+                {{if .IsUser}}<a class="navbar-item" href="/admin">Admin</a>{{end}}
             </div>
         </div>
     </div>
@@ -35,6 +36,6 @@
     <input id="navbarinput" hx-push-url="false" hx-get="/v1/search" hx-trigger="input changed delay:125ms" hx-target="#search-bar" class="input" type="text" name="q" placeholder="Search" role="search" onblur=clearNavbarSearchValue(event)>
 </form>
 <div id="search-bar"></div>
-{{if .IsUser}}{{template "admin-navbar" .}}{{end}}
+{{if and .IsUser (ge (len .RequestURL) 6) (eq (slice .RequestURL 0 6) "/admin")}}{{template "admin-navbar" .}}{{end}}
 {{end}}
 {{define "navbar"}}{{template "public-navbar" .}}{{end}}
