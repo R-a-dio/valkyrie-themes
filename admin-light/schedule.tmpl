@@ -22,9 +22,12 @@
     <div class="fixed-grid has-12-cols">
         <div class="grid">
             <div class="cell is-col-span-2 has-background-radio-secondary-1 is-align-content-center has-text-centered has-rounded-corners p-2">{{.Weekday}}</div>
-            <form class="cell is-fullheight has-background-radio-secondary-1 is-col-span-2 is-align-content-center has-text-centered has-rounded-corners p-2">
-                <input class="input is-fullheight" type="text" name="schedule-djname" value="{{if .Owner}}{{.Owner.DJ.Name}}{{else}}Nobody{{end}}"></input>
-            </form>
+            <div class="cell is-fullheight has-background-radio-secondary-1 is-col-span-2 is-align-content-center has-text-centered has-rounded-corners p-2">
+                <select class="is-fullwidth has-text-centered p-4">
+                    <!-- range djs -->
+                    <option>djman</option>
+                </select>
+            </div>
             <form class="cell is-col-span-7 has-background-radio-secondary-1 is-align-content-center has-text-centered has-rounded-corners p-2" style="word-wrap:anywhere;">
                 <textarea class="textarea is-fullheight" rows="2" type="text" name="schedule-djtext">{{if .Owner}}{{.Owner.DJ.Text}}{{else}}{{.Text}}{{end}}</textarea>
             </form>
