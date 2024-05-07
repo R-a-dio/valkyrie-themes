@@ -319,3 +319,7 @@ button.is-danger, button.is-info, button.is-primary, button.is-request, button.i
 .has-rounded-corners {
     border-radius: 4px;
 }
+
+.lp-meta:hover, .queue-meta:hover {
+    white-space: wrap !important;
+}

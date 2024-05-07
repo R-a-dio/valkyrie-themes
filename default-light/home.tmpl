@@ -1,7 +1,7 @@
 {{define "content"}}
 <section class="section" hx-ext="sse" sse-connect="/v1/sse">
     <div class="container">
-        <div id="np-container" class="columns is-vcentered">
+        <div class="columns is-vcentered">
             <div class="column is-narrow mr-6 is-hidden-touch">
                 <img src="/assets/images/logo_image_small.png" alt="R/a/dio">
             </div>
@@ -40,18 +40,22 @@
                 {{template "streamer" .Status.User}}
             </div>
         </div>
-        <div class="grid">
-            <div class="cell is-col-span-2-mobile" sse-swap="lastplayed">
-                {{template "lastplayed" .LastPlayed}}
-            </div>
-            <div class="cell is-col-span-2-mobile" sse-swap="queue">
-                {{template "queue" .Queue}}   
+        <div class="fixed-grid has-1-cols-mobile has-1-cols-tablet has-2-cols-desktop">
+            <div class="grid">
+                <div class="cell" sse-swap="lastplayed">
+                    {{template "lastplayed" .LastPlayed}}
+                </div>
+                <div class="cell" sse-swap="queue">
+                    {{template "queue" .Queue}}   
+                </div>
             </div>
         </div>
-        <div class="columns">
+        <div class="fixed-grid has-1-cols-mobile has-1-cols-tablet has-3-cols-desktop">
+            <div class="grid">
             {{range .News}}
             {{template "news-post-home" .}}
             {{end}}
+            </div>
         </div>
     </div>
 </section>
@@ -79,32 +83,36 @@
     Listeners: <span id="listener-count">{{.}}</span>
 {{end}}
 {{define "lastplayed"}}
-<p class="title is-4 has-text-centered">Last Played</p>
-<div class="notification">
-    <ul id="lastplayed">
+<p class="title is-4 has-text-centered is-hidden-touch">Last Played</p>
+<div class="notification fixed-grid has-1-cols">
+    <ul id="lastplayed" class="grid">
         {{range $song := .}}
-        <li class="lp-item columns is-mobile is-vcentered word-break-ellipsis">
-            <time datetime="{{$song.LastPlayed.Unix}}" class="lp-time column is-4 has-text-left">{{Until $song.LastPlayed | PrettyDuration}}</time>
-            <span class="lp-meta column is-8 has-text-centered">{{$song.Metadata}}</span>
-        </li>
+        <div class="cell" style="overflow:hidden;white-space:nowrap;">
+            <li class="lp-item columns is-mobile is-vcentered">
+                <time datetime="{{$song.LastPlayed.Unix}}" class="lp-time column is-4 has-text-left">{{Until $song.LastPlayed | PrettyDuration}}</time>
+                <span class="lp-meta column is-8 has-text-centered">{{$song.Metadata}}</span>
+            </li>
+        </div>
         {{end}}
     </ul>
 </div>
 {{end}}
 {{define "queue"}}
-<p class="title is-4 has-text-centered">Queue</p>
-<div class="notification">
-    <ul id="queue">
+<p class="title is-4 has-text-centered is-hidden-touch">Queue</p>
+<div class="notification fixed-grid has-1-cols">
+    <ul id="queue" class="grid">
         {{range $song := .}}
-        <li class="columns is-mobile is-vcentered word-break-ellipsis">
-        {{if not $song.IsUserRequest}}
-        <span class="column is-8 has-text-centered">{{$song.Metadata}}</span>
-        <time datetime="{{$song.ExpectedStartTime.Unix}}" class="column is-4 has-text-right">{{Until $song.ExpectedStartTime | PrettyDuration}}</time>
-        {{else}}
-        <span class="column is-8 has-text-centered is-request">{{$song.Metadata}}</span>
-        <time datetime="{{$song.ExpectedStartTime.Unix}}" class="column is-4 has-text-right is-request">{{Until $song.ExpectedStartTime | PrettyDuration}}</time>
-        {{end}}
-        </li>
+        <div class="cell" style="overflow:hidden;white-space:nowrap;">
+            <li class="columns is-mobile is-vcentered">
+            {{if not $song.IsUserRequest}}
+            <span class="column queue-meta is-8 has-text-centered">{{$song.Metadata}}</span>
+            <time datetime="{{$song.ExpectedStartTime.Unix}}" class="column is-4 has-text-right">{{Until $song.ExpectedStartTime | PrettyDuration}}</time>
+            {{else}}
+            <span class="column queue-meta is-8 has-text-centered is-request">{{$song.Metadata}}</span>
+            <time datetime="{{$song.ExpectedStartTime.Unix}}" class="column is-4 has-text-right is-request">{{Until $song.ExpectedStartTime | PrettyDuration}}</time>
+            {{end}}
+            </li>
+        </div>
         {{end}}
     </ul>
 </div>
