@@ -31,6 +31,36 @@
         {{ block "content" . }}{{end}}
     {{end}}
     </div>
+{{template "preferences"}}
 </body>
 </html>
+{{end}}
+{{define "preferences"}}
+<div id="prefs-modal" class="modal">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+        <div id="preferences" class="block column fixed-grid has-background-radio-secondary-1">
+            <div class="grid">
+                <div class="cell is-col-span-2 tabs is-fullwidth">
+                    <ul>
+                      <li class="is-active"><a>Theme</a></li>
+                      <li><a>Something else</a></li>
+                    </ul>
+                </div>
+                <div id="preferences-theme-content" class="cell is-col-span-2">
+                    <div id="grid">
+                        <div class="cell is-col-span-2 has-text-centered mb-4">Click one the buttons below the select the site theme.</div>
+                        <div class="cell is-col-span-2">
+                            <div class="grid">
+                                <a class="cell" hx-boost="true" hx-push-url="false" href="/set-theme?theme=default-light"><button class="button is-fullwidth">Light</button></a>
+                                <a class="cell" hx-boost="true" hx-push-url="false" href="/set-theme?theme=default-dark"><button class="button is-fullwidth">Dark</button></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>        
+    </div>
+    <button class="modal-close is-large" aria-label="close"></button>
+  </div>
 {{end}}

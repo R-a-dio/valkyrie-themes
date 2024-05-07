@@ -22,37 +22,6 @@ function toggleOptionsDropdown() {
     document.getElementById("options-button-dropdown").classList.toggle("is-hidden");
 }
 
-function togglePreferences(event) {
-    preferences = document.getElementById("preferences");
-    np_container = document.getElementById("np-container");
-
-    event.target.parentElement.parentElement.parentElement.id === "options-button-dropdown" ? toggleOptionsDropdown() : {};
-
-    if (np_container) {
-        Array.from(np_container.children).forEach(child => {
-            if (child.id === "preferences") {
-                if (child.classList.contains("is-hidden")) {
-                    child.classList.toggle("is-hidden");
-                    setTimeout(() => {
-                        child.classList.toggle("is-scaleX-0");
-                        child.classList.toggle("is-scaleX-1");
-                    }, 125);
-                } else {
-                    child.classList.toggle("is-scaleX-0");
-                    child.classList.toggle("is-scaleX-1");
-                    setTimeout(() => {
-                        child.classList.toggle("is-hidden");
-                    }, 125);
-                }
-            } else {
-                setTimeout(() => {
-                    child.classList.toggle("is-hidden");
-                }, 125);
-            }
-        });
-    }
-}
-
 // Help page switch for mobiles & highlight for desktop
 function toggleHelpDisplay(button) {
     let target = htmx.find(window.location.hash);
@@ -102,3 +71,46 @@ function countNewsInputCharacters(event) {
         input1.value = input2.value;
     }
 }
+
+htmx.onLoad((event) => {
+    // Functions to open and close a modal
+    function openModal($el) {
+      $el.classList.add('is-active');
+    }
+  
+    function closeModal($el) {
+      $el.classList.remove('is-active');
+    }
+  
+    function closeAllModals() {
+      (document.querySelectorAll('.modal') || []).forEach(($modal) => {
+        closeModal($modal);
+      });
+    }
+  
+    // Add a click event on buttons to open a specific modal
+    (document.querySelectorAll('.js-modal-trigger') || []).forEach(($trigger) => {
+      const modal = $trigger.dataset.target;
+      const $target = document.getElementById(modal);
+  
+      $trigger.addEventListener('click', () => {
+        openModal($target);
+      });
+    });
+  
+    // Add a click event on various child elements to close the parent modal
+    (document.querySelectorAll('.modal-background, .modal-close, .modal-card-head .delete, .modal-card-foot .button') || []).forEach(($close) => {
+      const $target = $close.closest('.modal');
+  
+      $close.addEventListener('click', () => {
+        closeModal($target);
+      });
+    });
+  
+    // Add a keyboard event to close all modals
+    document.addEventListener('keydown', (event) => {
+      if(event.key === "Escape") {
+        closeAllModals();
+      }
+    });
+  });

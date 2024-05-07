@@ -74,14 +74,6 @@
     border-radius: 0 !important;
 }
 
-.is-scaleX-0 {
-    transform: scaleX(0);
-}
-
-.is-scaleX-1 {
-    transform: scaleX(1);
-}
-
 .caret {
     width: 0;
     height: 0;
@@ -326,8 +318,4 @@ button.is-danger, button.is-info, button.is-primary, button.is-request, button.i
 
 .has-rounded-corners {
     border-radius: 4px;
-}
-
-#preferences {
-    transition: 0.125s all ease-in-out;
 }
