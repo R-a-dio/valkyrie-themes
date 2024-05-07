@@ -87,7 +87,7 @@
 <div class="notification fixed-grid has-1-cols">
     <ul id="lastplayed" class="grid">
         {{range $song := .}}
-        <div class="cell" style="overflow:hidden;white-space:nowrap;">
+        <div class="cell is-align-content-center" style="overflow:hidden;white-space:nowrap;">
             <li class="lp-item columns is-mobile is-vcentered">
                 <time datetime="{{$song.LastPlayed.Unix}}" class="lp-time column is-4 has-text-left">{{Until $song.LastPlayed | PrettyDuration}}</time>
                 <span class="lp-meta column is-8 has-text-centered">{{$song.Metadata}}</span>
@@ -102,7 +102,7 @@
 <div class="notification fixed-grid has-1-cols">
     <ul id="queue" class="grid">
         {{range $song := .}}
-        <div class="cell" style="overflow:hidden;white-space:nowrap;">
+        <div class="cell is-align-content-center" style="overflow:hidden;white-space:nowrap;">
             <li class="columns is-mobile is-vcentered">
             {{if not $song.IsUserRequest}}
             <span class="column queue-meta is-8 has-text-centered">{{$song.Metadata}}</span>
