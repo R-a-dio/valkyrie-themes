@@ -46,9 +46,28 @@ function showHighlightAnimation(target, button) {
 // Needed to display the right help page for mobile users
 htmx.onLoad((event) => {
     url = window.location;
-    if (url.pathname === "/help" || url.pathname === "/staff") {
+    if (url.pathname.startsWith("/help") || url.pathname.startsWith("/staff")) {
         if (url.hash !== "") {
             toggleHelpDisplay()
         }
+    } else if (url.pathname.startsWith("/news")) {
+        counter1 = document.getElementById("news-comment-character-counter-1");
+        counter2 = document.getElementById("news-comment-character-counter-2");
+    
+        input1 = document.getElementById("news-comment-input-1");
+        input2 = document.getElementById("news-comment-input-2");
     }
 })
+
+function countNewsInputCharacters(event) {
+    target = event.target;
+
+    counter1.innerHTML = 500 - target.textLength;
+    counter2.innerHTML = 500 - target.textLength;
+
+    if (target === input1) {
+        input2.value = input1.value;
+    } else {
+        input1.value = input2.value;
+    }
+}

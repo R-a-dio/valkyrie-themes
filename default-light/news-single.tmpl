@@ -2,8 +2,9 @@
 <section class="section">
     <div class="container">
         <div class="content">
+            {{$user := .User}}
             {{template "news-post" .Post}}
-            {{template "news-comments" .Post.Comments}}
+            {{template "news-comments" .}}
         </div>
     </div>
 </section>
@@ -29,12 +30,12 @@
 {{define "news-comments"}}
 <div class="columns">
     <div class="column is-hidden-tablet has-background-radio-secondary-1 is-align-self-flex-start mb-4">
-        <textarea name="comment" rows="4" class="textarea mb-4" placeholder="Enter a comment..."></textarea>
+        <textarea id="news-comment-input-1" name="comment" rows="4" class="textarea mb-4" placeholder="Enter a comment..." onkeyup="countNewsInputCharacters(event)"></textarea>
         <div class="columns">
             <div class="column is-8 has-text-centered">
-                <p>Logged in (as $user)</p>
-                <p>Comments use markdown formatting ($link)</p>
-                <p>500 characters remaining.</p>
+                <p>{{if .User}}Logged in (as {{.User.Username}}){{else}}Not logged in{{end}}</p>
+                <p>Comments use markdown formatting (<a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet">guide</a>)</p>
+                <p><span id="news-comment-character-counter-1">500</span> characters remaining.</p>
             </div>
             <div class="column is-narrow is-flex is-align-self-flex-end">
                 <button class="submit button is-primary is-fullwidth">Submit</button>
@@ -42,7 +43,7 @@
         </div>
     </div>
     <div class="column is-8 m-0 p-0">
-        {{range $comment := .}}
+        {{range .Post.Comments}}
         <div id="{{.ID}}" class="column block has-background-radio-secondary-1 mb-4">
             <div class="columns is-flex-mobile">
                 <div class="column is-narrow pb-0 ml-2">{{with .User}}{{.Username}}{{else}}Anonymous ({{.Identifier}}){{end}} #{{.ID}}</div>
@@ -58,11 +59,11 @@
         {{end}}
     </div>
     <div class="column is-hidden-mobile has-background-radio-secondary-1 is-align-self-flex-start ml-4">
-        <textarea name="comment" rows="4" class="textarea mb-4" placeholder="Enter a comment..."></textarea>
+        <textarea id="news-comment-input-2" name="comment" rows="4" class="textarea mb-4" placeholder="Enter a comment..." onkeyup="countNewsInputCharacters(event)"></textarea>
         <button class="submit button is-primary" style="position:relative;float:right;">Submit</button>
-        <p>Logged in (as $user)</p>
-        <p>Comments use markdown formatting ($link)</p>
-        <p>500 characters remaining.</p>
+        <p>{{if .User}}Logged in (as {{.User.Username}}){{else}}Not logged in{{end}}</p>
+        <p>Comments use markdown formatting (<a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet">guide</a>)</p>
+        <p><span id="news-comment-character-counter-2">500</span> characters remaining.</p>
     </div>
 </div>
 {{end}}
