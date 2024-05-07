@@ -42,6 +42,10 @@
     width: 10%;
 }
 
+.is-width-0 {
+    width: 0% !important;
+}
+
 .is-flex-3 {
     flex: 3 !important;
 }
@@ -68,6 +72,14 @@
 
 .disable-border-radius {
     border-radius: 0 !important;
+}
+
+.is-scaleX-0 {
+    transform: scaleX(0);
+}
+
+.is-scaleX-1 {
+    transform: scaleX(1);
 }
 
 .caret {
@@ -314,4 +326,8 @@ button.is-danger, button.is-info, button.is-primary, button.is-request, button.i
 
 .has-rounded-corners {
     border-radius: 4px;
+}
+
+#preferences {
+    transition: 0.125s all ease-in-out;
 }

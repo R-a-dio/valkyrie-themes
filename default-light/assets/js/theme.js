@@ -22,6 +22,37 @@ function toggleOptionsDropdown() {
     document.getElementById("options-button-dropdown").classList.toggle("is-hidden");
 }
 
+function togglePreferences(event) {
+    preferences = document.getElementById("preferences");
+    np_container = document.getElementById("np-container");
+
+    event.target.parentElement.parentElement.parentElement.id === "options-button-dropdown" ? toggleOptionsDropdown() : {};
+
+    if (np_container) {
+        Array.from(np_container.children).forEach(child => {
+            if (child.id === "preferences") {
+                if (child.classList.contains("is-hidden")) {
+                    child.classList.toggle("is-hidden");
+                    setTimeout(() => {
+                        child.classList.toggle("is-scaleX-0");
+                        child.classList.toggle("is-scaleX-1");
+                    }, 125);
+                } else {
+                    child.classList.toggle("is-scaleX-0");
+                    child.classList.toggle("is-scaleX-1");
+                    setTimeout(() => {
+                        child.classList.toggle("is-hidden");
+                    }, 125);
+                }
+            } else {
+                setTimeout(() => {
+                    child.classList.toggle("is-hidden");
+                }, 125);
+            }
+        });
+    }
+}
+
 // Help page switch for mobiles & highlight for desktop
 function toggleHelpDisplay(button) {
     let target = htmx.find(window.location.hash);
