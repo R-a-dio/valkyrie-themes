@@ -1,0 +1,32 @@
+{{define "content"}}
+<section class="section">
+    <div class="container">
+        <h2 class="title has-text-centered">Listeners</h2>
+        <form hx-push-url="false" hx-target="#content">
+            {{.CSRFTokenInput}}
+            <table class="table is-striped is-bordered is-fullwidth is-hoverable">
+                <thead>
+                    <tr>
+                        <td>ID</td>
+                        <td>Duration</td>
+                        <td>User-Agent</td>
+                        <td>IP</td>
+                        <td></td>
+                    </tr>
+                </thead>
+                <tbody>
+                {{range .Listeners}}
+                <tr>
+                    <td>{{.ID}}</div>
+                    <td>{{Since .Start}}</div>
+                    <td>{{.UserAgent}}</div>
+                    <td>{{.IP}}</div>
+                    <td><button class="button" hx-post="/admin/tracker/remove?id={{.ID}}" hx-push-url="false">Kick</button></div>
+                </tr>
+                {{end}}
+                </tbody>
+            </form>
+        </div>
+    </div>
+</section>
+{{end}}
