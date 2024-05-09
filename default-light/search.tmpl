@@ -35,7 +35,8 @@
                                     {{block "request-form" SongPair . $}}
                                         <form method="POST" action="/v1/request?trackid={{.TrackID}}&q={{.Data.Query}}&page={{.Data.Page.Nr}}"
                                             hx-post="/v1/request?trackid={{.TrackID}}&q={{.Data.Query}}&page={{.Data.Page.Nr}}"
-                                            hx-target="#content">
+                                            hx-target="#content"
+                                            hx-push-url="false">
                                             {{.Data.CSRFTokenInput}}
                                             {{if not .HasTrack}}
                                                 <button type="submit" class="button is-warning">Broken</button>
