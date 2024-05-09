@@ -50,3 +50,13 @@ func TestAdminZeroInput(t *testing.T) {
 		})
 	}
 }
+
+func TestAdminCSRFTokenInput(t *testing.T) {
+	tmpl, err := templates.FromDirectory(".")
+	require.NoError(t, err)
+	tmpl.Production = true
+
+	exec := tmpl.Executor()
+
+	runCSRFTokenTest(t, tmpl.ThemeNamesAdmin(), exec, adminInputs)
+}
