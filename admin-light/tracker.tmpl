@@ -18,7 +18,7 @@
                 {{range .Listeners}}
                 <tr>
                     <td>{{.ID}}</div>
-                    <td>{{Since .Start}}</div>
+                    <td>{{Since .Start | HumanDuration}}</div>
                     <td>{{.UserAgent}}</div>
                     <td>{{.IP}}</div>
                     <td><button class="button" hx-post="/admin/tracker/remove?id={{.ID}}" hx-push-url="false">Kick</button></div>

@@ -68,7 +68,7 @@
                     <label class="label mt-2">LP/LR</label>
                 </div>
                 <div class="field-body">
-                    <span class="mt-2">{{.Song.LastPlayed | Since}} / {{.Song.LastRequested | Since}}</span>
+                    <span class="mt-2">{{.Song.LastPlayed | Since | HumanDuration}} / {{.Song.LastRequested | Since | HumanDuration}}</span>
                 </div>
             </div>
         </div>
