@@ -11,7 +11,7 @@
                         <td>Duration</td>
                         <td>User-Agent</td>
                         <td>IP</td>
-                        <td></td>
+                        {{if $.User.UserPermissions.Has "listener_kick"}}<td></td>{{end}}
                     </tr>
                 </thead>
                 <tbody>
@@ -21,7 +21,7 @@
                     <td>{{Since .Start | HumanDuration}}</div>
                     <td>{{.UserAgent}}</div>
                     <td>{{.IP}}</div>
-                    <td><button class="button" hx-post="/admin/tracker/remove?id={{.ID}}" hx-push-url="false">Kick</button></div>
+                    {{if $.User.UserPermissions.Has "listener_kick"}}<td><button class="button" hx-post="/admin/tracker/remove?id={{.ID}}" hx-push-url="false">Kick</button></div>{{end}}
                 </tr>
                 {{end}}
                 </tbody>
