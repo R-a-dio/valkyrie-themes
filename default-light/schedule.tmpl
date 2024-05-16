@@ -13,7 +13,9 @@
             <div class="fixed-grid has-1-cols-mobile block">
                 <div class="grid is-fullheight is-row-gap-5 is-column-gap-5">
                     {{range $day := .Schedule}}
+                    {{with .}}
                     {{template "day" $day}}
+                    {{end}}
                     {{end}}
                 </div>
             </div>
