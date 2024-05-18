@@ -11,8 +11,8 @@
                     <input class="submit button is-link ml-3" type="submit" value="Submit">
                 </form>
             </div>
-            {{template "search-header"}}
             {{template "pagination" .Page}}
+            {{template "search-header"}}
             {{template "search-results" .Faves}}
         </div>
     </div>
@@ -21,23 +21,21 @@
 
 {{define "search-results"}}
     {{with .}}
-        <div class="columns has-text-centered is-vcentered has-background-radio-secondary-1 song-info">
         {{range .}}
-            <div class="column">{{.Artist}} Some artist</div>
-            <div class="column">{{.Title}} Some song</div>
+        <div class="columns has-text-centered is-vcentered has-background-radio-secondary-1 song-info">
+            <div class="column">{{.Metadata}}</div>
             <div class="column">
                 <button class="submit button is-primary">Request</button>
             </div>
-        {{end}}
         </div>
+        {{end}}
     {{end}}
 {{end}}
 
 {{define "search-header"}}
 <div class="block has-text-centered is-hidden-mobile">
     <div class="columns is-vcentered mb-5">
-        <div class="column is-size-4">Artist</div>
-        <div class="column is-size-4">Title</div>
+        <div class="column is-size-4">Artist - Title</div>
         <div class="column is-size-4">Request</div>
     </div>
 </div>
