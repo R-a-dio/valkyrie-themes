@@ -30,7 +30,9 @@
         <div class="block select is-fullwidth">
             <select class="is-fullwidth">
                 <option value="0">No replacement</option>
-                <option value="100">Test File</option>
+                {{range .NeedReplacementList}}
+                <option value="{{.}}">{{.}} (Placeholder)</option>
+                {{end}}
             </select>
         </div>
         <p>Sometimes, songs in the database aren't up to snuff. If you have a good copy of a track listed here, select the track in the list and upload it! </p>
