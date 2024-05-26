@@ -1,9 +1,9 @@
 {{define "form_admin_songs"}}
 {{if and .Song .Song.HasTrack}}
-<form class="songs-entry notification {{if .Song.NeedReplacement}}is-warning{{end}}" method="post" hx-target="this" hx-post="/admin/songs" hx-swap="outerHTML swap:1s">
+<form class="songs-entry p-1 notification {{if .Song.NeedReplacement}}is-warning{{end}}" method="post" hx-target="this" hx-post="/admin/songs" hx-swap="outerHTML swap:1s">
     <input class="is-hidden" type="number" name="id" value="{{.Song.TrackID}}">
     {{.CSRFTokenInput}}
-    <div class="columns is-gapless">
+    <div class="columns is-gapless mb-2">
         <div class="column">
             <div class="field is-horizontal">
                 <div class="field-label">
