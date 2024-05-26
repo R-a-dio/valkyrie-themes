@@ -12,31 +12,38 @@
                 </form>
             </div>
             {{template "pagination" .Page}}
-            {{template "search-header"}}
-            {{template "search-results" .Faves}}
+            <div class="fixed-grid has-1-cols">
+                <div class="grid">
+                    <div class="cell">
+                        <div class="fixed-grid has-12-cols">
+                            <div class="grid">
+                                <div class="cell is-col-span-11 is-align-content-center has-text-centered">
+                                    Artist - Title
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {{template "search-results" .Faves}}
+                </div>
+            </div>
         </div>
     </div>
 </section>
 {{end}}
 
 {{define "search-results"}}
-    {{with .}}
-        {{range .}}
-        <div class="columns has-text-centered is-vcentered has-background-radio-secondary-1 song-info">
-            <div class="column">{{.Metadata}}</div>
-            <div class="column">
-                <button class="submit button is-primary">Request</button>
+    {{with .}}{{range .}}
+        <div class="cell">
+            <div class="fixed-grid has-12-cols">
+                <div class="grid">
+                    <div class="cell is-col-span-11 has-background-radio-secondary-1 is-align-content-center has-text-centered">
+                        {{.Metadata}}
+                    </div>
+                    <div class="cell is-col-span-1 is-align-content-center">
+                        <button class="submit button is-primary">Request</button>
+                    </div>
+                </div>
             </div>
         </div>
-        {{end}}
-    {{end}}
-{{end}}
-
-{{define "search-header"}}
-<div class="block has-text-centered is-hidden-mobile">
-    <div class="columns is-vcentered mb-5">
-        <div class="column is-size-4">Artist - Title</div>
-        <div class="column is-size-4">Request</div>
-    </div>
-</div>
+    {{end}}{{end}}
 {{end}}
