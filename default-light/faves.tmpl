@@ -31,21 +31,21 @@
                                         {{.Metadata}}
                                     </div>
                                     <div class="cell is-col-span-1 is-align-content-center">
+                                {{if .HasTrack}}
                                     {{block "request-form" SongPair . $}}
                                         <form method="POST" action="/v1/request?trackid={{.TrackID}}&nick={{.Data.Nickname}}&page={{.Data.Page.Nr}}"
                                             hx-post="/v1/request?trackid={{.TrackID}}&nick={{.Data.Nickname}}&page={{.Data.Page.Nr}}"
                                             hx-target="#content"
                                             hx-push-url="false">
                                             {{.Data.CSRFTokenInput}}
-                                            {{if not .HasTrack}}
-                                                {{/* no database track, don't show a button */}}
-                                            {{else if and .Data.CanRequest .Requestable}}
+                                            {{if and .Data.CanRequest .Requestable}}
                                                 <button type="submit" class="button is-primary" name="id" value="{{.TrackID}}" onclick="event.stopPropagation()">Request</button>
                                             {{else}}
                                                 <button type="submit" class="button is-danger" name="id" value="{{.TrackID}}" onclick="event.stopPropagation()" disabled>Request</button>
                                             {{end}}
                                         </form>
                                     {{end}}
+                                {{end}}
                                     </div>
                                 </div>
                             </div>
