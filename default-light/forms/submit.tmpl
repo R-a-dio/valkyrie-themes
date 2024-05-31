@@ -31,7 +31,7 @@
             <select class="is-fullwidth">
                 <option value="0">No replacement</option>
                 {{range .NeedReplacementList}}
-                <option value="{{.}}">{{.}} (Placeholder)</option>
+                <option value="{{.TrackID}}">{{.Metadata}}</option>
                 {{end}}
             </select>
         </div>
