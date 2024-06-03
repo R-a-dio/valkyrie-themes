@@ -14,12 +14,15 @@ function clearNavbarSearchValue(event) {
 
 // Toggles dropdowns when you click queue, etc.
 function toggleDropdown(div) {
-    div.nextElementSibling.classList.toggle("is-hidden");
+    if (typeof div == "string")
+        document.getElementById(div).classList.toggle("is-hidden");
+    else
+        div.nextElementSibling.classList.toggle("is-hidden");
 }
 
 // Main page options dropdown toggle
 function toggleOptionsDropdown() {
-    document.getElementById("options-button-dropdown").classList.toggle("is-hidden");
+    toggleDropdown("options-button-dropdown");
 }
 
 // Help page switch for mobiles & highlight for desktop

@@ -1,7 +1,7 @@
 {{define "content"}}
-<section class="section" hx-ext="sse" sse-connect="/v1/sse">
+<section class="section py-5" hx-ext="sse" sse-connect="/v1/sse">
     <div class="container">
-        <div class="columns is-vcentered">
+        <div class="columns">
             <div class="column is-narrow mr-6 is-hidden-touch">
                 <img src="/assets/images/logo_image_small.png" alt="R/a/dio">
             </div>
@@ -10,8 +10,9 @@
                     <div class="column is-flex is-align-items-center is-justify-content-center">
                         <img src="/assets/images/logotitle_2.png" alt="R/a/dio">
                     </div>
+
                     <div class="column">
-                        <div class="field">
+                        <div class="field mb-1">
                             {{with .StreamURL}}
                             <noscript>
                                 <audio preload="none" controls>
@@ -21,11 +22,13 @@
                             {{end}}
                             <button id="stream-play-pause" class="is-hidden-without-js button is-info is-fullwidth">Play Stream</button>
                         </div>
+                        <div class="field mb-1">
+                            <button class="button is-fullwidth"><input id="stream-volume" class="is-fullwidth" type="range" min="0" max="100" step="1" value="80"></button>
+                        </div>
                         <div class="field has-addons dropdown-parent">
                                 <button class="button is-width-80"><a class="disable-link-color" href="/main">Direct Stream Link</a></button>
                                 <button class="button is-width-20 ml-3" style="font-weight: 900;" onclick="toggleDropdown(this)">⚙</button>
-                                <div id="options-button-dropdown" class="dropdown-container box is-hidden">
-                                    <div class="p-0 mb-2"><button class="button is-fullwidth"><input id="stream-volume" class="is-fullwidth" type="range" min="0" max="100" step="1" value="80"></button></div>
+                                <div id="options-button-dropdown" class="dropdown-container box is-hidden" style="z-index:1">
                                     <div class="p-0 mb-2"><a href="/help#stream-help" hx-boost="true" hx-push-url="true" hx-target="#content"><button class="button is-fullwidth">Help</button></a></div>
                                     <div class="p-0 mb-2"><a><button class="button is-fullwidth js-modal-trigger" data-target="prefs-modal" onclick="toggleOptionsDropdown()">Preferences</button></a></div>
                                 </div>
@@ -61,16 +64,18 @@
 </section>
 {{end}}
 {{define "nowplaying"}}
-<h2 id="current-song">
-    {{if gt (len .Song.Metadata) 35}}
-    <p id="metadata" class="title is-4 pb-3 has-text-centered" style="cursor:pointer;" onclick="toggleDropdown(this)">{{.Song.Metadata}}</p>
+<div id="current-song" class="columns is-vcentered">
+    {{if gt (len .Song.Metadata) 32}}
+    <div id="metadata" class="column is-12 title pb-0 has-text-centered">{{.Song.Metadata}}</div>
     {{else}}
-    <p id="metadata" class="title is-3 mb-3 has-text-centered" style="cursor:pointer;" onclick="toggleDropdown(this)">{{.Song.Metadata}}</p>
+    <div id="metadata" class="column is-12 title mb-0 has-text-centered">{{.Song.Metadata}}</div>
     {{end}}
-    <p class="subtitle has-text-centered mb-4 is-hidden" style="font-size: 14px;">{{if .Song.DatabaseTrack}}{{.Song.Tags}}{{end}}</p>
-</h2>
+    <button class="button tag py-3 ml-3" style="font-weight: 900;" onclick="toggleDropdown('now-playing-tags')">🔖</button>
+</div>
+<p id="now-playing-tags" class="subtitle has-text-centered mb-4 is-hidden" style="font-size: 14px;">{{if .Song.DatabaseTrack}}{{.Song.Tags}}{{end}}</p>
 {{$progress := .SongInfo.Start | Since}}
 <progress id="current-song-progress" class="progress is-large mb-0" value="{{$progress | ToSecond}}" max="{{.Song.Length.Seconds}}"></progress>
+
 <div class="columns mt-2">
     <div class="column is-6">
         <p class="has-text-centered" sse-swap="listeners">{{template "listeners" .Listeners}}</p>
@@ -85,7 +90,7 @@
 {{end}}
 {{define "lastplayed"}}
 <p class="title is-4 has-text-centered is-hidden-touch">Last Played</p>
-<div class="notification fixed-grid has-1-cols">
+<div class="notification fixed-grid has-1-cols py-3">
     <ul id="lastplayed" class="grid">
         {{range $song := .}}
         <div class="cell is-align-content-center" style="overflow:hidden;white-space:nowrap;">
@@ -100,7 +105,7 @@
 {{end}}
 {{define "queue"}}
 <p class="title is-4 has-text-centered is-hidden-touch">Queue</p>
-<div class="notification fixed-grid has-1-cols">
+<div class="notification fixed-grid has-1-cols py-3">
     <ul id="queue" class="grid">
         {{range $song := .}}
         <div class="cell is-align-content-center" style="overflow:hidden;white-space:nowrap;">
@@ -119,7 +124,7 @@
 </div>
 {{end}}
 {{define "streamer"}}
-<div class="p-5 m-5">
+<div class="px-5 mx-5">
     <div class="card-image">
         <figure class="image is-square ml-0 mr-0">
             <img src="/api/dj-image/{{.DJ.Image}}"/>
