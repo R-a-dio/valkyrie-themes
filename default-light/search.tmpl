@@ -27,10 +27,12 @@
                 <div class="fixed-grid has-1-cols">
                     <div class="grid">
                         {{range .Songs}}
-                        <div class="cell song-info" onclick="toggleDropdown(this)">
+                        <div class="cell">
                             <div class="fixed-grid has-12-cols">
                                 <div class="grid">
-                                    <div class="cell is-col-span-11 has-background-radio-secondary-1 is-align-content-center has-text-centered p-4">{{.Metadata}}</div>
+                                    <div class="cell is-col-span-11 has-background-radio-secondary-1 is-align-content-center has-text-centered p-5">{{.Metadata}}
+                                        <div class="button tag is-small is-pulled-right" onclick="toggleDropdown(this.parentElement.parentElement.parentElement.parentElement)">🔖</div>
+                                    </div>
                                     <div class="cell is-col-span-1 has-background-radio-secondary-1 is-align-content-center p-4">
                                     {{block "request-form" SongPair . $}}
                                         <form method="POST" action="/v1/request?trackid={{.TrackID}}&q={{.Data.Query}}&page={{.Data.Page.Nr}}"

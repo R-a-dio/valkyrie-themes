@@ -65,14 +65,18 @@
 {{end}}
 {{define "nowplaying"}}
 <div id="current-song" class="columns is-vcentered">
-    {{if gt (len .Song.Metadata) 32}}
+    {{if gt (len .Song.Metadata) 35}}
     <div id="metadata" class="column is-12 title pb-0 has-text-centered">{{.Song.Metadata}}</div>
     {{else}}
     <div id="metadata" class="column is-12 title mb-0 has-text-centered">{{.Song.Metadata}}</div>
     {{end}}
+    {{if .Song.HasTrack}}
+    {{if .Song.Tags}}
     <button class="button tag py-3 ml-3" style="font-weight: 900;" onclick="toggleDropdown('now-playing-tags')">🔖</button>
+    {{end}}
+    {{end}}
 </div>
-<p id="now-playing-tags" class="subtitle has-text-centered mb-4 is-hidden" style="font-size: 14px;">{{if .Song.DatabaseTrack}}{{.Song.Tags}}{{end}}</p>
+<p id="now-playing-tags" class="subtitle has-text-centered mb-4 is-hidden" style="font-size: 14px;">{{if .Song.HasTrack}}{{.Song.Tags}}{{end}}</p>
 {{$progress := .SongInfo.Start | Since}}
 <progress id="current-song-progress" class="progress is-large mb-0" value="{{$progress | ToSecond}}" max="{{.Song.Length.Seconds}}"></progress>
 

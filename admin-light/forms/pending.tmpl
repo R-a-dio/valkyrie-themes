@@ -1,9 +1,9 @@
 {{define "form_admin_pending"}}
-<div class="pending-entry notification">
+<div class="pending-entry notification p-1">
     <form class="{{if len .Errors}}is-warning {{end}}" method="post" hx-post="/admin/pending" hx-swap="outerHTML swap:1s">
         <input class="is-hidden" type="number" name="id" value="{{.ID}}">
         {{.CSRFTokenInput}}
-        <div class="columns is-desktop pending-controls">
+        <div class="columns is-desktop pending-controls p-1 m-0">
             <div class="column py-1">
                 <span class="tag is-dark is-fullwidth py-1">{{.UserIdentifier}}</span>
             </div>
@@ -14,49 +14,51 @@
                 <a class="tag is-warning has-text-dark is-fullwidth py-1" href="/admin/pending-song/{{.ID}}">{{.Filename}}</a>
             </div>
         </div>
-        <div class="columns is-gapless">
+        <div class="columns is-gapless mb-1">
             <div class="column is-6">
-                <div class="column field is-horizontal">
-                    <div class="field-label is-flex-grow-0">
+                <div class="column field is-horizontal mb-1">
+                    <div class="field-label">
                         <label class="label mt-2">Artist</label>
                     </div>
-                    <div class="field-body">
+                    <div class="field-body is-flex-grow-10">
                         <input class="input" name="artist" type="text" value="{{.Artist}}">
                     </div>
                 </div>
                 <div class="column field is-horizontal">
-                    <div class="field-label is-flex-grow-0">
+                    <div class="field-label">
                         <label class="label mt-2">Title</label>
                     </div>
-                    <div class="field-body">
+                    <div class="field-body is-flex-grow-10">
                         <input class="input" name="title" type="text" value="{{.Title}}">
                     </div>
                 </div>
             </div>
             <div class="column is-6">
-                <div class="column field is-horizontal">
-                    <div class="field-label is-flex-grow-0">
+                <div class="column field is-horizontal mb-1">
+                    <div class="field-label">
                         <label class="label mt-2">Album</label>
                     </div>
-                    <div class="field-body">
+                    <div class="field-body is-flex-grow-10">
                         <input class="input" name="album" type="text" value="{{.Album}}">
                     </div>
                 </div>
                 <div class="column field is-horizontal">
-                    <div class="field-label is-flex-grow-0">
+                    <div class="field-label">
                         <label class="label mt-2">Tags</label>
                     </div>
-                    <div class="field-body">
+                    <div class="field-body is-flex-grow-10">
                         <input class="input" name="tags" type="text">
                     </div>
                 </div>
             </div>
         </div>
-        <div class="columns">
-            <div class="label column is-narrow">Comment:</div>
-            <div class="column">{{.Comment}}</div>
+        <div class="columns field is-horizontal is-gapless mb-1">
+            <div class="field-label is-flex-grow-1">
+                <label class="label">Comment:</label>
+            </div>
+            <div class="field-body is-flex-grow-22">{{.Comment}}</div>
         </div>
-        <div class="columns is-desktop">
+        <div class="columns is-desktop mb-1">
             <div class="column">
                 <div class="field is-grouped is-grouped-multiline is-grouped-right">
                     <div class="control">
@@ -70,7 +72,7 @@
                                 <input class="input" name="reason" type="text" placeholder="Reason"></textarea>
                             </div>
                             <div class="control">
-                                <button class="button is-danger" type="submit" name="action" value="decline">Decline</button>
+                                <button class="button is-danger" style="margin-top:-1px" type="submit" name="action" value="decline">Decline</button>
                             </div>
                         </div>
                     </div>
@@ -80,7 +82,7 @@
                                 <input class="input" type="text" name="replacement" {{with .ReplacementID}}value="{{.}}"{{end}} placeholder="Rep. ID">
                             </div>
                             <div class="control">
-                                <button class="button is-warning" type="submit" name="action" value="replace">Replace</button>
+                                <button class="button is-warning" style="margin-top:-1px" type="submit" name="action" value="replace">Replace</button>
                             </div>
                         </div>
                     </div>

@@ -9,7 +9,7 @@
                 <div class="field-label">
                     <label class="label mt-2">Artist</label>
                 </div>
-                <div class="field-body">
+                <div class="field-body is-flex-grow-10">
                     <input class="input" name="artist" type="text" value="{{.Song.Artist}}" {{if not .HasEdit}}disabled{{end}}>
                 </div>
             </div>
@@ -17,7 +17,7 @@
                 <div class="field-label">
                     <label class="label mt-2">Title</label>
                 </div>
-                <div class="field-body">
+                <div class="field-body is-flex-grow-10">
                     <input class="input" name="title" type="text" value="{{.Song.Title}}" {{if not .HasEdit}}disabled{{end}}>
                 </div>
             </div>
@@ -27,7 +27,7 @@
                 <div class="field-label">
                     <label class="label mt-2">Album</label>
                 </div>
-                <div class="field-body">
+                <div class="field-body is-flex-grow-10">
                     <input class="input" name="album" type="text" value="{{.Song.Album}}" {{if not .HasEdit}}disabled{{end}}>
                 </div>
             </div>
@@ -35,7 +35,7 @@
                 <div class="field-label">
                     <label class="label mt-2">Tags</label>
                 </div>
-                <div class="field-body">
+                <div class="field-body is-flex-grow-10">
                     <input class="input" name="tags" type="text" value="{{.Song.Tags}}" {{if not .HasEdit}}disabled{{end}}>
                 </div>
             </div>
@@ -45,7 +45,7 @@
         <div class="column is-narrow">
             <div class="field is-horizontal">
                 <div class="field-label">
-                    <label class="label mt-2">ID:</label>
+                    <label class="label mt-2">ID</label>
                 </div>
                 <div class="field-body">
                     <span class="mt-2">{{.Song.TrackID}}</span>
@@ -83,7 +83,7 @@
             </div>
         </div>
         <div class="column is-flex is-justify-content-end">
-            <div class="buttons">
+            <div class="buttons" style="flex-wrap:nowrap">
                 <a class="button is-success" href="{{.SongURL}}">Download</a>
                 <button class="button is-info">Play</button>
                 {{if .HasEdit}}
