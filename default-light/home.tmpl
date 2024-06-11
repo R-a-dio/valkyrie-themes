@@ -35,7 +35,7 @@
                         </div>
                     </div>
                 </div>
-                <div sse-swap="metadata">
+                <div id="now-playing" class="hide-np-tags" sse-swap="metadata">
                     {{template "nowplaying" .Status}}
                 </div>
             </div>
@@ -72,11 +72,11 @@
     {{end}}
     {{if .Song.HasTrack}}
     {{if .Song.Tags}}
-    <button class="button tag py-3 ml-3" style="font-weight: 900;" onclick="toggleDropdown('now-playing-tags')">🔖</button>
+    <button class="button tag py-3 ml-3" style="font-weight: 900;" onclick="htmx.toggleClass(htmx.find('#now-playing'), 'hide-np-tags')">🔖</button>
     {{end}}
     {{end}}
 </div>
-<p id="now-playing-tags" class="subtitle has-text-centered mb-4 is-hidden" style="font-size: 14px;">{{if .Song.HasTrack}}{{.Song.Tags}}{{end}}</p>
+<p id="now-playing-tags" class="subtitle has-text-centered mb-4" style="font-size: 14px;">{{if .Song.HasTrack}}{{.Song.Tags}}{{end}}</p>
 {{$progress := .SongInfo.Start | Since}}
 <progress id="current-song-progress" class="progress is-large mb-0" value="{{$progress | ToSecond}}" max="{{.Song.Length.Seconds}}"></progress>
 
@@ -85,7 +85,7 @@
         <p class="has-text-centered" sse-swap="listeners">{{template "listeners" .Listeners}}</p>
     </div>
     <div class="column is-6">
-        <p class="has-text-centered"><span id="progress-current" data-start="{{.SongInfo.Start.UnixMilli}}">{{$progress | MediaDuration}}</span> / <span id="progress-max">{{.Song.Length | MediaDuration}}<span></p>
+        <p class="has-text-centered"><span id="progress-current" data-start="{{.SongInfo.Start.UnixMilli}}">{{$progress | MediaDuration}}</span> / <span id="progress-max">{{.Song.Length | MediaDuration}}</span></p>
     </div>
 </div>
 {{end}}
@@ -97,10 +97,10 @@
 <div class="notification fixed-grid has-1-cols py-3">
     <ul id="lastplayed" class="grid">
         {{range $song := .}}
-        <div class="cell is-align-content-center" style="overflow:hidden;white-space:nowrap;">
+        <div class="cell is-align-content-center">
             <li class="lp-item columns is-mobile is-vcentered">
-                <time datetime="{{$song.LastPlayed.Unix}}" class="lp-time column is-4 has-text-left">{{Until $song.LastPlayed | PrettyDuration}}</time>
-                <span class="lp-meta column is-8 has-text-centered">{{$song.Metadata}}</span>
+                <time datetime="{{$song.LastPlayed.Unix}}" class="lp-time column is-narrow has-text-left">{{Until $song.LastPlayed | PrettyDuration}}</time>
+                <span class="lp-meta column has-text-centered">{{$song.Metadata}}</span>
             </li>
         </div>
         {{end}}
@@ -112,14 +112,14 @@
 <div class="notification fixed-grid has-1-cols py-3">
     <ul id="queue" class="grid">
         {{range $song := .}}
-        <div class="cell is-align-content-center" style="overflow:hidden;white-space:nowrap;">
+        <div class="cell is-align-content-center">
             <li class="columns is-mobile is-vcentered">
             {{if not $song.IsUserRequest}}
-            <span class="column queue-meta is-8 has-text-centered">{{$song.Metadata}}</span>
-            <time datetime="{{$song.ExpectedStartTime.Unix}}" class="column is-4 has-text-right">{{Until $song.ExpectedStartTime | PrettyDuration}}</time>
+            <span class="column queue-meta has-text-centered">{{$song.Metadata}}</span>
+            <time datetime="{{$song.ExpectedStartTime.Unix}}" class="column is-narrow has-text-right">{{Until $song.ExpectedStartTime | PrettyDuration}}</time>
             {{else}}
-            <span class="column queue-meta is-8 has-text-centered is-request">{{$song.Metadata}}</span>
-            <time datetime="{{$song.ExpectedStartTime.Unix}}" class="column is-4 has-text-right is-request">{{Until $song.ExpectedStartTime | PrettyDuration}}</time>
+            <span class="column queue-meta has-text-centered is-request">{{$song.Metadata}}</span>
+            <time datetime="{{$song.ExpectedStartTime.Unix}}" class="column is-narrow has-text-right is-request">{{Until $song.ExpectedStartTime | PrettyDuration}}</time>
             {{end}}
             </li>
         </div>
@@ -135,7 +135,7 @@
         </figure>
     </div>
     <div class="card-content has-text-centered pt-4 pb-0">
-        <div class="title is-4 word-break-ellipsis">{{.DJ.Name}}</div>
+        <div class="title is-4">{{.DJ.Name}}</div>
     </div>
 </div>
 {{end}}

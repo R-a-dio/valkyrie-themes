@@ -30,7 +30,7 @@
             {{end}}
         </div>
         <div class="column has-background-radio-secondary-1 is-align-content-center has-text-centered p-4">{{.Metadata}}
-            <a href="/search?q={{.Metadata}}"><div class="button tag is-small is-pulled-right">🔎</div></a>
+            <a hx-boost="true" hx-push-url="true" hx-target="#content" href="/search?q={{.Metadata}}"><div class="button tag is-small is-pulled-right">🔎</div></a>
         </div>
         <div class="column is-narrow has-background-radio-secondary-1 is-align-content-center has-text-centered p-4 ml-2"><time datetime="{{.LastPlayed.Unix}}" data-type="absolute">{{.LastPlayed | AbsoluteDate}}</time></div>
     </div>

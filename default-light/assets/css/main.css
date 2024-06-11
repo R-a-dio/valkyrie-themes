@@ -82,6 +82,10 @@
     border-radius: 0 !important;
 }
 
+.hide-np-tags > #now-playing-tags {
+    display: none;
+}
+
 .caret {
     width: 0;
     height: 0;
