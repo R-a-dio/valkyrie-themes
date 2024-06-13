@@ -1,0 +1,15 @@
+{{define "content"}}
+<section class="section">
+    <div class="container">
+        <div class="content">
+            <div class="title">
+                Error {{.StatusCode}} {{.Message}}
+            </div>
+            <pre>Request ID: {{.RequestID}}
+
+{{.Error}}
+            </pre>
+        </div>
+    </div>
+</section>
+{{end}}
