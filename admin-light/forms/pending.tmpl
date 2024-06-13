@@ -1,5 +1,5 @@
 {{define "form_admin_pending"}}
-<div class="pending-entry notification p-1">
+<div class="pending-entry notification p-1" hx-target="this">
     <form class="{{if len .Errors}}is-warning {{end}}" method="post" hx-post="/admin/pending" hx-swap="outerHTML swap:1s">
         <input class="is-hidden" type="number" name="id" value="{{.ID}}">
         {{.CSRFTokenInput}}
