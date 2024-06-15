@@ -1,5 +1,5 @@
 @charset "utf-8";
-@use  "../../../bulma/sass";
+@use "../../../bulma/sass";
 @use 'sass:color';
 
 :root {
@@ -93,7 +93,12 @@
     border-color: var(--radio-primary-3);
   }
 
-  button.is-danger:hover, button.is-info:hover, button.is-primary:hover, button.is-request:hover, button.is-success:hover, button.is-warning:hover {
+  button.is-danger:hover,
+  button.is-info:hover,
+  button.is-primary:hover,
+  button.is-request:hover,
+  button.is-success:hover,
+  button.is-warning:hover {
     border-color: hsla(0, 0%, 100%, 25%);
     color: hsl(0, 0%, 80%) !important;
     transition: .125s all ease-in-out;
@@ -109,13 +114,15 @@
 
   // input
 
-  .input, .textarea {
+  .input,
+  .textarea {
     color: var(--text-secondary);
     background-color: var(--radio-primary-3);
     border-color: var(--radio-border);
   }
 
-  .input:focus, .textarea:focus {
+  .input:focus,
+  .textarea:focus {
     box-shadow: var(--bulma-input-focus-shadow-size) hsla(208, 27%, 39%, var(--bulma-input-focus-shadow-alpha))
   }
 
@@ -171,7 +178,8 @@
     background-color: var(--radio-primary-3) !important;
   }
 
-  input::placeholder, textarea::placeholder {
+  input::placeholder,
+  textarea::placeholder {
     color: var(--text-input) !important;
   }
 
@@ -260,7 +268,12 @@
     color: var(--text-primary);
   }
 
-  .content h1, .content h2, .content h3, .content h4, .content h5, .content h6 {
+  .content h1,
+  .content h2,
+  .content h3,
+  .content h4,
+  .content h5,
+  .content h6 {
     color: unset;
   }
 
@@ -283,7 +296,7 @@
 
   .is-warning {
     color: var(--text-secondary);
-    background-color: (--orange);
+    background-color: var(--orange);
   }
 
   .is-success {
@@ -323,7 +336,8 @@
   --bulma-progress-border-radius: 4px !important;
 }
 
-.message, .message-header {
+.message,
+.message-header {
   color: var(--text-primary);
 }
 
