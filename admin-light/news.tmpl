@@ -10,6 +10,7 @@
             <div class="columns mb-6">
                 <a class="button column is-info is-pulled-left" href="/admin/news/new">New Post</a>
             </div>
+            <div class="news-list">
             {{range $news := $.News}}
                 {{block "news-post-index" .}}
                     <article class="block message">
@@ -34,10 +35,11 @@
                 hx-push-url="false"
                 hx-trigger="intersect once"
                 hx-get="{{.URL}}"
-                hx-select="#news-content>div"
+                hx-select="#news-content>.news-list"
                 hx-target="#news-content"
                 hx-swap="beforeend"></div>
             {{end}}{{end}}
+            </div>
         </div>
         <div class="is-hidden-with-js">
             {{template "pagination" .Page}}
