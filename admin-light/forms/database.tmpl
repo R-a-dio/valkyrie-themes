@@ -85,7 +85,7 @@
         <div class="column is-flex is-justify-content-end">
             <div class="buttons" style="flex-wrap:nowrap">
                 <a class="button is-success" href="{{.SongURL}}">Download</a>
-                <button class="button is-info">Play</button>
+                <button hx-disinherit="*" class="button is-info">Play</button>
                 {{if .HasEdit}}
                     <button class="button" type="submit" name="action" value="save">Save</button>
                     {{if .Song.NeedReplacement}}
