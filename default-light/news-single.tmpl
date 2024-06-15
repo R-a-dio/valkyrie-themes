@@ -61,11 +61,14 @@
         {{end}}
     </div>
     <div class="column is-hidden-mobile has-background-radio-secondary-1 is-align-self-flex-start ml-4">
-        <textarea id="news-comment-input-2" name="comment" rows="4" class="textarea mb-4" placeholder="Enter a comment..." onkeyup="countNewsInputCharacters(event)"></textarea>
-        <button class="submit button is-primary" style="position:relative;float:right;">Submit</button>
-        <p>{{if .User}}Logged in (as {{.User.Username}}){{else}}Not logged in{{end}}</p>
-        <p>Comments use markdown formatting (<a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet">guide</a>)</p>
-        <p><span id="news-comment-character-counter-2">500</span> characters remaining.</p>
+        <form method="POST" action="{{.RequestURL}}" hx-post="{{.RequestURL}}" hx-push-url="false" hx-target="#content">
+            {{.CSRFTokenInput}}
+            <textarea id="news-comment-input-2" name="comment" rows="4" class="textarea mb-4" placeholder="Enter a comment..." onkeyup="countNewsInputCharacters(event)"></textarea>
+            <button class="submit button is-primary" style="position:relative;float:right;">Submit</button>
+            <p>{{if .User}}Logged in (as {{.User.Username}}){{else}}Not logged in{{end}}</p>
+            <p>Comments use markdown formatting (<a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet">guide</a>)</p>
+            <p><span id="news-comment-character-counter-2">500</span> characters remaining.</p>
+        </form>
     </div>
 </div>
 {{end}}
