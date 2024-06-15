@@ -1,6 +1,6 @@
 {{define "form_admin_songs"}}
 {{if and .Song .Song.HasTrack}}
-<form class="songs-entry p-1 mb-2 notification {{if .Song.NeedReplacement}}is-warning{{end}}" method="post" hx-target="this" hx-post="/admin/songs" hx-swap="outerHTML swap:1s">
+<form class="songs-entry p-1 mb-2 notification {{if .Song.NeedReplacement}}is-warning{{end}}" method="post" action="/admin/songs" hx-target="this" hx-swap="outerHTML swap:1s">
     <input class="is-hidden" type="number" name="id" value="{{.Song.TrackID}}">
     {{.CSRFTokenInput}}
     <div class="columns is-gapless mb-2">
@@ -85,13 +85,13 @@
         <div class="column is-flex is-justify-content-end">
             <div class="buttons" style="flex-wrap:nowrap">
                 <a class="button is-success" href="{{.SongURL}}">Download</a>
-                <button hx-disable hx-post="/this/should/never/be/requested" class="button is-info">Play</button>
+                <button hx-disable class="button is-info">Play</button>
                 {{if .HasEdit}}
-                    <button hx-disable-elt="this" class="button" type="submit" name="action" value="save">Save</button>
+                    <button hx-disable-elt="this" hx-post="/admin/songs" class="button" type="submit" name="action" value="save">Save</button>
                     {{if .Song.NeedReplacement}}
-                        <button hx-disable-elt="this" class="button is-white" type="submit" name="action" value="unmark-replacement">Unmark Repl</button>
+                        <button hx-disable-elt="this" hx-post="/admin/songs" class="button is-white" type="submit" name="action" value="unmark-replacement">Unmark Repl</button>
                     {{else}}
-                        <button hx-disable-elt="this" class="button is-warning" type="submit" name="action" value="mark-replacement">Mark Repl</button>
+                        <button hx-disable-elt="this" hx-post="/admin/songs" class="button is-warning" type="submit" name="action" value="mark-replacement">Mark Repl</button>
                     {{end}}
                 {{end}}
                 {{if .HasDelete}}<button hx-disable-elt="this" class="button is-danger" hx-post="/admin/songs" hx-confirm="Are you sure?" type="submit" name="action" value="delete">Delete</button>{{end}}
