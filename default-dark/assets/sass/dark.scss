@@ -1,6 +1,6 @@
 @charset "utf-8";
-@use "../../../bulma/sass";
 @use 'sass:color';
+@use "../../../bulma/sass";
 
 :root {
   --text-primary: hsl(0, 0%, 50%);
@@ -18,12 +18,23 @@
   --purple: hsl(271, 27%, 39%);
   --red: hsl(348, 27%, 50%);
 
-  --radio-primary-1: hsl(0, 0%, 13%);
+  --radio-primary-1-h: 0;
+  --radio-primary-1-s: 0%;
+  --radio-primary-1-l: 13%;
+  --radio-primary-1: hsl(var(--radio-primary-1-h), var(--radio-primary-1-l), var(--radio-primary-1-s));
+
+  --radio-primary-2-h: 0;
+  --radio-primary-2-s: 0%;
+  --radio-primary-2-l: 16%;
   --radio-primary-2: hsl(0, 0%, 16%);
+
   --radio-primary-3: hsl(0, 0%, 24%);
 
   --radio-secondary-1: hsl(0, 0%, 11%);
-  --radio-secondary-2: hsl(0, 0%, 10%);
+  --radio-secondary-2-h: 0;
+  --radio-secondary-2-s: 0%;
+  --radio-secondary-2-l: 10%;
+  --radio-secondary-2: hsl(var(--radio-secondary-2-h), var(--radio-secondary-2-l), var(--radio-secondary-2-s));
   --radio-secondary-3: hsl(0, 0%, 7%);
 
   --radio-border: var(--radio-primary-2);
@@ -39,292 +50,292 @@
   --bulma-block-spacing: 0.75rem;
 
   --bulma-card-shadow: hsl(0, 0%, 0%);
+}
+
+.cell,
+.column {
+  border-radius: 4px;
+}
+
+.is-request {
+  color: var(--blue);
+}
+
+.has-background-radio-primary-1 {
+  background-color: var(--radio-primary-1) !important;
+}
+
+.has-background-radio-primary-2 {
+  background-color: var(--radio-primary-2) !important;
+}
+
+.has-background-radio-primary-3 {
+  background-color: var(--radio-primary-3) !important;
+}
+
+.has-background-radio-secondary-1 {
+  background-color: var(--radio-secondary-1) !important;
+}
+
+.has-background-radio-secondary-2 {
+  background-color: var(--radio-secondary-2) !important;
+}
+
+.has-background-radio-secondary-3 {
+  background-color: var(--radio-secondary-3) !important;
+}
+
+.notification {
+  color: var(--text-primary);
+  --bulma-notification-h: var(--radio-secondary-2-h);
+  --bulma-notification-background-l: var(--radio-secondary-2-l);
+  --bulma-notification-s: var(--radio-secondary-2-s);
+}
+
+// button
+
+.button {
+  background-color: var(--radio-primary-2);
+  color: var(--text-primary);
+  border-color: var(--radio-border);
+}
+
+.button:hover {
+  color: var(--text-primary);
+  border-color: var(--radio-primary-3);
+}
+
+button.is-danger:hover,
+button.is-info:hover,
+button.is-primary:hover,
+button.is-request:hover,
+button.is-success:hover,
+button.is-warning:hover {
+  border-color: hsla(0, 0%, 100%, 25%);
+  color: hsl(0, 0%, 80%) !important;
+  transition: .125s all ease-in-out;
+}
+
+#options-button-dropdown .button {
+  background-color: var(--radio-primary-1);
+}
+
+a .button {
+  color: var(--text-primary);
+}
+
+// input
+
+.input,
+.textarea {
+  color: var(--text-secondary);
+  background-color: var(--radio-primary-3);
+  border-color: var(--radio-border);
+}
+
+.input:focus,
+.textarea:focus {
+  box-shadow: var(--bulma-input-focus-shadow-size) hsla(208, 27%, 39%, var(--bulma-input-focus-shadow-alpha))
+}
+
+// message
+
+.message-header {
+  border: 1px solid var(--radio-secondary-2);
+}
+
+.message-header span:not(.message-header a span) {
+  color: var(--text-primary);
+}
+
+.message-header a {
+  color: var(--blue) !important;
+}
+
+a .message-header:hover {
+  background-color: var(--radio-secondary-2);
+}
+
+.news-title {
+  color: var(--blue) !important;
+}
+
+// navbar
 
-
-
-  .cell,
-  .column {
-    border-radius: 4px;
-  }
-
-  .is-request {
-    color: var(--blue);
-  }
-
-  .has-background-radio-primary-1 {
-    background-color: var(--radio-primary-1) !important;
-  }
-
-  .has-background-radio-primary-2 {
-    background-color: var(--radio-primary-2) !important;
-  }
-
-  .has-background-radio-primary-3 {
-    background-color: var(--radio-primary-3) !important;
-  }
-
-  .has-background-radio-secondary-1 {
-    background-color: var(--radio-secondary-1) !important;
-  }
-
-  .has-background-radio-secondary-2 {
-    background-color: var(--radio-secondary-2) !important;
-  }
-
-  .has-background-radio-secondary-3 {
-    background-color: var(--radio-secondary-3) !important;
-  }
-
-  .notification {
-    color: var(--text-primary);
-    background-color: var(--radio-secondary-1);
-  }
-
-  // button
-
-  .button {
-    background-color: var(--radio-primary-2);
-    color: var(--text);
-    border-color: var(--radio-border);
-  }
-
-  .button:hover {
-    color: var(--text-primary);
-    border-color: var(--radio-primary-3);
-  }
-
-  button.is-danger:hover,
-  button.is-info:hover,
-  button.is-primary:hover,
-  button.is-request:hover,
-  button.is-success:hover,
-  button.is-warning:hover {
-    border-color: hsla(0, 0%, 100%, 25%);
-    color: hsl(0, 0%, 80%) !important;
-    transition: .125s all ease-in-out;
-  }
-
-  #options-button-dropdown .button {
-    background-color: var(--radio-primary-1);
-  }
-
-  a .button {
-    color: var(--text-primary);
-  }
-
-  // input
-
-  .input,
-  .textarea {
-    color: var(--text-secondary);
-    background-color: var(--radio-primary-3);
-    border-color: var(--radio-border);
-  }
-
-  .input:focus,
-  .textarea:focus {
-    box-shadow: var(--bulma-input-focus-shadow-size) hsla(208, 27%, 39%, var(--bulma-input-focus-shadow-alpha))
-  }
-
-  // message
-
-  .message-header {
-    border: 1px solid var(--radio-secondary-2);
-  }
-
-  .message-header span:not(.message-header a span) {
-    color: var(--text-primary);
-  }
-
-  .message-header a {
-    color: var(--blue) !important;
-  }
-
-  a .message-header:hover {
-    background-color: var(--radio-secondary-2);
-  }
-
-  .news-title {
-    color: var(--blue) !important;
-  }
-
-  // navbar
-
-  .navbar {
-    color: var(--text-primary) !important;
-    background-color: var(--radio-primary-2);
-  }
-
-  a.navbar-item {
-    color: var(--text-primary) !important;
-  }
-
-  a.navbar-item:hover {
-    color: var(--text-secondary) !important;
-    background-color: initial;
-  }
-
-  // generic elements
-
-  a {
-    color: var(--text-link);
-  }
-
-  a:hover {
-    color: var(--text-link-hover);
-  }
-
-  hr {
-    background-color: var(--radio-primary-3) !important;
-  }
-
-  input::placeholder,
-  textarea::placeholder {
-    color: var(--text-input) !important;
-  }
-
-  // other elements
-
-  .pagination-link:not(.is-current),
-  .pagination-next,
-  .pagination-previous {
-    background-color: var(--radio-primary-3);
-  }
-
-  .pagination-link.is-current {
-    background-color: var(--blue);
-    border-color: var(--blue);
-    color: var(--text-secondary);
-  }
-
-  .pagination-link.is-current:hover {
-    filter: brightness(0.8);
-    transition: 0.125s all ease-in-out;
-  }
-
-  .pagination a.button:not(.is-current):not(.is-disabled):hover {
-    filter: brightness(0.8);
-    color: var(--text-secondary);
-    transition: 0.125s all ease-in-out;
-  }
-
-  #current-song-progress {
-    background-color: var(--radio-primary-2);
-  }
-
-  // song info
-
-  .song-info {
-    color: var(--text-primary) !important;
-  }
-
-  .song-info:hover {
-    background-color: unset !important;
-  }
-
-  .song-info:hover>.columns>.column,
-  .song-info:hover>.fixed-grid>.grid>.cell {
-    background-color: var(--radio-secondary-2) !important;
-    transition: 0.125s all ease-in-out;
-  }
-
-  .song-info-extra:hover {
-    background-color: var(--radio-secondary-1) !important;
-  }
-
-
-  // misc or wip,
-
-  #search-bar-popup>.columns:nth-child(even) {
-    background-color: var(--radio-secondary-2) !important;
-    border-top: unset !important;
-  }
-
-  #search-bar-popup {
-    border: 2px solid var(--radio-primary-3) !important;
-    scrollbar-width: none;
-  }
-
-  #options-button-dropdown {
-    border: 1px solid var(--radio-border);
-  }
-
-  .box {
-    background-color: var(--radio-secondary-1);
-    box-shadow: unset !important;
-    color: unset;
-  }
-
-  .content-border-top {
-    border-top: 2px solid var(--radio-primary-3) !important;
-    border-radius: 0px 0px 4px 4px;
-  }
-
-  .lp-dj-image {
-    border: 6px solid var(--radio-secondary-1);
-  }
-
-  .title {
-    color: var(--text-primary);
-  }
-
-  .content h1,
-  .content h2,
-  .content h3,
-  .content h4,
-  .content h5,
-  .content h6 {
-    color: unset;
-  }
-
-  // button colors
-
-  .is-primary {
-    color: var(--text-secondary);
-    background-color: var(--green);
-  }
-
-  .is-info {
-    color: var(--text-secondary);
-    background-color: var(--blue);
-  }
-
-  .is-danger {
-    color: var(--text-secondary);
-    background-color: var(--red);
-  }
-
-  .is-warning {
-    color: var(--text-secondary);
-    background-color: var(--orange);
-  }
-
-  .is-success {
-    color: var(--text-secondary);
-    background-color: var(--turquoise);
-  }
-
-  // text colors
-
-  .has-text-primary {
-    color: var(--green) !important;
-  }
-
-  .has-text-info {
-    color: var(--blue) !important;
-  }
-
-  .has-text-danger {
-    color: var(--red) !important;
-  }
-
-  .has-text-warning {
-    color: var(--orange) !important;
-  }
-
-  .has-text-success {
-    color: var(--turquoise) !important;
-  }
+.navbar {
+  color: var(--text-primary) !important;
+  background-color: var(--radio-primary-2);
+}
+
+a.navbar-item {
+  color: var(--text-primary) !important;
+}
+
+a.navbar-item:hover {
+  color: var(--text-secondary) !important;
+  background-color: initial;
+}
+
+// generic elements
+
+a {
+  color: var(--text-link);
+}
+
+a:hover {
+  color: var(--text-link-hover);
+}
+
+hr {
+  background-color: var(--radio-primary-3) !important;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--text-input) !important;
+}
+
+// other elements
+
+.pagination-link:not(.is-current),
+.pagination-next,
+.pagination-previous {
+  background-color: var(--radio-primary-3);
+}
+
+.pagination-link.is-current {
+  background-color: var(--blue);
+  border-color: var(--blue);
+  color: var(--text-secondary);
+}
+
+.pagination-link.is-current:hover {
+  filter: brightness(0.8);
+  transition: 0.125s all ease-in-out;
+}
+
+.pagination a.button:not(.is-current):not(.is-disabled):hover {
+  filter: brightness(0.8);
+  color: var(--text-secondary);
+  transition: 0.125s all ease-in-out;
+}
+
+#current-song-progress {
+  background-color: var(--radio-primary-2);
+}
+
+// song info
+
+.song-info {
+  color: var(--text-primary) !important;
+}
+
+.song-info:hover {
+  background-color: unset !important;
+}
+
+.song-info:hover>.columns>.column,
+.song-info:hover>.fixed-grid>.grid>.cell {
+  background-color: var(--radio-secondary-2) !important;
+  transition: 0.125s all ease-in-out;
+}
+
+.song-info-extra:hover {
+  background-color: var(--radio-secondary-1) !important;
+}
+
+
+// misc or wip,
+
+#search-bar-popup>.columns:nth-child(even) {
+  background-color: var(--radio-secondary-2) !important;
+  border-top: unset !important;
+}
+
+#search-bar-popup {
+  border: 2px solid var(--radio-primary-3) !important;
+  scrollbar-width: none;
+}
+
+#options-button-dropdown {
+  border: 1px solid var(--radio-border);
+}
+
+.box {
+  background-color: var(--radio-secondary-1);
+  box-shadow: unset !important;
+  color: unset;
+}
+
+.content-border-top {
+  border-top: 2px solid var(--radio-primary-3) !important;
+  border-radius: 0px 0px 4px 4px;
+}
+
+.lp-dj-image {
+  border: 6px solid var(--radio-secondary-1);
+}
+
+.title {
+  color: var(--text-primary);
+}
+
+.content h1,
+.content h2,
+.content h3,
+.content h4,
+.content h5,
+.content h6 {
+  color: unset;
+}
+
+// button colors
+
+.is-primary {
+  color: var(--text-secondary);
+  background-color: var(--green);
+}
+
+.is-info {
+  color: var(--text-secondary);
+  background-color: var(--blue);
+}
+
+.is-danger {
+  color: var(--text-secondary);
+  background-color: var(--red);
+}
+
+.is-warning {
+  color: var(--text-secondary);
+  background-color: var(--orange);
+}
+
+.is-success {
+  color: var(--text-secondary);
+  background-color: var(--turquoise);
+}
+
+// text colors
+
+.has-text-primary {
+  color: var(--green) !important;
+}
+
+.has-text-info {
+  color: var(--blue) !important;
+}
+
+.has-text-danger {
+  color: var(--red) !important;
+}
+
+.has-text-warning {
+  color: var(--orange) !important;
+}
+
+.has-text-success {
+  color: var(--turquoise) !important;
 }
 
 .disable-message-border {

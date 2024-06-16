@@ -109,10 +109,6 @@
     padding: 0.25rem;
 }
 
-.pending-entry:nth-of-type(even) {
-    background-color: hsl(0, 0%, 90%);
-}
-
 .content-border-top {
     border-top: 2px rgba(0, 0, 0, .1) solid;
 }
