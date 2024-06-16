@@ -12,10 +12,16 @@
 
             <div class="fixed-grid has-1-cols-mobile block">
                 <div class="grid is-fullheight is-row-gap-5 is-column-gap-5">
-                    {{range $day := .Schedule}}
-                    {{with .}}
-                    {{template "day" $day}}
-                    {{end}}
+                    {{range $day, $entry := .Schedule}}
+                        {{with $entry}}
+                            {{if eq $day 4}}
+                                {{template "friday" $entry}}
+                            {{else if or (eq $day 1) (eq $day 3) (eq $day 6) }}
+                                {{template "day-right" $entry}}
+                            {{else}}
+                                {{template "day-left" $entry}}
+                            {{end}}
+                        {{end}}
                     {{end}}
                 </div>
             </div>
