@@ -254,7 +254,7 @@ textarea::placeholder {
 
 #search-bar-popup {
   border: 2px solid var(--radio-primary-3) !important;
-  scrollbar-width: none;
+  scrollbar-width: thin;
 }
 
 #options-button-dropdown {

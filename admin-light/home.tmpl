@@ -10,7 +10,8 @@
                 </div>
                 {{with .User}}
                 <div class="cell is-align-content-center has-text-centered notification">
-                    Welcome {{.Username}}.
+                    <div>Welcome {{.Username}}.</div>
+                    <div><a class="button" href="/logout">Logout</a></div>
                 </div>
                 {{end}}
                 {{if .CanKillStreamer}}

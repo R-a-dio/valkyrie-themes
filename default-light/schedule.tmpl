@@ -30,16 +30,6 @@
 </section>
 {{end}}
 
-{{define "day"}}
-{{if eq .Weekday 4}}
-{{template "friday" .}}
-{{else if or (eq .Weekday 1) (eq .Weekday 3) (eq .Weekday 6) }}
-{{template "day-right" .}}
-{{else}}
-{{template "day-left" .}}
-{{end}}
-{{end}}
-
 {{define "day-left"}}
 <!-- desktop -->
 <div class="cell is-flex is-flex-direction-column is-hidden-touch">
