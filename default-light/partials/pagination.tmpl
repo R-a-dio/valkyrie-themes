@@ -1,5 +1,5 @@
 {{define "pagination"}}
-{{with .}}{{if gt .Total 1}}
+{{with .}}{{if or (.Prev 1) (.Next 1)}}
 <div class="columns m-0">
     <nav class="column pagination is-left is-flex mb-0" hx-boost="true" hx-push-url="true" hx-target="#content" role="navigation">
         {{with .Prev 1}}
@@ -29,14 +29,14 @@
             {{with .Next 1}}{{template "page-link" .}}{{end}}
             {{with $next2 := .Next 2}}
                 {{template "page-link" .}}
-                {{if lt .Nr .Total}}
+                
                     {{with .Last}}
                     {{if lt $next2.Nr (Sub .Total 1)}}
                     <li class="m-0"><span class="pagination-ellipsis">&hellip;</span></li>
                     {{end}}
                     {{template "page-link" .}}
                     {{end}}
-                {{end}}
+                
             {{end}}
         </ul>
     </nav>
