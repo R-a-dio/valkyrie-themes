@@ -76,8 +76,8 @@
 {{end}}
 
 {{define "search-api"}}
-{{with .Songs}}
 <div id="search-bar-popup" class="box has-text-centered">
+{{with .Songs}}
     {{range .}}
     <div class="columns is-vcentered">
         <div class="column">{{.Metadata}}</div>
@@ -86,6 +86,8 @@
         </div>
     </div>
     {{end}}
-</div>
+{{else}}
+    <div>No search results</div>
 {{end}}
+</div>
 {{end}}
