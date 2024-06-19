@@ -1,0 +1,31 @@
+{{define "admin_player"}}
+<div style="position:fixed; bottom: var(--bulma-navbar-height); z-index: 999; background: rgba(0, 0, 0, 0.3); width: 100%" >
+    <div class="container">
+        <div class="columns is-justify-content-center">
+            <div class="column is-narrow">
+                <button id="admin-player-play" class="button tag">▶️</button>
+            </div>
+            <div class="column is-4 is-align-content-center">
+                <input id="admin-player-progress" type="range" value="0" style="width:100%"></input>
+            </div>
+            <div id="admin-player-time" class="column is-1 is-align-content-center">
+                0:00/0:00
+            </div>
+            <div class="column is-2 is-align-content-center">
+                <input id="admin-player-volume" type="range" value="50" style="width:100%"></input>
+            </div>
+            <div class="column is-narrow is-align-content-center">
+                <button id="admin-player-spec" class="button tag">📊</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="admin-player-spec-modal" class="modal">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+        <p class="image">
+            <img id="admin-player-spec-image" src="" alt="">
+        </p>
+    </div>
+</div>
+{{end}}
