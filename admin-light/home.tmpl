@@ -16,14 +16,19 @@
                 {{end}}
                 {{if .CanKillStreamer}}
                 <div class="cell is-align-content-center notification">
-                    <button class="button is-fullwidth" hx-trigger="click" hx-post="/admin/api/streamer/stop" hx-confirm="Are you sure?">Kill Hanyuu-sama</button>
+                    <form>
+                        {{.CSRFTokenInput}}
+                        <button class="button is-fullwidth" hx-trigger="click" hx-post="/admin/api/streamer/stop" hx-confirm="Are you sure?">Kill Hanyuu-sama</button>
+                    </form>
                 </div>
                 {{end}}
                 {{if .CanTemplateReload}}
-                {{block "template-reload" .TemplateReload}}
                 <div id="template-reload" class="cell is-align-content-center notification">
-                    <button class="button is-fullwidth" hx-target="#template-reload" hx-trigger="click" hx-post="/admin/api/website/reload-templates">Reload Templates</button>
-                    {{if .Reloaded}}Successfully reloaded templates{{else if .Error}}Failed to reload templates: {{.Error}}{{end}}
+                    <form>
+                        {{.CSRFTokenInput}}
+                        <button class="button is-fullwidth" hx-target="#template-reload" hx-trigger="click" hx-post="/admin/api/website/reload-templates">Reload Templates</button>
+                        {{with .TemplateReload}}{{if .Reloaded}}Successfully reloaded templates{{else if .Error}}Failed to reload templates: {{.Error}}{{end}}{{end}}
+                    </form>
                 </div>
                 {{end}}
                 {{end}}
