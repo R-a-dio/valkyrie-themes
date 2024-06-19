@@ -111,7 +111,7 @@
 <p class="title is-4 has-text-centered is-hidden-touch">Queue</p>
 <div class="notification fixed-grid has-1-cols py-3">
     <ul id="queue" class="grid">
-        {{range $song := .}}
+        {{range $song := (.Limit 5)}}
         <div class="cell is-align-content-center">
             <li class="columns is-mobile is-vcentered">
             {{if not $song.IsUserRequest}}
