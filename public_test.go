@@ -36,7 +36,7 @@ var publicInputs = []templates.TemplateSelectable{
 }
 
 func TestPublicZeroInput(t *testing.T) {
-	tmpl, err := templates.FromDirectory(".")
+	tmpl, err := templates.FromDirectory(".", nil)
 	require.NoError(t, err)
 	tmpl.Production = true
 
@@ -60,7 +60,7 @@ func TestPublicZeroInput(t *testing.T) {
 }
 
 func TestPublicCSRFTokenInput(t *testing.T) {
-	tmpl, err := templates.FromDirectory(".")
+	tmpl, err := templates.FromDirectory(".", nil)
 	require.NoError(t, err)
 	tmpl.Production = true
 

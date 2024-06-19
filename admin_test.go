@@ -28,7 +28,7 @@ var adminInputs = []templates.TemplateSelectable{
 }
 
 func TestAdminZeroInput(t *testing.T) {
-	tmpl, err := templates.FromDirectory(".")
+	tmpl, err := templates.FromDirectory(".", nil)
 	require.NoError(t, err)
 	tmpl.Production = true
 
@@ -52,7 +52,7 @@ func TestAdminZeroInput(t *testing.T) {
 }
 
 func TestAdminCSRFTokenInput(t *testing.T) {
-	tmpl, err := templates.FromDirectory(".")
+	tmpl, err := templates.FromDirectory(".", nil)
 	require.NoError(t, err)
 	tmpl.Production = true
 
