@@ -110,6 +110,15 @@
 {{define "queue"}}
 <p class="title is-4 has-text-centered is-hidden-touch">Queue</p>
 <div class="notification fixed-grid has-1-cols py-3">
+{{if not (Status.User | IsRobot)}}
+    <h3 id="thread" class="title has-text-centered pt-5">
+        {{if Status.Thread}}
+        <a class="has-text-link" href="{{Status.Thread}}" target="_blank">Thread up!</a>
+        {{else}}
+        There is no thread up.
+        {{end}}
+    </h3>
+{{else}}
     <ul id="queue" class="grid">
         {{range $song := (.Limit 5)}}
         <div class="cell is-align-content-center">
@@ -125,6 +134,7 @@
         </div>
         {{end}}
     </ul>
+{{end}}
 </div>
 {{end}}
 {{define "streamer"}}

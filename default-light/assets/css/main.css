@@ -272,7 +272,8 @@ article a {
 }
 
 #lastplayed,
-#queue {
+#queue,
+#thread {
     min-height: calc(256px - 2.5rem)
 }
 
