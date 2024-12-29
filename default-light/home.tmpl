@@ -48,8 +48,13 @@
                 <div class="cell" sse-swap="lastplayed">
                     {{template "lastplayed" .LastPlayed}}
                 </div>
-                <div class="cell" sse-swap="queue">
-                    {{template "queue" .Queue}}   
+                <div class="cell">
+                    <div sse-swap="thread">
+                        {{template "thread" .Status.Thread}}
+                    </div>
+                    <div sse-swap="queue">
+                        {{template "queue" .Queue}}
+                    </div>
                 </div>
             </div>
         </div>
@@ -63,6 +68,7 @@
     </div>
 </section>
 {{end}}
+
 {{define "nowplaying"}}
 <div id="current-song" class="columns is-vcentered" style="position:relative;">
     {{if gt (len .Song.Metadata) 35}}
@@ -89,9 +95,11 @@
     </div>
 </div>
 {{end}}
+
 {{define "listeners"}}
     Listeners: <span id="listener-count">{{.}}</span>
 {{end}}
+
 {{define "lastplayed"}}
 <p class="title is-4 has-text-centered is-hidden-touch">Last Played</p>
 <div class="notification fixed-grid has-1-cols py-3">
@@ -107,10 +115,11 @@
     </ul>
 </div>
 {{end}}
-{{define "queue"}}
+
+{{define "thread"}}
+{{if not (Status.User | IsRobot)}}
 <p class="title is-4 has-text-centered is-hidden-touch">Queue</p>
 <div class="notification fixed-grid has-1-cols py-3">
-{{if not (Status.User | IsRobot)}}
     <div id="thread" class="grid is-align-content-center title has-text-centered">
         {{if Status.Thread | IsValidThread}}
             {{if Status.Thread | IsImageThread}}
@@ -122,7 +131,14 @@
             There is no thread up.
         {{end}}
     </div>
-{{else}}
+</div>
+{{end}}
+{{end}}
+
+{{define "queue"}}
+{{if (Status.User | IsRobot)}}
+<p class="title is-4 has-text-centered is-hidden-touch">Queue</p>
+<div class="notification fixed-grid has-1-cols py-3">
     <ul id="queue" class="grid">
         {{range $song := (.Limit 5)}}
         <div class="cell is-align-content-center">
@@ -138,9 +154,10 @@
         </div>
         {{end}}
     </ul>
-{{end}}
 </div>
 {{end}}
+{{end}}
+
 {{define "streamer"}}
 <div>
     <div class="card-image">
