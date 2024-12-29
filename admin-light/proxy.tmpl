@@ -1,0 +1,37 @@
+{{define "content"}}
+<section class="section">
+    <div class="container">
+        <h2 class="title has-text-centered">Sources</h2>
+        <form hx-push-url="false" hx-target="#content">
+            {{.CSRFTokenInput}}
+            {{range $mount, $sources := .Sources}}
+            <h3 class="title has-text-centered">{{$mount}}</h3>
+            <table class="table is-striped is-bordered is-fullwidth is-hoverable">
+                <thead>
+                    <tr>
+                        <td>ID</td>
+                        <td>Duration</td>
+                        <td>Metadata</td>
+                        <td>User-Agent</td>
+                        {{if $.User.UserPermissions.Has "admin"}}<td>IP</td>{{end}}
+                        {{if $.User.UserPermissions.Has "proxy_kick"}}<td></td>{{end}}
+                    </tr>
+                </thead>
+                <tbody>
+                {{range $sources}}
+                <tr>
+                    <td>{{.ID}}</div>
+                    <td>{{Since .Start | HumanDuration}}</div>
+                    <td>{{.Metadata}}</div>
+                    <td>{{.UserAgent}}</div>
+                    {{if $.User.UserPermissions.Has "admin"}}<td>{{.IP}}</div>{{end}}
+                    {{if $.User.UserPermissions.Has "proxy_kick"}}<td><button class="button" hx-post="/admin/proxy/remove?id={{.ID}}" hx-push-url="false">Kick</button></div>{{end}}
+                </tr>
+                {{end}}
+                </tbody>
+            {{end}}
+            </form>
+        </div>
+    </div>
+</section>
+{{end}}
