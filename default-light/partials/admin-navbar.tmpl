@@ -19,7 +19,7 @@
                 {{if .User.UserPermissions.Has "pending_view"}}<a class="navbar-item" href="/admin/pending">Pending</a>{{end}}
                 {{if .User.UserPermissions.Has "database_view"}}<a class="navbar-item" href="/admin/songs">Song Database</a>{{end}}
                 {{if .User.UserPermissions.Has "admin"}}<a class="navbar-item" href="/admin/users">Users</a>{{end}}
-                {{if .User.UserPermissions.Has "grafana_view"}}<a class="navbar-item" hx-boost="false" target="_blank" href="/admin/grafana/">Grafana</a>{{end}}
+                {{if .User.UserPermissions.Has "telemetry_view"}}<a class="navbar-item" hx-boost="false" target="_blank" href="/admin/telemetry/">Telemetry</a>{{end}}
                 <a class="navbar-item" href="/admin/profile">Profile</a>
             </div>
         </div>
