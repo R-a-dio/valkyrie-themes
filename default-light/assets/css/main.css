@@ -201,10 +201,11 @@ article a {
     border-radius: 6px;
     padding: 4px 12px 4px 12px;
     overflow: visible;
+    text-wrap: nowrap;
 }
 
 .dj-image {
-    border-radius: 4px;
+    border-radius: 6px !important;
 }
 
 .dj-image:hover+.dj-image-name-64 {
@@ -231,7 +232,7 @@ article a {
 
 .content-border-top-light {
     border-top: 2px solid rgba(0, 0, 0, .1);
-    border-radius: 0px 0px 4px 4px;
+    border-radius: 0px 0px 6px 6px;
   }
 
 #radio-logo:hover {
@@ -247,7 +248,8 @@ article a {
     overflow: scroll;
     border: 2px solid hsl(0, 0%, 90%);
     right: -0.125rem;
-    top: calc(3.25rem + 1rem)
+    top: calc(3.25rem + 1rem);
+    scrollbar-width: none;
 }
 
 @media screen and (max-width:1023px) {
@@ -315,9 +317,13 @@ article a {
 
 .progress {
     --bulma-progress-border-radius: 4px !important;
-  }
+}
 
-  a.navbar-item:focus, a.navbar-item:focus-within, .navbar-link:focus, .navbar-link:focus-within {
+#current-song-progress {
+    background-color: var(--bulma-progress-bar-background-color);
+}
+
+a.navbar-item:focus, a.navbar-item:focus-within, .navbar-link:focus, .navbar-link:focus-within {
     background-color: initial;
 }
 
@@ -326,9 +332,28 @@ button.is-danger, button.is-info, button.is-primary, button.is-request, button.i
 }
 
 .has-rounded-corners {
-    border-radius: 4px;
+    border-radius: 6px;
 }
 
 .lp-meta:hover, .queue-meta:hover {
     white-space: wrap !important;
+}
+
+.no-background {
+    background-color: unset !important;
+}
+
+.svg-icon {
+    width: 1.25rem !important;
+    height: 1.25rem !important;
+}
+
+.svg-icon:hover {
+    cursor: pointer;
+}
+
+/* same as old site */
+#metadata, #dj-name {
+    font-weight: 500;
+    line-height: 1.1;
 }

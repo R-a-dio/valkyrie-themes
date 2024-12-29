@@ -21,7 +21,7 @@
   --radio-primary-1-h: 0;
   --radio-primary-1-s: 0%;
   --radio-primary-1-l: 13%;
-  --radio-primary-1: hsl(var(--radio-primary-1-h), var(--radio-primary-1-l), var(--radio-primary-1-s));
+  --radio-primary-1: hsl(var(--radio-primary-1-h), var(--radio-primary-1-s), var(--radio-primary-1-l));
 
   --radio-primary-2-h: 0;
   --radio-primary-2-s: 0%;
@@ -34,10 +34,12 @@
   --radio-secondary-2-h: 0;
   --radio-secondary-2-s: 0%;
   --radio-secondary-2-l: 10%;
-  --radio-secondary-2: hsl(var(--radio-secondary-2-h), var(--radio-secondary-2-l), var(--radio-secondary-2-s));
-  --radio-secondary-3: hsl(0, 0%, 7%);
+  --radio-secondary-2: hsl(var(--radio-secondary-2-h), var(--radio-secondary-2-s), var(--radio-secondary-2-l));
+  --radio-secondary-3: hsl(0, 0%, 9%);
 
   --radio-border: var(--radio-primary-2);
+  --radio-border-radius-1: 4px;
+  --radio-border-radius-2: 6px;
 
   --bulma-scheme-h: 0deg;
   --bulma-scheme-s: 0%;
@@ -54,7 +56,7 @@
 
 .cell,
 .column {
-  border-radius: 4px;
+  border-radius: var(--radio-border-radius-2);
 }
 
 .is-request {
@@ -87,9 +89,7 @@
 
 .notification {
   color: var(--text-primary);
-  --bulma-notification-h: var(--radio-secondary-2-h);
-  --bulma-notification-background-l: var(--radio-secondary-2-l);
-  --bulma-notification-s: var(--radio-secondary-2-s);
+  background-color: var(--radio-secondary-1);
 }
 
 // button
@@ -114,10 +114,6 @@ button.is-warning:hover {
   border-color: hsla(0, 0%, 100%, 25%);
   color: hsl(0, 0%, 80%) !important;
   transition: .125s all ease-in-out;
-}
-
-#options-button-dropdown .button {
-  background-color: var(--radio-primary-1);
 }
 
 a .button {
@@ -220,9 +216,6 @@ textarea::placeholder {
   transition: 0.125s all ease-in-out;
 }
 
-#current-song-progress {
-  background-color: var(--radio-primary-2);
-}
 
 // song info
 
@@ -248,13 +241,12 @@ textarea::placeholder {
 // misc or wip,
 
 #search-bar-popup>.columns:nth-child(even) {
-  background-color: var(--radio-secondary-2) !important;
+  background-color: var(--radio-secondary-3) !important;
   border-top: unset !important;
 }
 
 #search-bar-popup {
   border: 2px solid var(--radio-primary-3) !important;
-  scrollbar-width: thin;
 }
 
 #options-button-dropdown {
@@ -269,7 +261,7 @@ textarea::placeholder {
 
 .content-border-top {
   border-top: 2px solid var(--radio-primary-3) !important;
-  border-radius: 0px 0px 4px 4px;
+  border-radius: 0px 0px 6px 6px;
 }
 
 .lp-dj-image {
@@ -344,7 +336,8 @@ textarea::placeholder {
 
 .progress {
   --bulma-progress-value-background-color: var(--blue) !important;
-  --bulma-progress-border-radius: 4px !important;
+  --bulma-progress-border-radius: var(--radio-border-radius-1) !important;
+  --bulma-progress-bar-background-color: var(--radio-secondary-1);
 }
 
 .message,
@@ -359,4 +352,8 @@ textarea::placeholder {
 
 .card {
   box-shadow: none !important;
+}
+
+.svg-icon:hover {
+  filter: brightness(0.65);
 }
