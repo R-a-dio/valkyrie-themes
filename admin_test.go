@@ -6,7 +6,9 @@ import (
 	"strings"
 	"testing"
 
+	radio "github.com/R-a-dio/valkyrie"
 	"github.com/R-a-dio/valkyrie/templates"
+	"github.com/R-a-dio/valkyrie/util"
 	"github.com/R-a-dio/valkyrie/website/admin"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
@@ -28,7 +30,9 @@ var adminInputs = []templates.TemplateSelectable{
 }
 
 func TestAdminZeroInput(t *testing.T) {
-	tmpl, err := templates.FromDirectory(".", nil)
+	status := util.NewStaticValue(radio.Status{})
+
+	tmpl, err := templates.FromDirectory(".", templates.NewStatefulFunctions(status))
 	require.NoError(t, err)
 	tmpl.Production = true
 
@@ -52,7 +56,9 @@ func TestAdminZeroInput(t *testing.T) {
 }
 
 func TestAdminCSRFTokenInput(t *testing.T) {
-	tmpl, err := templates.FromDirectory(".", nil)
+	status := util.NewStaticValue(radio.Status{})
+
+	tmpl, err := templates.FromDirectory(".", templates.NewStatefulFunctions(status))
 	require.NoError(t, err)
 	tmpl.Production = true
 
