@@ -2,10 +2,7 @@
 <section class="section">
     <div class="container">
         <div class="content">
-            <div class="title has-text-centered mb-6 is-hidden-mobile">
-                <h3>Search & Request</h3>
-            </div>
-            <p class="has-text-centered">Search for something! You can click on the songs to show some additional information.</p>
+            <p class="has-text-centered">Search for something! You can click on the plus icon to show some additional information about the song.</p>
             <div class="columns is-centered mb-5">
                 <form action="/search" class="column is-8 control is-flex" hx-boost="true" hx-push-url="true" hx-target="#search-content" hx-select="#search-content">
                     {{.CSRFLegacyFix}}
@@ -30,10 +27,10 @@
                         <div class="cell">
                             <div class="fixed-grid has-12-cols">
                                 <div class="grid">
-                                    <div class="cell is-col-span-11 has-background-radio-secondary-1 is-align-content-center has-text-centered p-5">{{.Metadata}}
-                                        <div class="button tag is-small is-pulled-right" onclick="toggleDropdown(this.parentElement.parentElement.parentElement.parentElement)">🔖</div>
+                                    <div class="cell is-col-span-11 has-background-radio-secondary-1 is-align-content-center has-text-centered p-2">{{.Metadata}}
+                                        <div class="tag is-small is-pulled-right no-background" onclick="toggleDropdown(this.parentElement.parentElement.parentElement.parentElement)"><svg class="svg-icon"><use href="assets/default-light/svg/sprites.svg#plus"></use></svg></div>
                                     </div>
-                                    <div class="cell is-col-span-1 has-background-radio-secondary-1 is-align-content-center p-4">
+                                    <div class="cell is-col-span-1 has-background-radio-secondary-1 is-align-content-center p-2">
                                     {{block "request-form" SongPair . $}}
                                         <form method="POST" action="/v1/request?trackid={{.TrackID}}&q={{.Data.Query}}&page={{.Data.Page.Nr}}"
                                             hx-post="/v1/request?trackid={{.TrackID}}&q={{.Data.Query}}&page={{.Data.Page.Nr}}"

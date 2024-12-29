@@ -2,9 +2,6 @@
 <section class="section" hx-trigger="load delay:30s" hx-get="/queue" hx-target="#content">
     <div class="container">
         <div class="content">
-            <div class="title has-text-centered mb-6 is-hidden-mobile">
-                <h3>Queue</h3>
-            </div>
             <div class="fixed-grid has-1-cols">
                 <div class="grid">
                     {{range $song := $.Queue}}
@@ -24,12 +21,12 @@
             {{if not $.IsUserRequest}}
             <div class="cell is-col-span-2 has-background-radio-secondary-1 is-col-span-0-mobile is-align-content-center has-text-centered is-hidden-mobile p-4"><time datetime="{{$.ExpectedStartTime.Unix}}">{{Until $.ExpectedStartTime | PrettyDuration}}</time></div>
             <div class="cell is-col-span-10 is-col-span-12-mobile has-background-radio-secondary-1 is-align-content-center has-text-centered p-4">{{$.Metadata}}
-                <div class="button tag is-small is-pulled-right" onclick="toggleDropdown(this.parentElement.parentElement.parentElement.parentElement)">🔖</div>
+                <div class="tag is-small is-pulled-right px-0 no-background"><svg class="svg-icon" data-icon-type="plus"  onclick="toggleIcon(this);toggleDropdown(this.parentElement.parentElement.parentElement.parentElement.parentElement);"><use href="assets/default-light/svg/sprites.svg#plus"></use></svg></div>
             </div>
             {{else}}
             <div class="cell is-col-span-2 has-background-radio-secondary-1 is-align-content-center has-text-centered p-4 is-hidden-mobile is-request"><time datetime="{{$.ExpectedStartTime.Unix}}">{{Until $.ExpectedStartTime | PrettyDuration}}</time></div>
             <div class="cell is-col-span-9 is-col-span-12-mobile has-background-radio-secondary-1 is-align-content-center has-text-centered p-4 is-request" style="color:var(--blue)">{{$.Metadata}}
-                <div class="button tag is-small is-pulled-right" onclick="toggleDropdown(this.parentElement.parentElement.parentElement.parentElement)">🔖</div>
+                <div class="tag is-small is-pulled-right px-0 no-background"><svg class="svg-icon" data-icon-type="plus"  onclick="toggleIcon(this);toggleDropdown(this.parentElement.parentElement.parentElement.parentElement.parentElement);"><use href="assets/default-light/svg/sprites.svg#plus"></use></svg></div>
             </div>
             <div class="cell is-col-span-1 column has-background-radio-secondary-1 is-align-content-center has-text-centered ml-2 is-hidden-mobile is-request">/r/</div>
             {{end}}
