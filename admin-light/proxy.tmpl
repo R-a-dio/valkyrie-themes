@@ -5,11 +5,11 @@
         <form hx-push-url="false" hx-target="#content">
             {{.CSRFTokenInput}}
             {{range $mount, $sources := .Sources}}
-            <h3 class="title has-text-centered">{{$mount}}</h3>
+            <h3 class="has-text-centered">{{$mount}}</h3>
             <table class="table is-striped is-bordered is-fullwidth is-hoverable">
                 <thead>
                     <tr>
-                        <td>ID</td>
+                        <td>User</td>
                         <td>Duration</td>
                         <td>Metadata</td>
                         <td>User-Agent</td>
@@ -20,7 +20,7 @@
                 <tbody>
                 {{range $sources}}
                 <tr>
-                    <td>{{.ID}}</div>
+                    <td>{{.User.Username}}</div>
                     <td>{{Since .Start | HumanDuration}}</div>
                     <td>{{.Metadata}}</div>
                     <td>{{.UserAgent}}</div>
