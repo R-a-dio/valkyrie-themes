@@ -2,12 +2,8 @@
 <section class="section">
     <div class="container">
         <div class="content">
-            <div class="title has-text-centered is-hidden-mobile">
-                <h3>Schedule</h3>
-            </div>
-
             <div class="columns block has-background-radio-secondary-1 has-text-centered mb-5">
-                <div class="column">Times are in EST. All times and days are subject to change. Any stream can be cancelled without prior notice. If you're wondering if a stream will be held, don't hesitate to ask in chat.</div>
+                <div class="column">Times are in EST (<a onclick="processElementTimezones('.schedule-text')">click me</a> to attempt to convert to your local time). All times and days are subject to change. Any stream can be cancelled without prior notice. If you're wondering if a stream will be held, don't hesitate to ask in chat.</div>
             </div>
 
             <div class="fixed-grid has-1-cols-mobile block">
@@ -43,7 +39,7 @@
                 <img class="dj-image" src="{{if .Owner}}/api/dj-image/{{.Owner.DJ.Image}}{{else}}/assets/images/mystery-dj.png{{end}}" />
             </div>
         </div>
-        <div class="column has-background-radio-secondary-1 is-align-content-center has-text-centered is-col-span-3" style="word-wrap:anywhere;">{{if .Owner}}{{.Owner.DJ.Text}}{{else}}{{.Text}}{{end}}</div>
+        <div class="column has-background-radio-secondary-1 is-align-content-center has-text-centered is-col-span-3 schedule-text" data-weekday="{{.Weekday}}" style="word-wrap:anywhere;">{{if .Owner}}{{.Owner.DJ.Text}}{{else}}{{.Text}}{{end}}</div>
     </div>
 </div>
 <!-- mobile -->
@@ -53,7 +49,7 @@
         <h6 class="column has-background-radio-secondary-1 is-align-content-center has-text-centered mb-2 ml-1">{{if .Owner}}{{.Owner.DJ.Name}}{{else}}Nobody{{end}}</h6>
     </div>
     <div class="columns is-flex-1">
-        <div class="column has-background-radio-secondary-1 is-align-content-center has-text-centered is-col-span-3" style="word-wrap:anywhere;">{{if .Owner}}{{.Owner.DJ.Text}}{{else}}{{.Text}}{{end}}</div>
+        <div class="column has-background-radio-secondary-1 is-align-content-center has-text-centered is-col-span-3 schedule-text" data-weekday="{{.Weekday}}" style="word-wrap:anywhere;">{{if .Owner}}{{.Owner.DJ.Text}}{{else}}{{.Text}}{{end}}</div>
     </div>
 </div>
 {{end}}
@@ -66,7 +62,7 @@
         <h6 class="column is-3 has-background-radio-secondary-1 is-align-content-center has-text-centered ml-2">{{if .Owner}}{{.Owner.DJ.Name}}{{else}}Nobody{{end}}</h6>
     </div>
     <div class="columns is-flex-1">
-        <div class="column has-background-radio-secondary-1 is-align-content-center has-text-centered is-col-span-3" style="word-wrap:anywhere;">{{if .Owner}}{{.Owner.DJ.Text}}{{else}}{{.Text}}{{end}}</div>
+        <div class="column has-background-radio-secondary-1 is-align-content-center has-text-centered is-col-span-3 schedule-text" data-weekday="{{.Weekday}}" style="word-wrap:anywhere;">{{if .Owner}}{{.Owner.DJ.Text}}{{else}}{{.Text}}{{end}}</div>
         <div class="column is-3 has-background-radio-secondary-1 is-align-content-center is-col-span-1 p-3 ml-2">
             <div class="image is-square">
                 <img class="dj-image" src="{{if .Owner}}/api/dj-image/{{.Owner.DJ.Image}}{{else}}/assets/images/mystery-dj.png{{end}}" />
@@ -81,7 +77,7 @@
         <h6 class="column has-background-radio-secondary-1 is-align-content-center has-text-centered mb-2 ml-1">{{if .Owner}}{{.Owner.DJ.Name}}{{else}}Nobody{{end}}</h6>
     </div>
     <div class="columns is-flex-1">
-        <div class="column has-background-radio-secondary-1 is-align-content-center has-text-centered is-col-span-3" style="word-wrap:anywhere;">{{if .Owner}}{{.Owner.DJ.Text}}{{else}}{{.Text}}{{end}}</div>
+        <div class="column has-background-radio-secondary-1 is-align-content-center has-text-centered is-col-span-3 schedule-text" data-weekday="{{.Weekday}}" style="word-wrap:anywhere;">{{if .Owner}}{{.Owner.DJ.Text}}{{else}}{{.Text}}{{end}}</div>
     </div>
 </div>
 {{end}}
@@ -91,14 +87,14 @@
 <div id="friday" class="cell is-col-span-2 is-col-span-1-mobile is-hidden-mobile" style="width:calc(100% + (0.75rem / 2));">
     <div class="columns is-multiline">    
         <h6 class="column is-12 has-background-radio-secondary-1 has-text-centered p-2 mb-2">{{.Weekday}}</h6>
-        <div class="column is-12 has-background-radio-secondary-1 has-text-centered p-4">{{.Text}}</div>
+        <div class="column is-12 has-background-radio-secondary-1 has-text-centered p-4 schedule-text" data-weekday="{{.Weekday}}">{{.Text}}</div>
     </div>
 </div>
 <!-- mobile -->
 <div id="friday" class="cell is-col-span-2 is-col-span-1-mobile is-hidden-tablet">
     <div class="columns is-multiline">    
         <h6 class="column is-12 has-background-radio-secondary-1 has-text-centered p-2 mb-2">{{.Weekday}}</h6>
-        <div class="column is-12 has-background-radio-secondary-1 has-text-centered p-4">{{.Text}}</div>
+        <div class="column is-12 has-background-radio-secondary-1 has-text-centered p-4 schedule-text" data-weekday="{{.Weekday}}">{{.Text}}</div>
     </div>
 </div>
 {{end}}

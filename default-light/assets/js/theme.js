@@ -75,6 +75,94 @@ function countNewsInputCharacters(event) {
     }
 }
 
+function toggleIcon(element, iconMap = new Map([
+  ['plus', 'minus'],
+  ['minus', 'plus']
+])) {
+  const iconType = element.dataset.iconType;
+  const useElement = element.querySelector('use');
+  const currentHref = useElement.getAttribute('href');
+
+  if (iconMap.has(iconType)) {
+      const newIcon = iconMap.get(iconType);
+      useElement.setAttribute('href', currentHref.replace(`#${iconType}`, `#${newIcon}`));
+      element.dataset.iconType = newIcon;
+  }
+}
+
+function addTimezoneContext(text, weekday = null) {
+  const userOffset = -(new Date().getTimezoneOffset()) / 60;
+  const estOffset = -5;
+  const diffFromEST = userOffset - estOffset;
+  
+  const weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  const weekdayIndex = weekday ? weekdays.indexOf(weekday) : new Date().getDay();
+
+  const baseDate = new Date();
+  const currentDayIndex = baseDate.getDay();
+  const diff = weekdayIndex - currentDayIndex;
+  baseDate.setDate(baseDate.getDate() + diff);
+  
+  return text.replace(
+      /\b(\d{1,2}(?::\d{2})?(?:\s*[AaPp][Mm])?|\d{2}:\d{2})\b/g, 
+      (match) => {
+          let hour = 0;
+          let minutes = 0;
+          
+          if (match.includes(':')) {
+              const [h, m] = match.split(':');
+              hour = parseInt(h);
+              minutes = parseInt(m);
+              if (match.toLowerCase().includes('pm') && hour < 12) hour += 12;
+              if (match.toLowerCase().includes('am') && hour === 12) hour = 0;
+          } else {
+              hour = parseInt(match);
+              if (match.toLowerCase().includes('pm') && hour < 12) hour += 12;
+              if (match.toLowerCase().includes('am') && hour === 12) hour = 0;
+          }
+          
+          const oldDate = new Date(baseDate);
+          oldDate.setHours(hour, minutes, 0, 0);
+          
+          const newDate = new Date(oldDate);
+          newDate.setHours(hour + diffFromEST, minutes, 0, 0);
+          
+          let newHour = newDate.getHours();
+          let period = 'AM';
+          
+          if (newHour >= 12) {
+              period = 'PM';
+              if (newHour > 12) newHour -= 12;
+          }
+          if (newHour === 0) newHour = 12;
+          
+          const formattedNewTime = `${newHour}${minutes ? ':' + String(minutes).padStart(2, '0') : ''} ${period}`;
+          
+          const oldDay = weekdays[oldDate.getDay()];
+          const newDay = weekdays[newDate.getDay()];
+          const dayChanged = oldDate.getDay() !== newDate.getDay();
+          
+          if (dayChanged) {
+              return `${match} <b style="font-size:0.8rem;">(${formattedNewTime} on ${newDay} for (You))</b>`;
+          } else {
+              return `${match} <b style="font-size:0.8rem;">(${formattedNewTime} for (You))</b>`;
+          }
+      }
+  );
+}
+
+function processElementTimezones(className) {
+  const elementsToProcess = document.querySelectorAll(`${className}:not([data-timezone-processed])`);
+  
+  elementsToProcess.forEach(element => {
+      const originalText = element.textContent || element.innerText;
+      const weekday = element.dataset.weekday;
+      const processedText = addTimezoneContext(originalText, weekday);
+      element.innerHTML = processedText;
+      element.setAttribute('data-timezone-processed', 'true');
+  });
+}
+
 htmx.onLoad((event) => {
     // Functions to open and close a modal
     function openModal($el) {
@@ -116,4 +204,4 @@ htmx.onLoad((event) => {
         closeAllModals();
       }
     });
-  });
+});
