@@ -113,11 +113,11 @@
     border-top: 2px rgba(0, 0, 0, .1) solid;
 }
 
-span {
+/*span {
     word-break: unset;
     overflow: hidden;
     text-overflow: ellipsis;
-}
+}*/
 
 .message-header a,
 article a {
@@ -359,11 +359,6 @@ button.is-danger, button.is-info, button.is-primary, button.is-request, button.i
     line-height: 1.1;
 }
 
-.booth-button {
-    height: 40px !important;
-    margin-top: auto;
-}
-
 .booth-tab-button {
     background-color: var(--radio-border) !important;
     border-color: var(--radio-secondary-3) !important;
@@ -372,4 +367,22 @@ button.is-danger, button.is-info, button.is-primary, button.is-request, button.i
 .booth-tab-button:hover {
     background-color: var(--radio-border) !important;
     border-color: var(--radio-primary-3) !important;
+}
+
+#booth-dropdown button:hover {
+    border-color: 1px solid var(--radio-primary-1) !important;
+}
+
+.progress-wrapper {
+    display: flex;
+}
+
+#current-song-progress, .progress-text {
+    min-width: 100%;
+    text-align: center;
+}
+
+.progress-text {
+    margin-left: -100%; 
+    mix-blend-mode: plus-lighter;
 }

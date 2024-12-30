@@ -1,107 +1,132 @@
 {{define "content"}}
 <div class="container">
     <div class="section">
-        <div class="fixed-grid has-4-cols">
+        <div class="fixed-grid has-10-cols">
             <div class="grid">
-                <div class="cell is-col-span-1 box has-background-radio-secondary-1 mb-0">
-                    <div class="grid is-fullheight">
-                        <div class="cell title is-flex is-justify-content-center is-align-self-center has-text-weight-light mb-0">Streambooth</div>
+                <div class="cell is-flex box is-col-span-3 is-row-span-1 is-justify-content-center is-align-self-center has-background-radio-secondary-1 has-text-weight-light m-0 py-2">USERNAME: {{.User.Username}}</div>
+                <div class="cell is-flex box is-col-span-3 is-row-span-1 is-justify-content-center is-align-self-center has-background-radio-secondary-1 has-text-weight-light m-0 py-2">PASSWORD: SUPER_SECRET</div>
+                <div class="cell is-flex is-col-span-2 is-row-span-1 is-size-3 is-family-code is-justify-content-center is-align-self-center m-0" style="font-variant:ordinal;">STREAMBOOTH</div>
+                <div class="cell is-flex is-col-span-2 is-row-span-2 is-justify-content-center is-align-self-center has-text-weight-light m-0 p-0">
+                    <div class="columns is-flex-direction-column">
+                        {{template "streamer" .Status.User}}
                     </div>
                 </div>
-                <div class="cell is-col-span-2 box has-background-radio-secondary-1 mb-0">
-                    <div class="grid is-fullheight">
-                        <p class="cell is-flex is-justify-content-center is-align-self-center">Radical new stream page where you can do something</p>
-                    </div>
-                </div>
-                <div class="cell box is-col-span-1 is-row-span-2 is-flex is-flex-direction-column is-justify-content-center is-align-items-center has-background-radio-secondary-1 py-0 mb-0">
-                    <div>USERNAME: {{.User.Username}}</div>
-                    <div>PASSWORD: SUPER_SECRET</div>
-                    <div>DJ NAME: {{.User.DJ.Name}}</div>
-                </div>
-                <div class="cell is-flex is-flex-direction-column is-col-span-3 is-row-span-1">
+                <div class="cell is-col-span-8 is-row-span-1">
                     <div id="booth-tab-container" class="columns m-0">
-                        <div class="column is-size-4 has-text-weight-light has-text-centered has-background-radio-secondary-1 py-2 px-5">Streaming Info</div>
-                        <button class="column button booth-tab-button is-narrow ml-2 px-4 py-2" data-target="streaming-info" onclick="switchTab(this)">Streaming</button>
-                        <button class="column button booth-tab-button is-narrow ml-2 px-4 py-2" data-target="hanyuu-info" onclick="switchTab(this)">Hanyuu</button>
-                        <button class="column button booth-tab-button is-narrow ml-2 px-4 py-2" data-target="other-info" onclick="switchTab(this)">Other</button>
+                        <div class="column has-text-centered has-text-centered has-background-radio-secondary-1 py-2">Streaming Info</div>
+                        <button class="column is-narrow button booth-tab-button is-narrow ml-3 py-2" data-target="streaming-info" onclick="switchTab(this)">Streaming</button>
+                        <button class="column is-narrow button booth-tab-button is-narrow ml-3 py-2" data-target="hanyuu-info" onclick="switchTab(this)">Hanyuu</button>
+                        <button class="column is-narrow button booth-tab-button is-narrow ml-3 py-2" data-target="other-info" onclick="switchTab(this)">Other</button>
                     </div>
-                    </div>
-                <div class="cell is-flex is-flex-direction-column is-col-span-3 is-row-span-2">
+                </div>
+                <div class="cell is-flex is-flex-direction-column is-col-span-8 is-row-span-3">
                     <div class="box is-flex-1 has-background-radio-secondary-1">
                         <div id="streaming-info" class="grid">
-                            <p class="cell is-col-span-5">Something about streaming possibly also Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text</p>
-                            <p class="cell is-col-span-5">Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text</p>
-                            <p class="cell is-size-5 has-text-weight-light is-col-span-5">Subdescription</p>
-                            <p class="cell is-col-span-5">Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text</p>
-                            <p class="cell is-col-span-5">Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text</p>
-                            <p class="cell is-col-span-5">Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text TextText Text Text</p>
-                            <p class="cell is-col-span-5">Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text</p> 
+                            <p class="cell is-col-span-8">Something about streaming possibly also Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text</p>
+                            <p class="cell is-col-span-8">Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text</p>
+                            <p class="cell is-col-span-8 is-size-5 has-text-weight-light">Subdescription</p>
+                            <p class="cell is-col-span-8">Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text</p>
+                            <p class="cell is-col-span-8">Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text</p>
+                            <p class="cell is-col-span-8">Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text TextText Text Text</p>
+                            <p class="cell is-col-span-8">Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text</p> 
                         </div>
                         <div id="hanyuu-info" class="grid is-hidden">
-                            <p class="cell is-col-span-5">Something about Hanyuu here maybe if necessary</p>
+                            <p class="cell">Something about Hanyuu here maybe if necessary</p>
                         </div>
-                        <div id="other-info" class="grid is-hidden">
-                            <p class="cell is-col-span-5">Of course these don't have to be just text, could put anything in here really</p>
+                        <div id="other-info" class="columns is-hidden m-0">
+                            <div class="column is-3 columns is-flex-direction-column">
+                                <p class="column">Of course these don't have to be just text, could put anything in here really, like these buttons</p>
+                                <button class="column button m-2">Kill Hanyuu</button>
+                                <button class="column button m-2">Kill Hanyuu</button>
+                                <button class="column button m-2">Kill Hanyuu</button>
+                            </div>
+                            <div class="column is-3 columns is-flex-direction-column m-4">
+                                <p class="column">Or more of these</p>
+                                <div class="column has-background-radio-secondary-1 m-0 p-0" style="background-color:var(--radio-primary-1)!important;">
+                                    <div class="columns has-text-centered is-flex-direction-column p-4">
+                                        <p class="column">This is the current thread, you can update it here or set an image by prepending 'image:' to an URL</p>
+                                        <form class="is-align-self-stretch px-3">
+                                            <input id="booth-thread-input" class="input has-text-centered" type="text" placeholder="None">
+                                        </form>
+                                        <button class="button booth-button is-align-self-stretch m-3">Update</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="column is-3 columns is-flex-direction-column">
+                                <div class="columns has-text-centered is-flex-direction-column p-4" style="background-color:var(--radio-primary-1)!important;">
+                                    <p class="column">This is the current thread, you can update it here or set an image by prepending 'image:' to an URL</p>
+                                    <form class="is-align-self-stretch px-3">
+                                        <input id="booth-thread-input" class="input has-text-centered" type="text" placeholder="None">
+                                    </form>
+                                    <button class="button booth-button is-align-self-stretch m-3">Update</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="cell is-col-span-1 is-row-span-1 box has-background-radio-secondary-1 mb-0">
-                    <div class="grid has-text-centered">
-                        <div class="cell title has-text-weight-light mb-0">Kill Streamer</div>
-                        <p class="cell">This kills the Hanyuu. You must connect within x seconds after the current song ends.</p>
+                <div class="cell is-col-span-2 is-row-span-1">
+                    <div id="dj-name" class="column has-text-centered has-background-radio-secondary-1">Current DJ: {{.Status.User.DJ.Name}}</div>
+                </div>
+                <div class="cell is-col-span-2 is-row-span-1 m-0 p-0">
+                    <div class="columns has-text-centered is-flex-direction-column has-background-radio-secondary-1 m-0 p-0">
+                        <p class="column p-4">This kills the Hanyuu. You must connect within <b style="color:lightcoral">replaceme</b> seconds after the song ends.</p>
                         {{$progress := .Status.SongInfo.Start | Since}}
-                        <progress id="current-song-progress" class="progress is-large mb-0" value="{{$progress | ToSecond}}" max="{{.Status.Song.Length.Seconds}}"></progress>
-                        <button class="cell button booth-button {{if not .ProxyStatus}}disabled{{end}}">Kill Hanyuu</button>
+                        <div class="progress-container is-fullwidth">
+                            <div class="progress-wrapper">
+                              <progress id="current-song-progress" class="progress is-large px-4 mb-0" value="{{$progress | ToSecond}}" max="{{.Status.Song.Length.Seconds}}"></progress>
+                              <div class="progress-text">{{with .Status}}<div><span id="progress-current" data-start="{{.SongInfo.Start.UnixMilli}}">{{$progress | MediaDuration}}</span> / <span id="progress-max">{{.Song.Length | MediaDuration}}</span></div>{{end}}</div>
+                            </div>
+                          </div>
+                        <button class="button is-align-self-stretch m-4 {{if not .ProxyStatus}}disabled{{end}}">Kill Hanyuu</button>
                     </div>
                 </div>
-                <div class="cell is-col-span-1 is-row-span-2 box has-background-radio-secondary-1 mb-0">
-                    <div class="grid has-text-centered">
-                        <div class="cell title has-text-weight-light mb-0">Thread</div>
-                        <p class="cell">This is the current thread, you can update it here and use an image by prepending 'image:' to an URL</p>
-                        <form>
-                            <input id="booth-something-input" class="input has-text-centered" type="text" placeholder="None">
+                <div class="cell box is-col-span-2 is-row-span-2 has-background-radio-secondary-1 m-0 p-0">
+                    <div class="columns has-text-centered is-flex-direction-column p-4">
+                        <p class="column">This is the current thread, you can update it here or set an image by prepending 'image:' to an URL</p>
+                        <form class="is-align-self-stretch px-3">
+                            <input id="booth-thread-input" class="input has-text-centered" type="text" placeholder="None">
                         </form>
-                        <button class="cell button booth-button">Update</button>
+                        <button class="button booth-button is-align-self-stretch m-3">Update</button>
                     </div>
                 </div>
-                <div class="cell is-col-span-3 is-row-span-1 m-3">
-                    <div class="columns is-size-7 is-family-code">
-                        <div class="column is-col-span-1 is-flex is-justify-content-center is-align-items-center has-background-radio-secondary-1 p-2">
+                <div class="cell is-col-span-8 is-row-span-1 m-3">
+                    <div class="columns is-size-7 is-family-code ">
+                        <div class="column is-narrow is-flex is-justify-content-center is-align-items-center has-background-radio-secondary-1 mb-0">
                             {{with .ProxyStatus}}
-                                {{if $.IsLive}}<svg class="svg-icon" style="color:hsl(121, 39%, 47%);" viewBox="0 0 24 24"><use href="/assets/default-light/svg/sprites.svg#circle"></use></svg><div class="ml-2 ">LIVE</div>{{else}}<svg class="svg-icon" style="color:hsl(232, 39%, 47%);" viewBox="0 0 24 24"><use href="/assets/default-light/svg/sprites.svg#circle"></use></svg><div class="ml-2 ">CONNECTED</div>{{end}}<div class="ml-2">at <a href="{{.MountName}}">{{.MountName}}</a></div>
+                                {{if $.IsLive}}<svg class="svg-icon" style="color:hsl(121, 40%, 40%);" viewBox="0 0 24 24"><use href="/assets/default-light/svg/sprites.svg#circle"></use></svg><div class="ml-2">LIVE</div>{{else}}<svg class="svg-icon" style="color:hsl(232, 40%, 40%);" viewBox="0 0 24 24"><use href="/assets/default-light/svg/sprites.svg#circle"></use></svg><div class="ml-2">CONNECTED</div>{{end}}<div class="ml-2">at <a href="{{.MountName}}">{{.MountName}}</a></div>
                             {{else}}
-                                <svg class="svg-icon" style="color:hsl(0, 39%, 47%);" viewBox="0 0 24 24"><use href="/assets/default-light/svg/sprites.svg#circle"></use></svg><div class="ml-2 ">Stream: DISCONNECTED</div>
+                                <svg class="svg-icon" style="color:hsl(0, 40%, 40%);" viewBox="0 0 24 24"><use href="/assets/default-light/svg/sprites.svg#circle"></use></svg><div class="ml-2">Stream: DISCONNECTED</div>
                             {{end}}
                         </div>
-                        <div class="column box is-col-span-1 is-flex is-justify-content-center is-align-items-center has-background-radio-secondary-1 mx-2 my-0 p-2">
+                        <div class="column is-narrow box is-flex is-justify-content-center is-align-items-center has-background-radio-secondary-1 mb-0 ml-3">
                             {{with .ProxyStatus}}
-                            <svg class="svg-icon" style="color:hsl(121, 39%, 47%);" viewBox="0 0 24 24"><use href="/assets/default-light/svg/sprites.svg#circle"></use></svg><div class="ml-2 ">Connected for {{.Start | Since}}</div>
+                            <svg class="svg-icon" style="color:hsl(121, 40%, 40%);" viewBox="0 0 24 24"><use href="/assets/default-light/svg/sprites.svg#circle"></use></svg><div class="ml-2">Connected for {{.Start | Since | HumanDuration}}</div>
                             {{else}}
-                                <svg class="svg-icon" style="color:hsl(0, 39%, 47%);" viewBox="0 0 24 24"><use href="/assets/default-light/svg/sprites.svg#circle"></use></svg><div class="ml-2 ">Uptime: NOT CONNECTED</div>
+                                <svg class="svg-icon" style="color:hsl(0, 40%, 40%);" viewBox="0 0 24 24"><use href="/assets/default-light/svg/sprites.svg#circle"></use></svg><div class="ml-2">Uptime: NOT CONNECTED</div>
                             {{end}}
                         </div>
-                        <div class="column box is-col-span-1 is-flex is-justify-content-center is-align-items-center has-background-radio-secondary-1 p-2">
+                        <div class="column box is-flex is-align-items-center has-background-radio-secondary-1 mb-0 ml-3" style="white-space:nowrap;overflow-x:auto;scrollbar-width:none;">
                             {{with .ProxyStatus}}
-                                <svg class="svg-icon" style="color:hsl(121, 39%, 47%);" viewBox="0 0 24 24"><use href="/assets/default-light/svg/sprites.svg#circle"></use></svg><div class="ml-2 ">{{.Metadata}}</div>
+                                <svg class="svg-icon" style="color:hsl(121, 40%, 40%);" viewBox="0 0 24 24"><use href="/assets/default-light/svg/sprites.svg#circle"></use></svg><div class="ml-2" style="overflow:auto;scrollbar-width:none;"><div>{{.Metadata}}</div></div>
                             {{else}}
-                            <svg class="svg-icon" style="color:hsl(0, 39%, 47%);" viewBox="0 0 24 24"><use href="/assets/default-light/svg/sprites.svg#circle"></use></svg><div class="ml-2 ">Metadata: NOT CONNECTED</div>
+                            <svg class="svg-icon" style="color:hsl(0, 40%, 40%);" viewBox="0 0 24 24"><use href="/assets/default-light/svg/sprites.svg#circle"></use></svg><div class="ml-2" style="overflow:auto;scrollbar-width:none;"><div style="float:left;">Metadata: NOT CONNECTED</div></div>
                             {{end}}
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="fixed-grid has-6-cols">
-            <div class="grid box has-background-radio-secondary-1">
-                <button class="cell button">Button1</button>
-                <button class="cell button">Button2</button>
-                <button class="cell button">Button3</button>
-                <button class="cell button">Button4</button>
-                <button class="cell button">Button5</button>
-                <button class="cell button">Button6</button>
             </div>
         </div>
     </div>
     {{printjson .}}
+</div>
+{{end}}
+
+{{define "streamer"}}
+<div class="column">
+    <div class="card-image">
+        <figure class="image is-square is-96x96">
+            <img src="/api/dj-image/{{.DJ.Image}}"/>
+        </figure>
+    </div>
 </div>
 {{end}}
