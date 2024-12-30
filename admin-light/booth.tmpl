@@ -46,8 +46,8 @@
                     </div>
                 </div>
                 <div class="cell is-col-span-1 is-row-span-1 box has-background-radio-secondary-1 mb-0">
-                    <div class="grid">
-                        <div class="cell title has-text-weight-light is-flex is-justify-content-center mb-0">Kill Streamer</div>
+                    <div class="grid has-text-centered">
+                        <div class="cell title has-text-weight-light mb-0">Kill Streamer</div>
                         <p class="cell">This kills the Hanyuu. You must connect within x seconds after the current song ends.</p>
                         {{$progress := .Status.SongInfo.Start | Since}}
                         <progress id="current-song-progress" class="progress is-large mb-0" value="{{$progress | ToSecond}}" max="{{.Status.Song.Length.Seconds}}"></progress>
@@ -55,8 +55,8 @@
                     </div>
                 </div>
                 <div class="cell is-col-span-1 is-row-span-2 box has-background-radio-secondary-1 mb-0">
-                    <div class="grid">
-                        <div class="cell title has-text-weight-light is-flex is-justify-content-center mb-0">Thread</div>
+                    <div class="grid has-text-centered">
+                        <div class="cell title has-text-weight-light mb-0">Thread</div>
                         <p class="cell">This is the current thread, you can update it here and use an image by prepending 'image:' to an URL</p>
                         <form>
                             <input id="booth-something-input" class="input has-text-centered" type="text" placeholder="None">
@@ -64,27 +64,27 @@
                         <button class="cell button booth-button">Update</button>
                     </div>
                 </div>
-                <div class="cell is-col-span-3 is-row-span-1">
-                    <div class="columns m-0 p-0">
-                        <div class="column is-col-span-1 is-flex is-justify-content-center is-align-items-center has-background-radio-secondary-1 py-2 mb-0">
+                <div class="cell is-col-span-3 is-row-span-1 m-3">
+                    <div class="columns is-size-7 is-family-code">
+                        <div class="column is-col-span-1 is-flex is-justify-content-center is-align-items-center has-background-radio-secondary-1 p-2">
                             {{with .ProxyStatus}}
-                                {{if $.IsLive}}[LIVE]{{else}}[CONNECTED]{{end}} <p class="cell title">{{.MountName}}</p>
+                                {{if $.IsLive}}<svg class="svg-icon" style="color:hsl(121, 39%, 47%);" viewBox="0 0 24 24"><use href="/assets/default-light/svg/sprites.svg#circle"></use></svg><div class="ml-2 ">LIVE</div>{{else}}<svg class="svg-icon" style="color:hsl(232, 39%, 47%);" viewBox="0 0 24 24"><use href="/assets/default-light/svg/sprites.svg#circle"></use></svg><div class="ml-2 ">CONNECTED</div>{{end}}<div class="ml-2">at <a href="{{.MountName}}">{{.MountName}}</a></div>
                             {{else}}
-                                [DISCONNECTED]
+                                <svg class="svg-icon" style="color:hsl(0, 39%, 47%);" viewBox="0 0 24 24"><use href="/assets/default-light/svg/sprites.svg#circle"></use></svg><div class="ml-2 ">Stream: DISCONNECTED</div>
                             {{end}}
                         </div>
-                        <div class="column box is-col-span-1 is-flex is-justify-content-center is-align-items-center has-background-radio-secondary-1 py-2 mx-4 mb-0">
+                        <div class="column box is-col-span-1 is-flex is-justify-content-center is-align-items-center has-background-radio-secondary-1 mx-2 my-0 p-2">
                             {{with .ProxyStatus}}
-                                Connected for {{.Start | Since}}
+                            <svg class="svg-icon" style="color:hsl(121, 39%, 47%);" viewBox="0 0 24 24"><use href="/assets/default-light/svg/sprites.svg#circle"></use></svg><div class="ml-2 ">Connected for {{.Start | Since}}</div>
                             {{else}}
-                                NOT CONNECTED
+                                <svg class="svg-icon" style="color:hsl(0, 39%, 47%);" viewBox="0 0 24 24"><use href="/assets/default-light/svg/sprites.svg#circle"></use></svg><div class="ml-2 ">Uptime: NOT CONNECTED</div>
                             {{end}}
                         </div>
-                        <div class="column box is-col-span-1 is-flex is-justify-content-center is-align-items-center has-background-radio-secondary-1 py-2 mb-0">
+                        <div class="column box is-col-span-1 is-flex is-justify-content-center is-align-items-center has-background-radio-secondary-1 p-2">
                             {{with .ProxyStatus}}
-                                {{.Metadata}}
+                                <svg class="svg-icon" style="color:hsl(121, 39%, 47%);" viewBox="0 0 24 24"><use href="/assets/default-light/svg/sprites.svg#circle"></use></svg><div class="ml-2 ">{{.Metadata}}</div>
                             {{else}}
-                                NOT CONNECTED
+                            <svg class="svg-icon" style="color:hsl(0, 39%, 47%);" viewBox="0 0 24 24"><use href="/assets/default-light/svg/sprites.svg#circle"></use></svg><div class="ml-2 ">Metadata: NOT CONNECTED</div>
                             {{end}}
                         </div>
                     </div>
