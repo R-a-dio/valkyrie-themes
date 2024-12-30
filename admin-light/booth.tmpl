@@ -19,23 +19,29 @@
                     <div>DJ NAME: {{.User.DJ.Name}}</div>
                 </div>
                 <div class="cell is-flex is-flex-direction-column is-col-span-3 is-row-span-1">
-                    <div class="columns m-0">
-                        <div class="column is-size-4 has-text-weight-light has-text-centered has-background-radio-secondary-1 py-2 px-5">Description</div>
-                        <button class="column button is-narrow ml-2 px-4 py-2">Hanyuu info</button>
-                        <button class="column button is-narrow ml-2 px-4 py-2">Streaming info</button>
-                        <button class="column button is-narrow ml-2 px-4 py-2">Something else</button>
+                    <div id="booth-tab-container" class="columns m-0">
+                        <div class="column is-size-4 has-text-weight-light has-text-centered has-background-radio-secondary-1 py-2 px-5">Streaming Info</div>
+                        <button class="column button booth-tab-button is-narrow ml-2 px-4 py-2" data-target="streaming-info" onclick="switchTab(this)">Streaming</button>
+                        <button class="column button booth-tab-button is-narrow ml-2 px-4 py-2" data-target="hanyuu-info" onclick="switchTab(this)">Hanyuu</button>
+                        <button class="column button booth-tab-button is-narrow ml-2 px-4 py-2" data-target="other-info" onclick="switchTab(this)">Other</button>
                     </div>
                     </div>
                 <div class="cell is-flex is-flex-direction-column is-col-span-3 is-row-span-2">
                     <div class="box is-flex-1 has-background-radio-secondary-1">
-                        <div is="booth-description" class="grid">
-                            <p class="cell is-col-span-5">Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text</p>
+                        <div id="streaming-info" class="grid">
+                            <p class="cell is-col-span-5">Something about streaming possibly also Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text</p>
                             <p class="cell is-col-span-5">Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text</p>
                             <p class="cell is-size-5 has-text-weight-light is-col-span-5">Subdescription</p>
                             <p class="cell is-col-span-5">Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text</p>
                             <p class="cell is-col-span-5">Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text</p>
                             <p class="cell is-col-span-5">Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text TextText Text Text</p>
                             <p class="cell is-col-span-5">Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text</p> 
+                        </div>
+                        <div id="hanyuu-info" class="grid is-hidden">
+                            <p class="cell is-col-span-5">Something about Hanyuu here maybe if necessary</p>
+                        </div>
+                        <div id="other-info" class="grid is-hidden">
+                            <p class="cell is-col-span-5">Of course these don't have to be just text, could put anything in here really</p>
                         </div>
                     </div>
                 </div>

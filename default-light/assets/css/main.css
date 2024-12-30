@@ -346,6 +346,7 @@ button.is-danger, button.is-info, button.is-primary, button.is-request, button.i
 .svg-icon {
     width: 1.25rem !important;
     height: 1.25rem !important;
+    vertical-align: middle;
 }
 
 .svg-icon:hover {
@@ -361,4 +362,14 @@ button.is-danger, button.is-info, button.is-primary, button.is-request, button.i
 .booth-button {
     height: 40px !important;
     margin-top: auto;
+}
+
+.booth-tab-button {
+    background-color: var(--radio-border) !important;
+    border-color: var(--radio-secondary-3) !important;
+}
+
+.booth-tab-button:hover {
+    background-color: var(--radio-border) !important;
+    border-color: var(--radio-primary-3) !important;
 }
