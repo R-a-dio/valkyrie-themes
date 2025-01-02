@@ -8,7 +8,7 @@
                 <span class="tag is-dark is-fullwidth py-1">{{.UserIdentifier}}</span>
             </div>
             <div class="column py-1">
-                <span class="tag is-info is-fullwidth py-1">{{HumanDuration .Length}}, 31.83MB, {{Div .Bitrate 1000}}kbps vbr</span>
+                <span style="cursor:pointer" class="tag is-info is-fullwidth py-1" onclick="adminPlayerPlay('/admin/pending-song/{{.ID}}')">{{HumanDuration .Length}}, ???MB, {{Div .Bitrate 1000}}kbps vbr</span>
             </div>
             <div class="column py-1">
                 <a class="tag is-warning has-text-dark is-fullwidth py-1" href="/admin/pending-song/{{.ID}}">{{.Filename}}</a>
@@ -90,6 +90,5 @@
             </div>
         </div>
     </form>
-    <audio class="is-fullwidth mt-2" controls preload="none" src="/admin/pending-song/{{.ID}}"></audio>
 </div>
 {{end}}

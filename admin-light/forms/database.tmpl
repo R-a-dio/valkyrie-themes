@@ -85,7 +85,7 @@
         <div class="column is-flex is-justify-content-end">
             <div class="buttons" style="flex-wrap:nowrap">
                 <a class="button is-success" href="{{.SongURL}}">Download</a>
-                <button type="button" hx-disable class="button is-info">Play</button>
+                <button type="button" hx-disable class="button is-info" onclick="adminPlayerPlay('{{.SongURL}}')">Play</button>
                 {{if .HasEdit}}
                     <button hx-disable-elt="this" hx-post="/admin/songs" class="button" type="submit" name="action" value="save">Save</button>
                     {{if .Song.NeedReplacement}}
