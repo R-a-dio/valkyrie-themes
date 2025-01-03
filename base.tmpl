@@ -1,6 +1,6 @@
 {{block "full-page" .}}
 <!DOCTYPE html>
-<html>
+<html style="height:100%;">
 {{block "full-head" .}}
 <head>
     <meta charset="utf-8">
@@ -17,7 +17,7 @@
     {{ block "styles" .}}{{end}}
 </head>
 {{end}}
-<body {{block "full-page-body" .}}{{end}} style="padding-bottom: 60px;" hx-ext="head-support">
+<body {{block "full-page-body" .}}{{end}} style="display:flex;flex-direction:column;height:100%;" hx-ext="head-support">
     {{with .StreamURL}}
     <div id="player" style="display: none;">
         <audio id="stream-audio" preload="none">
@@ -31,9 +31,9 @@
         {{ block "navbar" . }}{{end}}
         {{ block "content" . }}{{end}}
     {{end}}
-    {{template "footer"}}
     </div>
 {{template "preferences"}}
+{{template "footer"}}
 </body>
 </html>
 {{end}}
