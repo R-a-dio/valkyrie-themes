@@ -27,10 +27,10 @@
                         <div class="cell">
                             <div class="fixed-grid has-12-cols">
                                 <div class="grid">
-                                    <div class="cell is-col-span-11 has-background-radio-secondary-1 is-align-content-center has-text-centered p-2">{{.Metadata}}
+                                    <div class="cell is-col-span-11 has-background-radio-secondary-1 is-align-content-center has-text-centered p-3">{{.Metadata}}
                                         <div class="tag is-small is-pulled-right no-background" onclick="toggleDropdown(this.parentElement.parentElement.parentElement.parentElement)"><svg class="svg-icon"><use href="assets/default-light/svg/sprites.svg#plus"></use></svg></div>
                                     </div>
-                                    <div class="cell is-col-span-1 has-background-radio-secondary-1 is-align-content-center p-2">
+                                    <div class="cell is-col-span-1 is-align-content-center p-0 m-0">
                                     {{block "request-form" SongPair . $}}
                                         <form method="POST" action="/v1/request?trackid={{.TrackID}}&q={{.Data.Query}}&page={{.Data.Page.Nr}}"
                                             hx-post="/v1/request?trackid={{.TrackID}}&q={{.Data.Query}}&page={{.Data.Page.Nr}}"
@@ -38,11 +38,11 @@
                                             hx-push-url="false">
                                             {{.Data.CSRFTokenInput}}
                                             {{if not .HasTrack}}
-                                                <button type="submit" class="button is-warning">Broken</button>
+                                                <button type="submit" class="button is-warning is-fullwidth">Broken</button>
                                             {{else if and .Data.CanRequest .Requestable}}
-                                                <button type="submit" class="button is-primary" name="id" value="{{.TrackID}}" onclick="event.stopPropagation()">Request</button>
+                                                <button type="submit" class="button is-primary is-fullwidth" name="id" value="{{.TrackID}}" onclick="event.stopPropagation()">Request</button>
                                             {{else}}
-                                                <button type="submit" class="button is-danger" name="id" value="{{.TrackID}}" onclick="event.stopPropagation()" disabled>Request</button>
+                                                <button type="submit" class="button is-danger is-fullwidth" name="id" value="{{.TrackID}}" onclick="event.stopPropagation()" disabled>Request</button>
                                             {{end}}
                                         </form>
                                     {{end}}
