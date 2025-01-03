@@ -40,11 +40,11 @@ func TestAdminZeroInput(t *testing.T) {
 	req := httptest.NewRequest("GET", "/", nil)
 
 	for _, theme := range tmpl.ThemeNamesAdmin() {
-		if !strings.HasPrefix(theme, templates.ADMIN_PREFIX) {
+		if !strings.HasPrefix(string(theme), templates.ADMIN_PREFIX) {
 			continue
 		}
 		req = req.WithContext(templates.SetTheme(req.Context(), theme, true))
-		t.Run(theme, func(t *testing.T) {
+		t.Run(string(theme), func(t *testing.T) {
 			for _, in := range adminInputs {
 				t.Run(in.TemplateBundle()+"/"+in.TemplateName(), func(t *testing.T) {
 					err := exec.Execute(io.Discard, req, in)

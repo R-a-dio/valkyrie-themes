@@ -5,7 +5,6 @@ import (
 	"io"
 	"net/http/httptest"
 	"reflect"
-	"strings"
 	"testing"
 
 	radio "github.com/R-a-dio/valkyrie"
@@ -48,11 +47,11 @@ func TestPublicZeroInput(t *testing.T) {
 	req := httptest.NewRequest("GET", "/", nil)
 
 	for _, theme := range tmpl.ThemeNames() {
-		if strings.HasPrefix(theme, templates.ADMIN_PREFIX) {
+		if templates.IsAdminTheme(theme) {
 			continue
 		}
 		req = req.WithContext(templates.SetTheme(req.Context(), theme, true))
-		t.Run(theme, func(t *testing.T) {
+		t.Run(string(theme), func(t *testing.T) {
 			for _, in := range publicInputs {
 				t.Run(in.TemplateBundle()+"/"+in.TemplateName(), func(t *testing.T) {
 					err := exec.Execute(io.Discard, req, in)
@@ -77,7 +76,7 @@ func TestPublicCSRFTokenInput(t *testing.T) {
 
 const csrfTokenInput = "CSRFTokenInput"
 
-func runCSRFTokenTest(t *testing.T, themes []string, exec templates.Executor, inputs []templates.TemplateSelectable) {
+func runCSRFTokenTest(t *testing.T, themes []radio.ThemeName, exec templates.Executor, inputs []templates.TemplateSelectable) {
 	t.SkipNow() // TODO: fix this test
 	var toTest []func(template.HTML) templates.TemplateSelectable
 
@@ -118,7 +117,7 @@ func runCSRFTokenTest(t *testing.T, themes []string, exec templates.Executor, in
 	for _, theme := range themes {
 		req = req.WithContext(templates.SetTheme(req.Context(), theme, true))
 		for _, fn := range toTest {
-			t.Run(theme, func(t *testing.T) {
+			t.Run(string(theme), func(t *testing.T) {
 				data := template.HTML("<input>CSRFTOKENINPUT-CSRFTOKENINPUT-CSRFTOKENINPUT-CSRFTOKENINPUT-CSRFTOKENINPUT</input>")
 				input := fn(data)
 
