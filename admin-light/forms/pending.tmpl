@@ -68,7 +68,7 @@
                         <label class="label is-small">File Info</label>
                         <div class="grid control field">
                             <div class="cell input is-small" style="cursor:unset;" disabled><span class="is-fullwidth">Length: {{HumanDuration .Length}}</span></div>
-                            <div class="cell input is-small" style="cursor:unset;" disabled><span class="is-fullwidth">Size: ???MB</span></div>
+                            <div class="cell input is-small" style="cursor:unset;" disabled><span class="is-fullwidth">Size: {{SongFileSize .PendingSong}}</span></div>
                             <div class="cell input is-small" style="cursor:unset;" disabled><span class="is-fullwidth">Bitrate: {{Div .Bitrate 1000}}kbps vbr</span></div>
                         </div>
 
