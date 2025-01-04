@@ -4,6 +4,13 @@
         <input class="is-hidden" type="number" name="id" value="{{.ID}}">
         {{.CSRFTokenInput}}
         <div class="grid">
+            <div class="cell">
+                <div class="grid is-fullheight">
+                        <button class="cell button is-small is-info" onclick="adminPlayerPlay('/admin/pending-song/{{.ID}}')" style="cursor:pointer;">Play</button>
+                        <button id="admin-player-spec" class="cell button is-small is-warning">Show Spec</button>
+                        <button class="cell button is-small is-success"><a href="/admin/pending-song/{{.ID}}" style="cursor:pointer;color:unset;">Download</a></button>
+                </div>
+            </div>
             <div class="cell is-col-span-2">
                 <div class="grid">
                     <div class="cell field">
@@ -13,7 +20,7 @@
                         </div>
                         <label class="label is-small">Filename</label>
                         <div class="control field">
-                            <span class="input is-small is-fullheight is-fullwidth" disabled>{{.Filename}}</span>
+                            <span class="input is-small is-fullheight is-fullwidth" style="cursor:unset;" disabled>{{.Filename}}</span>
                         </div>
                     </div>
                 </div>
@@ -27,7 +34,7 @@
                         </div>
                         <label class="label is-small">Submitter</label>
                         <div class="control field">
-                            <div class="input is-small is-fullheight is-fullwidth" disabled>{{.UserIdentifier}}</div>
+                            <div class="input is-small is-fullheight is-fullwidth" style="cursor:unset;" disabled>{{.UserIdentifier}}</div>
                         </div>
                     </div>
                 </div>
@@ -58,21 +65,14 @@
                                 <button class="button is-small is-success" style="height:calc(2rem - 2px);" type="submit" name="action" value="accept">Accept</button>
                             </div>
                         </div>
-                        <label class="label is-small">Buttons</label>
-                        <div class="grid control field" style="height:calc(2rem - 2px);">
-                            <div class="cell button is-small is-info" onclick="adminPlayerPlay('/admin/pending-song/{{.ID}}')" style="cursor:pointer;height:inherit;">Play</div>
-                            <div id="admin-player-play" class="cell button is-small is-success" onclick="adminPlayerPlayPause()" style="cursor:pointer;height:inherit;">Pause</div>
-                            <div class="cell button is-small is-warning"><a href="/admin/pending-song/{{.ID}}" style="cursor:pointer;height:inherit;color:unset;">Download</a></div>
+                        <label class="label is-small">File Info</label>
+                        <div class="grid control field">
+                            <div class="cell input is-small" style="cursor:unset;" disabled><span class="is-fullwidth">Length: {{HumanDuration .Length}}</span></div>
+                            <div class="cell input is-small" style="cursor:unset;" disabled><span class="is-fullwidth">Size: ???MB</span></div>
+                            <div class="cell input is-small" style="cursor:unset;" disabled><span class="is-fullwidth">Bitrate: {{Div .Bitrate 1000}}kbps vbr</span></div>
                         </div>
+
                     </div>
-                </div>
-            </div>
-            <div class="cell is-col-span-1">
-                <label class="label is-small">File Info</label>
-                <div class="grid control field is-gapless" style="height:calc(100% - 0.875rem)">
-                    <div class="cell"><span class="tag is-fullwidth">Length: {{HumanDuration .Length}}</span></div>
-                    <div class="cell"><span class="tag is-fullwidth">Size: ???MB</span></div>
-                    <div class="cell"><span class="tag is-fullwidth">Bitrate: {{Div .Bitrate 1000}}kbps vbr</span></div>
                 </div>
             </div>
             <div class="cell is-col-span-2">
