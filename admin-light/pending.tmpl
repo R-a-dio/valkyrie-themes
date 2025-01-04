@@ -1,6 +1,6 @@
 {{define "content"}}
-<section class="section">
-    <div id="pending" class="container is-fluid">
+<section id="pending-section" class="section fixed-grid has-1-cols">
+    <div id="pending" class="container grid is-fluid p-0">
         {{range $song := .Submissions}}
             {{template "form_admin_pending" $song}}
         {{end}}
