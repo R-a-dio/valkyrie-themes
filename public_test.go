@@ -8,6 +8,7 @@ import (
 	"testing"
 
 	radio "github.com/R-a-dio/valkyrie"
+	"github.com/R-a-dio/valkyrie/config"
 	"github.com/R-a-dio/valkyrie/templates"
 	"github.com/R-a-dio/valkyrie/util"
 	v1 "github.com/R-a-dio/valkyrie/website/api/v1"
@@ -37,9 +38,10 @@ var publicInputs = []templates.TemplateSelectable{
 }
 
 func TestPublicZeroInput(t *testing.T) {
+	cfg := config.TestConfig()
 	status := util.NewStaticValue(radio.Status{})
 
-	tmpl, err := templates.FromDirectory(".", templates.NewStatefulFunctions(status))
+	tmpl, err := templates.FromDirectory(".", templates.NewStatefulFunctions(cfg, status))
 	require.NoError(t, err)
 	tmpl.Production = true
 
@@ -63,9 +65,10 @@ func TestPublicZeroInput(t *testing.T) {
 }
 
 func TestPublicCSRFTokenInput(t *testing.T) {
+	cfg := config.TestConfig()
 	status := util.NewStaticValue(radio.Status{})
 
-	tmpl, err := templates.FromDirectory(".", templates.NewStatefulFunctions(status))
+	tmpl, err := templates.FromDirectory(".", templates.NewStatefulFunctions(cfg, status))
 	require.NoError(t, err)
 	tmpl.Production = true
 
