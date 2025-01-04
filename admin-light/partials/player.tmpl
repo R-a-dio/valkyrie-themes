@@ -1,9 +1,9 @@
 {{define "admin_player"}}
-<div style="position:fixed; bottom: var(--bulma-navbar-height); z-index: 999; background: rgba(0, 0, 0, 0.3); width: 100%" >
+<div style="position:fixed; bottom: var(--bulma-navbar-height); z-index: 2; background: rgba(0, 0, 0, 0.3); width: 100%" >
     <div class="container">
         <div class="columns is-justify-content-center">
             <div class="column is-narrow">
-                <button id="admin-player-play" class="button tag" onclick="adminPlayerPlayPause()">▶️</button>
+                <button id="admin-player-play" class="button tag" onclick="adminPlayerPlayPause()" title="Play/Pause">▶️</button>
             </div>
             <div class="column is-4 is-align-content-center">
                 <input id="admin-player-progress" type="range" value="0" style="width:100%"></input>
@@ -15,7 +15,7 @@
                 <input id="admin-player-volume" type="range" value="10" style="width:100%"></input>
             </div>
             <div class="column is-narrow is-align-content-center">
-                <button id="admin-player-spec" class="button tag">📊</button>
+                <button id="admin-player-spec" class="button tag" onclick="adminShowSpectrogram()" title="Spectrogram">📊</button>
             </div>
         </div>
     </div>
