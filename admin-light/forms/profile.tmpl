@@ -141,10 +141,10 @@
         </div>
         <div class="field-body"><div class="field"><div class="control">
             <div class="select">
-                <select name="dj.theme.name" value="{{.DJ.Theme}}">
+                <select name="dj.theme.name" autocomplete="off">
                     <option value="">None</option>
                 {{range PublicThemes}}
-                    <option value="{{.Name}}">{{.DisplayName}}</option>
+                    <option {{if eq .Name $.DJ.Theme}}selected{{end}} value="{{.Name}}">{{.DisplayName}}</option>
                 {{end}}
                 </select>
             </div>

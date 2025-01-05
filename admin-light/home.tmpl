@@ -26,8 +26,25 @@
                 <div id="template-reload" class="cell is-align-content-center notification">
                     <form>
                         {{.CSRFTokenInput}}
-                        <button class="button is-fullwidth" hx-target="#template-reload" hx-trigger="click" hx-post="/admin/api/website/reload-templates">Reload Templates</button>
+                        <button class="button is-fullwidth" hx-swap="outerHTML" hx-select="#template-reload" hx-target="#template-reload" hx-trigger="click" hx-post="/admin/api/website/reload-templates">Reload Templates</button>
                         {{with .TemplateReload}}{{if .Reloaded}}Successfully reloaded templates{{else if .Error}}Failed to reload templates: {{.Error}}{{end}}{{end}}
+                    </form>
+                </div>
+                {{end}}
+                {{if .CanSetHolidayTheme}}
+                <div id="holiday-theme" class="cell is-align-content-center notification">
+                    <p class="is-size-3 has-text-centered">Holiday Theme</p>
+                    <form>
+                        {{.CSRFTokenInput}}
+                        <div class="select is-fullwidth">
+                            <select name="theme" autocomplete="off">
+                                <option value="">None</option>
+                            {{range PublicThemes}}
+                                <option {{if eq .Name $.HolidayTheme}}selected{{end}} value="{{.Name}}">{{.DisplayName}}</option>
+                            {{end}}
+                            </select>
+                        </div>
+                        <button class="button is-fullwidth" hx-swap="outerHTML" hx-select="#holiday-theme" hx-target="#holiday-theme" hx-trigger="click" hx-post="/admin/api/website/set-holiday-theme">Set Theme</button>
                     </form>
                 </div>
                 {{end}}
