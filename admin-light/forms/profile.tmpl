@@ -142,7 +142,10 @@
         <div class="field-body"><div class="field"><div class="control">
             <div class="select">
                 <select name="dj.theme.name" value="{{.DJ.Theme}}">
-                    <option value="default">Default</option>
+                    <option value="">None</option>
+                {{range PublicThemes}}
+                    <option value="{{.Name}}">{{.DisplayName}}</option>
+                {{end}}
                 </select>
             </div>
         </div></div></div>
