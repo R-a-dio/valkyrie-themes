@@ -64,21 +64,6 @@ function countNewsInputCharacters(event) {
     }
 }
 
-function toggleIcon(element, iconMap = new Map([
-  ['plus', 'minus'],
-  ['minus', 'plus']
-])) {
-  const iconType = element.dataset.iconType;
-  const useElement = element.querySelector('use');
-  const currentHref = useElement.getAttribute('href');
-
-  if (iconMap.has(iconType)) {
-      const newIcon = iconMap.get(iconType);
-      useElement.setAttribute('href', currentHref.replace(`#${iconType}`, `#${newIcon}`));
-      element.dataset.iconType = newIcon;
-  }
-}
-
 function toggleState(element, stateA, stateB, options = { type: 'text', class: null, resetOthers: false }) {
     const currentState = element.dataset.state;
     const newState = currentState === stateA ? stateB : stateA;
@@ -213,19 +198,6 @@ function switchTab(button) {
     
     targets.forEach(target => target.classList.add('is-hidden'));
     selectedTarget.classList.remove('is-hidden');
-}
-
-function getTimeUntilMidnight(tzOffset = 0) {
-    const now = new Date();
-    const nextMidnight = new Date().setUTCHours(24 - tzOffset, 0, 0, 0);
-    
-    const timeDiff = nextMidnight - now;
-    const hours = Math.floor(timeDiff / (1000 * 60 * 60));
-    const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
-    const formatNumber = (num) => num.toString().padStart(2, '0');
-    const formattedTime = `${formatNumber(hours)}h${formatNumber(minutes)}m`;
-    
-    return formattedTime;
 }
 
 htmx.onLoad((event) => {
