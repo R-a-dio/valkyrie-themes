@@ -14,14 +14,6 @@
                     <div><a class="button" href="/logout">Logout</a></div>
                 </div>
                 {{end}}
-                {{if .CanKillStreamer}}
-                <div class="cell is-align-content-center notification">
-                    <form>
-                        {{.CSRFTokenInput}}
-                        <button class="button is-fullwidth" hx-swap="none" hx-trigger="click" hx-post="/admin/api/streamer/stop" hx-confirm="Are you sure?">Kill Hanyuu-sama</button>
-                    </form>
-                </div>
-                {{end}}
                 {{if .CanTemplateReload}}
                 <div id="template-reload" class="cell is-align-content-center notification">
                     <form>
@@ -33,7 +25,7 @@
                 {{end}}
                 {{if .CanSetHolidayTheme}}
                 <div id="holiday-theme" class="cell is-align-content-center notification">
-                    <p class="is-size-3 has-text-centered">Holiday Theme</p>
+                    <p class="title has-text-centered">Holiday Theme</p>
                     <form>
                         {{.CSRFTokenInput}}
                         <div class="select is-fullwidth">
