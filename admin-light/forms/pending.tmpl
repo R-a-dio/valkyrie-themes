@@ -6,8 +6,8 @@
         <div class="grid">
             <div class="cell">
                 <div class="grid is-fullheight">
-                        <div class="cell button is-small is-info" onclick="adminPlayerPlay('/admin/pending-song/{{.ID}}')" style="cursor:pointer;">Play</div>
-                        <div id="admin-player-spec" class="cell button is-small is-warning" onclick="adminShowSpectrogram('/admin/pending-song/{{.ID}}')">Show Spec</div>
+                        <div class="cell button is-small is-info adminPlayerPlayPauseButton" onclick="togglePlayPauseAdmin(this, '{{.ID}}')" style="cursor:pointer;" data-state="Play">Play</div>
+                        <div class="cell button is-small is-warning" onclick="adminShowSpectrogram('/admin/pending-song/{{.ID}}')">Show Spec</div>
                         <div class="cell button is-small is-success"><a href="/admin/pending-song/{{.ID}}" style="cursor:pointer;color:unset;">Download</a></div>
                 </div>
             </div>
