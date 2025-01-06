@@ -59,6 +59,9 @@ htmx.onLoad((event) => {
         if (adminPlayerVolume)              Array.from(document.getElementsByClassName("volume-input")).forEach((el) => el.value = adminPlayerVolume);
         if (adminPendingColumns > 1)        document.getElementById("pending-section").classList.add("has-"+adminPendingColumns+"-cols");
         if (adminPendingWidth === "narrow") document.getElementById("pending").classList.remove("is-fluid");
+    } else if (url.pathname.startsWith("/admin/songs")) {
+        let adminPlayerVolume = localStorage.getItem("admin-player-volume");
+        if (adminPlayerVolume)              Array.from(document.getElementsByClassName("volume-input")).forEach((el) => el.value = adminPlayerVolume);
     }
 })
 
@@ -125,7 +128,12 @@ const toggleDropdown = (element, targetDiv = null, targetClass = "is-hidden", is
 
 const togglePlayPauseAdmin = (element, songIdentifier) => {
     toggleState(element, "Play", "Pause", options = {class: "adminPlayerPlayPauseButton", resetOthers: true});
-    adminPlayerPlayPause('/admin/pending-song/' + songIdentifier);
+
+    if (this.url.pathname.startsWith("/admin/pending")) {
+        adminPlayerPlayPause('/admin/pending-song/' + songIdentifier);
+    } else {
+        adminPlayerPlayPause(songIdentifier);
+    }
 }
 
 function addTimezoneContext(text, weekday = null) {
