@@ -1,100 +1,89 @@
 {{define "form_admin_songs"}}
 {{if and .Song .Song.HasTrack}}
-<form class="songs-entry p-1 mb-2 notification {{if .Song.NeedReplacement}}is-warning{{end}}" method="post" action="/admin/songs" hx-target="this" hx-swap="outerHTML swap:1s">
+<form class="songs-entry fixed-grid has-12-cols-mobile has-12-cols-tablet has-12-cols-desktop has-12-cols-widescreen has-12-cols-fullhd" method="post" action="/admin/songs" hx-swap="outerHTML swap:1s">
     <input class="is-hidden" type="number" name="id" value="{{.Song.TrackID}}">
     {{.CSRFTokenInput}}
-    <div class="columns is-gapless mb-2">
-        <div class="column">
-            <div class="field is-horizontal">
-                <div class="field-label">
-                    <label class="label mt-2">Artist</label>
-                </div>
-                <div class="field-body is-flex-grow-10">
-                    <input class="input" name="artist" type="text" value="{{.Song.Artist}}" {{if not .HasEdit}}disabled{{end}}>
-                </div>
-            </div>
-            <div class="field is-horizontal">
-                <div class="field-label">
-                    <label class="label mt-2">Title</label>
-                </div>
-                <div class="field-body is-flex-grow-10">
-                    <input class="input" name="title" type="text" value="{{.Song.Title}}" {{if not .HasEdit}}disabled{{end}}>
-                </div>
-            </div>
-        </div>
-        <div class="column">
-            <div class="field is-horizontal">
-                <div class="field-label">
-                    <label class="label mt-2">Album</label>
-                </div>
-                <div class="field-body is-flex-grow-10">
-                    <input class="input" name="album" type="text" value="{{.Song.Album}}" {{if not .HasEdit}}disabled{{end}}>
-                </div>
-            </div>
-            <div class="field is-horizontal">
-                <div class="field-label">
-                    <label class="label mt-2">Tags</label>
-                </div>
-                <div class="field-body is-flex-grow-10">
-                    <input class="input" name="tags" type="text" value="{{.Song.Tags}}" {{if not .HasEdit}}disabled{{end}}>
-                </div>
-            </div>
+    <div class="columns m-0 mx-5 mb-3">
+        <div class="column is-tags m-0 p-0">
+            <div class="tag is-narrow is-medium" style="max-width:10%;">{{.Song.ID}}</div>
+            <div class="tag is-size-6 is-medium" style="max-width:90%;overflow:hidden;text-overflow:ellipsis;">by {{.Song.Metadata}}</div>
         </div>
     </div>
-    <div class="columns is-desktop is-variable is-1">
-        <div class="column is-narrow">
-            <div class="field is-horizontal">
-                <div class="field-label">
-                    <label class="label mt-2">ID</label>
+    <div class="grid box"{{if .Song.NeedReplacement}} style="background-color: rgba(185, 117, 57, 0.25);"{{end}}>
+        <div class="cell is-col-span-12 is-col-span-1-fullhd">
+            <div class="grid is-fullheight">
+                <button type="button" hx-disable class="cell button is-small is-info" onclick="togglePlayPauseAdmin(this, '{{.SongURL}}')">Play</button>
+                <div class="cell button is-small is-warning" onclick="adminShowSpectrogram()" disabled>Show Spec</div>
+                <a class="cell button is-small is-success" href="{{.SongURL}}">Download</a>
+            </div>
+        </div>
+        <div class="cell is-col-span-6 is-col-span-4-fullhd">
+            <div class="field">
+                <label class="label is-small">Artist</label>
+                <div class="control">
+                    <input class="input is-small" name="artist" type="text" value="{{.Song.Artist}}" {{if not .HasEdit}}disabled{{end}}>
                 </div>
-                <div class="field-body">
-                    <span class="mt-2">{{.Song.TrackID}}</span>
+            </div>
+            <div class="field">
+                <label class="label is-small">Title</label>
+                <div class="control">
+                    <input class="input is-small" name="title" type="text" value="{{.Song.Title}}" {{if not .HasEdit}}disabled{{end}}>
                 </div>
             </div>
         </div>
-        <div class="column">
-            <div class="field is-horizontal">
-                <div class="field-label">
-                    <label class="label mt-2">Acceptor</label>
+        <div class="cell is-col-span-6 is-col-span-4-fullhd">
+            <div class="field">
+                <label class="label is-small">Album</label>
+                <div class="control">
+                    <input class="input is-small" name="album" type="text" value="{{.Song.Album}}" {{if not .HasEdit}}disabled{{end}}>
                 </div>
-                <div class="field-body">
-                    <span class="mt-2">{{.Song.Acceptor}} ({{.Song.LastEditor}})</span>
+            </div>
+            <div class="field">
+                <label class="label is-small">Tags</label>
+                <div class="control">
+                    <input class="input is-small" name="tags" type="text" value="{{.Song.Tags}}" {{if not .HasEdit}}disabled{{end}}>
                 </div>
             </div>
         </div>
-        <div class="column">
-            <div class="field is-horizontal">
-                <div class="field-label">
-                    <label class="label mt-2">LP/LR</label>
+        <!--<div class="cell is-col-span-1">
+            <div class="field">
+                <label class="label is-small">ID</label>
+                <div class="control">
+                    <div class="input is-small" disabled>{{.Song.TrackID}}</div>
                 </div>
-                <div class="field-body">
-                    <span class="mt-2">{{.Song.LastPlayed | Since | HumanDuration}} / {{.Song.LastRequested | Since | HumanDuration}}</span>
+            </div>
+            <div class="field">
+                <label class="label is-small">Priority</label>
+                <div class="control">
+                    <div class="input is-small" disabled>{{.Song.Priority}} ({{.Song.RequestCount}})</div>
+                </div>
+            </div>
+        </div>-->
+        <div class="cell is-col-span-12 is-col-span-2-fullhd">
+            <div class="field">
+                <label class="label is-small">LP/LR</label>
+                <div class="control">
+                    <div class="input is-small is-overflow-auto" disabled>{{.Song.LastPlayed | Since | HumanDuration}} / {{.Song.LastRequested | Since | HumanDuration}}</div>
+                </div>
+            </div>
+            <div class="field">
+                <label class="label is-small">Acceptor</label>
+                <div class="control">
+                    <div class="input is-small is-overflow-auto" disabled>{{.Song.Acceptor}} ({{.Song.LastEditor}})</div>
                 </div>
             </div>
         </div>
-        <div class="column is-narrow">
-            <div class="field is-horizontal">
-                <div class="field-label">
-                    <label class="label mt-2">Priority</label>
-                </div>
-                <div class="field-body">
-                    <span class="mt-2">{{.Song.Priority}} ({{.Song.RequestCount}})</span>
-                </div>
-            </div>
-        </div>
-        <div class="column is-flex is-justify-content-end">
-            <div class="buttons" style="flex-wrap:nowrap">
-                <a class="button is-success" href="{{.SongURL}}">Download</a>
-                <button type="button" hx-disable class="button is-info" onclick="adminPlayerPlay('{{.SongURL}}')">Play</button>
+        <div class="cell is-col-span-12 is-col-span-1-fullhd">
+            <div class="grid is-fullheight">
                 {{if .HasEdit}}
-                    <button hx-disable-elt="this" hx-post="/admin/songs" class="button" type="submit" name="action" value="save">Save</button>
-                    {{if .Song.NeedReplacement}}
-                        <button hx-disable-elt="this" hx-post="/admin/songs" class="button is-white" type="submit" name="action" value="unmark-replacement">Unmark Repl</button>
-                    {{else}}
-                        <button hx-disable-elt="this" hx-post="/admin/songs" class="button is-warning" type="submit" name="action" value="mark-replacement">Mark Repl</button>
-                    {{end}}
+                <button hx-disable-elt="this" hx-post="/admin/songs" class="cell button is-small" type="submit" name="action" value="save">Save</button>
+                {{if .Song.NeedReplacement}}
+                    <button hx-disable-elt="this" hx-post="/admin/songs" class="cell button is-small is-white" type="submit" name="action" value="unmark-replacement">Unmark Repl</button>
+                {{else}}
+                    <button hx-disable-elt="this" hx-post="/admin/songs" class="cell button is-small is-warning" type="submit" name="action" value="mark-replacement">Mark Repl</button>
                 {{end}}
-                {{if .HasDelete}}<button hx-disable-elt="this" class="button is-danger" hx-post="/admin/songs" hx-confirm="Are you sure?" type="submit" name="action" value="delete">Delete</button>{{end}}
+            {{end}}
+            {{if .HasDelete}}<button hx-disable-elt="this" class="cell button is-small is-danger" hx-post="/admin/songs" hx-confirm="Are you sure?" type="submit" name="action" value="delete">Delete</button>{{end}}
             </div>
         </div>
     </div>
