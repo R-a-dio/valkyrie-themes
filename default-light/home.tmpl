@@ -27,10 +27,10 @@
                         </div>
                         <div class="field has-addons dropdown-parent">
                                 <button class="button is-flex-1"><a class="disable-link-color" href="/main">Direct Stream Link</a></button>
-                                <button class="button is-small ml-2" style="font-weight: 900;" onclick="toggleDropdown(this)"><svg class="svg-icon" style="height:1.5rem!important;width:1.5rem!important;"><use href="assets/default-light/svg/sprites.svg#cog"></use></svg></button>
+                                <button class="button is-small ml-2" style="font-weight: 900;" onclick="toggleDropdown(this, 'options-button-dropdown')"><svg class="svg-icon" style="height:1.5rem!important;width:1.5rem!important;"><use href="assets/default-light/svg/sprites.svg#cog"></use></svg></button>
                                 <div id="options-button-dropdown" class="dropdown-container box is-hidden" style="z-index:1">
                                     <div class="p-0 mb-2"><a href="/help#stream-help" hx-boost="true" hx-push-url="true" hx-target="#content"><button class="button is-fullwidth">Help</button></a></div>
-                                    <div class="p-0 mb-2"><a><button class="button is-fullwidth js-modal-trigger" data-target="prefs-modal" onclick="toggleOptionsDropdown()">Preferences</button></a></div>
+                                    <div class="p-0 mb-2"><a><button class="button is-fullwidth js-modal-trigger" data-target="prefs-modal">Preferences</button></a></div>
                                 </div>
                         </div>
                     </div>
@@ -78,11 +78,11 @@
     {{end}}
     {{if .Song.HasTrack}}
     {{if .Song.Tags}}
-    <svg class="svg-icon" data-icon-type="plus" onclick="toggleIcon(this);htmx.toggleClass(htmx.find('#now-playing'), 'hide-np-tags');" style="position:absolute;right:1rem;top:1.1rem;font-weight:900;"><use href="assets/default-light/svg/sprites.svg#plus"></use></svg>
+    <svg class="svg-icon" data-state="plus" onclick="toggleDropdown(this, 'now-playing-tags');" style="position:absolute;right:1rem;top:1.1rem;font-weight:900;"><use href="assets/default-light/svg/sprites.svg#plus"></use></svg>
     {{end}}
     {{end}}
 </div>
-<p id="now-playing-tags" class="tag button is-vcentered has-text-centered mb-4" style="font-size: 14px;">{{if .Song.HasTrack}}{{.Song.Tags}}{{end}}</p>
+<p id="now-playing-tags" class="tag button is-vcentered has-text-centered mb-4 is-hidden" style="font-size: 14px;">{{if .Song.HasTrack}}{{.Song.Tags}}{{end}}</p>
 {{$progress := .SongInfo.Start | Since}}
 <progress id="current-song-progress" class="progress is-large mb-0" value="{{$progress | ToSecond}}" max="{{.Song.Length.Seconds}}"></progress>
 
