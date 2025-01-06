@@ -46,8 +46,19 @@ htmx.onLoad((event) => {
     
         input1 = document.getElementById("news-comment-input-1");
         input2 = document.getElementById("news-comment-input-2");
-    } else if (url.pathname === '/admin') {
-        document.getElementById('daypass-timer').innerHTML = `Expires <time id="daypass-hours" datetime="${86400 + Math.floor(Date.now() / 1000 / 86400) * 86400}">at midnight</time>`
+    } else if (url.pathname === "/admin") {
+        document.getElementById("daypass-timer").innerHTML = `Expires <time id="daypass-hours" datetime="${86400 + Math.floor(Date.now() / 1000 / 86400) * 86400}">at midnight</time>`
+    } else if (url.pathname === "/admin/pending") {
+        let adminPlayerVolume = localStorage.getItem("admin-player-volume");
+        let adminPendingColumns = localStorage.getItem("admin-pending-columns");
+        let adminPendingWidth = localStorage.getItem("admin-pending-width");
+
+        document.getElementById("pending-columns").value = adminPendingColumns;
+        document.getElementById("pending-width").value = adminPendingWidth;
+        
+        if (adminPlayerVolume)              Array.from(document.getElementsByClassName("volume-input")).forEach((el) => el.value = adminPlayerVolume);
+        if (adminPendingColumns > 1)        document.getElementById("pending-section").classList.add("has-"+adminPendingColumns+"-cols");
+        if (adminPendingWidth === "narrow") document.getElementById("pending").classList.remove("is-fluid");
     }
 })
 
@@ -99,18 +110,17 @@ function toggleState(element, stateA, stateB, options = { type: 'text', class: n
     return newState;
 }
 
-const toggleDropdown = (element, targetDiv = null) => {
+const toggleDropdown = (element, targetDiv = null, targetClass = "is-hidden") => {
     toggleState(element, 'plus', 'minus', options = {type: 'icon'});
 
     if (targetDiv === null) {
-        element.closest(".dropdown-parent").nextElementSibling.classList.toggle("is-hidden");
+        element.closest(".dropdown-parent").nextElementSibling.classList.toggle(targetClass);
     } else {
-        document.getElementById(targetDiv).classList.toggle("is-hidden");
+        document.getElementById(targetDiv).classList.toggle(targetClass);
     }
 }
 
 const togglePlayPauseAdmin = (element, songIdentifier) => {
-    document.getElementById('admin-player-volume').value = localStorage.getItem('adminPlayerDefaultVolume');    
     toggleState(element, "Play", "Pause", options = {class: "adminPlayerPlayPauseButton", resetOthers: true});
     adminPlayerPlayPause('/admin/pending-song/' + songIdentifier);
 }

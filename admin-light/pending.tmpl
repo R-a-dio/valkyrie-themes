@@ -1,5 +1,36 @@
 {{define "content"}}
 <section id="pending-section" class="section fixed-grid has-1-cols">
+    <div id="pending-options" class="fixed-grid has-4-cols">
+        <div class="grid">
+            <div class="cell box">
+                <div class="is-size-4">Protips</div>
+            </div>
+            <div class="cell box">
+                <div class="is-size-4">Links</div>
+            </div>
+            <div class="cell box">
+                <div class="is-size-4">Something</div>
+            </div>
+            <div class="cell box">
+                <div class="is-size-4">Options</div>
+                <div>Default player volume</div> 
+                <div>
+                    <input id="pending-volume" class="volume-input" name="pending-volume" type="number" min="0" max="100" value="5" oninput="localStorage.setItem('admin-player-volume', this.value)">
+                </div>
+                <div>Column count</div>
+                <div>
+                    <input id="pending-columns" name="pending-columns" type="number" min="1" max="3" value="1" oninput="localStorage.setItem('admin-pending-columns', this.value)">
+                </div>
+                <div>Column width</div>
+                <div>
+                    <select id="pending-width" name="pending-width" onchange="localStorage.setItem('admin-pending-width', this.value)">
+                        <option value="wide">Wide</option>
+                        <option value="narrow">Narrow</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
     <div id="pending" class="container grid is-fluid p-0">
         {{range $song := .Submissions}}
             {{template "form_admin_pending" $song}}
