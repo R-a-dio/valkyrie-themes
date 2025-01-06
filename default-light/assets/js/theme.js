@@ -12,19 +12,6 @@ function clearNavbarSearchValue(event) {
     })
 }
 
-// Toggles dropdowns when you click queue, etc.
-function toggleDropdown(div) {
-    if (typeof div == "string")
-        document.getElementById(div).classList.toggle("is-hidden");
-    else
-        div.nextElementSibling.classList.toggle("is-hidden");
-}
-
-// Main page options dropdown toggle
-function toggleOptionsDropdown() {
-    toggleDropdown("options-button-dropdown");
-}
-
 // Help page switch for mobiles & highlight for desktop
 function toggleHelpDisplay(button) {
     let target = htmx.find(window.location.hash);
@@ -90,6 +77,57 @@ function toggleIcon(element, iconMap = new Map([
       useElement.setAttribute('href', currentHref.replace(`#${iconType}`, `#${newIcon}`));
       element.dataset.iconType = newIcon;
   }
+}
+
+function toggleState(element, stateA, stateB, options = { type: 'text', class: null, resetOthers: false }) {
+    const currentState = element.dataset.state;
+    const newState = currentState === stateA ? stateB : stateA;
+    
+    if (options.resetOthers && options.class) {
+        document.querySelectorAll(`.${options.class}`).forEach(el => {
+            if (el !== element) {
+                if (options.type === 'icon') {
+                    const iconEl = el.querySelector('use');
+                    if (iconEl) {
+                        const value = iconEl.getAttribute('href');
+                        iconEl.setAttribute('href', value.replace(`#${el.dataset.state}`, `#${stateA}`));
+                    }
+                } else {
+                    el.textContent = stateA;
+                }
+                el.dataset.state = stateA;
+            }
+        });
+    }
+    
+    if (options.type === 'icon') {
+        const iconElement = element.querySelector('use');
+        if (iconElement) {
+            const currentValue = iconElement.getAttribute('href');
+            iconElement.setAttribute('href', currentValue.replace(`#${currentState}`, `#${newState}`));
+        }
+    } else {
+        element.textContent = newState;
+    }
+    
+    element.dataset.state = newState;
+    return newState;
+}
+
+const toggleDropdown = (element, targetDiv = null) => {
+    toggleState(element, 'plus', 'minus', options = {type: 'icon'});
+
+    if (targetDiv === null) {
+        element.closest(".dropdown-parent").nextElementSibling.classList.toggle("is-hidden");
+    } else {
+        document.getElementById(targetDiv).classList.toggle("is-hidden");
+    }
+}
+
+const togglePlayPauseAdmin = (element, songIdentifier) => {
+    document.getElementById('admin-player-volume').value = localStorage.getItem('adminPlayerDefaultVolume');    
+    toggleState(element, "Play", "Pause", options = {class: "adminPlayerPlayPauseButton", resetOthers: true});
+    adminPlayerPlayPause('/admin/pending-song/' + songIdentifier);
 }
 
 function addTimezoneContext(text, weekday = null) {
