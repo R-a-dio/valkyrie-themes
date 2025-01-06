@@ -110,11 +110,14 @@ function toggleState(element, stateA, stateB, options = { type: 'text', class: n
     return newState;
 }
 
-const toggleDropdown = (element, targetDiv = null, targetClass = "is-hidden") => {
+const toggleDropdown = (element, targetDiv = null, targetClass = "is-hidden", isLastChild = false) => {
     toggleState(element, 'plus', 'minus', options = {type: 'icon'});
+    let dropdownParent = element.closest(".dropdown-parent");
 
-    if (targetDiv === null) {
-        element.closest(".dropdown-parent").nextElementSibling.classList.toggle(targetClass);
+    if (isLastChild) {
+        dropdownParent.children[dropdownParent.children.length - 1].classList.toggle(targetClass);
+    } else if (targetDiv === null) {
+        dropdownParent.nextElementSibling.classList.toggle(targetClass);
     } else {
         document.getElementById(targetDiv).classList.toggle(targetClass);
     }

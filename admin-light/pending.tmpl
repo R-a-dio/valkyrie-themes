@@ -1,34 +1,12 @@
 {{define "content"}}
 <section id="pending-section" class="section fixed-grid has-1-cols">
-    <div id="pending-options" class="fixed-grid has-4-cols">
+    <div id="pending-options" class="fixed-grid has-4-cols mb-0">
         <div class="grid">
-            <div class="cell box">
-                <div class="is-size-4">Protips</div>
-            </div>
-            <div class="cell box">
-                <div class="is-size-4">Links</div>
-            </div>
-            <div class="cell box">
-                <div class="is-size-4">Something</div>
-            </div>
-            <div class="cell box">
-                <div class="is-size-4">Options</div>
-                <div>Default player volume</div> 
-                <div>
-                    <input id="pending-volume" class="volume-input" name="pending-volume" type="number" min="0" max="100" value="5" oninput="localStorage.setItem('admin-player-volume', this.value)">
-                </div>
-                <div>Column count</div>
-                <div>
-                    <input id="pending-columns" name="pending-columns" type="number" min="1" max="3" value="1" oninput="localStorage.setItem('admin-pending-columns', this.value)">
-                </div>
-                <div>Column width</div>
-                <div>
-                    <select id="pending-width" name="pending-width" onchange="localStorage.setItem('admin-pending-width', this.value)">
-                        <option value="wide">Wide</option>
-                        <option value="narrow">Narrow</option>
-                    </select>
-                </div>
-            </div>
+            <button class="cell button box is-size-4 js-modal-trigger" data-target="admin-pending-guidelines-modal">Accepting guidelines</button>
+            <button class="cell button box is-size-4 js-modal-trigger" data-target="admin-pending-links-modal">Links</button>
+            <button class="cell button box is-size-4 js-modal-trigger" data-target="admin-pending-spectrogram-modal">How to read spectrograms</button>
+            <button class="cell button box is-size-4 js-modal-trigger" data-target="admin-pending-options-modal">Options</button>
+            <div class="cell"></div>
         </div>
     </div>
     <div id="pending" class="container grid is-fluid p-0">
@@ -38,4 +16,126 @@
     </div>
 </section>
 {{template "admin_player" .}}
+{{template "pending-guidelines"}}
+{{template "pending-links"}}
+{{template "pending-spectrogram-guide"}}
+{{template "pending-options"}}
 {{end}}
+
+{{define "pending-options"}}
+<div id="admin-pending-options-modal" class="modal">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+        <div class="content box">
+            <div class="title">Options</div>
+            <hr>
+            <div>Default player volume</div> 
+            <div>
+                <input id="pending-volume" class="volume-input" name="pending-volume" type="number" min="0" max="100" value="5" oninput="localStorage.setItem('admin-player-volume', this.value)">
+            </div>
+            <div>Column count</div>
+            <div>
+                <input id="pending-columns" name="pending-columns" type="number" min="1" max="3" value="1" oninput="localStorage.setItem('admin-pending-columns', this.value)">
+            </div>
+            <div>Column width</div>
+            <div>
+                <select id="pending-width" name="pending-width" onchange="localStorage.setItem('admin-pending-width', this.value)">
+                    <option value="wide">Wide</option>
+                    <option value="narrow">Narrow</option>
+                </select>
+            </div>
+        </div>
+    </div>
+</div>
+{{end}}
+
+{{define "pending-spectrogram-guide"}}
+<div id="admin-pending-spectrogram-modal" class="modal">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+        <div class="content box">
+            <div class="title">Spectrograms</div>
+            <hr>
+            <h2>Work in progress</h2>
+        </div>
+    </div>
+</div>
+{{end}}
+
+{{define "pending-links"}}
+<div id="admin-pending-links-modal" class="modal">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+        <div class="content box">
+            <div class="title">Links</div>
+            <hr>
+            <h2 class="text-warning">Useful sites:</h2>
+            <p>
+                <ul>
+                    <li><a href="https://anidb.net/creator">AniDB (anime)</a></li>
+                    <li><a href="https://vgmdb.net/search">VGMDB (all kinds of Japanese releases)</a></li>
+                    <li><a href="https://vndb.org/s">VNDB (visual novels)</a></li>
+                    <li><a href="https://myanimelist.net/?type=person&keyword=">MyAnimeList (anime)</a></li>
+                </ul>
+            </p>
+        </div>
+    </div>
+</div>
+{{end}}
+
+{{define "pending-guidelines"}}
+<div id="admin-pending-guidelines-modal" class="modal">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+        <div class="content box">
+            <div class="title">Accepting guidelines</div>
+            <hr>
+        	<h2 class="text-warning">Keep these in mind when accepting songs:</h2>
+        	<p>
+        	<ul>
+        		<li>Accept full size releases only (meaning no TV size anime openings, endings, etc).</li>
+        		<li>We follow Japanese name order for artist (for example, Kugimiya Rie instead of Rie Kugimiya). If you're not sure, google the artist name, then put it the other way around (protips below).</li>
+        		<li>Sites that use western name order: Wikipedia (usually), Anime News Network</li>
+        		<li>Sites that use Japanese name order: AniDB, MyAnimeList (on the site; western order on google search results)</li>
+        		<li>If the song is by an idol group, use the idol group name as the artist name and add the singers in tags. Character names can also be added to tags, but are not necessary.</li>
+        		<li>Always use the artist(s) as the artist name, not the character. (good: Hirano Aya - Hare Hare Yukai; bad: Suzumiya Haruhi - Hare Hare Yukai)</li>
+        		<li>Add as much information as (reasonably) possible in the tags. Too much is better than too little, for example if a show is often referred to with an English title (or has an official one), add that as well.</li>
+        		<li>Use "artist feat. someone - song" instead of "artist - song feat. someone", even if it was released as the latter.</li>
+        		<li>を-> "wo", not "o". へ -> "he", not "e". は-> "wa", not "ha".</li>
+        		<li>Particles are always lower case; other words are Upper Case.</li>
+        		<li>Follow official artist stylization of artist name (for example "AZKi" instead of "Azki").</li>
+        		<li>For romanization, if you're unsure, check the database for what's most commonly used and go with that. If there's nothing from the artist in the database, use what AniDB uses. If they're not on AniDB, use what you think AniDB would use.</li>
+        	</ul>
+        	</p>
+            <hr>
+        	<h2 class="text-warning">Don't accept:</h2>
+        	<p>
+        	<ul>
+        		<li>Don't accept anything below 192kbps.</li>
+        		<li>Don't accept youtube rips. If you don't know if something is a youtube rip or not, don't do anything.</li>
+        		<li>It's not exactly required if you trust your ears, but consider <a href="https://interviewfor.red/en/spectrals.html">reading this</a>.</li>
+        		<li>Read the stuff on <a href="https://r-a-d.io/submit">submit page</a> for more information on what should be declined.</li>
+        	</ul>
+        	</p>
+            <hr>
+        	<h2 class="text-warning">Words of warning:</h2>
+        	<p>
+        	<ul>
+        		<li>Don't modify artist or song name on old songs. This will reset favorites on the song. If you think they should be changed anyway, ask Vin/Kethsar/exci. Album and tags can be edited without resetting anything.</li>
+        		<li>You can do ".i id" on irc to check if the song only has a few favourites and/or plays to figure out if it's old. Or just look at the ID and extrapolate. You probably don't want to change anything anyway, just ask someone else.</li>
+        	</ul>
+        	</p>
+            <hr>
+        	<h2 class="text-warning">On vtumors:</h2>
+        	<p>
+        	<ul>
+        		<li>Accept vtumors when song production was by a Japanese artist (for example, all of hololive JP). This generally also means you can accept any vtumor, even if not Japanese, if they're managed by a Japanese vtumor factory. If you're unsure, don't do anything.</li>
+        		<li>In general, same rules apply as to other submissions; an anime avatar alone doesn't make it /a/ or /jp/. You can still accept English vtumor (even outside Hololive or Nijisanji, etc) songs if the song production is Japanese. If you're unsure, don't do anything.</li>
+        		<li>Special case: if a vtumor song is in a language that isn't English or Japanese, don't accept.</li>
+        	</ul>
+        	</p>
+        </div>
+    </div>
+</div>
+{{end}}
+
