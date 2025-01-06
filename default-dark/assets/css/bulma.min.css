@@ -21879,4 +21879,8 @@ textarea::placeholder {
   filter: brightness(0.65);
 }
 
+.tag {
+  background-color: var(--radio-primary-3);
+}
+
 /*# sourceMappingURL=bulma.min.css.map */
