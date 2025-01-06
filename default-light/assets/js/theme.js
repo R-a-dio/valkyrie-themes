@@ -46,7 +46,7 @@ function showHighlightAnimation(target, button) {
     }
 }
 
-// Needed to display the right help page for mobile users
+// Needed to display the right help page for mobile users (and whatever else it does now)
 htmx.onLoad((event) => {
     url = window.location;
     if (url.pathname.startsWith("/help") || url.pathname.startsWith("/staff")) {
@@ -59,6 +59,8 @@ htmx.onLoad((event) => {
     
         input1 = document.getElementById("news-comment-input-1");
         input2 = document.getElementById("news-comment-input-2");
+    } else if (url.pathname === '/admin') {
+        document.getElementById('daypass-hours').textContent = getTimeUntilMidnight(1).formatted;
     }
 })
 
@@ -173,6 +175,19 @@ function switchTab(button) {
     
     targets.forEach(target => target.classList.add('is-hidden'));
     selectedTarget.classList.remove('is-hidden');
+}
+
+function getTimeUntilMidnight(tzOffset = 0) {
+    const now = new Date();
+    const nextMidnight = new Date().setUTCHours(24 - tzOffset, 0, 0, 0);
+    
+    const timeDiff = nextMidnight - now;
+    const hours = Math.floor(timeDiff / (1000 * 60 * 60));
+    const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+    const formatNumber = (num) => num.toString().padStart(2, '0');
+    const formattedTime = `${formatNumber(hours)}h${formatNumber(minutes)}m`;
+    
+    return formattedTime;
 }
 
 htmx.onLoad((event) => {
