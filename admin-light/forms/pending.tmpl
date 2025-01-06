@@ -6,9 +6,9 @@
         <div class="grid">
             <div class="cell">
                 <div class="grid is-fullheight">
-                        <div class="cell button is-small is-info adminPlayerPlayPauseButton" onclick="togglePlayPauseAdmin(this, '{{.ID}}')" style="cursor:pointer;" data-state="Play">Play</div>
-                        <div class="cell button is-small is-warning" onclick="adminShowSpectrogram('/admin/pending-song/{{.ID}}')">Show Spec</div>
-                        <div class="cell button is-small is-success"><a href="/admin/pending-song/{{.ID}}" style="cursor:pointer;color:unset;">Download</a></div>
+                    <div class="cell button is-small is-info adminPlayerPlayPauseButton" onclick="togglePlayPauseAdmin(this, '{{.ID}}')" style="cursor:pointer;" data-state="Play">Play</div>
+                    <div class="cell button is-small is-warning" onclick="adminShowSpectrogram('/admin/pending-song/{{.ID}}')">Show Spec</div>
+                    <a class="cell button is-small is-success" href="/admin/pending-song/{{.ID}}">Download</a>
                 </div>
             </div>
             <div class="cell is-col-span-2">
@@ -53,7 +53,7 @@
                     </div>
                 </div>
             </div>
-            <div class="cell is-col-span-3">
+            <div class="cell is-col-span-2">
                 <div class="grid">
                     <div class="cell is-col-span-1">
                         <label class="label is-small">Tags</label>
@@ -65,14 +65,26 @@
                                 <button class="button is-small is-success" style="height:calc(2rem - 2px);" type="submit" name="action" value="accept">Accept</button>
                             </div>
                         </div>
-                        <label class="label is-small">File Info</label>
-                        <div class="grid control field">
-                            <div class="cell input is-small" style="cursor:unset;" disabled><span class="is-fullwidth">Length: {{HumanDuration .Length}}</span></div>
-                            <div class="cell input is-small" style="cursor:unset;" disabled><span class="is-fullwidth">Size: {{SongFileSize .PendingSong}}</span></div>
-                            <div class="cell input is-small" style="cursor:unset;" disabled><span class="is-fullwidth">Bitrate: {{Div .Bitrate 1000}}kbps vbr</span></div>
+                        <div class="cell">
+                            <div class="grid">
+                        <div class="cell">
+                                <label class="label is-small">Size</label>
+                                <div class="input is-small" style="cursor:unset;" disabled><span class="is-fullwidth">{{SongFileSize .PendingSong}}, {{HumanDuration .Length}}</span></div>
+                            </div>
+                            <div class="cell">
+                                <label class="label is-small">Bitrate</label>
+                                <div class="input is-small" style="cursor:unset;" disabled><span class="is-fullwidth">{{Div .Bitrate 1000}}kbps vbr</span></div>
+                            </div>
                         </div>
-
+                        </div>
                     </div>
+                </div>
+            </div>
+            <div class="cell">
+                <div class="grid is-fullheight">
+                    <a class="cell button is-small" href="https://www.google.com/search?q={{.Metadata}}" target="_blank">Google (Metadata)</a>
+                    <a class="cell button is-small" href="https://www.youtube.com/results?search_query={{.Metadata}}" target="_blank" class="cell button is-small">Youtube (Metadata)</a>
+                    <a class="cell button is-small" href="" target="_blank" class="cell button is-small">Custom Search</a>
                 </div>
             </div>
             <div class="cell is-col-span-2">
