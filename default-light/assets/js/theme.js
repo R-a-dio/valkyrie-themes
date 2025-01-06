@@ -47,7 +47,7 @@ htmx.onLoad((event) => {
         input1 = document.getElementById("news-comment-input-1");
         input2 = document.getElementById("news-comment-input-2");
     } else if (url.pathname === '/admin') {
-        document.getElementById('daypass-hours').textContent = getTimeUntilMidnight(1);
+        document.getElementById('daypass-timer').innerHTML = `Expires <time id="daypass-hours" datetime="${86400 + Math.floor(Date.now() / 1000 / 86400) * 86400}">at midnight</time>`
     }
 })
 
