@@ -51,18 +51,14 @@
                     <div class="box has-background-radio-secondary-1">
                         <div class="content has-text-success has-text-centered">
                             <h2>Accepts</h2>            
-                            <br>
-                            {{.Stats.AcceptedTotal}} accepted submissions.
-                            <br>
-                            {{.Stats.AcceptedLastTwoWeeks}} accepted in the last 2 weeks.
-                            <br>
-                            {{.Stats.AcceptedYou}} accepted submissions from (You).
-                            <br><br>
+                            <div>{{.Stats.AcceptedTotal}} accepted submissions.</div>
+                            <div>{{.Stats.AcceptedLastTwoWeeks}} accepted in the last 2 weeks.</div>
+                            <div>{{.Stats.AcceptedYou}} accepted submissions from (You).</div>
                         </div>
                         <div class="content">
                             {{range $song := .Stats.RecentAccepts}}
-                            <p>{{$song.Metadata}}</p>
                             <hr>
+                            <p class="has-text-centered">{{$song.Metadata}}</p>
                             {{end}}
                         </div>
                     </div>
@@ -71,24 +67,20 @@
                     <div class="box has-background-radio-secondary-1">
                         <div class="content has-text-danger has-text-centered">
                             <h2>Declines</h2>
-                            <br>
-                            {{.Stats.DeclinedTotal}} declined submissions.
-                            <br>
-                            {{.Stats.DeclinedLastTwoWeeks}} declined in the last 2 weeks.
-                            <br>
-                            {{.Stats.DeclinedYou}} declined submissions from (You).
-                            <br><br>
+                            <div>{{.Stats.DeclinedTotal}} declined submissions.</div>
+                            <div>{{.Stats.DeclinedLastTwoWeeks}} declined in the last 2 weeks.</div>
+                            <div>{{.Stats.DeclinedYou}} declined submissions from (You).</div>
                         </div>
                         {{range $song := .Stats.RecentDeclines}}
+                        <hr>
                         <div class="columns content">
-                            <div class="column is-8">
-                                <p>{{$song.Metadata}}</p>
+                            <div class="column">
+                                <p class="has-text-centered">{{$song.Metadata}}</p>
                             </div>
-                            <div class="column is-4">
-                                <p class="has-text-danger">{{$song.DeclineReason}}</p>
+                            <div class="column">
+                                <p class="has-text-centered has-text-danger">{{$song.DeclineReason}}</p>
                             </div>
                         </div>
-                        <hr>
                         {{end}}
                     </div>
                 </div>
