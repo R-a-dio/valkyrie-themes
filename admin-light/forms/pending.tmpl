@@ -6,9 +6,9 @@
         <div class="grid">
             <div class="cell">
                 <div class="grid is-fullheight">
-                        <button class="cell button is-small is-info" onclick="adminPlayerPlay('/admin/pending-song/{{.ID}}')" style="cursor:pointer;">Play</button>
-                        <button id="admin-player-spec" class="cell button is-small is-warning">Show Spec</button>
-                        <button class="cell button is-small is-success"><a href="/admin/pending-song/{{.ID}}" style="cursor:pointer;color:unset;">Download</a></button>
+                        <div class="cell button is-small is-info" onclick="adminPlayerPlay('/admin/pending-song/{{.ID}}')" style="cursor:pointer;">Play</div>
+                        <div id="admin-player-spec" class="cell button is-small is-warning" onclick="adminShowSpectrogram('/admin/pending-song/{{.ID}}')">Show Spec</div>
+                        <div class="cell button is-small is-success"><a href="/admin/pending-song/{{.ID}}" style="cursor:pointer;color:unset;">Download</a></div>
                 </div>
             </div>
             <div class="cell is-col-span-2">
