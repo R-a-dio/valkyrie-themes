@@ -60,7 +60,7 @@ htmx.onLoad((event) => {
         input1 = document.getElementById("news-comment-input-1");
         input2 = document.getElementById("news-comment-input-2");
     } else if (url.pathname === '/admin') {
-        document.getElementById('daypass-hours').textContent = getTimeUntilMidnight(1).formatted;
+        document.getElementById('daypass-hours').textContent = getTimeUntilMidnight(1);
     }
 })
 
