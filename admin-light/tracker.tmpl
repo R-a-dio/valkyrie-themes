@@ -17,16 +17,16 @@
                 <tbody>
                 {{range .Listeners}}
                 <tr>
-                    <td>{{.ID}}</div>
-                    <td>{{Since .Start | HumanDuration}}</div>
-                    <td>{{.UserAgent}}</div>
-                    <td>{{.IP}}</div>
-                    {{if $.User.UserPermissions.Has "listener_kick"}}<td><button class="button" hx-post="/admin/tracker/remove?id={{.ID}}" hx-push-url="false">Kick</button></div>{{end}}
+                    <td>{{.ID}}</td>
+                    <td>{{Since .Start | HumanDuration}}</td>
+                    <td>{{.UserAgent}}</td>
+                    <td>{{.IP}}</td>
+                    {{if $.User.UserPermissions.Has "listener_kick"}}<td><button class="button" hx-post="/admin/tracker/remove?id={{.ID}}" hx-push-url="false">Kick</button></td>{{end}}
                 </tr>
                 {{end}}
                 </tbody>
-            </form>
-        </div>
+            </table>
+        </form>
     </div>
 </section>
 {{end}}
