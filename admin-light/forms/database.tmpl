@@ -1,23 +1,20 @@
 {{define "form_admin_songs"}}
 {{if and .Song .Song.HasTrack}}
-<form class="songs-entry fixed-grid has-12-cols-mobile has-12-cols-tablet has-12-cols-desktop has-12-cols-widescreen has-12-cols-fullhd" method="post" action="/admin/songs" hx-swap="outerHTML swap:1s">
+<form class="songs-entry fixed-grid has-12-cols" method="post" action="/admin/songs" hx-swap="outerHTML swap:1s">
     <input class="is-hidden" type="number" name="id" value="{{.Song.TrackID}}">
     {{.CSRFTokenInput}}
-    <div class="columns m-0 mx-5 mb-3">
-        <div class="column is-tags m-0 p-0">
-            <div class="tag is-narrow is-medium" style="max-width:10%;">{{.Song.ID}}</div>
-            <div class="tag is-size-6 is-medium" style="max-width:90%;overflow:hidden;text-overflow:ellipsis;">by {{.Song.Metadata}}</div>
-        </div>
-    </div>
+
     <div class="grid box"{{if .Song.NeedReplacement}} style="background-color: rgba(185, 117, 57, 0.25);"{{end}}>
-        <div class="cell is-col-span-12 is-col-span-1-fullhd">
-            <div class="grid is-fullheight">
-                <button type="button" hx-disable class="cell button is-small is-info" onclick="togglePlayPauseAdmin(this, '{{.SongURL}}')">Play</button>
-                <div class="cell button is-small is-warning" onclick="adminShowSpectrogram()" disabled>Show Spec</div>
-                <a class="cell button is-small is-success" href="{{.SongURL}}">Download</a>
+        <div class="cell is-col-span-12 fixed-grid has-12-cols mb-0">
+            <div class="grid is-align-items-end">
+                <div class="cell tag is-narrow is-size-7-mobile is-medium">{{.Song.ID}}</div>
+                <div class="cell is-col-span-8 tag is-size-7-mobile is-medium" style="overflow:hidden;text-overflow:ellipsis;">{{.Song.Metadata}}</div>
+                <div class="cell button is-small is-size-7-mobile is-info adminPlayerPlayPauseButton" onclick="togglePlayPauseAdmin(this, '{{.SongURL}}')" style="cursor:pointer;" data-state="Play">Play</div>
+                <div class="cell button is-small is-size-7-mobile is-warning" onclick="adminShowSpectrogram('')" disabled>Show Spec</div>
+                <a class="cell button is-small is-size-7-mobile is-success" href="{{.SongURL}}">Download</a>
             </div>
         </div>
-        <div class="cell is-col-span-6 is-col-span-4-fullhd">
+        <div class="cell is-col-span-4 is-col-span-6-mobile">
             <div class="field">
                 <label class="label is-small">Artist</label>
                 <div class="control">
@@ -31,7 +28,7 @@
                 </div>
             </div>
         </div>
-        <div class="cell is-col-span-6 is-col-span-4-fullhd">
+        <div class="cell is-col-span-4 is-col-span-6-mobile">
             <div class="field">
                 <label class="label is-small">Album</label>
                 <div class="control">
@@ -59,21 +56,21 @@
                 </div>
             </div>
         </div>-->
-        <div class="cell is-col-span-12 is-col-span-2-fullhd">
+        <div class="cell is-col-span-3 is-col-span-6-mobile">
             <div class="field">
                 <label class="label is-small">LP/LR</label>
                 <div class="control">
-                    <div class="input is-small is-overflow-auto" disabled>{{.Song.LastPlayed | Since | HumanDuration}} / {{.Song.LastRequested | Since | HumanDuration}}</div>
+                    <div class="input is-small is-overflow-auto" style="scrollbar-width:none;" disabled>{{.Song.LastPlayed | Since | HumanDuration}} / {{.Song.LastRequested | Since | HumanDuration}}</div>
                 </div>
             </div>
             <div class="field">
                 <label class="label is-small">Acceptor</label>
                 <div class="control">
-                    <div class="input is-small is-overflow-auto" disabled>{{.Song.Acceptor}} ({{.Song.LastEditor}})</div>
+                    <div class="input is-small is-overflow-auto" style="scrollbar-width:none;" disabled>{{.Song.Acceptor}} ({{.Song.LastEditor}})</div>
                 </div>
             </div>
         </div>
-        <div class="cell is-col-span-12 is-col-span-1-fullhd">
+        <div class="cell is-col-span-1 is-col-span-6-mobile">
             <div class="grid is-fullheight">
                 {{if .HasEdit}}
                 <button hx-disable-elt="this" hx-post="/admin/songs" class="cell button is-small" type="submit" name="action" value="save">Save</button>

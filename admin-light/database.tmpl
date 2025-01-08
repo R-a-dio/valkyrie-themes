@@ -10,16 +10,16 @@
             </div>
         </div>
     </div>
-    <div id="songs-content" class="fixed-grid has-1-cols-mobile has-1-cols-tablet has-1-cols-desktop has-1-cols-widescreen has-2-cols-fullhd">
-        {{template "pagination" .Page}}
-        <div class="grid is-gap-4">
+    <div id="songs-content" class="fixed-grid has-1-cols">
+        <div class="container grid">
+            {{template "pagination" .Page}}
             {{range .Forms}}
             <div class="cell">
                 {{template "form_admin_songs" .}}
             </div>
             {{end}}
+            {{template "pagination" .Page}}
         </div>
-        {{template "pagination" .Page}}
     </div>
 </section>
 {{template "admin_player" .}}

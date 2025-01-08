@@ -1,15 +1,15 @@
 {{define "content"}}
-<section id="pending-section" class="section fixed-grid has-1-cols-mobile has-1-cols-tablet has-1-cols-desktop has-2-cols-widescreen has-2-cols-fullhd">
-    <div id="pending-options" class="container fixed-grid has-4-cols mb-0">
-        <div class="grid">
-            <button class="cell button box is-size-4 js-modal-trigger" data-target="admin-pending-guidelines-modal">Accepting guidelines</button>
-            <button class="cell button box is-size-4 js-modal-trigger" data-target="admin-pending-links-modal">Links</button>
-            <button class="cell button box is-size-4 js-modal-trigger" data-target="admin-pending-spectrogram-modal">How to read spectrograms</button>
-            <button class="cell button box is-size-4 js-modal-trigger" data-target="admin-pending-options-modal">Options</button>
+<section id="pending-section" class="section fixed-grid has-1-cols">
+    <div id="pending-options" class="container fixed-grid has-1-cols-mobile has-2-cols-tablet has-4-cols-desktop">
+        <div class="grid is-gap-1">
+            <button class="cell button box is-size-5 is-size-6-mobile js-modal-trigger m-0" data-target="admin-pending-guidelines-modal">Accepting guidelines</button>
+            <button class="cell button box is-size-5 is-size-6-mobile js-modal-trigger m-0" data-target="admin-pending-links-modal">Links</button>
+            <button class="cell button box is-size-5 is-size-6-mobile js-modal-trigger m-0" data-target="admin-pending-spectrogram-modal">How to read spectrograms</button>
+            <button class="cell button box is-size-5 is-size-6-mobile js-modal-trigger m-0" data-target="admin-pending-options-modal">Options</button>
             <div class="cell"></div>
         </div>
     </div>
-    <div id="pending" class="grid is-gap-4">
+    <div id="pending" class="container grid">
         {{range $song := .Submissions}}
             <div class="cell">
             {{template "form_admin_pending" $song}}

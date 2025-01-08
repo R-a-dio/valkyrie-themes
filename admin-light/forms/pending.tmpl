@@ -1,22 +1,19 @@
 {{define "form_admin_pending"}}
-<form class="{{if len .Errors}}is-warning {{end}}pending-entry fixed-grid has-6-cols-mobile has-6-cols-tablet has-12-cols-desktop has-12-cols-widescreen has-12-cols-fullhd" method="post" hx-target="this" hx-post="/admin/pending" hx-swap="outerHTML swap:1s">
+<form class="{{if len .Errors}}is-warning {{end}}pending-entry fixed-grid has-12-cols" method="post" hx-target="this" hx-post="/admin/pending" hx-swap="outerHTML swap:1s">
     <input class="is-hidden" type="number" name="id" value="{{.ID}}">
     {{.CSRFTokenInput}}
-    <div class="columns m-0 mx-5 mb-3">
-        <div class="column is-tags m-0 p-0">
-            <div class="tag is-medium">{{.Filename}}</div>
-            <div class="tag is-medium">by {{.UserIdentifier}}</div>
-        </div>
-        <div class="column is-narrow buttons m-0 p-0">
-            <div class="button is-small is-info adminPlayerPlayPauseButton" onclick="togglePlayPauseAdmin(this, '{{.ID}}')" style="cursor:pointer;" data-state="Play">Play</div>
-            <div class="button is-small is-warning" onclick="adminShowSpectrogram('/admin/pending-song/{{.ID}}')">Show Spec</div>
-            <a class="button is-small is-success" href="/admin/pending-song/{{.ID}}">Download</a>
-        </div>
-    </div>
     <div class="grid box">
+        <div class="cell is-col-span-12 fixed-grid has-12-cols mb-0">
+            <div class="grid is-align-items-end">
+                <div class="cell is-col-span-7 is-col-span-7-mobile is-col-span-7-touch is-col-span-8-desktop tag is-size-7-touch is-medium">{{.Filename}}</div>
+                <div class="cell tag is-size-7-touch is-medium">by {{.UserIdentifier}}</div>
+                <div class="cell tag is-size-7-touch is-medium is-hidden-desktop">{{Div .Bitrate 1000}}kbps</div>            
+                <div class="cell button is-small is-info adminPlayerPlayPauseButton" onclick="togglePlayPauseAdmin(this, '{{.ID}}')" style="cursor:pointer;" data-state="Play">Play</div>
+                <div class="cell button is-small is-warning" onclick="adminShowSpectrogram('/admin/pending-song/{{.ID}}')">Show Spec</div>
+                <a class="cell button is-small is-success" href="/admin/pending-song/{{.ID}}">Download</a>
+            </div>
+        </div>
         <div class="cell is-col-span-3">
-            <div class="grid">
-                <div class="cell field">
                     <label class="label is-small">Artist</label>
                     <div class="control field">
                         <input class="input is-small" name="artist" type="text" value="{{.Artist}}" placeholder="Artist">
@@ -25,12 +22,8 @@
                     <div class="control field">
                         <input class="input is-small" name="title" type="text" value="{{.Title}}" placeholder="Title">
                     </div>
-                </div>
-            </div>
         </div>
         <div class="cell is-col-span-3">
-            <div class="grid">
-                <div class="cell field">
                     <label class="label is-small">Album</label>
                     <div class="control field">
                         <input class="input is-small" name="album" type="text" value="{{.Album}}" placeholder="Album">
@@ -44,65 +37,39 @@
                             <button class="button is-small is-success" style="height:calc(2rem - 2px);" type="submit" name="action" value="accept">Accept</button>
                         </div>
                     </div>
-                </div>
-            </div>
         </div>
-        <div class="cell is-col-span-3">
-            <div class="grid">
-                <div class="cell is-col-span-2">
+        <div class="cell is-col-span-3-mobile is-col-span-3-tablet is-col-span-2-desktop">
                     <label class="label is-small">Comment</label>
-                    <div class="control field">
-                        <div class="input is-small" style="scrollbar-width:none;resize:none;min-height:unset;overflow:auto;cursor:unset;" disabled>{{.Comment}}</div>
+                    <div class="control field is-flex is-flex-direction-column">
+                        <div class="input is-small" style="scrollbar-width:none;resize:none;min-height:unset;overflow:auto;cursor:unset;flex:6rem;" disabled>{{.Comment}}</div>
                     </div>
-                </div>
-                <div class="cell is-col-span-2">
-                    <div class="fixed-grid has-3-cols">
-                        <div class="grid is-gap-1">
-                            <div class="cell">
-                                <label class="label is-small">Size</label>
-                                <div class="input is-small" style="cursor:unset;" disabled>{{SongFileSize .PendingSong}}</div>
-                            </div>
-                            <div class="cell">
-                                <label class="label is-small">Length</label>
-                                <div class="input is-small" style="cursor:unset;" disabled>{{HumanDuration .Length}}</div>
-                            </div>
-                            <div class="cell">
-                                <label class="label is-small">Bitrate</label>
-                                <div class="input is-small" style="cursor:unset;" disabled>{{Div .Bitrate 1000}}kbps</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        </div>
+        <div class="cell is-col-span-1 is-hidden-touch">
+            <div class="grid is-fullheight">
+                <div class="cell input is-small" style="cursor:unset;" disabled>{{SongFileSize .PendingSong}}</div>
+                <div class="cell input is-small" style="cursor:unset;margin-top:0.2rem;" disabled>{{HumanDuration .Length}}</div>
+                <div class="cell input is-small" style="cursor:unset;margin-top:0.2rem;" disabled>{{Div .Bitrate 1000}}kbps</div>
             </div>
         </div>
         <div class="cell is-col-span-3">
             <div class="fixed-grid has-6-cols">
                 <div class="grid">
                     <div class="cell is-col-span-6">
-                        <label class="label is-small">Reason for declining</label>
-                        <div class="field has-addons">
-                            <div class="control is-expanded">
-                                <input class="input is-small" name="reason" type="text" placeholder="Reason">
-                            </div>
-                            <div class="control">
-                                <button class="button is-small is-danger" style="margin-top:-1px;height:calc(2rem - 2px);" type="submit" name="action" value="decline">Decline</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="cell is-col-span-6">
                         <div class="fixed-grid has-6-cols">
                             <div class="grid">
-                                <div class="cell is-col-span-3">
-                                    <div class="fixed-grid has-3-cols">
+                                <div class="cell is-col-span-2 is-hidden-touch">
+                                    <div class="fixed-grid has-2-cols">
                                         <label class="label is-small">Search</label>
-                                        <div class="grid is-gap-1">
-                                            <a class="cell button is-small" href="https://www.google.com/search?q={{.Metadata}}" target="_blank">G</a>
-                                            <a class="cell button is-small" href="https://www.youtube.com/results?search_query={{.Metadata}}" target="_blank" class="cell button is-small">Y</a>
-                                            <a class="cell button is-small" href="" target="_blank" class="cell button is-small">C</a>
+                                        <div class="grid">
+                                            <div class="cell is-small is-col-span-3 is-flex is-justify-content-space-around" disabled>
+                                                <a class="is-family-code" href="https://www.google.com/search?q={{.Metadata}}" target="_blank">G</a>
+                                                <a class="is-family-code" href="https://www.youtube.com/results?search_query={{.Metadata}}" target="_blank">Y</a>
+                                                <a class="is-family-code" href="" target="_blank" class="cell button is-small">C</a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="cell is-col-span-3">
+                                <div class="cell is-col-span-6 is-col-span-4-desktop">
                                     <label class="label is-small">Replace</label>
                                     <div class="field has-addons">
                                         <div class="control is-expanded">
@@ -113,6 +80,17 @@
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="cell is-col-span-6">
+                        <label class="label is-small" style="width:max-content">Reason for declining</label>
+                        <div class="field has-addons">
+                            <div class="control is-expanded">
+                                <input class="input is-small" name="reason" type="text" placeholder="Reason">
+                            </div>
+                            <div class="control">
+                                <button class="button is-small is-danger" style="margin-top:-1px;height:calc(2rem - 2px);" type="submit" name="action" value="decline">Decline</button>
                             </div>
                         </div>
                     </div>
