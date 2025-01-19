@@ -90,34 +90,37 @@
                     </div>
                 </div>
                 <div class="cell is-col-span-8 is-row-span-1 m-3">
+                    {{block "proxy-status" .ProxyStatus}}
                     <div class="columns is-size-7 is-family-code ">
                         <div class="column is-narrow is-flex is-justify-content-center is-align-items-center has-background-radio-secondary-1 mb-0">
-                            {{with .ProxyStatus}}
-                                {{if $.IsLive}}<svg class="svg-icon" style="color:hsl(121, 40%, 40%);" viewBox="0 0 24 24"><use href="/assets/default-light/svg/sprites.svg#circle"></use></svg><div class="ml-2">LIVE</div>{{else}}<svg class="svg-icon" style="color:hsl(232, 40%, 40%);" viewBox="0 0 24 24"><use href="/assets/default-light/svg/sprites.svg#circle"></use></svg><div class="ml-2">CONNECTED</div>{{end}}<div class="ml-2">at <a href="{{.MountName}}">{{.MountName}}</a></div>
+                            {{with .}}
+                                {{if .IsLive}}<svg class="svg-icon" style="color:hsl(121, 40%, 40%);" viewBox="0 0 24 24"><use href="/assets/default-light/svg/sprites.svg#circle"></use></svg><div class="ml-2">LIVE</div>{{else}}<svg class="svg-icon" style="color:hsl(232, 40%, 40%);" viewBox="0 0 24 24"><use href="/assets/default-light/svg/sprites.svg#circle"></use></svg><div class="ml-2">CONNECTED</div>{{end}}<div class="ml-2">at <a href="{{.MountName}}">{{.MountName}}</a></div>
                             {{else}}
                                 <svg class="svg-icon" style="color:hsl(0, 40%, 40%);" viewBox="0 0 24 24"><use href="/assets/default-light/svg/sprites.svg#circle"></use></svg><div class="ml-2">Stream: DISCONNECTED</div>
                             {{end}}
                         </div>
                         <div class="column is-narrow box is-flex is-justify-content-center is-align-items-center has-background-radio-secondary-1 mb-0 ml-3">
-                            {{with .ProxyStatus}}
-                            <svg class="svg-icon" style="color:hsl(121, 40%, 40%);" viewBox="0 0 24 24"><use href="/assets/default-light/svg/sprites.svg#circle"></use></svg><div class="ml-2">Connected for {{.Start | Since | HumanDuration}}</div>
+                            {{with .}}
+                                <svg class="svg-icon" style="color:hsl(121, 40%, 40%);" viewBox="0 0 24 24"><use href="/assets/default-light/svg/sprites.svg#circle"></use></svg><div class="ml-2">Connected for {{.Start | Since | HumanDuration}}</div>
                             {{else}}
                                 <svg class="svg-icon" style="color:hsl(0, 40%, 40%);" viewBox="0 0 24 24"><use href="/assets/default-light/svg/sprites.svg#circle"></use></svg><div class="ml-2">Uptime: NOT CONNECTED</div>
                             {{end}}
                         </div>
                         <div class="column box is-flex is-align-items-center has-background-radio-secondary-1 mb-0 ml-3" style="white-space:nowrap;overflow-x:auto;scrollbar-width:none;">
-                            {{with .ProxyStatus}}
+                            {{with .}}
                                 <svg class="svg-icon" style="color:hsl(121, 40%, 40%);" viewBox="0 0 24 24"><use href="/assets/default-light/svg/sprites.svg#circle"></use></svg><div class="ml-2" style="overflow:auto;scrollbar-width:none;"><div>{{.Metadata}}</div></div>
                             {{else}}
-                            <svg class="svg-icon" style="color:hsl(0, 40%, 40%);" viewBox="0 0 24 24"><use href="/assets/default-light/svg/sprites.svg#circle"></use></svg><div class="ml-2" style="overflow:auto;scrollbar-width:none;"><div style="float:left;">Metadata: NOT CONNECTED</div></div>
+                                <svg class="svg-icon" style="color:hsl(0, 40%, 40%);" viewBox="0 0 24 24"><use href="/assets/default-light/svg/sprites.svg#circle"></use></svg><div class="ml-2" style="overflow:auto;scrollbar-width:none;"><div style="float:left;">Metadata: NOT CONNECTED</div></div>
                             {{end}}
                         </div>
                     </div>
+                    {{end}}
                 </div>
             </div>
         </div>
+        {{template "stop-streamer" .StreamerInfo}}
+        {{template "set-thread" .ThreadInfo}}
     </div>
-    {{printjson .}}
 </div>
 {{end}}
 
@@ -129,4 +132,36 @@
         </figure>
     </div>
 </div>
+{{end}}
+
+{{define "stop-streamer"}}
+    {{with .}}
+        {{if .Success}}
+            <p>You have killed hanyuu, she will stop streaming in ??? </p>
+        {{else}}
+            {{if .UserIsLive}}
+                <p>You are currently streaming</p>
+            {{else if .CurrentIsRobot}}
+                <p>Hanyuu-sama is currently streaming, to kill her send <code>.kill</code> in the #r/a/dio irc channel or press this button <button>Kill Hanyuu</button></p>
+            {{else}}
+                <p>Another DJ is currently streaming, communicate with them to determine when to start playing music</p>
+            {{end}}
+        {{end}}
+    {{end}}
+    {{printjson .}}
+{{end}}
+
+{{define "set-thread"}}
+    {{with .}}
+        {{if .Success}}
+            Thread has been updated
+        {{end}}
+        <p>Current thread: <code>{{.Thread}}</code></p>
+        {{if .AllowedToThread}}
+            <p>You can update the thread here: ???</p>
+        {{else}}
+            <p>You are currently not allowed to set the thread, if you fucked up request guest auth again in IRC</p>
+        {{end}}
+    {{end}}
+    {{printjson .}}
 {{end}}
