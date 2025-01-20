@@ -74,32 +74,38 @@
 
 {{define "search-api"}}
 <div id="search-bar-popup" class="box has-text-centered">
-{{with .Songs}}
-    {{range .}}
-    <div class="columns is-vcentered">
-        <div class="column">{{.Metadata}}</div>
-        <div class="column is-narrow">
-        {{block "request-api-form" SongPair . $}}
-            <form method="POST" action="/v1/request?trackid={{.TrackID}}&q={{.Data.Query}}&page={{.Data.Page.Nr}}&s=navbar"
-                hx-post="/v1/request?trackid={{.TrackID}}&q={{.Data.Query}}&page={{.Data.Page.Nr}}&s=navbar"
-                hx-target="#search-bar-popup"
-                hx-swap="outerHTML"
-                hx-push-url="false">
-                {{.Data.CSRFTokenInput}}
-                {{if not .HasTrack}}
-                    <button type="submit" class="button is-warning is-fullwidth">Broken</button>
-                {{else if and .Data.CanRequest .Requestable}}
-                    <button type="submit" class="button is-primary is-fullwidth" name="id" value="{{.TrackID}}" onclick="event.stopPropagation()">Request</button>
-                {{else}}
-                    <button type="submit" class="button is-danger is-fullwidth" name="id" value="{{.TrackID}}" onclick="event.stopPropagation()" disabled>Request</button>
-                {{end}}
-            </form>
-        {{end}}
-        </div>
+{{if .Message}}
+    <div class="columns is-vcentered {{if .IsError}}is-danger{{else}}is-success{{end}}">
+        <div class="column">{{.Message}}</div>
     </div>
-    {{end}}
 {{else}}
-    <div>No search results</div>
+    {{with .Songs}}
+        {{range .}}
+        <div class="columns is-vcentered">
+            <div class="column">{{.Metadata}}</div>
+            <div class="column is-narrow">
+            {{block "request-api-form" SongPair . $}}
+                <form method="POST" action="/v1/request?trackid={{.TrackID}}&q={{.Data.Query}}&page={{.Data.Page.Nr}}&s=navbar"
+                    hx-post="/v1/request?trackid={{.TrackID}}&q={{.Data.Query}}&page={{.Data.Page.Nr}}&s=navbar"
+                    hx-target="#search-bar-popup"
+                    hx-swap="outerHTML"
+                    hx-push-url="false">
+                    {{.Data.CSRFTokenInput}}
+                    {{if not .HasTrack}}
+                        <button type="submit" class="button is-warning is-fullwidth">Broken</button>
+                    {{else if and .Data.CanRequest .Requestable}}
+                        <button type="submit" class="button is-primary is-fullwidth" name="id" value="{{.TrackID}}" onclick="event.stopPropagation()">Request</button>
+                    {{else}}
+                        <button type="submit" class="button is-danger is-fullwidth" name="id" value="{{.TrackID}}" onclick="event.stopPropagation()" disabled>Request</button>
+                    {{end}}
+                </form>
+            {{end}}
+            </div>
+        </div>
+        {{end}}
+    {{else}}
+        <div>No search results</div>
+    {{end}}
 {{end}}
 </div>
 {{end}}
