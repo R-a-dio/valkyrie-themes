@@ -21,8 +21,8 @@
                                 </div>
                                 <div class="cell is-col-span-1 is-align-content-center">
                                     {{block "request-form" SongPair . $}}
-                                    <form method="POST" action="/v1/request?trackid={{.TrackID}}&nick={{.Data.Nickname}}&page={{.Data.Page.Nr}}"
-                                        hx-post="/v1/request?trackid={{.TrackID}}&nick={{.Data.Nickname}}&page={{.Data.Page.Nr}}"
+                                    <form method="POST" action="/v1/request?trackid={{.TrackID}}&nick={{.Data.Nickname}}&page={{.Data.Page.Nr}}&s=fave"
+                                        hx-post="/v1/request?trackid={{.TrackID}}&nick={{.Data.Nickname}}&page={{.Data.Page.Nr}}&s=fave"
                                         hx-target="#content"
                                         hx-push-url="false">
                                         {{.Data.CSRFTokenInput}}
