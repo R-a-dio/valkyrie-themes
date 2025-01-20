@@ -8,6 +8,7 @@
                         <div class="cell is-flex is-col-span-4 is-row-span-1 is-size-3 is-family-code is-justify-content-center is-align-self-center m-0" style="font-variant:ordinal;">STREAMBOOTH</div>
                         <div class="cell is-flex box is-col-span-4 is-row-span-1 is-justify-content-center is-align-self-center has-background-radio-secondary-1 has-text-weight-light m-0 py-2">USERNAME: {{.User.Username}}</div>
                         {{template "proxy-status" .ProxyStatus}}
+                        {{template "set-thread" .ThreadInfo}}
                         <div class="cell is-flex is-flex-direction-column is-col-span-8 is-row-span-3">
                             <div class="box is-flex-1 has-background-radio-secondary-1">
                                 <div class="tabs is-boxed">
@@ -82,7 +83,6 @@
                             </div>
                         </div>
                         {{template "stop-streamer" .StreamerInfo}}
-                        {{template "set-thread" .ThreadInfo}}
                     </div>
                 </div>
             </div>
@@ -123,7 +123,7 @@
 {{end}}
 
 {{define "set-thread"}}
-<div id="set-thread" class="cell box is-col-span-2 is-row-span-2 has-background-radio-secondary-1 m-0 p-0">
+<div id="set-thread" class="cell box is-col-span-8 is-row-span-2 has-background-radio-secondary-1 m-0 p-0">
     <div class="columns has-text-centered is-flex-direction-column p-4">
         {{if .AllowedToThread}}
         <p class="column">This is the current thread, you can update it here or set an image by prepending 'image:' to an URL</p>
@@ -132,8 +132,14 @@
         {{end}}
         <form hx-post="{{.FormAction}}" hx-target="#set-thread" hx-swap="outerHTML" class="is-align-self-stretch px-3">
             {{.CSRFTokenInput}}
-            <input name="thread" class="input has-text-centered" type="text" value="{{.Thread}}">
-            <button type="submit" class="button booth-button is-align-self-stretch m-3 is-info" {{if not .AllowedToThread}}disabled{{end}}>Update</button>
+            <div class="field has-addons">
+                <div class="control is-expanded">
+                    <input name="thread" class="input has-text-centered" type="text" value="{{.Thread}}">
+                </div>
+                <div class="control">
+                    <button type="submit" class="button booth-button is-align-self-stretch is-info" {{if not .AllowedToThread}}disabled{{end}}>Update</button>
+                </div>
+            </div>
         </form>
     </div>
 </div>
