@@ -77,7 +77,7 @@
                             {{$progress := Status.SongInfo.Start | Since}}
                             <div class="progress-container is-fullwidth">
                                 <div class="progress-wrapper">
-                                    <progress id="current-song-progress" class="progress is-large px-4 mb-0" value="{{$progress | ToSecond}}" max="{{.Status.Song.Length.Seconds}}"></progress>
+                                    <progress id="current-song-progress" class="progress is-large" value="{{$progress | ToSecond}}" max="{{.Status.Song.Length.Seconds}}"></progress>
                                     <div class="progress-text">{{with .Status}}<div><span id="progress-current" data-start="{{.SongInfo.Start.UnixMilli}}">{{$progress | MediaDuration}}</span> / <span id="progress-max">{{.Song.Length | MediaDuration}}</span></div>{{end}}</div>
                                 </div>
                             </div>
