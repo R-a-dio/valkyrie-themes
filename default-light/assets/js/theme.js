@@ -210,15 +210,19 @@ function processElementTimezones(className) {
 }
 
 function switchTab(button) {
-    const container = button.parentElement;
-    const buttons = container.getElementsByTagName('button');
+    const container = button.closest(".tabs");
+    const buttons = container.getElementsByClassName('tab-button');
     const targets = [...buttons].map(btn => document.getElementById(btn.dataset.target));
     const selectedTarget = document.getElementById(button.dataset.target);
     
     if (!selectedTarget || !selectedTarget.classList.contains('is-hidden')) return;
     
-    targets.forEach(target => target.classList.add('is-hidden'));
+    targets.forEach((target, idx) => {
+        target.classList.add('is-hidden');
+        buttons[idx].parentElement.classList.remove('is-active');
+    });
     selectedTarget.classList.remove('is-hidden');
+    button.parentElement.classList.add('is-active');
 }
 
 htmx.onLoad((event) => {

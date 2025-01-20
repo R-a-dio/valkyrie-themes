@@ -3,8 +3,14 @@
     <div class="section">
         <div class="fixed-grid has-10-cols">
             <div class="grid">
-                <div class="cell is-flex box is-col-span-3 is-row-span-1 is-justify-content-center is-align-self-center has-background-radio-secondary-1 has-text-weight-light m-0 py-2">USERNAME: {{.User.Username}}</div>
-                <div class="cell is-flex box is-col-span-3 is-row-span-1 is-justify-content-center is-align-self-center has-background-radio-secondary-1 has-text-weight-light m-0 py-2">
+                <div class="cell is-flex is-col-span-2 is-row-span-1 is-size-3 is-family-code is-justify-content-center is-align-self-center m-0" style="font-variant:ordinal;">STREAMBOOTH</div>
+                <div class="cell is-flex box is-col-span-6 is-row-span-1 is-justify-content-center is-align-self-center has-background-radio-secondary-1 has-text-weight-light m-0 py-2">USERNAME: {{.User.Username}}</div>
+                <div class="cell is-flex is-col-span-2 is-row-span-2 is-justify-content-center is-align-self-center has-text-weight-light m-0 p-0">
+                    <div class="columns is-flex-direction-column">
+                        {{template "streamer" .Status.User}}
+                    </div>
+                </div>
+                <div class="cell is-flex box is-col-span-8 is-row-span-1 is-justify-content-center is-align-self-center has-background-radio-secondary-1 has-text-weight-light m-0 py-2">
                     {{$progress := Status.SongInfo.Start | Since}}
                     <div class="progress-container is-fullwidth">
                         <div class="progress-wrapper">
@@ -13,29 +19,17 @@
                         </div>
                     </div>
                 </div>
-                <div class="cell is-flex is-col-span-2 is-row-span-1 is-size-3 is-family-code is-justify-content-center is-align-self-center m-0" style="font-variant:ordinal;">STREAMBOOTH</div>
-                <div class="cell is-flex is-col-span-2 is-row-span-2 is-justify-content-center is-align-self-center has-text-weight-light m-0 p-0">
-                    <div class="columns is-flex-direction-column">
-                        {{template "streamer" .Status.User}}
-                    </div>
-                </div>
                 {{template "proxy-status" .ProxyStatus}}
-                <div class="cell is-col-span-2 is-row-span-1">
-                    <div id="dj-name" class="column has-text-centered has-background-radio-secondary-1">Current DJ: {{.Status.User.DJ.Name}}</div>
-                </div>
-                <div class="cell is-col-span-8 is-row-span-1">
-                    <div id="booth-tab-container" class="columns m-0">
-                        <div class="column has-text-centered has-text-centered has-background-radio-secondary-1 py-2">Streaming Info</div>
-                        <button class="column is-narrow button booth-tab-button is-narrow ml-3 py-2" data-target="streaming-info" onclick="switchTab(this)">Streaming</button>
-                        <button class="column is-narrow button booth-tab-button is-narrow ml-3 py-2" data-target="hanyuu-info" onclick="switchTab(this)">Hanyuu</button>
-                        <button class="column is-narrow button booth-tab-button is-narrow ml-3 py-2" data-target="other-info" onclick="switchTab(this)">Other</button>
-                    </div>
-                </div>
                 <div class="cell is-flex is-flex-direction-column is-col-span-8 is-row-span-3">
                     <div class="box is-flex-1 has-background-radio-secondary-1">
+                        <div class="tabs is-boxed">
+                            <ul>
+                                <li class="is-active"><a class="tab-button" data-target="streaming-info" onclick="switchTab(this)">Stream Settings</a></li>
+                                <li><a class="tab-button" data-target="irc-info" onclick="switchTab(this)">IRC Commands</a></li>
+                            </ul>
+                        </div>
                         <div id="streaming-info" class="grid">
                             <div class="content cell is-col-span-8">
-                                <h1>Stream Settings</h1>
                                 <p>Sample Rate MUST be 44100 or 44.1kHz.</p>
                                 <p>
                                 If you are using Loopstream and it is yelling at you, either fix your audio devices or ignore the warning.
@@ -49,8 +43,10 @@
                                     <dd>You can test your audio setup by setting the address field in the Server tab of the settings to blank.</dd>
                                     <dd>Doing so will fake a connection when you press Connect on the main window. Don't forget to re-set the address to the stream server after.</dd>
                                 </dl>
-
-                                <h5>IRC Commands</h5>
+                            </div>
+                        </div>
+                        <div id="irc-info" class="grid is-hidden">
+                            <div class="content cell is-col-span-8">
                                 <p>Commands should all be in the main IRC channel</p>
                                 <dl>
                                     <dt>Use <code>.kill</code> to kill Hanyuu-sama</dt>
@@ -122,9 +118,12 @@
 {{define "streamer"}}
 <div class="column">
     <div class="card-image">
-        <figure class="image is-square is-96x96">
+        <figure class="image is-square">
             <img src="/api/dj-image/{{.DJ.Image}}"/>
         </figure>
+    </div>
+    <div class="cell is-col-span-2 is-row-span-1">
+        <div id="dj-name" class="column has-text-centered has-background-radio-secondary-1">Current DJ: {{.DJ.Name}}</div>
     </div>
 </div>
 {{end}}
