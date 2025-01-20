@@ -4,12 +4,24 @@
         <div class="fixed-grid has-10-cols">
             <div class="grid">
                 <div class="cell is-flex box is-col-span-3 is-row-span-1 is-justify-content-center is-align-self-center has-background-radio-secondary-1 has-text-weight-light m-0 py-2">USERNAME: {{.User.Username}}</div>
-                <div class="cell is-flex box is-col-span-3 is-row-span-1 is-justify-content-center is-align-self-center has-background-radio-secondary-1 has-text-weight-light m-0 py-2">PASSWORD: SUPER_SECRET</div>
+                <div class="cell is-flex box is-col-span-3 is-row-span-1 is-justify-content-center is-align-self-center has-background-radio-secondary-1 has-text-weight-light m-0 py-2">
+                    {{$progress := Status.SongInfo.Start | Since}}
+                    <div class="progress-container is-fullwidth">
+                        <div class="progress-wrapper">
+                            <progress id="current-song-progress" class="progress is-large px-4 mb-0" value="{{$progress | ToSecond}}" max="{{.Status.Song.Length.Seconds}}"></progress>
+                            <div class="progress-text">{{with .Status}}<div><span id="progress-current" data-start="{{.SongInfo.Start.UnixMilli}}">{{$progress | MediaDuration}}</span> / <span id="progress-max">{{.Song.Length | MediaDuration}}</span></div>{{end}}</div>
+                        </div>
+                    </div>
+                </div>
                 <div class="cell is-flex is-col-span-2 is-row-span-1 is-size-3 is-family-code is-justify-content-center is-align-self-center m-0" style="font-variant:ordinal;">STREAMBOOTH</div>
                 <div class="cell is-flex is-col-span-2 is-row-span-2 is-justify-content-center is-align-self-center has-text-weight-light m-0 p-0">
                     <div class="columns is-flex-direction-column">
                         {{template "streamer" .Status.User}}
                     </div>
+                </div>
+                {{template "proxy-status" .ProxyStatus}}
+                <div class="cell is-col-span-2 is-row-span-1">
+                    <div id="dj-name" class="column has-text-centered has-background-radio-secondary-1">Current DJ: {{.Status.User.DJ.Name}}</div>
                 </div>
                 <div class="cell is-col-span-8 is-row-span-1">
                     <div id="booth-tab-container" class="columns m-0">
@@ -22,13 +34,48 @@
                 <div class="cell is-flex is-flex-direction-column is-col-span-8 is-row-span-3">
                     <div class="box is-flex-1 has-background-radio-secondary-1">
                         <div id="streaming-info" class="grid">
-                            <p class="cell is-col-span-8">Something about streaming possibly also Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text</p>
-                            <p class="cell is-col-span-8">Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text</p>
-                            <p class="cell is-col-span-8 is-size-5 has-text-weight-light">Subdescription</p>
-                            <p class="cell is-col-span-8">Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text</p>
-                            <p class="cell is-col-span-8">Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text</p>
-                            <p class="cell is-col-span-8">Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text TextText Text Text</p>
-                            <p class="cell is-col-span-8">Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text</p> 
+                            <div class="content cell is-col-span-8">
+                                <h1>Stream Settings</h1>
+                                <p>Sample Rate MUST be 44100 or 44.1kHz.</p>
+                                <p>
+                                If you are using Loopstream and it is yelling at you, either fix your audio devices or ignore the warning.
+                                The warning is (was?) overblown and the audio is not actually low-quality.
+                                </p>
+                                <p>Codec must be MP3.</p>
+                                <p>Bitrate should be 192kbps. No lower, preferrably not higher for consistency.</p>
+                                <dl>
+                                    <dt>If you are using Loopstream, set up audio routing if possible.</dt>
+                                    <dd>This does require two usable audio output devices. If you only have one, and don't feel comfortable finding and setting up a Virtual Audio Cable program, don't bother.</dd>
+                                    <dd>You can test your audio setup by setting the address field in the Server tab of the settings to blank.</dd>
+                                    <dd>Doing so will fake a connection when you press Connect on the main window. Don't forget to re-set the address to the stream server after.</dd>
+                                </dl>
+
+                                <h5>IRC Commands</h5>
+                                <p>Commands should all be in the main IRC channel</p>
+                                <dl>
+                                    <dt>Use <code>.kill</code> to kill Hanyuu-sama</dt>
+                                    <dd>Only needed if Hanyuu is the current DJ.</dd>
+                                    <dd>Do this with at least 15 seconds left in the current song to be safe, but you can do this as early as 5 seconds into a song.</dd>
+                                    <dd>You can keep an eye on how much time is left in a song on the site.</dd>
+                                    <dd>Connect when there are 30 seconds left in the current song but DO NOT start your music.</dd>
+                                    <dd>Start your music when the current song ends.</dd>
+                                </dl>
+                                <dl>
+                                    <dt>Use of <code>.dj</code> is no longer needed</dt>
+                                    <dd>You will be set as DJ when you go live on the stream automatically</dd>
+                                    <dd><strong>Still use the below command to set Hanyuu-sama after you're done.</strong></dd>
+                                </dl>
+                                <dl>
+                                    <dt>Use <code>.dj hanyuu</code> to set Hanyuu-sama as DJ when you are done streaming.</dt>
+                                    <dd>You can do this before you disconnect, as long as there is less than one minute left in your set.</dd>
+                                </dl>
+                                <dl>
+                                    <dt>Use <tag class="is-success">.thread [thread]</tag> to set the thread, with <tag class="is-success">[thread]</tag> changed to what you want to set.</dt>
+                                    <dd>Example: <tag class="is-success">.thread fake.imageboard.net/a/8169743</tag></dd>
+                                    <dd>Using <tag class="is-success">.thread none</tag> unsets the thread</dd>
+                                    <dd>You can also set the thread on this page</dd>
+                                </dl>
+                            </div>
                         </div>
                         <div id="hanyuu-info" class="grid is-hidden">
                             <p class="cell">Something about Hanyuu here maybe if necessary</p>
@@ -64,62 +111,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="cell is-col-span-2 is-row-span-1">
-                    <div id="dj-name" class="column has-text-centered has-background-radio-secondary-1">Current DJ: {{.Status.User.DJ.Name}}</div>
-                </div>
-                <div class="cell is-col-span-2 is-row-span-1 m-0 p-0">
-                    <div class="columns has-text-centered is-flex-direction-column has-background-radio-secondary-1 m-0 p-0">
-                        <p class="column p-4">This kills the Hanyuu. You must connect within <b style="color:lightcoral">replaceme</b> seconds after the song ends.</p>
-                        {{$progress := .Status.SongInfo.Start | Since}}
-                        <div class="progress-container is-fullwidth">
-                            <div class="progress-wrapper">
-                              <progress id="current-song-progress" class="progress is-large px-4 mb-0" value="{{$progress | ToSecond}}" max="{{.Status.Song.Length.Seconds}}"></progress>
-                              <div class="progress-text">{{with .Status}}<div><span id="progress-current" data-start="{{.SongInfo.Start.UnixMilli}}">{{$progress | MediaDuration}}</span> / <span id="progress-max">{{.Song.Length | MediaDuration}}</span></div>{{end}}</div>
-                            </div>
-                          </div>
-                        <button class="button is-align-self-stretch m-4 {{if not .ProxyStatus}}disabled{{end}}">Kill Hanyuu</button>
-                    </div>
-                </div>
-                <div class="cell box is-col-span-2 is-row-span-2 has-background-radio-secondary-1 m-0 p-0">
-                    <div class="columns has-text-centered is-flex-direction-column p-4">
-                        <p class="column">This is the current thread, you can update it here or set an image by prepending 'image:' to an URL</p>
-                        <form class="is-align-self-stretch px-3">
-                            <input id="booth-thread-input" class="input has-text-centered" type="text" placeholder="None">
-                        </form>
-                        <button class="button booth-button is-align-self-stretch m-3">Update</button>
-                    </div>
-                </div>
-                <div class="cell is-col-span-8 is-row-span-1 m-3">
-                    {{block "proxy-status" .ProxyStatus}}
-                    <div class="columns is-size-7 is-family-code ">
-                        <div class="column is-narrow is-flex is-justify-content-center is-align-items-center has-background-radio-secondary-1 mb-0">
-                            {{with .}}
-                                {{if .IsLive}}<svg class="svg-icon" style="color:hsl(121, 40%, 40%);" viewBox="0 0 24 24"><use href="/assets/default-light/svg/sprites.svg#circle"></use></svg><div class="ml-2">LIVE</div>{{else}}<svg class="svg-icon" style="color:hsl(232, 40%, 40%);" viewBox="0 0 24 24"><use href="/assets/default-light/svg/sprites.svg#circle"></use></svg><div class="ml-2">CONNECTED</div>{{end}}<div class="ml-2">at <a href="{{.MountName}}">{{.MountName}}</a></div>
-                            {{else}}
-                                <svg class="svg-icon" style="color:hsl(0, 40%, 40%);" viewBox="0 0 24 24"><use href="/assets/default-light/svg/sprites.svg#circle"></use></svg><div class="ml-2">Stream: DISCONNECTED</div>
-                            {{end}}
-                        </div>
-                        <div class="column is-narrow box is-flex is-justify-content-center is-align-items-center has-background-radio-secondary-1 mb-0 ml-3">
-                            {{with .}}
-                                <svg class="svg-icon" style="color:hsl(121, 40%, 40%);" viewBox="0 0 24 24"><use href="/assets/default-light/svg/sprites.svg#circle"></use></svg><div class="ml-2">Connected for {{.Start | Since | HumanDuration}}</div>
-                            {{else}}
-                                <svg class="svg-icon" style="color:hsl(0, 40%, 40%);" viewBox="0 0 24 24"><use href="/assets/default-light/svg/sprites.svg#circle"></use></svg><div class="ml-2">Uptime: NOT CONNECTED</div>
-                            {{end}}
-                        </div>
-                        <div class="column box is-flex is-align-items-center has-background-radio-secondary-1 mb-0 ml-3" style="white-space:nowrap;overflow-x:auto;scrollbar-width:none;">
-                            {{with .}}
-                                <svg class="svg-icon" style="color:hsl(121, 40%, 40%);" viewBox="0 0 24 24"><use href="/assets/default-light/svg/sprites.svg#circle"></use></svg><div class="ml-2" style="overflow:auto;scrollbar-width:none;"><div>{{.Metadata}}</div></div>
-                            {{else}}
-                                <svg class="svg-icon" style="color:hsl(0, 40%, 40%);" viewBox="0 0 24 24"><use href="/assets/default-light/svg/sprites.svg#circle"></use></svg><div class="ml-2" style="overflow:auto;scrollbar-width:none;"><div style="float:left;">Metadata: NOT CONNECTED</div></div>
-                            {{end}}
-                        </div>
-                    </div>
-                    {{end}}
-                </div>
+                {{template "stop-streamer" .StreamerInfo}}
+                {{template "set-thread" .ThreadInfo}}
             </div>
         </div>
-        {{template "stop-streamer" .StreamerInfo}}
-        {{template "set-thread" .ThreadInfo}}
     </div>
 </div>
 {{end}}
@@ -135,33 +130,72 @@
 {{end}}
 
 {{define "stop-streamer"}}
-    {{with .}}
-        {{if .Success}}
-            <p>You have killed hanyuu, she will stop streaming in ??? </p>
-        {{else}}
-            {{if .UserIsLive}}
-                <p>You are currently streaming</p>
-            {{else if .CurrentIsRobot}}
-                <p>Hanyuu-sama is currently streaming, to kill her send <code>.kill</code> in the #r/a/dio irc channel or press this button <button>Kill Hanyuu</button></p>
-            {{else}}
-                <p>Another DJ is currently streaming, communicate with them to determine when to start playing music</p>
-            {{end}}
-        {{end}}
+<div id="stop-streamer" class="cell is-col-span-2 is-row-span-1 m-0 p-0">
+    <div class="columns has-text-centered is-flex-direction-column has-background-radio-secondary-1 m-0 p-0">
+    {{if .UserIsLive}}
+        <p class="column p-4 is-success">You are currently streaming</p>
+    {{else if .CurrentIsRobot}}
+        <p class="column p-4">This kills the Hanyuu. You must connect within <b style="color:lightcoral">{{.ConnectTimeout}}</b> after the song ends.</p>
+        <form hx-post="{{.FormAction}}" hx-target="#stop-streamer" hx-swap="outerHTML">
+            {{.CSRFTokenInput}}
+            <button type="submit" class="button is-align-self-stretch m-4 is-warning" {{if not .AllowedToKill}}disabled{{end}}>Kill Hanyuu</button>
+        </form>
+    {{else}}
+        <p class="column p-4">Another DJ is currently streaming, communicate with them.</p>
     {{end}}
-    {{printjson .}}
+    </div>
+</div>
 {{end}}
 
 {{define "set-thread"}}
-    {{with .}}
-        {{if .Success}}
-            Thread has been updated
-        {{end}}
-        <p>Current thread: <code>{{.Thread}}</code></p>
+<div id="set-thread" class="cell box is-col-span-2 is-row-span-2 has-background-radio-secondary-1 m-0 p-0">
+    <div class="columns has-text-centered is-flex-direction-column p-4">
         {{if .AllowedToThread}}
-            <p>You can update the thread here: ???</p>
+        <p class="column">This is the current thread, you can update it here or set an image by prepending 'image:' to an URL</p>
         {{else}}
-            <p>You are currently not allowed to set the thread, if you fucked up request guest auth again in IRC</p>
+        <p class="column">You are currently not allowed to set the thread, if you fucked up request guest auth again in IRC</p>
         {{end}}
-    {{end}}
-    {{printjson .}}
+        <form hx-post="{{.FormAction}}" hx-target="#set-thread" hx-swap="outerHTML" class="is-align-self-stretch px-3">
+            {{.CSRFTokenInput}}
+            <input name="thread" class="input has-text-centered" type="text" value="{{.Thread}}">
+            <button type="submit" class="button booth-button is-align-self-stretch m-3 is-info" {{if not .AllowedToThread}}disabled{{end}}>Update</button>
+        </form>
+    </div>
+</div>
+{{end}}
+
+{{define "proxy-status"}}
+<div class="cell is-col-span-8 is-row-span-1 m-3">
+    <div class="columns is-size-7 is-family-code ">
+        <div class="column is-narrow is-flex is-justify-content-center is-align-items-center has-background-radio-secondary-1 mb-0">
+            {{with .}}
+                {{if .IsLive}}
+                    <svg class="svg-icon" style="color:hsl(121, 40%, 40%);" viewBox="0 0 24 24"><use href="/assets/default-light/svg/sprites.svg#circle"></use></svg><div class="ml-2">LIVE</div>
+                {{else}}
+                    <svg class="svg-icon" style="color:hsl(232, 40%, 40%);" viewBox="0 0 24 24"><use href="/assets/default-light/svg/sprites.svg#circle"></use></svg><div class="ml-2">CONNECTED</div>
+                {{end}}<div class="ml-2">at <a href="{{.MountName}}">{{.MountName}}</a></div>
+            {{else}}
+                <svg class="svg-icon" style="color:hsl(0, 40%, 40%);" viewBox="0 0 24 24"><use href="/assets/default-light/svg/sprites.svg#circle"></use></svg><div class="ml-2">Stream: DISCONNECTED</div>
+            {{end}}
+        </div>
+        <div class="column is-narrow box is-flex is-justify-content-center is-align-items-center has-background-radio-secondary-1 mb-0 ml-3">
+            {{with .}}
+                <svg class="svg-icon" style="color:hsl(121, 40%, 40%);" viewBox="0 0 24 24"><use href="/assets/default-light/svg/sprites.svg#circle"></use></svg><div class="ml-2">Connected for {{.Start | Since | HumanDuration}}</div>
+            {{else}}
+                <svg class="svg-icon" style="color:hsl(0, 40%, 40%);" viewBox="0 0 24 24"><use href="/assets/default-light/svg/sprites.svg#circle"></use></svg><div class="ml-2">Uptime: NOT CONNECTED</div>
+            {{end}}
+        </div>
+        <div class="column box is-flex is-align-items-center has-background-radio-secondary-1 mb-0 ml-3" style="white-space:nowrap;overflow-x:auto;scrollbar-width:none;">
+            {{with .}}
+                {{with .Metadata}}
+                    <svg class="svg-icon" style="color:hsl(121, 40%, 40%);" viewBox="0 0 24 24"><use href="/assets/default-light/svg/sprites.svg#circle"></use></svg><div class="ml-2" style="overflow:auto;scrollbar-width:none;"><div>{{.}}</div></div>
+                {{else}}
+                    <svg class="svg-icon" style="color:hsl(232, 40%, 40%);" viewBox="0 0 24 24"><use href="/assets/default-light/svg/sprites.svg#circle"></use></svg><div class="ml-2" style="overflow:auto;scrollbar-width:none;"><div style="float:left;">[NO METADATA]</div></div>
+                {{end}}
+            {{else}}
+                <svg class="svg-icon" style="color:hsl(0, 40%, 40%);" viewBox="0 0 24 24"><use href="/assets/default-light/svg/sprites.svg#circle"></use></svg><div class="ml-2" style="overflow:auto;scrollbar-width:none;"><div style="float:left;">NOT CONNECTED</div></div>
+            {{end}}
+        </div>
+    </div>
+</div>
 {{end}}
