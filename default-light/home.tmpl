@@ -30,7 +30,7 @@
                                 <button class="button is-small ml-2" style="font-weight: 900;" onclick="toggleDropdown(this, 'options-button-dropdown')"><svg class="svg-icon" style="height:1.5rem!important;width:1.5rem!important;"><use href="assets/default-light/svg/sprites.svg#cog"></use></svg></button>
                                 <div id="options-button-dropdown" class="dropdown-container box is-hidden" style="z-index:1">
                                     <div class="p-0 mb-2"><a href="/help#stream-help" hx-boost="true" hx-push-url="true" hx-target="#content"><button class="button is-fullwidth">Help</button></a></div>
-                                    <div class="p-0 mb-2"><a><button class="button is-fullwidth js-modal-trigger" data-target="prefs-modal">Preferences</button></a></div>
+                                    <div class="p-0 mb-2"><a><button class="button is-fullwidth" onclick="toggleClassOnClick(this)" data-class="is-active" data-target="prefs-modal">Preferences</button></a></div>
                                 </div>
                         </div>
                     </div>

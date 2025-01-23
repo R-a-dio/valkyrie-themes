@@ -224,38 +224,27 @@ function switchTab(button) {
     button.parentElement.classList.add('is-active');
 }
 
-htmx.onLoad((event) => {
-    // Add a click event on buttons to open a specific modal
-    (document.querySelectorAll('.js-modal-trigger') || []).forEach(($trigger) => {
-      const modal = $trigger.dataset.target;
-      const $target = document.getElementById(modal);
-  
-      addEventListener("ModalOpen", "click", $trigger, () => {
-        openModal($target);
-      });
-    });
-  
-    // Add a click event on various child elements to close the parent modal
-    (document.querySelectorAll('.modal-background, .modal-close, .modal-card-head .delete, .modal-card-foot .button') || []).forEach(($close) => {
-      const $target = $close.closest('.modal');
-  
-      addEventListener("ModalClose", "click", $close, () => {
-        closeModal($target);
-      });
-    });
-
-    // Add a click event on notification close buttons
-    (document.querySelectorAll('.notification .delete') || []).forEach(($close) => {
-        const $notification = $close.closest($close.dataset.target);
-
-        addEventListener("Delete", "click", $close, () => {
-            $notification.parentNode.removeChild($notification);    
-        });
-      });
-  
+htmx.onLoad((content) => {
     // Add a keyboard event to close all modals
     document.addEventListener('keydown', escToCloseModals, {passive: true});
 });
+
+function removeTargetOnClick(e) {
+    el = e.closest(e.dataset.target);
+    el.parentNode.removeChild(el);
+}
+
+function toggleClassOnClick(e) {
+    htmx.toggleClass(htmx.find(`#${e.dataset.target}`), e.dataset.class);
+}
+
+function removeClassOnClick(e) {
+    htmx.removeClass(htmx.find(`#${e.dataset.target}`), e.dataset.class);
+}
+
+function addClassOnClick(e) {
+    htmx.addClass(htmx.find(`#${e.dataset.target}`), e.dataset.class);
+}
 
 // Functions to open and close modals
 function escToCloseModals(event) {

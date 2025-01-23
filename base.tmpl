@@ -45,7 +45,7 @@
 {{end}}
 {{define "preferences"}}
 <div id="prefs-modal" class="modal">
-    <div class="modal-background"></div>
+    <div class="modal-background" onclick="removeClassOnClick(this)" data-target="prefs-modal" data-class="is-active"></div>
     <div class="modal-content">
         <div id="preferences" class="block column fixed-grid has-background-radio-secondary-1">
             <div class="grid">
@@ -69,6 +69,6 @@
             </div>
         </div>        
     </div>
-    <button class="modal-close is-large" aria-label="close"></button>
+    <button data-target="prefs-modal" data-class="is-active" onclick="removeClassOnClick(this)" class="modal-close is-large" aria-label="close"></button>
   </div>
 {{end}}

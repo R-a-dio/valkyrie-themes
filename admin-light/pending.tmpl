@@ -2,10 +2,10 @@
 <section id="pending-section" class="section fixed-grid has-1-cols">
     <div id="pending-options" class="container fixed-grid has-1-cols-mobile has-2-cols-tablet has-4-cols-desktop">
         <div class="grid">
-            <button class="cell button box is-size-5 is-size-6-mobile js-modal-trigger m-0" data-target="admin-pending-guidelines-modal">Accepting guidelines</button>
-            <button class="cell button box is-size-5 is-size-6-mobile js-modal-trigger m-0" data-target="admin-pending-links-modal">Links</button>
-            <button class="cell button box is-size-5 is-size-6-mobile js-modal-trigger m-0" data-target="admin-pending-spectrogram-modal">How to read spectrograms</button>
-            <button class="cell button box is-size-5 is-size-6-mobile js-modal-trigger m-0" data-target="admin-pending-options-modal">Options</button>
+            <button class="cell button box is-size-5 is-size-6-mobile m-0" onclick="toggleClassOnClick(this)" data-target="admin-pending-guidelines-modal" data-class="is-active">Accepting guidelines</button>
+            <button class="cell button box is-size-5 is-size-6-mobile m-0" onclick="toggleClassOnClick(this)" data-target="admin-pending-links-modal" data-class="is-active">Links</button>
+            <button class="cell button box is-size-5 is-size-6-mobile m-0" onclick="toggleClassOnClick(this)" data-target="admin-pending-spectrogram-modal" data-class="is-active">How to read spectrograms</button>
+            <button class="cell button box is-size-5 is-size-6-mobile m-0" onclick="toggleClassOnClick(this)" data-target="admin-pending-options-modal" data-class="is-active">Options</button>
             <div class="cell"></div>
         </div>
     </div>
@@ -26,7 +26,7 @@
 
 {{define "pending-options"}}
 <div id="admin-pending-options-modal" class="modal">
-    <div class="modal-background"></div>
+    <div class="modal-background" onclick="removeClassOnClick(this)" data-target="admin-pending-options-modal" data-class="is-active"></div>
     <div class="modal-content">
         <div class="content box">
             <div class="title">Options</div>
@@ -53,7 +53,7 @@
 
 {{define "pending-spectrogram-guide"}}
 <div id="admin-pending-spectrogram-modal" class="modal">
-    <div class="modal-background"></div>
+    <div class="modal-background" onclick="removeClassOnClick(this)" data-target="admin-pending-spectrogram-modal" data-class="is-active"></div>
     <div class="modal-content">
         <div class="content box">
             <div class="title">Spectrograms</div>
@@ -66,7 +66,7 @@
 
 {{define "pending-links"}}
 <div id="admin-pending-links-modal" class="modal">
-    <div class="modal-background"></div>
+    <div class="modal-background" onclick="removeClassOnClick(this)" data-target="admin-pending-links-modal" data-class="is-active"></div>
     <div class="modal-content">
         <div class="content box">
             <div class="title">Links</div>
@@ -87,7 +87,7 @@
 
 {{define "pending-guidelines"}}
 <div id="admin-pending-guidelines-modal" class="modal">
-    <div class="modal-background"></div>
+    <div class="modal-background" onclick="removeClassOnClick(this)" data-target="admin-pending-guidelines-modal" data-class="is-active"></div>
     <div class="modal-content">
         <div class="content box">
             <div class="title">Accepting guidelines</div>
