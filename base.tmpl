@@ -27,10 +27,14 @@
         </audio>
     </div>
     {{end}}
+
     <div id="content" hx-history-elt>
     {{block "partial-page" .}}
         {{if .IsHTMX}}{{template "full-head" .}}{{end}}
         {{ block "navbar" . }}{{end}}
+        <div id="error-container">
+        {{ block "error-template" . }}{{end}}
+        </div>
         {{ block "content" . }}{{end}}
     {{end}}
     </div>

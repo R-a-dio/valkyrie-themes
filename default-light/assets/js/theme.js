@@ -7,9 +7,8 @@ function clearNavbarSearchValue(event) {
         if (!parent.contains(e.target)) {
             originalTarget.value = "";
             htmx.trigger(originalTarget, "input");
-            document.body.removeEventListener("click", this, true);
         }
-    })
+    }, {once: true});
 }
 
 // Help page switch for mobiles & highlight for desktop
@@ -226,27 +225,12 @@ function switchTab(button) {
 }
 
 htmx.onLoad((event) => {
-    // Functions to open and close a modal
-    function openModal($el) {
-      $el.classList.add('is-active');
-    }
-  
-    function closeModal($el) {
-      $el.classList.remove('is-active');
-    }
-  
-    function closeAllModals() {
-      (document.querySelectorAll('.modal') || []).forEach(($modal) => {
-        closeModal($modal);
-      });
-    }
-  
     // Add a click event on buttons to open a specific modal
     (document.querySelectorAll('.js-modal-trigger') || []).forEach(($trigger) => {
       const modal = $trigger.dataset.target;
       const $target = document.getElementById(modal);
   
-      $trigger.addEventListener('click', () => {
+      addEventListener("ModalOpen", "click", $trigger, () => {
         openModal($target);
       });
     });
@@ -255,15 +239,41 @@ htmx.onLoad((event) => {
     (document.querySelectorAll('.modal-background, .modal-close, .modal-card-head .delete, .modal-card-foot .button') || []).forEach(($close) => {
       const $target = $close.closest('.modal');
   
-      $close.addEventListener('click', () => {
+      addEventListener("ModalClose", "click", $close, () => {
         closeModal($target);
       });
     });
+
+    // Add a click event on notification close buttons
+    (document.querySelectorAll('.notification .delete') || []).forEach(($close) => {
+        const $notification = $close.closest($close.dataset.target);
+
+        addEventListener("Delete", "click", $close, () => {
+            $notification.parentNode.removeChild($notification);    
+        });
+      });
   
     // Add a keyboard event to close all modals
-    document.addEventListener('keydown', (event) => {
-      if(event.key === "Escape") {
-        closeAllModals();
-      }
-    });
+    document.addEventListener('keydown', escToCloseModals, {passive: true});
 });
+
+// Functions to open and close modals
+function escToCloseModals(event) {
+    if(event.key === "Escape") {
+        closeAllModals();
+    }
+}
+
+function openModal($el) {
+    $el.classList.add('is-active');
+}
+
+function closeModal($el) {
+    $el.classList.remove('is-active');
+}
+
+function closeAllModals() {
+    (document.querySelectorAll('.modal') || []).forEach(($modal) => {
+        closeModal($modal);
+    });
+}
