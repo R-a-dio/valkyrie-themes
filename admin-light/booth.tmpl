@@ -134,7 +134,7 @@
             {{.CSRFTokenInput}}
             <div class="field has-addons">
                 <div class="control is-expanded">
-                    <input name="thread" class="input has-text-centered" type="text" value="{{.Thread}}">
+                    <input name="thread" class="input has-text-centered" type="text" placeholder="no thread set currently" value="{{.Thread}}">
                 </div>
                 <div class="control">
                     <button type="submit" class="button booth-button is-align-self-stretch is-info" {{if not .AllowedToThread}}disabled{{end}}>Update</button>
