@@ -99,7 +99,7 @@
                             {{template "stop-streamer" .StreamerInfo}}
                             </div>
                         </div>
-                        <div class="cell is-col-span-2 m-0 p-0">
+                        <div sse-swap="proxy-streamers" class="cell is-col-span-2 m-0 p-0">
                             {{template "proxy-streamers" .StreamerList}}
                         </div>
                     </div>
