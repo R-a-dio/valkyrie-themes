@@ -1,0 +1,12 @@
+{{define "error-template"}}
+<template id="error-template">
+    {{block "error" .}}
+    <div class="container">
+        <div class="notification is-warning mt-2">
+            <button data-target=".container" onclick="removeTargetOnClick(this)" class="delete"></button>
+            <div class="error-message has-text-centered">An error has occurred</div>
+        </div>
+    </div>
+    {{end}}
+</template>
+{{end}}
