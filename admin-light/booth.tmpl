@@ -115,7 +115,9 @@
 {{define "stop-streamer"}}
 <div id="stop-streamer" sse-swap="stop-streamer" hx-swap="outerHTML" class="cell is-col-span-2 is-row-span-1 m-0 p-0">
     <div class="columns has-text-centered is-flex-direction-column has-background-radio-secondary-1 m-0 p-0">
-    {{if .UserIsLive}}
+    {{if not Status.StreamUser}}
+        <p class="column p-4 is-warning">Nobody is currently streaming</p>
+    {{else if .UserIsLive}}
         <p class="column p-4 is-success">You are currently streaming</p>
     {{else if .CurrentIsRobot}}
         <p class="column p-4">This kills the Hanyuu. You must connect within <b style="color:lightcoral">{{.ConnectTimeout}}</b> after the song ends.</p>

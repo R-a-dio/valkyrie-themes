@@ -40,7 +40,14 @@
                     </form>
                 </div>
                 {{end}}
-                <div class="cell"></div>
+                {{if .CanKillStreamer}}
+                <div id="kill-streamer" class="cell notification">
+                    <form hx-post="/admin/api/streamer/stop" hx-target="#kill-streamer" hx-swap="outerHTML">
+                        {{.CSRFTokenInput}}
+                        <button type="submit" class="button is-align-self-stretch m-4 is-warning">Force Kill Hanyuu</button>
+                    </form>
+                </div>
+                {{end}}
             </div>
         </div>
     </div>
