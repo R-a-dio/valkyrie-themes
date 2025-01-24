@@ -149,7 +149,7 @@
     {{else}}
     <p class="column">You are currently not allowed to set the thread, if you fucked up request guest auth again in IRC</p>
     {{end}}
-    <form hx-post="{{.FormAction}}" hx-target="#set-thread" hx-swap="outerHTML" class="is-align-self-stretch px-3">
+    <form hx-post="{{.FormAction}}" hx-target="#set-thread" class="is-align-self-stretch px-3">
         {{.CSRFTokenInput}}
         <div class="field has-addons">
             <div class="control is-expanded">
