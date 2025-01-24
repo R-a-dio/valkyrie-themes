@@ -159,8 +159,10 @@
 {{end}}
 
 {{define "streamer"}}
-<div id="thread-container" sse-swap="thread" hx-swap-oob="true">
-    {{template "thread" Status.Thread}}
+<div style="display: none;">
+    <div id="thread-container" sse-swap="thread" hx-swap-oob="true">
+        {{template "thread" Status.Thread}}
+    </div>
 </div>
 <div>
     <div class="card-image">
