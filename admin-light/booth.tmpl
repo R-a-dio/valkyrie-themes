@@ -12,7 +12,11 @@
                             {{template "proxy-status" .ProxyStatus}}
                             </div>
                         </div>
-                        {{template "set-thread" .ThreadInfo}}
+                        <div class="cell box is-col-span-8 is-row-span-2 has-background-radio-secondary-1 m-0 p-0">
+                            <div id="set-thread" sse-swap="thread" class="columns has-text-centered is-flex-direction-column p-4">
+                            {{template "set-thread" .ThreadInfo}}
+                            </div>
+                        </div>
                         <div class="cell is-flex is-flex-direction-column is-col-span-8 is-row-span-3">
                             <div class="box is-flex-1 has-background-radio-secondary-1">
                                 <div class="tabs is-boxed">
@@ -74,7 +78,9 @@
                     <div class="grid">
                         <div class="cell is-flex is-col-span-2 is-row-span-3 is-justify-content-center is-align-self-center has-text-weight-light m-0 p-0">
                             <div class="columns is-flex-direction-column is-fullwidth">
+                                <div sse-swap="streamer" class="column">
                                 {{template "streamer" .Status.StreamUser}}
+                                </div>
                             </div>
                         </div>
                         <div sse-swap="status" class="cell is-flex box is-col-span-2 is-row-span-1 is-justify-content-center is-align-self-center has-background-radio-secondary-1 has-text-weight-light m-0 py-2">
@@ -88,7 +94,11 @@
                             </div>
                             {{end}}
                         </div>
-                        {{template "stop-streamer" .StreamerInfo}}
+                        <div class="cell is-col-span-2 is-row-span-1 m-0 p-0">
+                            <div id="stop-streamer" sse-swap="stop-streamer" class="columns has-text-centered is-flex-direction-column has-background-radio-secondary-1 m-0 p-0">
+                            {{template "stop-streamer" .StreamerInfo}}
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -98,7 +108,6 @@
 {{end}}
 
 {{define "streamer"}}
-<div sse-swap="streamer" hx-swap="outerHTML" class="column">
     {{with .}}
     <div class="card-image">
         <figure class="image is-square">
@@ -113,12 +122,9 @@
         <div id="dj-name" class="column has-text-centered has-background-radio-secondary-1">Current DJ: NOBODY</div>
     </div>
     {{end}}
-</div>
 {{end}}
 
 {{define "stop-streamer"}}
-<div id="stop-streamer" sse-swap="stop-streamer" hx-swap="outerHTML" class="cell is-col-span-2 is-row-span-1 m-0 p-0">
-    <div class="columns has-text-centered is-flex-direction-column has-background-radio-secondary-1 m-0 p-0">
     {{if not Status.StreamUser}}
         <p class="column p-4 is-warning">Nobody is currently streaming</p>
     {{else if .UserIsLive}}
@@ -132,31 +138,25 @@
     {{else}}
         <p class="column p-4">Another DJ is currently streaming, communicate with them.</p>
     {{end}}
-    </div>
-</div>
 {{end}}
 
 {{define "set-thread"}}
-<div id="set-thread" sse-swap="thread" hx-swap="outerHTML" class="cell box is-col-span-8 is-row-span-2 has-background-radio-secondary-1 m-0 p-0">
-    <div class="columns has-text-centered is-flex-direction-column p-4">
-        {{if .AllowedToThread}}
-        <p class="column">This is the current thread, you can update it here or set an image by prepending 'image:' to an URL</p>
-        {{else}}
-        <p class="column">You are currently not allowed to set the thread, if you fucked up request guest auth again in IRC</p>
-        {{end}}
-        <form hx-post="{{.FormAction}}" hx-target="#set-thread" hx-swap="outerHTML" class="is-align-self-stretch px-3">
-            {{.CSRFTokenInput}}
-            <div class="field has-addons">
-                <div class="control is-expanded">
-                    <input name="thread" class="input has-text-centered" type="text" placeholder="no thread set currently" value="{{if .Thread | IsValidThread}}{{.Thread}}{{end}}">
-                </div>
-                <div class="control">
-                    <button type="submit" class="button booth-button is-align-self-stretch is-info" {{if not .AllowedToThread}}disabled{{end}}>Update</button>
-                </div>
+    {{if .AllowedToThread}}
+    <p class="column">This is the current thread, you can update it here or set an image by prepending 'image:' to an URL</p>
+    {{else}}
+    <p class="column">You are currently not allowed to set the thread, if you fucked up request guest auth again in IRC</p>
+    {{end}}
+    <form hx-post="{{.FormAction}}" hx-target="#set-thread" hx-swap="outerHTML" class="is-align-self-stretch px-3">
+        {{.CSRFTokenInput}}
+        <div class="field has-addons">
+            <div class="control is-expanded">
+                <input name="thread" class="input has-text-centered" type="text" placeholder="no thread set currently" value="{{if .Thread | IsValidThread}}{{.Thread}}{{end}}">
             </div>
-        </form>
-    </div>
-</div>
+            <div class="control">
+                <button type="submit" class="button booth-button is-align-self-stretch is-info" {{if not .AllowedToThread}}disabled{{end}}>Update</button>
+            </div>
+        </div>
+    </form>
 {{end}}
 
 {{define "proxy-status"}}
