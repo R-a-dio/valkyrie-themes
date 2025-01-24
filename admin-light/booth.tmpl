@@ -95,7 +95,7 @@
 
 {{define "streamer"}}
 <div sse-swap="streamer" hx-swap="outerHTML" class="column">
-    {{with .}}
+    {{with .User}}
     <div class="card-image">
         <figure class="image is-square">
             <img src="/api/dj-image/{{.DJ.Image}}"/>
