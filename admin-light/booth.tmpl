@@ -92,7 +92,8 @@
 {{end}}
 
 {{define "streamer"}}
-<div class="column">
+<div sse-swap="streamer" hx-swap="outerHTML" class="column">
+    {{with .}}
     <div class="card-image">
         <figure class="image is-square">
             <img src="/api/dj-image/{{.DJ.Image}}"/>
@@ -101,6 +102,11 @@
     <div class="cell is-col-span-2 is-row-span-1">
         <div id="dj-name" class="column has-text-centered has-background-radio-secondary-1">Current DJ: {{.DJ.Name}}</div>
     </div>
+    {{else}}
+    <div class="cell is-col-span-2 is-row-span-1">
+        <div id="dj-name" class="column has-text-centered has-background-radio-secondary-1">Current DJ: NOBODY</div>
+    </div>
+    {{end}}
 </div>
 {{end}}
 
@@ -123,7 +129,7 @@
 {{end}}
 
 {{define "set-thread"}}
-<div id="set-thread" class="cell box is-col-span-8 is-row-span-2 has-background-radio-secondary-1 m-0 p-0">
+<div id="set-thread" sse-swap="thread" hx-swap="outerHTML" class="cell box is-col-span-8 is-row-span-2 has-background-radio-secondary-1 m-0 p-0">
     <div class="columns has-text-centered is-flex-direction-column p-4">
         {{if .AllowedToThread}}
         <p class="column">This is the current thread, you can update it here or set an image by prepending 'image:' to an URL</p>
