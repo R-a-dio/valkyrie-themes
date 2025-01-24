@@ -7,7 +7,11 @@
                     <div class="grid">
                         <div class="cell is-flex is-col-span-4 is-row-span-1 is-size-3 is-family-code is-justify-content-center is-align-self-center m-0" style="font-variant:ordinal;">STREAMBOOTH</div>
                         <div class="cell is-flex box is-col-span-4 is-row-span-1 is-justify-content-center is-align-self-center has-background-radio-secondary-1 has-text-weight-light m-0 py-2">USERNAME: {{.User.Username}}</div>
-                        {{template "proxy-status" .ProxyStatus}}
+                        <div class="cell is-col-span-8 is-row-span-1 m-3">
+                            <div sse-swap="proxy-status" class="columns is-size-7 is-family-code ">
+                            {{template "proxy-status" .ProxyStatus}}
+                            </div>
+                        </div>
                         {{template "set-thread" .ThreadInfo}}
                         <div class="cell is-flex is-flex-direction-column is-col-span-8 is-row-span-3">
                             <div class="box is-flex-1 has-background-radio-secondary-1">
@@ -156,8 +160,6 @@
 {{end}}
 
 {{define "proxy-status"}}
-<div sse-swap="proxy-status" hx-swap="outerHTML" class="cell is-col-span-8 is-row-span-1 m-3">
-    <div class="columns is-size-7 is-family-code ">
     {{range .Connections}}
         <div class="column is-narrow is-flex is-justify-content-center is-align-items-center has-background-radio-secondary-1 mb-0">
             {{if .IsLive}}
@@ -187,8 +189,6 @@
             {{template "booth-circle" safeCSS "hsl(0, 40%, 40%)"}}<div class="ml-2" style="overflow:auto;scrollbar-width:none;"><div style="float:left;">NOT CONNECTED</div></div>
         </div>
     {{end}}
-    </div>
-</div>
 {{end}}
 {{define "booth-circle" -}}
 <svg class="svg-icon" style="color: {{.}};" viewBox="0 0 24 24"><use href="/assets/default-light/svg/sprites.svg#circle"></use></svg>
