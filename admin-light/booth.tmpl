@@ -70,7 +70,7 @@
                     <div class="grid">
                         <div class="cell is-flex is-col-span-2 is-row-span-3 is-justify-content-center is-align-self-center has-text-weight-light m-0 p-0">
                             <div class="columns is-flex-direction-column">
-                                {{template "streamer" .Status.User}}
+                                {{template "streamer" .Status.StreamUser}}
                             </div>
                         </div>
                         <div sse-swap="status" class="cell is-flex box is-col-span-2 is-row-span-1 is-justify-content-center is-align-self-center has-background-radio-secondary-1 has-text-weight-light m-0 py-2">
@@ -95,7 +95,7 @@
 
 {{define "streamer"}}
 <div sse-swap="streamer" hx-swap="outerHTML" class="column">
-    {{with .User}}
+    {{with .}}
     <div class="card-image">
         <figure class="image is-square">
             <img src="/api/dj-image/{{.DJ.Image}}"/>
