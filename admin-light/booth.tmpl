@@ -99,6 +99,9 @@
                             {{template "stop-streamer" .StreamerInfo}}
                             </div>
                         </div>
+                        <div class="cell is-col-span-2 m-0 p-0">
+                            {{template "proxy-streamers" .StreamerList}}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -193,3 +196,14 @@
 {{define "booth-circle" -}}
 <svg class="svg-icon" style="color: {{.}};" viewBox="0 0 24 24"><use href="/assets/default-light/svg/sprites.svg#circle"></use></svg>
 {{- end}}
+
+{{define "proxy-streamers"}}
+<aside class="menu">
+    <p class="has-text-centered menu-label">Connected DJs</p>
+    <ul class="menu-list">
+        {{range $idx, $streamer := .Streamers}}
+        <li><a class="has-text-centered {{if eq $idx 0}}is-active{{end}}">{{$streamer.User.Username}}</a></li>
+        {{end}}
+    </ul>
+</aside>
+{{end}}
