@@ -134,7 +134,7 @@
         <p class="column p-4 is-success">You are currently streaming</p>
     {{else if .CurrentIsRobot}}
         <p class="column p-4">This kills the Hanyuu. You must connect within <b style="color:lightcoral">{{.ConnectTimeout}}</b> after the song ends.</p>
-        <form hx-post="{{.FormAction}}" hx-target="#stop-streamer" hx-swap="outerHTML">
+        <form hx-post="{{.FormAction}}" hx-target="#stop-streamer">
             {{.CSRFTokenInput}}
             <button type="submit" class="button is-align-self-stretch m-4 is-warning" {{if not .AllowedToKill}}disabled{{end}}>Kill Hanyuu</button>
         </form>
