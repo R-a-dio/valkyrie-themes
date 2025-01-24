@@ -1,5 +1,5 @@
 {{define "content"}}
-<div class="container">
+<div class="container" hx-ext="sse" sse-connect="/admin/booth/sse">
     <div class="section">
         <div class="fixed-grid has-10-cols">
             <div class="grid">
@@ -146,41 +146,39 @@
 {{end}}
 
 {{define "proxy-status"}}
+<div sse-swap="status" hx-swap="outerHTML" class="cell is-col-span-8 is-row-span-1 m-3">
+    <div class="columns is-size-7 is-family-code ">
     {{range .Connections}}
-    <div class="cell is-col-span-8 is-row-span-1 m-3">
-        <div class="columns is-size-7 is-family-code ">
-            <div class="column is-narrow is-flex is-justify-content-center is-align-items-center has-background-radio-secondary-1 mb-0">
-                {{if .IsLive}}
-                    {{template "booth-circle" safeCSS "hsl(121, 40%, 40%)"}}<div class="ml-2">LIVE</div>
-                {{else}}
-                    {{template "booth-circle" safeCSS "hsl(232, 40%, 40%)"}}<div class="ml-2">CONNECTED</div>
-                {{end}}<div class="ml-2">at <a href="{{.MountName}}">{{.MountName}}</a></div>
-            </div>
-            <div class="column is-narrow box is-flex is-justify-content-center is-align-items-center has-background-radio-secondary-1 mb-0 ml-3">
-                {{template "booth-circle" safeCSS "hsl(121, 40%, 40%)"}}<div class="ml-2">Connected for {{.Start | Since | HumanDuration}}</div>
-            </div>
-            <div class="column box is-flex is-align-items-center has-background-radio-secondary-1 mb-0 ml-3" style="white-space:nowrap;overflow-x:auto;scrollbar-width:none;">
-            {{with .Metadata}}
-                {{template "booth-circle" safeCSS "hsl(121, 40%, 40%)"}}<div class="ml-2" style="overflow:auto;scrollbar-width:none;"><div>{{.}}</div></div>
+        <div class="column is-narrow is-flex is-justify-content-center is-align-items-center has-background-radio-secondary-1 mb-0">
+            {{if .IsLive}}
+                {{template "booth-circle" safeCSS "hsl(121, 40%, 40%)"}}<div class="ml-2">LIVE</div>
             {{else}}
-                {{template "booth-circle" safeCSS "hsl(232, 40%, 40%)"}}<div class="ml-2" style="overflow:auto;scrollbar-width:none;"><div style="float:left;">[NO METADATA]</div></div>
-            {{end}}
-            </div>
+                {{template "booth-circle" safeCSS "hsl(232, 40%, 40%)"}}<div class="ml-2">CONNECTED</div>
+            {{end}}<div class="ml-2">at <a href="{{.MountName}}">{{.MountName}}</a></div>
         </div>
-    </div>
+        <div class="column is-narrow box is-flex is-justify-content-center is-align-items-center has-background-radio-secondary-1 mb-0 ml-3">
+            {{template "booth-circle" safeCSS "hsl(121, 40%, 40%)"}}<div class="ml-2">Connected for <time data-type="small" datetime="{{.Start.Unix}}">{{.Start | Since | HumanDuration}}</time></div>
+        </div>
+        <div class="column box is-flex is-align-items-center has-background-radio-secondary-1 mb-0 ml-3" style="white-space:nowrap;overflow-x:auto;scrollbar-width:none;">
+        {{with .Metadata}}
+            {{template "booth-circle" safeCSS "hsl(121, 40%, 40%)"}}<div class="ml-2" style="overflow:auto;scrollbar-width:none;"><div>{{.}}</div></div>
+        {{else}}
+            {{template "booth-circle" safeCSS "hsl(232, 40%, 40%)"}}<div class="ml-2" style="overflow:auto;scrollbar-width:none;"><div style="float:left;">[NO METADATA]</div></div>
+        {{end}}
+        </div>
     {{else}}
-    <div class="cell is-col-span-8 is-row-span-1 m-3">
-        <div class="columns is-size-7 is-family-code ">
-            <div class="column is-narrow is-flex is-justify-content-center is-align-items-center has-background-radio-secondary-1 mb-0">
-                {{template "booth-circle" safeCSS "hsl(0, 40%, 40%)"}}<div class="ml-2">Stream: NOT CONNECTED</div>
-            </div>
-            <div class="column is-narrow box is-flex is-justify-content-center is-align-items-center has-background-radio-secondary-1 mb-0 ml-3">
-                {{template "booth-circle" safeCSS "hsl(0, 40%, 40%)"}}<div class="ml-2">Uptime: NOT CONNECTED</div>
-            </div>
-            <div class="column box is-flex is-align-items-center has-background-radio-secondary-1 mb-0 ml-3" style="white-space:nowrap;overflow-x:auto;scrollbar-width:none;">
-                {{template "booth-circle" safeCSS "hsl(0, 40%, 40%)"}}<div class="ml-2" style="overflow:auto;scrollbar-width:none;"><div style="float:left;">NOT CONNECTED</div></div>
-            </div>
+        <div class="column is-narrow is-flex is-justify-content-center is-align-items-center has-background-radio-secondary-1 mb-0">
+            {{template "booth-circle" safeCSS "hsl(0, 40%, 40%)"}}<div class="ml-2">Stream: NOT CONNECTED</div>
+        </div>
+        <div class="column is-narrow box is-flex is-justify-content-center is-align-items-center has-background-radio-secondary-1 mb-0 ml-3">
+            {{template "booth-circle" safeCSS "hsl(0, 40%, 40%)"}}<div class="ml-2">Uptime: NOT CONNECTED</div>
+        </div>
+        <div class="column box is-flex is-align-items-center has-background-radio-secondary-1 mb-0 ml-3" style="white-space:nowrap;overflow-x:auto;scrollbar-width:none;">
+            {{template "booth-circle" safeCSS "hsl(0, 40%, 40%)"}}<div class="ml-2" style="overflow:auto;scrollbar-width:none;"><div style="float:left;">NOT CONNECTED</div></div>
+        </div>
     {{end}}
+    </div>
+</div>
 {{end}}
 {{define "booth-circle" -}}
 <svg class="svg-icon" style="color: {{.}};" viewBox="0 0 24 24"><use href="/assets/default-light/svg/sprites.svg#circle"></use></svg>
