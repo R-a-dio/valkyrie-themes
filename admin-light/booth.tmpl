@@ -146,37 +146,42 @@
 {{end}}
 
 {{define "proxy-status"}}
-<div class="cell is-col-span-8 is-row-span-1 m-3">
-    <div class="columns is-size-7 is-family-code ">
-        <div class="column is-narrow is-flex is-justify-content-center is-align-items-center has-background-radio-secondary-1 mb-0">
-            {{with .}}
+    {{range .Connections}}
+    <div class="cell is-col-span-8 is-row-span-1 m-3">
+        <div class="columns is-size-7 is-family-code ">
+            <div class="column is-narrow is-flex is-justify-content-center is-align-items-center has-background-radio-secondary-1 mb-0">
                 {{if .IsLive}}
-                    <svg class="svg-icon" style="color:hsl(121, 40%, 40%);" viewBox="0 0 24 24"><use href="/assets/default-light/svg/sprites.svg#circle"></use></svg><div class="ml-2">LIVE</div>
+                    {{template "booth-circle" safeCSS "hsl(121, 40%, 40%)"}}<div class="ml-2">LIVE</div>
                 {{else}}
-                    <svg class="svg-icon" style="color:hsl(232, 40%, 40%);" viewBox="0 0 24 24"><use href="/assets/default-light/svg/sprites.svg#circle"></use></svg><div class="ml-2">CONNECTED</div>
+                    {{template "booth-circle" safeCSS "hsl(232, 40%, 40%)"}}<div class="ml-2">CONNECTED</div>
                 {{end}}<div class="ml-2">at <a href="{{.MountName}}">{{.MountName}}</a></div>
+            </div>
+            <div class="column is-narrow box is-flex is-justify-content-center is-align-items-center has-background-radio-secondary-1 mb-0 ml-3">
+                {{template "booth-circle" safeCSS "hsl(121, 40%, 40%)"}}<div class="ml-2">Connected for {{.Start | Since | HumanDuration}}</div>
+            </div>
+            <div class="column box is-flex is-align-items-center has-background-radio-secondary-1 mb-0 ml-3" style="white-space:nowrap;overflow-x:auto;scrollbar-width:none;">
+            {{with .Metadata}}
+                {{template "booth-circle" safeCSS "hsl(121, 40%, 40%)"}}<div class="ml-2" style="overflow:auto;scrollbar-width:none;"><div>{{.}}</div></div>
             {{else}}
-                <svg class="svg-icon" style="color:hsl(0, 40%, 40%);" viewBox="0 0 24 24"><use href="/assets/default-light/svg/sprites.svg#circle"></use></svg><div class="ml-2">Stream: NOT CONNECTED</div>
+                {{template "booth-circle" safeCSS "hsl(232, 40%, 40%)"}}<div class="ml-2" style="overflow:auto;scrollbar-width:none;"><div style="float:left;">[NO METADATA]</div></div>
             {{end}}
-        </div>
-        <div class="column is-narrow box is-flex is-justify-content-center is-align-items-center has-background-radio-secondary-1 mb-0 ml-3">
-            {{with .}}
-                <svg class="svg-icon" style="color:hsl(121, 40%, 40%);" viewBox="0 0 24 24"><use href="/assets/default-light/svg/sprites.svg#circle"></use></svg><div class="ml-2">Connected for {{.Start | Since | HumanDuration}}</div>
-            {{else}}
-                <svg class="svg-icon" style="color:hsl(0, 40%, 40%);" viewBox="0 0 24 24"><use href="/assets/default-light/svg/sprites.svg#circle"></use></svg><div class="ml-2">Uptime: NOT CONNECTED</div>
-            {{end}}
-        </div>
-        <div class="column box is-flex is-align-items-center has-background-radio-secondary-1 mb-0 ml-3" style="white-space:nowrap;overflow-x:auto;scrollbar-width:none;">
-            {{with .}}
-                {{with .Metadata}}
-                    <svg class="svg-icon" style="color:hsl(121, 40%, 40%);" viewBox="0 0 24 24"><use href="/assets/default-light/svg/sprites.svg#circle"></use></svg><div class="ml-2" style="overflow:auto;scrollbar-width:none;"><div>{{.}}</div></div>
-                {{else}}
-                    <svg class="svg-icon" style="color:hsl(232, 40%, 40%);" viewBox="0 0 24 24"><use href="/assets/default-light/svg/sprites.svg#circle"></use></svg><div class="ml-2" style="overflow:auto;scrollbar-width:none;"><div style="float:left;">[NO METADATA]</div></div>
-                {{end}}
-            {{else}}
-                <svg class="svg-icon" style="color:hsl(0, 40%, 40%);" viewBox="0 0 24 24"><use href="/assets/default-light/svg/sprites.svg#circle"></use></svg><div class="ml-2" style="overflow:auto;scrollbar-width:none;"><div style="float:left;">NOT CONNECTED</div></div>
-            {{end}}
+            </div>
         </div>
     </div>
-</div>
+    {{else}}
+    <div class="cell is-col-span-8 is-row-span-1 m-3">
+        <div class="columns is-size-7 is-family-code ">
+            <div class="column is-narrow is-flex is-justify-content-center is-align-items-center has-background-radio-secondary-1 mb-0">
+                {{template "booth-circle" safeCSS "hsl(0, 40%, 40%)"}}<div class="ml-2">Stream: NOT CONNECTED</div>
+            </div>
+            <div class="column is-narrow box is-flex is-justify-content-center is-align-items-center has-background-radio-secondary-1 mb-0 ml-3">
+                {{template "booth-circle" safeCSS "hsl(0, 40%, 40%)"}}<div class="ml-2">Uptime: NOT CONNECTED</div>
+            </div>
+            <div class="column box is-flex is-align-items-center has-background-radio-secondary-1 mb-0 ml-3" style="white-space:nowrap;overflow-x:auto;scrollbar-width:none;">
+                {{template "booth-circle" safeCSS "hsl(0, 40%, 40%)"}}<div class="ml-2" style="overflow:auto;scrollbar-width:none;"><div style="float:left;">NOT CONNECTED</div></div>
+            </div>
+    {{end}}
 {{end}}
+{{define "booth-circle" -}}
+<svg class="svg-icon" style="color: {{.}};" viewBox="0 0 24 24"><use href="/assets/default-light/svg/sprites.svg#circle"></use></svg>
+{{- end}}
