@@ -73,14 +73,16 @@
                                 {{template "streamer" .Status.User}}
                             </div>
                         </div>
-                        <div class="cell is-flex box is-col-span-2 is-row-span-1 is-justify-content-center is-align-self-center has-background-radio-secondary-1 has-text-weight-light m-0 py-2">
-                            {{$progress := Status.SongInfo.Start | Since}}
+                        <div sse-swap="status" class="cell is-flex box is-col-span-2 is-row-span-1 is-justify-content-center is-align-self-center has-background-radio-secondary-1 has-text-weight-light m-0 py-2">
+                            {{block "status" Status}}
+                            {{$progress := .SongInfo.Start | Since}}
                             <div class="progress-container is-fullwidth">
                                 <div class="progress-wrapper">
-                                    <progress id="current-song-progress" class="progress is-large" value="{{$progress | ToSecond}}" max="{{.Status.Song.Length.Seconds}}"></progress>
-                                    <div class="progress-text">{{with .Status}}<div><span id="progress-current" data-start="{{.SongInfo.Start.UnixMilli}}">{{$progress | MediaDuration}}</span> / <span id="progress-max">{{.Song.Length | MediaDuration}}</span></div>{{end}}</div>
+                                    <progress id="current-song-progress" class="progress is-large" value="{{$progress | ToSecond}}" max="{{.Song.Length.Seconds}}"></progress>
+                                    <div class="progress-text">{{with .}}<div><span id="progress-current" data-start="{{.SongInfo.Start.UnixMilli}}">{{$progress | MediaDuration}}</span> / <span id="progress-max">{{.Song.Length | MediaDuration}}</span></div>{{end}}</div>
                                 </div>
                             </div>
+                            {{end}}
                         </div>
                         {{template "stop-streamer" .StreamerInfo}}
                     </div>
@@ -111,7 +113,7 @@
 {{end}}
 
 {{define "stop-streamer"}}
-<div id="stop-streamer" class="cell is-col-span-2 is-row-span-1 m-0 p-0">
+<div id="stop-streamer" sse-swap="stop-streamer" hx-swap="outerHTML" class="cell is-col-span-2 is-row-span-1 m-0 p-0">
     <div class="columns has-text-centered is-flex-direction-column has-background-radio-secondary-1 m-0 p-0">
     {{if .UserIsLive}}
         <p class="column p-4 is-success">You are currently streaming</p>
@@ -140,7 +142,7 @@
             {{.CSRFTokenInput}}
             <div class="field has-addons">
                 <div class="control is-expanded">
-                    <input name="thread" class="input has-text-centered" type="text" placeholder="no thread set currently" value="{{.Thread}}">
+                    <input name="thread" class="input has-text-centered" type="text" placeholder="no thread set currently" value="{{if .Thread | IsValidThread}}{{.Thread}}{{end}}">
                 </div>
                 <div class="control">
                     <button type="submit" class="button booth-button is-align-self-stretch is-info" {{if not .AllowedToThread}}disabled{{end}}>Update</button>
@@ -152,7 +154,7 @@
 {{end}}
 
 {{define "proxy-status"}}
-<div sse-swap="status" hx-swap="outerHTML" class="cell is-col-span-8 is-row-span-1 m-3">
+<div sse-swap="proxy-status" hx-swap="outerHTML" class="cell is-col-span-8 is-row-span-1 m-3">
     <div class="columns is-size-7 is-family-code ">
     {{range .Connections}}
         <div class="column is-narrow is-flex is-justify-content-center is-align-items-center has-background-radio-secondary-1 mb-0">
