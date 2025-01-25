@@ -28,6 +28,13 @@ var adminInputs = []templates.TemplateSelectable{
 	admin.ProfileInput{},
 	admin.ProfileForm{},
 	admin.UsersInput{},
+	admin.BoothInput{},
+	admin.BoothProxyStatusInput{},
+	admin.BoothSetThreadInput{},
+	admin.BoothStatusInput{},
+	admin.BoothStopStreamerInput{},
+	admin.BoothStreamerInput{},
+	admin.BoothStreamerList{},
 }
 
 func TestAdminZeroInput(t *testing.T) {
