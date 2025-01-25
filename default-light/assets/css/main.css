@@ -382,3 +382,6 @@ button.is-danger, button.is-info, button.is-primary, button.is-request, button.i
     margin-left: -100%; 
     mix-blend-mode: plus-lighter;
 }
+.fave-row {
+    min-height: 42px;
+}
