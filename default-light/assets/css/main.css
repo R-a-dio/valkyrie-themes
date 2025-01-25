@@ -109,6 +109,11 @@
     border-top: 2px rgba(0, 0, 0, .1) solid;
 }
 
+.remove-top-border-radius {
+    border-start-end-radius: 0 !important;
+    border-start-start-radius: 0 !important;
+}
+
 /*span {
     word-break: unset;
     overflow: hidden;
@@ -355,6 +360,10 @@ button.is-danger, button.is-info, button.is-primary, button.is-request, button.i
     line-height: 1.1;
 }
 
+#dj-name-booth {
+    line-height: calc(2 * var(--bulma-box-padding));
+}
+
 .booth-tab-button {
     background-color: var(--radio-border) !important;
     border-color: var(--radio-secondary-3) !important;
@@ -382,9 +391,64 @@ button.is-danger, button.is-info, button.is-primary, button.is-request, button.i
     margin-left: -100%; 
     mix-blend-mode: plus-lighter;
 }
+
+input.is-fullheight {
+    height: 100% !important;
+}
+
 .dj-card-roles {
     text-align: end;
 }
+
+.tabs.is-boxed ul .is-active .tab-button {
+    background-color: var(--radio-secondary-1) !important;
+    color: var(--text-link)
+}
+
+.tabs.is-boxed ul .is-active .tab-button:hover {
+    color: var(--text-link-hover);
+}
+
+*:has(.is-box-title) {
+    position: relative;
+}
+
+.is-box-title {
+    --stroke-color: var(--radio-secondary-1);
+    --stroke-width: 2px;
+
+    position: absolute;
+    top: -0.5rem;
+    left: 0.5rem;
+    font-size: 0.75rem;
+    font-weight: bold;
+    text-shadow: 
+        calc(-1 * var(--stroke-width)) calc(-1 * var(--stroke-width)) 0 var(--stroke-color),  
+        calc(1 * var(--stroke-width)) calc(-1 * var(--stroke-width)) 0 var(--stroke-color),
+        calc(-1 * var(--stroke-width)) calc(1 * var(--stroke-width)) 0 var(--stroke-color),
+        calc(1 * var(--stroke-width)) calc(1 * var(--stroke-width)) 0 var(--stroke-color),
+        calc(-1 * var(--stroke-width)) 0 var(--stroke-color),
+        calc(1 * var(--stroke-width)) 0 var(--stroke-color),
+        0 calc(-1 * var(--stroke-width)) var(--stroke-color),
+        0 calc(1 * var(--stroke-width)) var(--stroke-color);
+}
+
+.message-body dd::before {
+    content: '–';
+    margin-inline-start: -1em !important;
+    margin-inline-end: 0.25em !important;
+}
+
+.message-body dd, .message-body dt {
+    line-height: 1.75rem;
+}
+
+.message-body code {
+    background-color: var(--bulma-code-background) !important;
+    filter: brightness(0.85);
+    color: var(--bulma-code) !important;
+}
+
 .fave-row {
     min-height: 42px;
 }

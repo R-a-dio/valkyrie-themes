@@ -6,68 +6,97 @@
                 <div class="cell fixed-grid has-8-cols is-col-span-8">
                     <div class="grid">
                         <div class="cell is-flex is-col-span-4 is-row-span-1 is-size-3 is-family-code is-justify-content-center is-align-self-center m-0" style="font-variant:ordinal;">STREAMBOOTH</div>
-                        <div class="cell is-flex box is-col-span-4 is-row-span-1 is-justify-content-center is-align-self-center has-background-radio-secondary-1 has-text-weight-light m-0 py-2">{{with .User}}USERNAME: {{.Username}}{{end}}</div>
+                        <div class="cell is-flex box is-col-span-2 is-row-span-1 is-justify-content-center is-align-self-center has-background-radio-secondary-1 has-text-weight-light m-0 py-2">
+                            <span class="is-uppercase is-box-title">Username</span>{{with .User}}{{.Username}}{{end}}
+                        </div>
+                        <div class="cell is-flex box is-col-span-2 is-row-span-1 is-justify-content-center is-align-self-center has-background-radio-secondary-1 has-text-weight-light m-0 py-2">
+                            <span class="is-uppercase is-box-title">Display Name</span>{{with .User}}{{.DJ.Name}}{{end}}</div>
                         <div class="cell is-col-span-8 is-row-span-1 m-3">
                             <div sse-swap="proxy-status" class="columns is-size-7 is-family-code ">
                             {{template "proxy-status" .ProxyStatus}}
                             </div>
                         </div>
-                        <div class="cell box is-col-span-8 is-row-span-2 has-background-radio-secondary-1 m-0 p-0">
-                            <div id="set-thread" sse-swap="thread" class="columns has-text-centered is-flex-direction-column p-4">
+                        <div class="cell is-col-span-8 is-row-span-2 has-background-radio-secondary-1 m-0 p-0">
+                            <span class="is-uppercase is-box-title">Set Thread</span>
+                            <div id="set-thread" sse-swap="thread" class="box has-text-centered is-flex-direction-column p-4">
                             {{template "set-thread" .ThreadInfo}}
                             </div>
                         </div>
                         <div class="cell is-flex is-flex-direction-column is-col-span-8 is-row-span-3">
-                            <div class="box is-flex-1 has-background-radio-secondary-1">
-                                <div class="tabs is-boxed">
-                                    <ul>
-                                        <li class="is-active"><a class="tab-button" data-target="streaming-info" onclick="switchTab(this)">Stream Settings</a></li>
-                                        <li><a class="tab-button" data-target="irc-info" onclick="switchTab(this)">IRC Commands</a></li>
-                                    </ul>
-                                </div>
+                            <div class="tabs is-boxed mb-0">
+                                <ul>
+                                    <li class="is-active"><a class="tab-button" data-target="streaming-info" onclick="switchTab(this)">Stream Settings</a></li>
+                                    <li><a class="tab-button" data-target="irc-info" onclick="switchTab(this)">IRC Commands</a></li>
+                                </ul>
+                            </div>
+                            <div class="box is-flex-1 has-background-radio-secondary-1 remove-top-border-radius">
                                 <div id="streaming-info" class="grid">
                                     <div class="content cell is-col-span-8">
-                                        <p>Sample Rate MUST be 44100 or 44.1kHz.</p>
-                                        <p>
-                                        If you are using Loopstream and it is yelling at you, either fix your audio devices or ignore the warning.
-                                        The warning is (was?) overblown and the audio is not actually low-quality.
-                                        </p>
-                                        <p>Codec must be MP3.</p>
-                                        <p>Bitrate should be 192kbps. No lower, preferrably not higher for consistency.</p>
-                                        <dl>
-                                            <dt>If you are using Loopstream, set up audio routing if possible.</dt>
-                                            <dd>This does require two usable audio output devices. If you only have one, and don't feel comfortable finding and setting up a Virtual Audio Cable program, don't bother.</dd>
-                                            <dd>You can test your audio setup by setting the address field in the Server tab of the settings to blank.</dd>
-                                            <dd>Doing so will fake a connection when you press Connect on the main window. Don't forget to re-set the address to the stream server after.</dd>
-                                        </dl>
+                                        <div class="message">
+                                            <div class="message-body block">
+                                                <span class="is-uppercase is-box-title">Sample Rate</span>
+                                                <p>Sample Rate MUST be 44100 (44.1kHz).</p>
+                                            </div>
+                                            <div class="message-body block">
+                                                <span class="is-uppercase is-box-title">Loopstream Warning</span>
+                                                <p>
+                                                    If you are using Loopstream and it is yelling at you, either fix your audio devices or ignore the warning.
+                                                    The warning is (was?) overblown and the audio is not actually low-quality.
+                                                </p>
+                                            </div>
+                                            <div class="message-body block">
+                                                <span class="is-uppercase is-box-title">Codec</span>
+                                                <p>Codec must be MP3.</p>
+                                            </div>
+                                            <div class="message-body block">
+                                                <span class="is-uppercase is-box-title">Bitrate</span>
+                                                <p>Bitrate should be 192kbps. No lower, preferrably not higher for consistency.</p>
+                                            </div>
+                                            <dl class="message-body">
+                                                <span class="is-uppercase is-box-title">Audio Routing</span>
+                                                <dt>If you are using Loopstream, set up audio routing if possible.</dt>
+                                                <dd>This does require two usable audio output devices. If you only have one, and don't feel comfortable finding and setting up a Virtual Audio Cable program, don't bother.</dd>
+                                                <dd>You can test your audio setup by setting the address field in the Server tab of the settings to blank.</dd>
+                                                <dd>Doing so will fake a connection when you press Connect on the main window. Don't forget to re-set the address to the stream server after.</dd>
+                                            </dl>
+                                        </div>
                                     </div>
                                 </div>
                                 <div id="irc-info" class="grid is-hidden">
                                     <div class="content cell is-col-span-8">
-                                        <p>Commands should all be in the main IRC channel</p>
-                                        <dl>
-                                            <dt>Use <code>.kill</code> to kill Hanyuu-sama</dt>
-                                            <dd>Only needed if Hanyuu is the current DJ.</dd>
-                                            <dd>Do this with at least 15 seconds left in the current song to be safe, but you can do this as early as 5 seconds into a song.</dd>
-                                            <dd>You can keep an eye on how much time is left in a song on the site.</dd>
-                                            <dd>Connect when there are 30 seconds left in the current song but DO NOT start your music.</dd>
-                                            <dd>Start your music when the current song ends.</dd>
-                                        </dl>
-                                        <dl>
-                                            <dt>Use of <code>.dj</code> is no longer needed</dt>
-                                            <dd>You will be set as DJ when you go live on the stream automatically</dd>
-                                            <dd><strong>Still use the below command to set Hanyuu-sama after you're done.</strong></dd>
-                                        </dl>
-                                        <dl>
-                                            <dt>Use <code>.dj hanyuu</code> to set Hanyuu-sama as DJ when you are done streaming.</dt>
-                                            <dd>You can do this before you disconnect, as long as there is less than one minute left in your set.</dd>
-                                        </dl>
-                                        <dl>
-                                            <dt>Use <tag class="is-success">.thread [thread]</tag> to set the thread, with <tag class="is-success">[thread]</tag> changed to what you want to set.</dt>
-                                            <dd>Example: <tag class="is-success">.thread fake.imageboard.net/a/8169743</tag></dd>
-                                            <dd>Using <tag class="is-success">.thread none</tag> unsets the thread</dd>
-                                            <dd>You can also set the thread on this page</dd>
-                                        </dl>
+                                        <div class="message">
+                                            <div class="message-body block">
+                                                <span class="is-uppercase is-box-title">Protip</span>
+                                                <p>Commands should be used in the main IRC channel.</p>
+                                            </div>
+                                            <dl class="message-body">
+                                                <span class="is-uppercase is-box-title">Before Connecting</span>
+                                                <dt>Use <code>.kill</code> to make Hanyuu-sama stop streaming</dt>
+                                                <dd>only needed if Hanyuu is the current DJ.</dd>
+                                                <dd>you should do this while there is <strong>at least</strong> 15 seconds left in the current song to be safe.</dd>
+                                                <dd>you can keep an eye on how much time is left in a song on the site.</dd>
+                                                <dd>connect when there are 30 seconds left in the current song but DO NOT start your music.</dd>
+                                                <dd>start your music when the current song ends.</dd>
+                                            </dl>
+                                            <dl class="message-body">
+                                                <span class="is-uppercase is-box-title">When You Connect</span>
+                                                <dt>Use of <code>.dj</code> is <strong>no longer needed</strong></dt>
+                                                <dd>you will be set as DJ when you go live on the stream automatically</dd>
+                                                <dd><strong>you still need to use the below command to set Hanyuu-sama after you're done.</strong></dd>
+                                            </dl>
+                                            <dl class="message-body">
+                                                <span class="is-uppercase is-box-title">After You're Done</span>
+                                                <dt>Use <code>.dj hanyuu</code> to set Hanyuu-sama as DJ when you are done streaming.</dt>
+                                                <dd>you can do this before you disconnect, as long as there is less than one minute left in your set.</dd>
+                                            </dl>
+                                            <dl class="message-body">
+                                                <span class="is-uppercase is-box-title">Setting Thread</span>
+                                                <dt>Use <code>.thread [thread]</code> to set the thread, with <code>[thread]</code> changed to what you want to set.</dt>
+                                                <dd>example: <code>.thread https://fake.imageboard.net/a/8169743</code></dd>
+                                                <dd>using <code>.thread none</code> unsets the thread</dd>
+                                                <dd>you can also set the thread on this page</dd>
+                                            </dl>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -77,22 +106,26 @@
                 <div class="cell fixed-grid has-2-cols is-col-span-2">
                     <div class="grid">
                         <div class="cell is-flex is-col-span-2 is-row-span-3 is-justify-content-center is-align-self-center has-text-weight-light m-0 p-0">
-                            <div class="columns is-flex-direction-column is-fullwidth">
-                                <div sse-swap="streamer" class="column">
+                            <span class="is-uppercase is-box-title">Current DJ</span>
+                            <div class="box is-fullwidth pb-0">
+                                <div sse-swap="streamer" class="">
                                 {{template "streamer" .Status.StreamUser}}
                                 </div>
                             </div>
                         </div>
-                        <div sse-swap="status" class="cell is-flex box is-col-span-2 is-row-span-1 is-justify-content-center is-align-self-center has-background-radio-secondary-1 has-text-weight-light m-0 py-2">
-                            {{block "status" Status}}
-                            {{$progress := .SongInfo.Start | Since}}
-                            <div class="progress-container is-fullwidth">
-                                <div class="progress-wrapper">
-                                    <progress id="current-song-progress" class="progress is-large" value="{{$progress | ToSecond}}" max="{{.Song.Length.Seconds}}"></progress>
-                                    <div class="progress-text">{{with .}}<div><span id="progress-current" data-start="{{.SongInfo.Start.UnixMilli}}">{{$progress | MediaDuration}}</span> / <span id="progress-max">{{.Song.Length | MediaDuration}}</span></div>{{end}}</div>
+                        <div class="cell is-flex box is-col-span-2 is-row-span-1 is-justify-content-center is-align-self-center has-background-radio-secondary-1 has-text-weight-light m-0 p-2 pt-3">
+                            <span class="is-uppercase is-box-title">Current Song</span>
+                            <div sse-swap="status">
+                                {{block "status" Status}}
+                                {{$progress := .SongInfo.Start | Since}}
+                                <div class="progress-container is-fullwidth">
+                                    <div class="progress-wrapper">
+                                        <progress id="current-song-progress" class="progress is-large m-0" value="{{$progress | ToSecond}}" max="{{.Song.Length.Seconds}}"></progress>
+                                        <div class="progress-text">{{with .}}<span id="progress-current" data-start="{{.SongInfo.Start.UnixMilli}}">{{$progress | MediaDuration}}</span> / <span id="progress-max">{{.Song.Length | MediaDuration}}</span>{{end}}</div>
+                                    </div>
                                 </div>
+                                {{end}}
                             </div>
-                            {{end}}
                         </div>
                         <div class="cell is-col-span-2 is-row-span-1 m-0 p-0">
                             <div id="stop-streamer" sse-swap="stop-streamer" class="columns has-text-centered is-flex-direction-column has-background-radio-secondary-1 m-0 p-0">
@@ -117,17 +150,14 @@
             <img src="/api/dj-image/{{.DJ.Image}}"/>
         </figure>
     </div>
-    <div class="cell is-col-span-2 is-row-span-1">
-        <div id="dj-name" class="column has-text-centered has-background-radio-secondary-1">Current DJ: {{.DJ.Name}}</div>
-    </div>
+    <div id="dj-name-booth" class="has-text-centered has-background-radio-secondary-1">{{.DJ.Name}}</div>
     {{else}}
-    <div class="cell is-col-span-2 is-row-span-1">
-        <div id="dj-name" class="column has-text-centered has-background-radio-secondary-1">Current DJ: NOBODY</div>
-    </div>
+    <div id="dj-name-booth" class="has-text-centered has-background-radio-secondary-1">NOBODY</div>
     {{end}}
 {{end}}
 
 {{define "stop-streamer"}}
+    <span class="is-uppercase is-box-title">Kill Stream</span>
     {{if not Status.StreamUser}}
         <p class="column p-4 is-warning">Nobody is currently streaming</p>
     {{else if .UserIsLive}}
@@ -146,15 +176,15 @@
 {{define "set-thread"}}
 {{with .}}
     {{if .AllowedToThread}}
-    <p class="column">This is the current thread, you can update it here or set an image by prepending 'image:' to an URL</p>
+    <p class="block">This is the current thread, you can update it here or set an image by prepending 'image:' to an URL</p>
     {{else}}
-    <p class="column">You are currently not allowed to set the thread, if you fucked up request guest auth again in IRC</p>
+    <p class="block">You must be authorized to stream to set the thread. If you're already streaming and still can't set the thread, ask for a re-auth.</p>
     {{end}}
-    <form hx-post="{{.FormAction}}" hx-target="#set-thread" class="is-align-self-stretch px-3">
+    <form hx-post="{{.FormAction}}" hx-target="#set-thread" class="is-align-self-stretch">
         {{.CSRFTokenInput}}
         <div class="field has-addons">
             <div class="control is-expanded">
-                <input name="thread" class="input has-text-centered" type="text" placeholder="no thread set currently" value="{{if .Thread | IsValidThread}}{{.Thread}}{{end}}">
+                <input name="thread" class="input has-text-centered is-fullheight" type="text" placeholder="no thread set currently" value="{{if .Thread | IsValidThread}}{{.Thread}}{{end}}">
             </div>
             <div class="control">
                 <button type="submit" class="button booth-button is-align-self-stretch is-info" {{if not .AllowedToThread}}disabled{{end}}>Update</button>
@@ -187,12 +217,15 @@
         {{end}}
     {{else}}
         <div class="column is-narrow is-flex is-justify-content-center is-align-items-center has-background-radio-secondary-1 mb-0">
-            {{template "booth-circle" safeCSS "hsl(0, 40%, 40%)"}}<div class="ml-2">Stream: NOT CONNECTED</div>
+            <span class="is-uppercase is-box-title">Stream</span>
+            {{template "booth-circle" safeCSS "hsl(0, 40%, 40%)"}}<div class="ml-2">NOT CONNECTED</div>
         </div>
         <div class="column is-narrow box is-flex is-justify-content-center is-align-items-center has-background-radio-secondary-1 mb-0 ml-3">
-            {{template "booth-circle" safeCSS "hsl(0, 40%, 40%)"}}<div class="ml-2">Uptime: NOT CONNECTED</div>
+            <span class="is-uppercase is-box-title">Uptime</span>
+            {{template "booth-circle" safeCSS "hsl(0, 40%, 40%)"}}<div class="ml-2">NOT CONNECTED</div>
         </div>
-        <div class="column box is-flex is-align-items-center has-background-radio-secondary-1 mb-0 ml-3" style="white-space:nowrap;overflow-x:auto;scrollbar-width:none;">
+        <div class="column box is-flex is-align-items-center has-background-radio-secondary-1 mb-0 ml-3">
+            <span class="is-uppercase is-box-title">Metadata</span>
             {{template "booth-circle" safeCSS "hsl(0, 40%, 40%)"}}<div class="ml-2" style="overflow:auto;scrollbar-width:none;"><div style="float:left;">NOT CONNECTED</div></div>
         </div>
     {{end}}
@@ -203,12 +236,12 @@
 {{- end}}
 
 {{define "proxy-streamers"}}
-<aside class="menu">
-    <p class="has-text-centered menu-label">Connected DJs</p>
+<aside class="box p-4">
+    <span class="is-uppercase is-box-title">Connected DJs</span>
     <ul class="menu-list">
     {{with .}}
         {{range $idx, $streamer := .Streamers}}
-        <li><a class="has-text-centered {{if eq $idx 0}}is-active{{end}}">{{$streamer.User.Username}}</a></li>
+        <li class="has-text-centered {{if eq $idx 0}}is-active{{end}}">{{$streamer.User.Username}}</li>
         {{end}}
     {{end}}
     </ul>
