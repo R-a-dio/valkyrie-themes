@@ -12,10 +12,10 @@
     {{range $role := .Roles}}
         <div class="fixed-grid block has-4-cols-desktop has-2-cols-touch has-1-cols-mobile mb-5">
             {{template "staff-row-title" $role}}
-            <div id="{{$role}}" class="grid message has-background-radio-secondary-1 content-border-top is-gap-6 p-6 m-0">
+            <div id="{{$role}}" class="grid message has-background-radio-secondary-1 content-border-top is-column-gap-6 is-row-gap-1 px-6 py-4">
                 {{range $user := $.Users}}
                     {{if and $user.DJ.Visible (eq $user.DJ.Role $role)}}
-                        {{template "djcard" $user.DJ}}
+                        {{template "djcard" $user}}
                     {{end}}
                 {{end}}
              </div>
@@ -34,14 +34,23 @@
 {{end}}
 
 {{define "djcard"}}
-<div class="cell p-0 m-0">
-        <div class="card-image p-0 pb-4 m-0">
-	        <figure class="image is-square fill-sides has-rounded-corners">
-	        	<img src="/api/dj-image/{{.Image}}" class="dj-image"/>
-	        </figure>
-	    </div>
-        <div class="card-content has-text-centered p-0 m-0">
-            <div class="title is-5 word-break-ellipsis">{{.Name}}</div>
-        </div>
+<div class="cell">
+    <div class="dj-card-roles is-uppercase is-family-code has-text-weight-semibold">
+    {{if gt (len $.UserPermissions) 1}}
+    {{range $key, $val := $.UserPermissions -}}
+        {{if ne $key "active"}}<span class="tag ml-1 mb-1">{{$key}}</span>{{end}}
+    {{- end}} 
+    {{else}}
+        <span class="tag ml-1 mb-1">???</span>
+    {{end}}
+    </div>
+    <div class="card-image">
+	    <figure class="image is-square fill-sides has-rounded-corners">
+	    	<img src="/api/dj-image/{{.DJ.Image}}" class="dj-image"/>
+	    </figure>
+	</div>
+    <div class="card-content">
+        <div class="dj-card-name is-size-5 has-text-centered">{{.DJ.Name}}</div>
+    </div>
 </div>
 {{end}}
