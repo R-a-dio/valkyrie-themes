@@ -9,6 +9,7 @@ import (
 	radio "github.com/R-a-dio/valkyrie"
 	"github.com/R-a-dio/valkyrie/config"
 	"github.com/R-a-dio/valkyrie/templates"
+	"github.com/R-a-dio/valkyrie/templates/functions"
 	"github.com/R-a-dio/valkyrie/util"
 	"github.com/R-a-dio/valkyrie/website/admin"
 	"github.com/stretchr/testify/assert"
@@ -41,7 +42,7 @@ func TestAdminZeroInput(t *testing.T) {
 	cfg := config.TestConfig()
 	status := util.NewStaticValue(radio.Status{})
 
-	tmpl, err := templates.FromDirectory(".", templates.NewStatefulFunctions(cfg, status))
+	tmpl, err := templates.FromDirectory(".", functions.NewStatefulFunctions(cfg, status))
 	require.NoError(t, err)
 	tmpl.Production = true
 
@@ -68,7 +69,7 @@ func TestAdminCSRFTokenInput(t *testing.T) {
 	cfg := config.TestConfig()
 	status := util.NewStaticValue(radio.Status{})
 
-	tmpl, err := templates.FromDirectory(".", templates.NewStatefulFunctions(cfg, status))
+	tmpl, err := templates.FromDirectory(".", functions.NewStatefulFunctions(cfg, status))
 	require.NoError(t, err)
 	tmpl.Production = true
 
