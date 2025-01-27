@@ -44,7 +44,7 @@
                 <div id="kill-streamer" class="cell notification">
                     <form hx-post="/admin/api/streamer/stop" hx-target="#kill-streamer" hx-swap="outerHTML">
                         {{.CSRFTokenInput}}
-                        <button type="submit" class="button is-align-self-stretch m-4 is-warning">Force Kill Hanyuu</button>
+                        <button type="submit" class="button is-fullwidth is-warning">Force Kill Hanyuu</button>
                     </form>
                 </div>
                 {{end}}
