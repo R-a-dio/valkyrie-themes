@@ -15,7 +15,7 @@
             <input id="track-input" {{if not .Errors.track}}hx-preserve{{end}} class="block input" type="file" name="track">
             <p>Upload a song to the R/a/dio database. We accept both MP3 (30MB max) and FLAC (90MB max).</p>
         </div>
-        <progress id="submit-progress" class="htmx-indicator progress mt-2" value="0" max="100"></progress>
+        <progress id="submit-progress" class="htmx-indicator progress mt-2 is-hidden" value="0" max="100"></progress>
     </div>
     <div class="cell field">
         <div class="control">
@@ -49,7 +49,7 @@ Uploading full soundtracks or albums without asking for a daypass will probably 
     </div>
     <div class="cell field">
         <div class="control is-fullwidth">
-            <button class="button is-fullwidth" type="submit">Upload Song</button>
+            <button class="button is-fullwidth" type="submit" onclick="document.getElementById('submit-progress').classList.remove('is-hidden')">Upload Song</button>
         </div>
     </div>
 </form>
