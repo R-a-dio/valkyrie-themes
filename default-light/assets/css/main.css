@@ -449,10 +449,6 @@ input.is-fullheight {
     color: var(--bulma-code) !important;
 }
 
-.fave-row {
-    min-height: 42px;
-}
-
 [aria-description] {
     position: relative;
     cursor: help;
