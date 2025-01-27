@@ -1,8 +1,10 @@
 package themes
 
 import (
+	"context"
 	"html/template"
 	"io"
+	"net/http"
 	"net/http/httptest"
 	"reflect"
 	"testing"
@@ -35,7 +37,6 @@ var publicInputs = []templates.TemplateSelectable{
 	v1.Queue{},
 	v1.SearchInput{},
 	v1.Listeners(0),
-	v1.SearchInput{},
 }
 
 func TestPublicZeroInput(t *testing.T) {
@@ -116,11 +117,12 @@ func runCSRFTokenTest(t *testing.T, themes []radio.ThemeName, exec templates.Exe
 	}
 
 	// start the actual testing
-	req := httptest.NewRequest("GET", "/", nil)
-
 	for _, theme := range themes {
-		req = req.WithContext(templates.SetTheme(req.Context(), theme, true))
+		ctx := context.Background()
+		ctx = templates.SetTheme(ctx, theme, true)
+
 		for _, fn := range toTest {
+			req := httptest.NewRequestWithContext(ctx, http.MethodGet, "/", nil)
 			t.Run(string(theme), func(t *testing.T) {
 				data := template.HTML("<input>CSRFTOKENINPUT-CSRFTOKENINPUT-CSRFTOKENINPUT-CSRFTOKENINPUT-CSRFTOKENINPUT</input>")
 				input := fn(data)

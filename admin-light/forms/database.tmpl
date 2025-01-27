@@ -1,6 +1,6 @@
 {{define "form_admin_songs"}}
 {{if and .Song .Song.HasTrack}}
-<form class="songs-entry fixed-grid has-12-cols" method="post" action="/admin/songs" hx-swap="outerHTML swap:1s">
+<form class="songs-entry fixed-grid has-12-cols" method="post" action="/admin/songs" hx-target="this" hx-swap="outerHTML swap:1s">
     <input class="is-hidden" type="number" name="id" value="{{.Song.TrackID}}">
     {{.CSRFTokenInput}}
 
