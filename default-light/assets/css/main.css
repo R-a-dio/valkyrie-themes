@@ -78,6 +78,22 @@
     background-color: hsl(var(--bulma-scheme-h), var(--bulma-scheme-s), var(--bulma-scheme-main-ter-l));
 }
 
+/*breaks long sentenc
+es like this which is 
+some times desirable*/
+.has-word-break-all {
+    word-break: break-all;
+}
+
+/*breaks long sentences
+by word like you 
+would expect, but may
+sometimes leave long
+whitespace*/
+.has-word-break-word {
+    word-break: break-word;
+}
+
 .disable-border-radius {
     border-radius: 0 !important;
 }
@@ -433,22 +449,6 @@ input.is-fullheight {
         0 calc(1 * var(--stroke-width)) var(--stroke-color);
 }
 
-.message-body dd::before {
-    content: '–';
-    margin-inline-start: -1em !important;
-    margin-inline-end: 0.25em !important;
-}
-
-.message-body dd, .message-body dt {
-    line-height: 1.75rem;
-}
-
-.message-body code {
-    background-color: var(--bulma-code-background) !important;
-    filter: brightness(0.85);
-    color: var(--bulma-code) !important;
-}
-
 [aria-description] {
     position: relative;
     cursor: help;
@@ -472,4 +472,17 @@ input.is-fullheight {
 
 #page-profile-container form .field .field-label {
     align-self: center;
+}
+
+#page-booth-djlist li div[class$=active-dj]::before {
+    position: absolute;
+    content: '● ';
+}
+
+#page-booth-djlist li div[class=is-not-active-dj]::before {
+    color: var(--red);
+}
+
+#page-booth-djlist li div[class=is-active-dj]::before {
+    color: var(--green);
 }
