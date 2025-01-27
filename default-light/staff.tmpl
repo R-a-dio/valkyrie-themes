@@ -35,15 +35,6 @@
 
 {{define "djcard"}}
 <div class="cell">
-    <!--<div class="dj-card-roles is-uppercase is-family-code has-text-weight-semibold">
-    {{if gt (len $.UserPermissions) 1}}
-    {{range $key, $val := $.UserPermissions -}}
-    {{if or (eq $key "dev") (eq $key "staff") (eq $key "dj")}}<span class="tag ml-1 mb-1">{{$key}}</span>{{end}}
-   {{- end}}
-    {{else}}
-        <span class="tag ml-1 mb-1">???</span>
-    {{end}}
-    </div>-->
     <div class="card-image">
 	    <figure class="image is-square fill-sides has-rounded-corners">
 	    	<img src="/api/dj-image/{{.DJ.Image}}" class="dj-image"/>
