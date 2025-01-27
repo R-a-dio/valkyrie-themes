@@ -1,10 +1,24 @@
 {{define "footer"}}
 <footer class="footer is-flex is-justify-content-center no-background" style="margin-top:auto;">
-    <p class="">
-        <a class="" href="https://play.google.com/store/apps/details?id=io.r_a_d.radio2" target="_blank">Android</a> |
-        <a class="" href="https://twitter.com/Hanyuu_status" target="_blank">Twitter</a> |
-        <a class="" href="https://github.com/R-a-dio/valkyrie" target="_blank">Github</a> |
-        <a class="" href="https://need.moe/radio/" target="_blank">Extra</a>
-    </p>
+    <a class="mx-4" href="https://play.google.com/store/apps/details?id=io.r_a_d.radio2" aria-description="r/a/dio on Android" target="_blank">
+        <svg class="svg-icon-big">
+            <use href="assets/default-light/svg/sprites.svg#gpstore"></use>
+        </svg>
+    </a>
+    <a class="mx-4" href="https://twitter.com/Hanyuu_status" aria-description="Hanyuu's Twitter (DJ announcements)" target="_blank">
+        <svg class="svg-icon-big">
+            <use href="assets/default-light/svg/sprites.svg#twitter"></use>
+        </svg>
+    </a>
+    <a class="mx-4" href="https://github.com/R-a-dio/valkyrie" aria-description="Github (Source code for website)" target="_blank">
+        <svg class="svg-icon-big">
+            <use href="assets/default-light/svg/sprites.svg#ghcat"></use>
+        </svg>
+    </a>
+    <a class="mx-4" href="https://need.moe/radio/" aria-description="need.moe/radio (extra r/a/dio utilities)" target="_blank">
+        <svg class="svg-icon-big">
+            <use href="assets/default-light/svg/sprites.svg#chart"></use>
+        </svg>
+    </a>
 </footer>
 {{end}}
