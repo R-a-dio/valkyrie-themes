@@ -19,7 +19,7 @@
     {{ block "styles" .}}{{end}}
 </head>
 {{end}}
-<body {{block "full-page-body" .}}{{end}} style="display:flex;flex-direction:column;height:100%;" hx-ext="head-support">
+<body {{block "full-page-body" .}}{{end}} style="display:flex;flex-direction:column;height:100%;" hx-ext="head-support" hx-indicator="#loading-indicator">
     {{with .StreamURL}}
     <div id="player" style="display: none;">
         <audio id="stream-audio" preload="none">

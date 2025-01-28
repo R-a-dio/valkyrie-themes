@@ -36,6 +36,7 @@
         </div>
     </div>
 </nav>
+<progress id="loading-indicator" class="progress is-small is-primary htmx-indicator"></progress>
 {{if .IsUser}}{{template "admin-navbar" .}}{{end}}
 {{end}}
 {{define "navbar"}}{{template "public-navbar" .}}{{end}}
