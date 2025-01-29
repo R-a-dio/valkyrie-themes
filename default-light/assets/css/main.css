@@ -575,7 +575,7 @@ label.checkboxhack {
 
 #loading-indicator.htmx-request.progress:indeterminate {
     animation: var(--bulma-progress-indeterminate-duration) infinite linear moveIndeterminate,
-    0.25s forwards 0.75s delay-loading-indicator;
+    0.1s forwards 0.3s delay-loading-indicator;
 }
 
 @keyframes delay-loading-indicator {
