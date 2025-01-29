@@ -549,3 +549,21 @@ label.checkboxhack {
     display: unset;
     opacity: unset;
 }
+
+@media (1216px>width) {
+    #staff > .cell:not(:first-child), #dev > .cell:not(:first-child), #dj > .cell:not(:first-child) {
+        margin-top: -1.5rem;
+    }
+}
+
+@media (1408px>width) and (1215px<width) {
+    #staff > .cell:nth-child(n+3), #dev > .cell:nth-child(n+3), #dj > .cell:nth-child(n+3) {
+        margin-top: -1.5rem;
+    }
+}
+
+@media (width>1407px) {
+    #staff > .cell:nth-child(n+5), #dev > .cell:nth-child(n+5), #dj > .cell:nth-child(n+5) {
+        margin-top: -1.5rem;
+    }
+}

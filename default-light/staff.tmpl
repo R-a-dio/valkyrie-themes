@@ -1,7 +1,7 @@
 {{define "content"}}
 <section class="section">
-    <div class="container">
-        <div class="content">
+    <div class="container px-6">
+        <div class="content mx-6">
             {{template "staff-rows" .}}
         </div>
     </div>
@@ -12,7 +12,7 @@
     {{range $role := .Roles}}
         <div class="fixed-grid block has-4-cols-desktop has-2-cols-touch has-1-cols-mobile mb-5">
             {{template "staff-row-title" $role}}
-            <div id="{{$role}}" class="grid message has-background-radio-secondary-1 content-border-top is-column-gap-6 is-row-gap-3 p-6">
+            <div id="{{$role}}" class="grid has-background-radio-secondary-1 content-border-top is-gap-3 px-5 pt-5 pb-3">
                 {{range $user := $.Users}}
                     {{if and $user.DJ.Visible (eq $user.DJ.Role $role)}}
                         {{template "djcard" $user}}
@@ -34,13 +34,13 @@
 {{end}}
 
 {{define "djcard"}}
-<div class="cell">
+<div class="cell p-4">
     <div class="card-image">
 	    <figure class="image is-square fill-sides has-rounded-corners">
 	    	<img src="/api/dj-image/{{.DJ.Image}}" class="dj-image"/>
 	    </figure>
 	</div>
-    <div class="card-content">
+    <div class="card-content has-word-break-all pt-3">
         <div class="dj-card-name is-size-5 has-text-centered">{{.DJ.Name}}</div>
     </div>
 </div>
