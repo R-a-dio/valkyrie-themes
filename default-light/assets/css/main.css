@@ -567,3 +567,19 @@ label.checkboxhack {
         margin-top: -1.5rem;
     }
 }
+
+#loading-indicator {
+    position: absolute;
+    height: 0rem;
+}
+
+#loading-indicator.htmx-request.progress:indeterminate {
+    animation: var(--bulma-progress-indeterminate-duration) infinite linear moveIndeterminate,
+    0.25s forwards 0.75s delay-loading-indicator;
+}
+
+@keyframes delay-loading-indicator {
+    to {
+        height: var(--bulma-size-small);
+    }
+}
