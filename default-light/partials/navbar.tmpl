@@ -16,9 +16,9 @@
                 <img src="/assets/images/logotitle_2.png" alt="r/a/dio logo">
             </a>
             <div class="navbar-start has-text-centered">
-            {{range .NavBar.Values}}
+            {{with .NavBar.Values}}{{range slice . 1}}
                 <a class="navbar-item" {{.Attr}}>{{.Name}}</a>
-            {{end}}
+            {{end}}{{end}}
             </div>
             <div class="pl-3 navbar-end is-hidden-touch">
                 <form class="my-auto" method="GET" action="/search" accept-charset="UTF-8">
