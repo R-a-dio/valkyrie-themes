@@ -1,13 +1,12 @@
 {{define "form_profile"}}
-<form hx-post="{{.FormAction}}" {{.FormType}} hx-target="this" hx-swap="outerHTML settle:3s">
+<form hx-post="{{.FormAction}}" {{.FormType}} hx-target="this" hx-swap="outerHTML settle:6s">
     {{.CSRFTokenInput}}
 {{if .Errors}}
     <div class="notification is-warning">
         {{.Errors}}
     </div>
 {{else if .Success}}
-    <div class="notification is-success has-text-centered">
-        <button data-target=".notification" onclick="removeTargetOnClick(this)" class="delete"></button>
+    <div class="notification notification-temporary is-success has-text-centered">
         User has been updated
     </div>
 {{end}}
