@@ -584,6 +584,12 @@ label.checkboxhack {
     }
 }
 
+#page-home-dj-image {
+    max-width: 40vw;
+    margin: 0 auto;
+    margin-bottom: -2rem;
+}
+
 .page-db-needreplacement {
     background-color: hsla(14, 27%, 39%, 0.2) !important;
 }
