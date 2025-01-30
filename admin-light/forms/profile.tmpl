@@ -5,6 +5,11 @@
     <div class="notification is-warning">
         {{.Errors}}
     </div>
+{{else if .Success}}
+    <div class="notification is-success has-text-centered">
+        <button data-target=".notification" onclick="removeTargetOnClick(this)" class="delete"></button>
+        User has been updated
+    </div>
 {{end}}
     <div class="field is-horizontal">
         <div class="field-label">

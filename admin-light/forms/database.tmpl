@@ -5,6 +5,7 @@
     {{.CSRFTokenInput}}
 
     <div class="grid box"{{if .Song.NeedReplacement}} style="background-color: rgba(185, 117, 57, 0.25);"{{end}}>
+        {{if .Success}}<div class="cell is-col-span-12 is-success has-text-centered">Song has been updated</div>{{end}}
         <div class="cell is-col-span-12 fixed-grid has-12-cols mb-0">
             <div class="grid is-align-items-end">
                 <div class="cell tag is-narrow is-size-7-mobile is-medium">{{.Song.ID}}</div>
