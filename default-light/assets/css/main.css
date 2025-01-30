@@ -1,3 +1,11 @@
+form .notification {
+    transition: all 5s linear;
+    transition-behavior: allow-discrete;
+}
+form:not(.htmx-settling) .notification {
+    opacity: 0;
+    display: none;
+}
 .htmx-indicator {
     opacity:0;
 }

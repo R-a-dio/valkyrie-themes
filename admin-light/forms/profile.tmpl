@@ -1,5 +1,5 @@
 {{define "form_profile"}}
-<form hx-post="{{.FormAction}}" {{.FormType}}>
+<form hx-post="{{.FormAction}}" {{.FormType}} hx-target="this" hx-swap="outerHTML settle:3s">
     {{.CSRFTokenInput}}
 {{if .Errors}}
     <div class="notification is-warning">
