@@ -1,3 +1,20 @@
+{{define "head"}}
+<link rel="stylesheet" href="/assets/tuicss/css/tuicss.min.css">
+<link rel="stylesheet" href="/assets/tuicss/css/main.css">
+<script src="/assets/tuicss/js/tuicss.min.js"></script>
+{{end}}
+
+{{define "public-navbar"}}
+<nav class="tui-nav" {{.NavBar.Attr}}>
+    <span id="tui-navbar-time" hx-preserve class="tui-datetime" data-format="H:m:s y/M/d"></span>
+    <ul>
+        {{range .NavBar.Values}}
+            <li><a {{.Attr}}>{{.Name}}</a></li>
+        {{end}}
+    </ul>
+</nav>
+{{end}}
+
 {{define "content"}}
 <div class="container full-width tui-bg-cyan-black" hx-ext="sse" sse-connect="/v1/sse">
     <div class="row">
@@ -25,24 +42,13 @@
     {{with .News}}
     <div class="row">
         <div class="col">
-            <div class="tui-window full-width">
-                <fieldset class="tui-fieldset tui-border-solid">
-                    <legend>News</legend>
-                    <ul class="container">
-                        <li class="row">
-                        {{range .}}
-                            <div class="col">
-                                <div class="tui-window full-width">
-                                    <fieldset class="tui-fieldset tui-border-solid">
-                                        <legend>{{.Title}}</legend>
-                                        {{.Header}}
-                                    </fieldset>
-                                </div>
-                            </div>
-                        {{end}}
-                        </li>
-                    </ul>
-                </fieldset>
+            <div class="flex">
+            {{range .}}
+                <div class="tui-panel full-width">
+                    <div class="tui-panel-header black-255-text">{{.Title}}</div>
+                    <div class="tui-panel-content">{{.Header}}</div>
+                </div>
+            {{end}}
             </div>
         </div>
     </div>

@@ -2,6 +2,18 @@
     max-width: 3000px;
 }
 
+.flex {
+    display: flex;
+}
+
+.flex .tui-panel {
+    margin: 0px 5px;
+}
+
+.flex .tui-panel:last-child {
+    margin-right: 0px !important;
+}
+
 .modal {
     display: none;
 }

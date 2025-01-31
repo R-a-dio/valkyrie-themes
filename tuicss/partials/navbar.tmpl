@@ -1,10 +1,1 @@
-{{define "public-navbar"}}
-<nav class="tui-nav" {{.NavBar.Attr}}>
-    <span id="tui-navbar-time" hx-preserve class="tui-datetime" data-format="H:m:s y/M/d"></span>
-    <ul>
-        {{range .NavBar.Values}}
-            <li><a {{.Attr}}>{{.Name}}</a></li>
-        {{end}}
-    </ul>
-</nav>
-{{end}}
+{{/* with single-page themes the navbar should be in the page template file instead, see home.tmpl in this theme */}}
