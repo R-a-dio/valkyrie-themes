@@ -523,31 +523,26 @@ input:focus {
     --bulma-input-focus-l: 55%;
 }
 
-*:has(.checkboxhack) {
-    position: relative;
-    overflow: hidden;
+#toggle-now-playing-tags, 
+#toggle-options-button-dropdown {
+    display: none;
 }
 
-.checkboxhack {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    width: 50%;
-    height: 3rem;
-    opacity: 0;
-    cursor: pointer; 
+#toggle-options-button-dropdown:checked ~ .dropdown-container,
+#toggle-now-playing-tags:checked ~ #now-playing-tags {
+    display: block !important;
 }
 
-.checkboxhack:checked ~ #preferences-options-content {
-    display: unset;
+label>svg[data-state="minus"] {
+    display: none;
 }
 
-label.checkboxhack {
-    position: unset;
-    display: unset;
-    opacity: unset;
+#toggle-now-playing-tags:checked ~ #current-song>label>svg[data-state="plus"] {
+    display: none;
+}
+
+#toggle-now-playing-tags:checked ~ #current-song>label>svg[data-state="minus"] {
+    display: block;
 }
 
 @media (1216px>width) {
