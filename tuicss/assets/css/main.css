@@ -1,0 +1,25 @@
+.container {
+    max-width: 3000px;
+}
+
+.modal {
+    display: none;
+}
+
+.tui-nav {
+    position: unset;
+}
+
+.svg-icon-big {
+    width: 2.5rem !important; 
+    height: 2.5rem !important;
+}
+
+.footer {
+    margin: auto;
+}
+
+body {
+    background-image: url(/assets/tuicss/images/bg-cyan-black.png);
+    background-repeat: repeat;
+}

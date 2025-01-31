@@ -1,0 +1,117 @@
+{{define "content"}}
+<div class="container full-width tui-bg-cyan-black" hx-ext="sse" sse-connect="/v1/sse">
+    <div class="row">
+        {{with .StreamURL}}
+        <noscript>
+            <audio preload="none" controls>
+                    <source src="{{.}}" type="audio/mpeg" />
+            </audio>
+        </noscript>
+        {{end}}
+    </div>
+    <div class="row">
+        <div class="col s12 m12 l12" sse-swap="metadata">
+        {{template "nowplaying" .Status}}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s6 m6 l6" sse-swap="lastplayed">
+        {{template "lastplayed" .LastPlayed}}
+        </div>
+        <div class="col s6 m6 l6" sse-swap="queue">
+        {{template "queue" .Queue}}
+        </div>
+    </div>
+    {{with .News}}
+    <div class="row">
+        <div class="col">
+            <div class="tui-window full-width">
+                <fieldset class="tui-fieldset tui-border-solid">
+                    <legend>News</legend>
+                    <ul class="container">
+                        <li class="row">
+                        {{range .}}
+                            <div class="col">
+                                <div class="tui-window full-width">
+                                    <fieldset class="tui-fieldset tui-border-solid">
+                                        <legend>{{.Title}}</legend>
+                                        {{.Header}}
+                                    </fieldset>
+                                </div>
+                            </div>
+                        {{end}}
+                        </li>
+                    </ul>
+                </fieldset>
+            </div>
+        </div>
+    </div>
+    {{end}}
+</div>
+{{end}}
+
+{{define "nowplaying"}}
+<div class="tui-window full-width">
+    <fieldset class="tui-fieldset tui-border-solid">
+        <legend>Now Playing</legend>
+        <div class="tui-fieldset-button right">
+            <button id="stream-play-pause" hx-preserve class="is-hidden-without-js tui-button">Play Stream</button>
+        </div>
+        <ul class="container full-width">
+            <li class="row">
+                <div class="col s12 m12 l12 center">{{.Song.Metadata}}</div>
+            </li>
+            {{$progress := .SongInfo.Start | Since}}
+            <li class="row">
+                <div class="col s12 m12 l12">
+                    <progress id="current-song-progress" class="tui-progress-bar full-width" value="{{$progress | ToSecond}}" max="{{.Song.Length.Seconds}}"></progress>
+                </div>
+            </li>
+        </ul>
+        <div class="tui-fieldset-text">
+            {{template "listeners" .Listeners}}
+        </div>
+        <div class="tui-fieldset-text right">
+            <span id="progress-current" data-start="{{.SongInfo.Start.UnixMilli}}">{{$progress | MediaDuration}}</span>
+            /
+            <span id="progress-max">{{.Song.Length | MediaDuration}}</span>
+        </div>
+    </fieldset>
+</div>
+{{end}}
+
+{{define "listeners"}}
+    Listeners: <span id="listener-count">{{.}}</span>
+{{end}}
+
+{{define "lastplayed"}}
+<div class="tui-window full-width">
+    <fieldset class="tui-fieldset tui-border-solid">
+        <legend>Last Played</legend>
+        <ul class="container full-width">
+        {{range .}}
+            <li class="row">
+                <div class="col s3 m3 l3"><time datetime="{{.LastPlayed.Unix}}">{{Until .LastPlayed | PrettyDuration}}</time></div>
+                <div class="col s12 m9 l9 right-align">{{.Metadata}}</div>
+            </li>
+        {{end}}
+        </ul>
+    </fieldset>
+</div>
+{{end}}
+
+{{define "queue"}}
+<div class="tui-window full-width">
+    <fieldset class="tui-fieldset tui-border-solid">
+        <legend>Queue</legend>
+        <ul class="container full-width">
+        {{range (.Limit 5)}}
+            <li class="row {{if .IsUserRequest}}cyan-255 black-255-text {{end}}">
+                <div class="col s12 m9 l9 left-align">{{.Metadata}}</div>
+                <div class="col s3 m3 l3"><time datetime="{{.ExpectedStartTime.Unix}}">{{Until .ExpectedStartTime | PrettyDuration}}</time></div>
+            </li>
+        {{end}}
+        </ul>
+    </fieldset>
+</div>
+{{end}}
