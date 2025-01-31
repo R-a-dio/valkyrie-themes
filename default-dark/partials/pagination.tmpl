@@ -16,10 +16,10 @@
             {{with $prev2 := .Prev 2}}
                 {{if gt .Nr 1}}
                     {{with .First}}
-                    {{template "page-link" .}}
-                    {{if gt $prev2.Nr 2}}
-                    <li class="m-0"><span class="pagination-ellipsis">&hellip;</span></li>
-                    {{end}}
+                        {{template "page-link" .}}
+                        {{if gt $prev2.Nr 2}}
+                        <li class="m-0"><span class="pagination-ellipsis">&hellip;</span></li>
+                        {{end}}
                     {{end}}
                 {{end}}
                 {{template "page-link" .}}
@@ -29,14 +29,14 @@
             {{with .Next 1}}{{template "page-link" .}}{{end}}
             {{with $next2 := .Next 2}}
                 {{template "page-link" .}}
-                
-                    {{with .Last}}
-                    {{if lt $next2.Nr (Sub .Total 1)}}
-                    <li class="m-0"><span class="pagination-ellipsis">&hellip;</span></li>
+                {{with .Last}}
+                    {{if lt $next2 .Nr}}
+                        {{if lt $next2.Nr (Sub .Nr 1)}}
+                        <li class="m-0"><span class="pagination-ellipsis">&hellip;</span></li>
+                        {{end}}
+                        {{template "page-link" .}}
                     {{end}}
-                    {{template "page-link" .}}
-                    {{end}}
-                
+                {{end}}
             {{end}}
         </ul>
     </nav>
