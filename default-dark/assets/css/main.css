@@ -609,3 +609,11 @@ form.htmx-settling > .notification-temporary {
     90% {opacity:1;transform:scaleY(1);}
     100% {opacity:0;transform:scaleY(0);}
 } 
+
+.one-time-notification {
+    display: none;
+}
+  
+.one-time-notification[data-visible="true"] {
+    display: block;
+}

@@ -266,3 +266,18 @@ function closeAllModals() {
         closeModal($modal);
     });
 }
+
+// Function to show one-time notifications; see chat page for an example
+function initOneTimeNotification(element) {
+    element = element.parentElement;
+    if (!localStorage.getItem(element.dataset.storageKey)) {
+      element.dataset.visible = 'true';
+    }
+    
+    element.onclick = (event) => {
+      if (event.target.matches('.delete')) {
+        localStorage.setItem(element.dataset.storageKey, 'dismissed');
+        element.dataset.visible = 'false';
+      }
+    };
+  }
