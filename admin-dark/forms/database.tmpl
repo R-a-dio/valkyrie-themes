@@ -11,7 +11,7 @@
         {{end}}
         <div class="cell is-col-span-12 fixed-grid has-12-cols mb-0">
             <div class="grid is-align-items-end">
-                <div class="cell tag is-narrow is-size-7-mobile is-medium">{{.Song.ID}}</div>
+                <div class="cell tag is-narrow is-size-7-mobile is-medium">{{.Song.TrackID}}</div>
                 <div class="cell is-col-span-8 tag is-size-7-mobile is-medium" style="overflow:hidden;text-overflow:ellipsis;">{{.Song.Metadata}}</div>
                 <div class="cell button is-small is-size-7-mobile is-info adminPlayerPlayPauseButton" onclick="togglePlayPauseAdmin(this, '{{.SongURL}}')" style="cursor:pointer;" data-state="Play">Play</div>
                 <div class="cell button is-small is-size-7-mobile is-warning" onclick="adminShowSpectrogram('')" disabled>Show Spec</div>
