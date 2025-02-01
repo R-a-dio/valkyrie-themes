@@ -1,6 +1,6 @@
 {{define "content"}}
 <section class="section">
-    <div class="content">
+    <div class="container content">
         <div id="news-content" hx-boost="true" hx-push-url="true" hx-target="#content" class="columns is-multiline">
             {{range $news := $.News}}
                 {{template "news-post-news" $news}}

@@ -3,12 +3,12 @@
     <article class="message">
         <a href="/news/{{.ID}}" hx-boost="true" hx-push-url="true" hx-target="#content" style="text-decoration:none!important;">
             <div class="message-header has-background-radio-primary-2 on-hover-darken">
-                <span class="news-title">{{.Title}}</span>
+                <span class="news-title has-word-break-all pr-2">{{.Title}}</span>
                 <span style="text-decoration:none;">{{.User.Username}}</span>
             </div>
         </a>
-        <div class="message-body has-background-radio-secondary-1 disable-message-border pt-2">
-            <strong><time class="is-inline-block is-fullwidth has-text-right" datetime="{{.CreatedAt.Unix}}" data-type="absolute">{{.CreatedAt | AbsoluteDate}}</time></strong>
+        <div class="message-body has-background-radio-secondary-1 disable-message-border pt-3">
+            <time class="has-text-weight-bold is-pulled-right pl-2" datetime="{{.CreatedAt.Unix}}" data-type="absolute" style="font-size: 0.9rem;line-height:1.5rem;">{{.CreatedAt}}</time>
             {{.Header}}
         </div>
     </article>
@@ -16,16 +16,15 @@
 {{end}}
 
 {{define "news-post-news"}}
-<div class="column is-3-fullhd is-4-desktop is-half-tablet">
-    <article class="message m-3 p-0">
+<div class="column is-12">
+    <article class="message m-0 p-0">
         <a href="/news/{{.ID}}">
             <div class="message-header has-background-radio-primary-2 on-hover-darken">
-                <span class="news-title">{{.Title}}</span>
-                <span style="text-decoration:none;">{{.User.Username}}</span>
+                <span class="news-title has-word-break-all pr-2">{{.Title}}</span>
+                <span style="text-decoration:none;"><span class="is-size-7"><time datetime="{{.CreatedAt.Unix}}" data-type="absolute">{{.CreatedAt}}</time> by </span>{{.User.Username}}</span>
             </div>
         </a>
-        <div class="message-body has-background-radio-secondary-1 disable-message-border pt-2">
-            <strong><time class="is-inline-block is-fullwidth has-text-right" datetime="{{.CreatedAt.Unix}}" data-type="absolute">{{.CreatedAt | AbsoluteDate}}</time></strong>
+        <div class="message-body has-background-radio-secondary-1 disable-message-border">
             {{.Header}}
         </div>
     </article>
