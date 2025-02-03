@@ -469,20 +469,23 @@ input.is-fullheight {
     cursor: help;
 }
 
-[aria-description]:hover::after {
+[aria-description]:hover::before {
     content: attr(aria-description);
     position: absolute;
-    bottom: 100%;
-    left: 50%;
-    transform: translate(-50%, -75%);
+    width: max-content;
+    max-width: 50vw;
+    top: -3rem;
     padding: 4px 8px;
-    background: #333;
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid white;
     color: white;
     border-radius: 4px;
     font-size: 0.9rem;
     font-weight: semibold;
     font-family: "Inconsolata", "Hack", "SF Mono", "Roboto Mono", "Source Code Pro", "Ubuntu Mono", monospace !important;
-    white-space: nowrap;
+    white-space: break-spaces;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
     z-index: 100;
 }
 
@@ -616,4 +619,11 @@ form.htmx-settling > .notification-temporary {
   
 .one-time-notification[data-visible="true"] {
     display: block;
+}
+
+.indicator-info::after {
+    content: "?";
+    font-size: 0.75rem;
+    position: relative;
+    top: -0.75rem;
 }
