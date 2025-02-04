@@ -2,13 +2,12 @@
 <div class="cell">
     <article class="message">
         <a href="/news/{{.ID}}" hx-boost="true" hx-push-url="true" hx-target="#content" style="text-decoration:none!important;">
-            <div class="message-header has-background-radio-primary-2 on-hover-darken">
+            <div class="message-header has-background-radio-primary-2 on-hover-darken py-2">
                 <span class="news-title has-word-break-all pr-2">{{.Title}}</span>
-                <span style="text-decoration:none;">{{.User.Username}}</span>
+                <span style="display:flex;flex-direction:column;text-decoration:none;font-size:0.8rem;text-align:right;">{{.User.Username}}<time class="has-text-weight-bold page-home-news-date pl-2" datetime="{{.CreatedAt.Unix}}" data-type="absolute">{{.CreatedAt}}</time></span>
             </div>
         </a>
         <div class="message-body has-background-radio-secondary-1 disable-message-border pt-3">
-            <time class="has-text-weight-bold is-pulled-right pl-2" datetime="{{.CreatedAt.Unix}}" data-type="absolute" style="font-size: 0.9rem;line-height:1.5rem;">{{.CreatedAt}}</time>
             {{.Header}}
         </div>
     </article>
@@ -19,10 +18,11 @@
 <div class="column is-12">
     <article class="message m-0 p-0">
         <a href="/news/{{.ID}}">
-            <div class="message-header has-background-radio-primary-2 on-hover-darken">
+            <div class="message-header has-background-radio-primary-2 on-hover-darken py-2">
                 <span class="news-title has-word-break-all pr-2">{{.Title}}</span>
-                <span style="text-decoration:none;"><span class="is-size-7"><time datetime="{{.CreatedAt.Unix}}" data-type="absolute">{{.CreatedAt}}</time> by </span>{{.User.Username}}</span>
+                <span style="display:flex;flex-direction:column;text-decoration:none;font-size:0.8rem;text-align:right;">{{.User.Username}}<time class="has-text-weight-bold page-home-news-date pl-2" datetime="{{.CreatedAt.Unix}}" data-type="absolute">{{.CreatedAt}}</time></span>
             </div>
+
         </a>
         <div class="message-body has-background-radio-secondary-1 disable-message-border">
             {{.Header}}

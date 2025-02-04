@@ -627,3 +627,16 @@ form.htmx-settling > .notification-temporary {
     position: relative;
     top: -0.75rem;
 }
+
+.page-home-news-date {
+    display: block;
+    font-size: 0.8rem;
+    width: calc(13ch);
+    overflow: hidden;
+    white-space: nowrap;
+    align-self: end;
+}
+
+.page-home-news-date::before {
+    content: "on ";
+}
