@@ -15,14 +15,13 @@
             </div>
             <div id="title-render" class="cell is-fullheight">
                 {{block "title-render" .Raw}}
-                <article class="message m-3 p-0">
-                    <a href="/admin/news/{{or .ID "new"}}">
-                        <div class="block message-header columns on-hover-darken">
-                            <span class="column has-background-radio-primary-2 news-title">{{.Title}}</span>
-                            <span class="column is-narrow has-background-radio-primary-2">{{if not .CreatedAt.IsZero}}{{.CreatedAt | AbsoluteDate}}{{end}}</span>
-                            <span class="column is-narrow has-background-radio-primary-2" style="text-decoration:none;">{{.User.Username}}</span>
+                <article class="message">
+                    <span style="color:var(--text-link)">
+                        <div class="message-header has-background-radio-primary-2 on-hover-darken">
+                            <span class="news-title has-word-break-all pr-2">{{.Title}}</span>
+                            <span style="text-decoration:none;"><span class="is-size-7"><time datetime="{{.CreatedAt.Unix}}" data-type="absolute">{{.CreatedAt}}</time> by </span>{{.User.Username}}</span>
                         </div>
-                    </a>
+                    </span>
                 </article>
                 {{end}}
             </div>
