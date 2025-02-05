@@ -6,7 +6,7 @@
             <div class="columns is-centered mb-5">
                 <form action="/search" class="column is-8 control is-flex" hx-boost="true" hx-push-url="true" hx-target="#search-content" hx-select="#search-content">
                     {{.CSRFLegacyFix}}
-                    <input class="input" type="text" name="q" placeholder="Search" value="{{.Query}}" hx-get="/search" hx-target="#search-content" hx-select="#search-content" hx-trigger="keyup changed delay:500ms">
+                    <input class="input" type="text" name="q" placeholder="Search" value="{{.Query}}" hx-get="/search" hx-target="#search-content" hx-select="#search-content" hx-trigger="input changed delay:500ms">
                 </form>
             </div>
             <div id="search-content">

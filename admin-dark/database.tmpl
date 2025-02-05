@@ -3,7 +3,7 @@
     <div class="container mb-5 pb-1">
         <div class="field has-addons">
             <form action="/admin/songs" class="control is-fullwidth" hx-boost="true" hx-push-url="true" hx-target="#songs-content" hx-select="#songs-content">
-                <input class="input" type="text" name="q" placeholder="Search" value="{{.Query}}" hx-get="/admin/songs" hx-target="#songs-content" hx-select="#songs-content" hx-trigger="keyup changed delay:500ms">
+                <input class="input" type="text" name="q" placeholder="Search" value="{{.Query}}" hx-get="/admin/songs" hx-target="#songs-content" hx-select="#songs-content" hx-trigger="input changed delay:500ms">
             </form>
             <div class="control">
                 <button class="button is-info" type="submit">Search</button>
