@@ -62,13 +62,13 @@
         </div>-->
         <div class="cell is-col-span-3 is-col-span-6-mobile">
             <div class="field">
-                <label class="label is-small">LP/LR</label>
+                <label class="label is-small">LP / LR</label>
                 <div class="control">
                     <div class="input is-small is-overflow-auto" style="scrollbar-width:none;" disabled>{{.Song.LastPlayed | Since | HumanDuration}} / {{.Song.LastRequested | Since | HumanDuration}}</div>
                 </div>
             </div>
             <div class="field">
-                <label class="label is-small">Acceptor</label>
+                <label class="label is-small">Acceptor (Editor)</label>
                 <div class="control">
                     <div class="input is-small is-overflow-auto" style="scrollbar-width:none;" disabled>{{.Song.Acceptor}} ({{.Song.LastEditor}})</div>
                 </div>
