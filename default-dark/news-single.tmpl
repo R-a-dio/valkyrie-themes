@@ -19,7 +19,7 @@
             </div>
         </a>
         <div class="message-body has-background-radio-secondary-1 disable-message-border">
-            <strong><time class="is-inline-block is-fullwidth has-text-right" datetime="{{.CreatedAt.Unix}}" data-type="absolute">{{.CreatedAt | AbsoluteDate}}</time></strong>
+            <strong><time class="is-inline-block is-fullwidth has-text-right has-timeago" datetime="{{.CreatedAt.Unix}}" data-type="medium">{{ TimeAgo .CreatedAt "%y years, %d days, %h hours, %m minutes" }}</time></strong>
             {{.Body}}
         </div>
     </article>
@@ -45,6 +45,7 @@
         </form>
     </div>
     <div class="column is-8 m-0 p-0">
+        {{if .Post.Comments}}
         {{range .Post.Comments}}
         <div id="{{.ID}}" class="column block has-background-radio-secondary-1 mb-4">
             <div class="columns is-flex-mobile">
@@ -57,6 +58,13 @@
                     {{.Body}}
                 </div>
             </div>
+        </div>
+        {{end}}
+        {{else}}
+        <div class="column block is-fullheight has-background-radio-secondary-1 mb-4">
+                <div class="is-fullheight has-centered-content p-4">
+                    There are no comments to show yet. Be the first one to comment!
+                </div>
         </div>
         {{end}}
     </div>
