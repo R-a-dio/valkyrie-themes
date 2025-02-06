@@ -624,8 +624,7 @@ form.htmx-settling > .notification-temporary {
 .indicator-info::after {
     content: "?";
     font-size: 0.75rem;
-    position: relative;
-    top: -0.75rem;
+    vertical-align: super;
 }
 
 .page-home-news-date {
