@@ -1,3 +1,9 @@
+@font-face {
+    font-family: 'Inter';
+    src: url('/assets/default-dark/fonts/Inter.woff2') format('woff2');
+    font-display: swap;
+}
+
 .htmx-indicator {
     opacity:0;
 }
@@ -612,6 +618,17 @@ form.htmx-settling > .notification-temporary {
     90% {opacity:1;transform:scaleY(1);}
     100% {opacity:0;transform:scaleY(0);}
 } 
+
+.has-centered-content {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.has-timeago::after {
+    content: " ago";
+}
 
 .one-time-notification {
     display: none;
