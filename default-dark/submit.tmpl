@@ -1,11 +1,13 @@
 {{define "content"}}
 <section class="section">
     <div class="container">
-        <div class="content fixed-grid has-2-cols-fullhd has-1-cols-mobile ">
+        <div class="content fixed-grid has-2-cols-fullhd has-1-cols-mobile">
             {{$cooldown := CalculateSubmissionCooldown .Stats.LastSubmissionTime}}
             {{if or (or (eq $cooldown 0) (.IsUser)) (.Form.IsDaypass)}}
-            <div id="submit-cooldown" class="notification is-primary has-text-centered mb-6">
+            <div id="submit-cooldown" class="notification one-time-notification is-primary has-text-centered mb-6" data-storage-key="notification-youcanupload">
+                <button class="delete"></button>
                 You can upload a song
+                <img src="" onerror="initOneTimeNotification(this)">
             </div>
             {{else}}
             <div id="submit-cooldown" class="notification is-danger has-text-centered mb-6">
