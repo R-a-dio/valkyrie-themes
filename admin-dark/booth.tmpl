@@ -122,7 +122,7 @@
                         <div sse-swap="status" class="cell columns is-multiline is-flex box is-col-span-2 is-row-span-1 is-justify-content-center is-align-self-center has-background-radio-secondary-1 has-text-weight-light has-word-break-all m-0 p-4 pt-5">
                             {{block "status" Status}}
                             <span class="is-uppercase is-box-title">Current Song</span>
-                            <div class="column now-playing is-12">{{.Status.Song.Metadata}}</div>
+                            <div class="column now-playing is-12">{{.Song.Metadata}}</div>
                             <div class="column is-12">
                                 {{$progress := .SongInfo.Start | Since}}
                                 <div class="progress-container is-fullwidth">
