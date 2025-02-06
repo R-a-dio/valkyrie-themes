@@ -1,6 +1,10 @@
+:root {
+    --bulma-family-primary: Roboto, Inter, SF Pro, Segoe UI, Roboto, Oxygen, Ubuntu, Helvetica Neue, Helvetica, Arial, sans-serif !important;
+}
+
 @font-face {
-    font-family: 'Inter';
-    src: url('/assets/default-dark/fonts/Inter.woff2') format('woff2');
+    font-family: 'Roboto';
+    src: url('/assets/default-dark/fonts/Roboto.woff2') format('woff2');
     font-display: swap;
 }
 
