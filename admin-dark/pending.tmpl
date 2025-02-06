@@ -29,22 +29,11 @@
     <div class="modal-background" onclick="removeClassOnClick(this)" data-target="admin-pending-options-modal" data-class="is-active"></div>
     <div class="modal-content">
         <div class="content box">
-            <div class="title">Options (these don't work right now haha)</div>
+            <div class="title">Options</div>
             <hr>
             <div>Default player volume</div> 
             <div>
                 <input id="pending-volume" class="volume-input" name="pending-volume" type="number" min="0" max="100" value="5" oninput="localStorage.setItem('admin-player-volume', this.value)">
-            </div>
-            <div>Column count</div>
-            <div>
-                <input id="pending-columns" name="pending-columns" type="number" min="1" max="3" value="1" oninput="localStorage.setItem('admin-pending-columns', this.value)">
-            </div>
-            <div>Column width</div>
-            <div>
-                <select id="pending-width" name="pending-width" onchange="localStorage.setItem('admin-pending-width', this.value)">
-                    <option value="wide">Wide</option>
-                    <option value="narrow">Narrow</option>
-                </select>
             </div>
         </div>
     </div>
@@ -57,8 +46,9 @@
     <div class="modal-content">
         <div class="content box">
             <div class="title">Spectrograms</div>
+            <h5>Lifted from <a href="https://interviewfor.red/en/spectrals.html">interviewfor.red</a>. Click images to open them in another tab.</h5>
             <hr>
-            <h2>Work in progress</h2>
+            {{template "spectrogram-guide"}}
         </div>
     </div>
 </div>
@@ -141,3 +131,62 @@
 </div>
 {{end}}
 
+{{define "spectrogram-guide"}}
+<h3>Spectral Analysis</h3>
+<p>Spectral analysis is a visual way to display the data in a music file. Every music note has a specific frequency: lower notes have lower frequencies and higher notes have higher frequencies. All of the frequencies are displayed on a spectral diagram ("spectral" for short), which is a graph of all the frequencies vs. time in a music file. Frequencies are measured in hertz (Hz) and kilohertz (1,000 Hz). Humans have a hearing range from about 20 Hz - 20kHz (20,000 Hz).</p>
+<p>Since spectrals show all the data in a file, they are helpful tools to use when you're trying to decide whether or not a song has been transcoded. Every file has a relatively standard frequency cut-off.</p>
+<h4>CD / Lossless</h4>
+<p>Songs on a retail CD and lossless songs have frequencies that extend all the way to 22 kHz. Since lossless to lossless transcoding preserves all of the data in a music file, the spectral of a lossless song will look the same in FLAC, WAV (PCM), ALAC, etc.</p>
+<p>
+    <a href="/assets/default-dark/images/spectrals/Guide-FLAC.jpg">
+        <img src="/assets/default-dark/images/spectrals/Guide-FLAC.jpg" title="Spectral (FLAC)">
+    </a>
+</p>
+<p>However, different genres have different-looking spectrals. The example above was a pop song, so most of the frequencies were represented. But look at this classical piano song.</p>
+<p>
+    <a href="/assets/default-dark/images/spectrals/Guide-FLAC-Classical.jpg">
+        <img src="/assets/default-dark/images/spectrals/Guide-FLAC-Classical.jpg" title="Spectral (FLAC - Classical)">
+    </a>
+</p>
+<p>It looks much different, right? But it's still a lossless spectral! Notice how "white noise" (the light purple) still extends to 22 kHz, even though those frequencies aren't used.</p>
+<h4>MP3</h4>
+<p>Different types of MP3s have different frequency cut-offs. MP3s also tend to have a "shelf" at 16 kHz (you'll see it in the spectrals).</p>
+<p>MP3 320kbps (CBR) has a frequency cut-off at 20.5 kHz.
+    <a href="/assets/default-dark/images/spectrals/Guide-MP3-320-CBR.jpg">
+        <img src="/assets/default-dark/images/spectrals/Guide-MP3-320-CBR.jpg" title="Spectral (MP3 320)">
+    </a>
+</p>
+<p>MP3 256kbps (CBR) has a frequency cut-off at 20 kHz.
+<a href="/assets/default-dark/images/spectrals/Guide-MP3-256-CBR.jpg">
+    <img src="/assets/default-dark/images/spectrals/Guide-MP3-256-CBR.jpg" title="Spectral (MP3 256)"></a>
+</p>
+<p>MP3 V0 has a frequency cut-off at 19.5 kHz.
+    <a href="/assets/default-dark/images/spectrals/Guide-MP3-V0.jpg">
+        <img src="/assets/default-dark/images/spectrals/Guide-MP3-V0.jpg" title="Spectral (MP3 V0)">
+    </a>
+</p>
+<p>MP3 192kbps (CBR) has a frequency cut-off at 19 kHz.
+    <a href="/assets/default-dark/images/spectrals/Guide-MP3-192-CBR.jpg">
+        <img src="/assets/default-dark/images/spectrals/Guide-MP3-192-CBR.jpg" title="Spectral (MP3 192)">
+    </a>
+</p>
+<p>MP3 V2 has a frequency cut-off at 18.5 kHz.
+    <a href="/assets/default-dark/images/spectrals/Guide-MP3-V2.jpg">
+        <img src="/assets/default-dark/images/spectrals/Guide-MP3-V2.jpg" title="Spectral (MP3 V2)">
+    </a>
+</p>
+<p>MP3 128kbps (CBR) has a frequency cut-off at 16 kHz.
+    <a href="/assets/default-dark/images/spectrals/Guide-MP3-128-CBR.jpg">
+        <img src="/assets/default-dark/images/spectrals/Guide-MP3-128-CBR.jpg" title="Spectral (MP3 128)">
+    </a>
+</p>
+<h4>Transcodes</h4>
+<p>How are spectrals helpful when trying to detect transcodes? Say you download a song in FLAC from a blog. The only way to verify that this song is truly a lossless file and not a transcoded file is by looking at its spectral. (Programs like AudioIdentifier are not reliable at detecting transcodes.)</p>
+<p>For example, the spectral below is of a FLAC file: the file extension is .flac, it is 21.8 MB, and it sounds okay.</p>
+<p>
+    <a href="/assets/default-dark/images/spectrals/Guide-MP3-192-to-FLAC.jpg">
+        <img src="/assets/default-dark/images/spectrals/Guide-MP3-192-to-FLAC.jpg" title="Spectral (MP3 192 to FLAC)">
+    </a>
+</p>
+<p>But whoa, does that look anything like what a regular FLAC spectral should look like? No! This file was transcoded from MP3 192kbps (CBR) to FLAC. It's a lossy to lossless transcode, which is bad.</p>
+{{end}}
