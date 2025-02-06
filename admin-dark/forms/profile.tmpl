@@ -81,6 +81,7 @@
     </div>
 {{if (ne .DJ.ID 0)}}
     <div></div>
+{{if .IsAdmin}}
     <div class="field is-horizontal">
         <div class="field-label">
             <label class="label" for="dj.visible">Visible?</label>
@@ -97,6 +98,7 @@
             <input class="input" type="number" name="dj.priority" value={{.DJ.Priority}}>
         </div></div></div>
     </div>
+{{end}}
     <div class="field is-horizontal">
         <div class="field-label">
             <label class="label" for="dj.name">DJ name:</label>
