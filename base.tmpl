@@ -47,22 +47,46 @@
 <div id="prefs-modal" class="modal">
     <div class="modal-background" onclick="removeClassOnClick(this)" data-target="prefs-modal" data-class="is-active"></div>
     <div class="modal-content">
+        <div id="preferences-notification-notifications-reset" class="notification notification-temporary is-success has-text-centered is-hidden">
+            Notifications have been reset.
+        </div>
         <div id="preferences" class="block column fixed-grid has-background-radio-secondary-1">
-            <div class="grid">
-                <div class="cell is-col-span-2 tabs is-fullwidth">
-                    <ul>
-                      <li class="is-active"><a>Theme</a></li>
-                      <li><a>Something else</a></li>
-                    </ul>
+            <div class="fixed-grid has-2-cols">
+                <div class="grid mb-5">
+                    <label class="cell is-clickable" for="theme-tab">
+                        <div class="on-hover-darken has-background-radio-secondary-3 has-centered-content is-clickable p-2">               
+                            Theme
+                        </div>
+                    </label>
+                    <label class="cell is-clickable" for="other-settings-tab">
+                        <div class="on-hover-darken has-background-radio-secondary-3 has-centered-content is-clickable p-2">               
+                            Other settings
+                        </div>
+                    </label>
                 </div>
-                <div id="preferences-theme-content" class="cell is-col-span-2">
-                    <div id="grid">
-                        <div class="cell is-col-span-2 has-text-centered mb-4">Click one the buttons below the select the site theme.</div>
-                        <div class="cell is-col-span-2">
-                            <div class="grid">
-                                <a class="cell" hx-boost="true" hx-push-url="false" href="/set-theme?theme=default-light"><button class="button is-fullwidth">Light</button></a>
-                                <a class="cell" hx-boost="true" hx-push-url="false" href="/set-theme?theme=default-dark"><button class="button is-fullwidth">Dark</button></a>
+
+                <input type="radio" name="tab" id="theme-tab" class="tab-input" checked>
+                <input type="radio" name="tab" id="other-settings-tab" class="tab-input">
+
+                <div id="preferences-theme-content" class="cell is-col-span-2 tab-content">
+                    <div class="fixed-grid has-1-cols">
+                        <div class="grid">
+                            <div class="cell has-text-centered mb-4">Click one the buttons below the select the site theme.</div>
+                            <div class="cell">
+                                <div class="grid">
+                                    <a class="cell" hx-boost="true" hx-push-url="false" href="/set-theme?theme=default-light"><button class="button is-fullwidth">Light</button></a>
+                                    <a class="cell" hx-boost="true" hx-push-url="false" href="/set-theme?theme=default-dark"><button class="button is-fullwidth">Dark</button></a>
+                                </div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="preferences-other-settings" class="cell is-col-span-2 tab-content">
+                    <div class="fixed-grid has-1-cols">
+                        <div class="grid">
+                            <div class="cell has-text-centered mb-4">There will eventually be something here.</div>
+                            <button class="cell button" onclick="preferencesResetNotifications()">Reset all notifications</button>
                         </div>
                     </div>
                 </div>

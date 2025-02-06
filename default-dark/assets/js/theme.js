@@ -32,6 +32,20 @@ function showHighlightAnimation(target, button) {
     }
 }
 
+function preferencesResetNotifications() {
+    Object.keys(localStorage)
+    .filter(key => key.startsWith('notification-'))
+    .forEach(key => localStorage.removeItem(key));
+    
+    let prefsNotification = document.getElementById('preferences-notification-notifications-reset');
+
+    prefsNotification.classList.toggle('is-hidden');
+    prefsNotification.classList.toggle('fake-temporary-notification');
+    setTimeout(() => {
+        prefsNotification.classList.toggle('is-hidden');
+    }, 6000)
+}
+
 // Needed to display the right help page for mobile users (and whatever else it does now)
 htmx.onLoad((event) => {
     url = window.location;
