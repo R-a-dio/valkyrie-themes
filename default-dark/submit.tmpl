@@ -72,6 +72,7 @@
                             <div>{{.Stats.DeclinedYou}} declined submissions from (You).</div>
                         </div>
                         {{range $song := .Stats.RecentDeclines}}
+                        {{if $song.DeclineReason }}
                         <hr>
                         <div class="columns content">
                             <div class="column">
@@ -82,10 +83,12 @@
                             </div>
                         </div>
                         {{end}}
+                        {{end}}
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
+{{printjson .}}
 {{end}}
