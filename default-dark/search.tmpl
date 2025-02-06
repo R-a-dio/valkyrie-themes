@@ -74,6 +74,7 @@
 
 {{define "search-api"}}
 <div id="search-bar-popup" class="box has-text-centered">
+    <a class="is-size-5 block is-block pb-4" href="/search?q={{.Query}}">Open search page</a>
 {{if .Message}}
     <div class="columns is-vcentered {{if .IsError}}is-danger{{else}}is-success{{end}}">
         <div class="column">{{.Message}}</div>
@@ -82,7 +83,7 @@
     {{with .Songs}}
         {{range .}}
         <div class="columns is-vcentered">
-            <div class="column">{{.Metadata}}</div>
+            <div class="column my-2">{{.Metadata}}</div>
             <div class="column is-narrow">
             {{block "request-api-form" SongPair . $}}
                 <form method="POST" action="/v1/request?trackid={{.TrackID}}&q={{.Data.Query}}&page={{.Data.Page.Nr}}&s=navbar"
@@ -92,11 +93,11 @@
                     hx-push-url="false">
                     {{.Data.CSRFTokenInput}}
                     {{if not .HasTrack}}
-                        <button type="submit" class="button is-warning is-fullwidth">Broken</button>
+                        <button type="submit" class="button is-warning is-fullwidth my-2">Broken</button>
                     {{else if and .Data.CanRequest .Requestable}}
-                        <button type="submit" class="button is-primary is-fullwidth" name="id" value="{{.TrackID}}" onclick="event.stopPropagation()">Request</button>
+                        <button type="submit" class="button is-primary is-fullwidth my-2" name="id" value="{{.TrackID}}" onclick="event.stopPropagation()">Request</button>
                     {{else}}
-                        <button type="submit" class="button is-danger is-fullwidth" name="id" value="{{.TrackID}}" onclick="event.stopPropagation()" disabled>Request</button>
+                        <button type="submit" class="button is-danger is-fullwidth my-2" name="id" value="{{.TrackID}}" onclick="event.stopPropagation()" disabled>Request</button>
                     {{end}}
                 </form>
             {{end}}
