@@ -63,18 +63,10 @@ htmx.onLoad((event) => {
         document.getElementById("daypass-timer").innerHTML = `Expires <time id="daypass-hours" datetime="${86400 + Math.floor(Date.now() / 1000 / 86400) * 86400}">at midnight</time>`
     } else if (url.pathname === "/admin/pending") {
         let adminPlayerVolume = localStorage.getItem("admin-player-volume");
-        let adminPendingColumns = localStorage.getItem("admin-pending-columns");
-        let adminPendingWidth = localStorage.getItem("admin-pending-width");
-
-        document.getElementById("pending-columns").value = adminPendingColumns;
-        document.getElementById("pending-width").value = adminPendingWidth;
-        
-        if (adminPlayerVolume)              Array.from(document.getElementsByClassName("volume-input")).forEach((el) => el.value = adminPlayerVolume);
-        if (adminPendingColumns > 1)        document.getElementById("pending-section").classList.add("has-"+adminPendingColumns+"-cols");
-        if (adminPendingWidth === "narrow") document.getElementById("pending").classList.remove("is-fluid");
+        if (adminPlayerVolume) Array.from(document.getElementsByClassName("volume-input")).forEach((el) => el.value = adminPlayerVolume);
     } else if (url.pathname.startsWith("/admin/songs")) {
         let adminPlayerVolume = localStorage.getItem("admin-player-volume");
-        if (adminPlayerVolume)              Array.from(document.getElementsByClassName("volume-input")).forEach((el) => el.value = adminPlayerVolume);
+        if (adminPlayerVolume) Array.from(document.getElementsByClassName("volume-input")).forEach((el) => el.value = adminPlayerVolume);
     }
 })
 
