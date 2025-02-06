@@ -114,7 +114,7 @@
         {{range $song := .}}
         <div class="cell is-align-content-center">
             <li class="lp-item columns is-mobile is-vcentered">
-                <time datetime="{{$song.LastPlayed.Unix}}" class="lp-time column is-narrow has-text-left">{{Until $song.LastPlayed | PrettyDuration}}</time>
+                <time class="lp-time column is-narrow has-text-left" datetime="{{$song.LastPlayed.Unix}}" data-type="pretty">{{Until $song.LastPlayed | PrettyDuration}}</time>
                 <span class="lp-meta column has-text-centered">{{$song.Metadata}}</span>
             </li>
         </div>
@@ -152,10 +152,10 @@
             <li class="columns is-mobile is-vcentered">
             {{if not $song.IsUserRequest}}
             <span class="column queue-meta has-text-centered">{{$song.Metadata}}</span>
-            <time datetime="{{$song.ExpectedStartTime.Unix}}" class="column is-narrow has-text-right">{{Until $song.ExpectedStartTime | PrettyDuration}}</time>
+            <time class="column is-narrow has-text-right" datetime="{{$song.ExpectedStartTime.Unix}}" data-type="pretty">{{Until $song.ExpectedStartTime | PrettyDuration}}</time>
             {{else}}
             <span class="column queue-meta has-text-centered is-request">{{$song.Metadata}}</span>
-            <time datetime="{{$song.ExpectedStartTime.Unix}}" class="column is-narrow has-text-right is-request">{{Until $song.ExpectedStartTime | PrettyDuration}}</time>
+            <time class="column is-narrow has-text-right is-request" datetime="{{$song.ExpectedStartTime.Unix}}" data-type="pretty">{{Until $song.ExpectedStartTime | PrettyDuration}}</time>
             {{end}}
             </li>
         </div>

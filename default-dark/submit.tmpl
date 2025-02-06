@@ -11,7 +11,7 @@
             </div>
             {{else}}
             <div id="submit-cooldown" class="notification is-danger has-text-centered mb-6">
-                You cannot upload another song just yet. You can upload <time datetime="{{(Now.Add $cooldown).Unix}}">{{PrettyDuration $cooldown}}</time>.
+                You cannot upload another song just yet. You can upload <time datetime="{{(Now.Add $cooldown).Unix}}" data-type="pretty">{{PrettyDuration $cooldown}}</time>.
             </div>
             {{end}}
             <div class="grid">
