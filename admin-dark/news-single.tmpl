@@ -17,9 +17,9 @@
                 {{block "title-render" .Raw}}
                 <article class="message">
                     <span style="color:var(--text-link)">
-                        <div class="message-header has-background-radio-primary-2 on-hover-darken">
+                        <div class="message-header has-background-radio-primary-2 on-hover-darken py-2">
                             <span class="news-title has-word-break-all pr-2">{{.Title}}</span>
-                            <span style="text-decoration:none;"><span class="is-size-7"><time datetime="{{.CreatedAt.Unix}}" data-type="absolute">{{.CreatedAt}}</time> by </span>{{.User.Username}}</span>
+                            <span class="page-home-news-author" style="display:flex;flex-direction:column;text-decoration:none;font-size:0.8rem;text-align:right;">{{.User.Username}}<time class="has-text-weight-bold page-home-news-date pl-2" datetime="{{.CreatedAt}}">on {{.CreatedAt.Format "2006-02-01"}}</time></span>
                         </div>
                     </span>
                 </article>
