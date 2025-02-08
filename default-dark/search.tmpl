@@ -2,9 +2,14 @@
 <section class="section">
     <div class="container">
         <div class="content">
+            {{if .Message}}
+            <div class="notification notification-temporary is-success has-text-centered">
+                {{.Message}}
+            </div>
+            {{end}}
             <p class="has-text-centered">Search for something! You can click on the plus icon to show some additional information about the song.</p>
             <div class="columns is-centered mb-5">
-                <form action="/search" class="column is-8 control is-flex" hx-boost="true" hx-push-url="true" hx-target="#search-content" hx-select="#search-content">
+                <form action="/search" class="column is-8 control is-flex" hx-boost="true" hx-push-url="true" hx-swap="innerHTML settle:10s" hx-target="#search-content" hx-select="#search-content">
                     {{.CSRFLegacyFix}}
                     <input class="input" type="text" name="q" placeholder="Search" value="{{.Query}}" hx-get="/search" hx-target="#search-content" hx-select="#search-content" hx-trigger="input changed delay:500ms">
                 </form>
@@ -35,7 +40,8 @@
                                         <form method="POST" action="/v1/request?trackid={{.TrackID}}&q={{.Data.Query}}&page={{.Data.Page.Nr}}"
                                             hx-post="/v1/request?trackid={{.TrackID}}&q={{.Data.Query}}&page={{.Data.Page.Nr}}"
                                             hx-target="#content"
-                                            hx-push-url="false">
+                                            hx-push-url="false"
+                                            hx-swap="innerHTML settle:10s">
                                             {{.Data.CSRFTokenInput}}
                                             {{if not .HasTrack}}
                                                 <button type="submit" class="button is-warning is-fullwidth">Broken</button>
