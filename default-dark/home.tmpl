@@ -55,7 +55,7 @@
                     <div id="thread-container" sse-swap="thread">
                         {{template "thread" .Status.Thread}}
                     </div>
-                    <div sse-swap="queue">
+                    <div id="queue-container" sse-swap="queue">
                         {{template "queue" .Queue}}
                     </div>
                 </div>
@@ -125,6 +125,7 @@
 
 {{define "thread"}}
 {{if not (Status.User | IsRobot)}}
+<div id="queue-container" hx-swap-oob="innerHTML"></div>
 <p class="title is-4 has-text-centered is-hidden-touch">Thread</p>
 <div class="notification fixed-grid has-1-cols py-3">
     <div id="thread" class="grid is-align-content-center title has-text-centered">
@@ -143,7 +144,9 @@
 {{end}}
 
 {{define "queue"}}
+
 {{if (Status.User | IsRobot)}}
+<div id="thread-container" hx-swap-oob="innerHTML"></div>
 <p class="title is-4 has-text-centered is-hidden-touch">Queue</p>
 <div class="notification fixed-grid has-1-cols py-3">
     <ul id="queue" class="grid">
@@ -166,11 +169,13 @@
 {{end}}
 
 {{define "streamer"}}
+{{if not (Status.User | IsRobot)}}
 <div style="display: none;">
     <div id="thread-container" sse-swap="thread" hx-swap-oob="true">
         {{template "thread" Status.Thread}}
     </div>
 </div>
+{{end}}
 <div id="page-home-dj-image">
     <div class="card-image">
         <figure class="image is-square ml-0 mr-0">
