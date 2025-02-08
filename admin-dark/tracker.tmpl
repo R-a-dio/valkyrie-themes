@@ -2,25 +2,32 @@
 <section class="section">
     <div class="container">
         <h2 class="title has-text-centered">Listeners</h2>
+        <div id="listener-tracker-duplicate-listeners-container" class="box is-hidden">
+            <div class="is-size-6">Duplicate listeners:</div>
+            <div id="listener-tracker-duplicate-listeners"></div>
+            <img class="is-hidden" src="" onerror="countDuplicateListeners()">
+        </div>
         <form hx-push-url="false" hx-target="#content">
             {{.CSRFTokenInput}}
             <table class="table is-striped is-bordered is-fullwidth is-hoverable">
                 <thead>
                     <tr>
-                        <td>ID</td>
-                        <td>Duration</td>
-                        <td>User-Agent</td>
-                        <td>IP</td>
-                        {{if $.User.UserPermissions.Has "listener_kick"}}<td></td>{{end}}
+                        <th scope="col">#</th>
+                        <th scope="col">ID</th>
+                        <th scope="col">Duration</th>
+                        <th scope="col">User-Agent</th>
+                        <th id="listener-tracker-column-ip" scope="col">IP</th>
+                        {{if $.User.UserPermissions.Has "listener_kick"}}<th scope="col"></th>{{end}}
                     </tr>
                 </thead>
                 <tbody>
-                {{range .Listeners}}
+                {{range $idx, $entry := .Listeners}}
                 <tr>
-                    <td>{{.ID}}</td>
-                    <td>{{Since .Start | HumanDuration}}</td>
-                    <td>{{.UserAgent}}</td>
-                    <td>{{.IP}}</td>
+                    <th scope="row">{{$idx}}</th>
+                    <td>{{$entry.ID}}</td>
+                    <td>{{Since $entry.Start | HumanDuration}}</td>
+                    <td>{{$entry.UserAgent}}</td>
+                    <td>{{$entry.IP}}</td>
                     {{if $.User.UserPermissions.Has "listener_kick"}}<td><button class="button" hx-post="/admin/tracker/remove?id={{.ID}}" hx-push-url="false">Kick</button></td>{{end}}
                 </tr>
                 {{end}}

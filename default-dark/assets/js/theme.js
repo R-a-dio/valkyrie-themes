@@ -230,6 +230,45 @@ function switchTab(button) {
     button.parentElement.classList.add('is-active');
 }
 
+function countDuplicateListeners() {
+    const ipColumn = document.querySelector('#listener-tracker-column-ip');
+    if (ipColumn === null) return;
+
+    const columnIndex = Array.from(ipColumn.parentElement.children).indexOf(ipColumn);
+    const ipCells = document.querySelectorAll(`table tbody tr td:nth-child(${columnIndex + 1})`);
+    const duplicateListenersElement = document.querySelector('#listener-tracker-duplicate-listeners');
+    const containerElement = document.querySelector('#listener-tracker-duplicate-listeners-container');
+    const ipCounts = {};
+
+    ipCells.forEach(cell => {
+        const ip = cell.textContent.trim();
+        ipCounts[ip] = (ipCounts[ip] || 0) + 1;
+    });
+
+    duplicateListenersElement.innerHTML = '';
+    let hasDuplicates = false;
+
+    for (const [ip, count] of Object.entries(ipCounts)) {
+        if (count > 1) {
+            hasDuplicates = true;
+            const containerDiv = document.createElement('div'); 
+            const ipDiv = document.createElement('div');
+            const countDiv = document.createElement('div');
+            ipDiv.classList.add("tag");
+            countDiv.classList.add("tag", "m-2");
+            ipDiv.textContent = `${ip}`;
+            countDiv.textContent = `${count} times`;
+            containerDiv.appendChild(ipDiv);
+            containerDiv.appendChild(countDiv);
+            duplicateListenersElement.appendChild(containerDiv);
+        }
+    }
+
+    if (hasDuplicates) {
+        containerElement.classList.remove('is-hidden');
+    }
+}
+
 htmx.onLoad((content) => {
     // Add a keyboard event to close all modals
     document.addEventListener('keydown', escToCloseModals, {passive: true});
