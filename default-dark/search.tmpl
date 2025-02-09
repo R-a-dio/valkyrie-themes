@@ -26,9 +26,9 @@
             <div id="search-content">
                 <div class="block has-text-centered is-size-5 mb-5 pb-3">
                     {{if eq .RequestCooldown 0}}
-                    <p>The request cooldown is one hour. You are currently not on cooldown!</p>
+                    <p>The request cooldown is 30 minutes. You are currently not on cooldown!</p>
                     {{else}}
-                    <p>The request cooldown is one hour. You can request again <time datetime="{{(.Now.Add .RequestCooldown).Unix}}" data-type="pretty">{{.RequestCooldown | PrettyDuration}}</time>.</p>
+                    <p>The request cooldown is 30 minutes. You can request again <time datetime="{{(.Now.Add .RequestCooldown).Unix}}" data-type="pretty">{{.RequestCooldown | PrettyDuration}}</time>.</p>
                     {{end}}
                 </div>
                 {{if len .Songs}}
