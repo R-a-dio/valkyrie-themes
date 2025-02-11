@@ -8,10 +8,10 @@
     <link rel="shortcut icon" href="/assets/favicon.png" type="image/x-icon">
     <link rel="icon" href="/assets/images/logo_image_small.png" type="image/png">
     <link rel="search" type="application/opensearchdescription+xml" title="r/a/dio" href="/assets/opensearch.xml">
-    <script src="/assets/js/htmx.min.js"></script>
-    <script src="/assets/js/htmx-sse.js"></script>
-    <script src="/assets/js/htmx-head.js"></script>
-    <script src="/assets/js/radio.js"></script>
+    <script src="{{WithVersion "/assets/js/htmx.min.js"}}"></script>
+    <script src="{{WithVersion "/assets/js/htmx-sse.js"}}"></script>
+    <script src="{{WithVersion "/assets/js/htmx-head.js"}}"></script>
+    <script src="{{WithVersion "/assets/js/radio.js"}}"></script>
     <meta name="htmx-config"
         content='{"responseHandling":[{"code":"204", "swap": false}, {"code":"[23]..", "swap": true}, {"code":"[4]..", "swap": true, "error": true}, {"code": "500", "swap": true, "error": true}]}' />
     {{ block "head" . }}{{end}}
