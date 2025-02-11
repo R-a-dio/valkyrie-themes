@@ -12,7 +12,7 @@
                 <form action="/search" class="column is-8 control is-flex"
                         hx-boost="true"
                         hx-push-url="true"
-                        hx-swap="outerHTML settle:10s show:none"
+                        hx-swap="outerHTML show:none"
                         hx-target="#search-content"
                         hx-select="#search-content">
                     {{.CSRFLegacyFix}}
@@ -50,7 +50,7 @@
                                             hx-post="/v1/request?trackid={{.TrackID}}&q={{.Data.Query}}&page={{.Data.Page.Nr}}"
                                             hx-target="#content"
                                             hx-push-url="false"
-                                            hx-swap="innerHTML settle:10s show:top">
+                                            hx-swap="innerHTML show:top">
                                             {{.Data.CSRFTokenInput}}
                                             {{if not .HasTrack}}
                                                 <button type="submit" class="button is-warning is-fullwidth">Broken</button>
