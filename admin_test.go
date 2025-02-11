@@ -34,7 +34,7 @@ var adminInputs = []templates.TemplateSelectable{
 	admin.BoothSetThreadInput{},
 	admin.BoothStatusInput{},
 	admin.BoothStopStreamerInput{},
-	admin.BoothStreamerInput{},
+	&admin.BoothStreamerInput{},
 	admin.BoothStreamerList{},
 }
 
