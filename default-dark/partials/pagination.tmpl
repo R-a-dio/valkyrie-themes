@@ -52,3 +52,49 @@
     <a class="pagination-link button" href="{{.URL}}">{{.Nr}}</a>
 </li>
 {{end}}
+
+{{define "pagination-last-played"}}
+{{with .}}{{if or (.Prev 1) (.Next 1)}}
+<div class="columns m-0">
+    <nav class="column pagination is-left is-flex mb-0" hx-boost="true" hx-push-url="true" hx-target="#content" role="navigation">
+        {{with .Prev 1}}
+        <a class="pagination-previous button" href="{{.URL}}">Previous</a>
+        {{else}}
+        <a class="pagination-previous is-disabled disable-pointer button">Previous</a>
+        {{end}}
+        {{with .Next 1}}
+        <a class="pagination-next button" href="{{.URL}}">Next</a>
+        {{else}}
+        <a class="pagination-next is-disabled disable-pointer button">Next</a>
+        {{end}}
+        <ul class="pagination-list m-0 p-0">
+            {{with $prev2 := .Prev 2}}
+                {{if gt .Nr 1}}
+                    {{with .First}}
+                        {{template "page-link" .}}
+                        {{if gt $prev2.Nr 2}}
+                        <li class="m-0"><span class="pagination-ellipsis">&hellip;</span></li>
+                        {{end}}
+                    {{end}}
+                {{end}}
+                {{template "page-link" .}}
+            {{end}}
+            {{with .Prev 1}}{{template "page-link" .}}{{end}}
+            {{with .}}<li class="m-0"><a class="pagination-link is-current button" href="{{.URL}}">{{.Nr}}</a></li>{{end}}
+            {{with .Next 1}}{{template "page-link" .}}{{end}}
+            {{with $next2 := .Next 2}}
+                {{template "page-link" .}}
+                {{with .Last}}
+                    {{if lt $next2.Nr .Nr}}
+                        {{if lt $next2.Nr (Sub .Nr 1)}}
+                        <li class="m-0"><span class="pagination-ellipsis">&hellip;</span></li>
+                        {{end}}
+                        {{template "page-link" .}}
+                    {{end}}
+                {{end}}
+            {{end}}
+        </ul>
+    </nav>
+</div>
+{{end}}
+{{end}}{{end}}

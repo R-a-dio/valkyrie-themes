@@ -2,11 +2,11 @@
 <section class="section">
     <div class="container">
         <div class="content">
-            {{template "pagination" .Page}}
+            {{template "pagination-last-played" .Page}}
                     {{range $song := $.Songs}}
                     {{template "song" $song}}
                     {{end}}
-            {{template "pagination" .Page}}
+            {{template "pagination-last-played" .Page}}
         </div>
     </div>
 </section>
