@@ -169,6 +169,14 @@ article a {
     filter: brightness(0.85);
 }
 
+.no-hover-darken:hover {
+    filter: brightness(1) !important;
+}
+
+.is-not-clickable:hover {
+    cursor: default !important;
+}
+
 .word-break-ellipsis {
     overflow: hidden;
     text-overflow: ellipsis;
