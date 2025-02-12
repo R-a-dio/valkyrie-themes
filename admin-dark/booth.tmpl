@@ -30,11 +30,17 @@
                                 <ul>
                                     <li class="is-active"><a class="tab-button" data-target="streaming-info" onclick="switchTab(this)">Stream Settings</a></li>
                                     <li><a class="tab-button" data-target="irc-info" onclick="switchTab(this)">IRC Commands</a></li>
+                                    <li><a class="tab-button" data-target="connection-info" onclick="switchTab(this)">Connection Info</a></li>
+
                                 </ul>
                             </div>
                             <div class="box is-flex-1 has-background-radio-secondary-1 remove-top-border-radius">
                                 <div id="streaming-info" class="grid mb-0">
                                     <div class="content cell is-col-span-8">
+                                        <div class="block is-hidden-touch">
+                                            <span class="is-uppercase is-box-title">Protip</span>
+                                            <blockquote>First time? Hover over the spoiler to the right! <span class="is-size-4 is-pulled-right is-spoiler" style="margin-top:-0.25rem;margin-right:-0.75rem;">READ EVERYTHING</span></blockquote>
+                                        </div>
                                         <div class="block">
                                             <span class="is-uppercase is-box-title">Sample Rate</span>
                                             <blockquote>Sample Rate MUST be 44100 (44.1kHz).</blockquote>
@@ -42,8 +48,7 @@
                                         <div class="block">
                                             <span class="is-uppercase is-box-title">Loopstream Warning</span>
                                             <blockquote>
-                                                If you are using Loopstream and it is yelling at you, either fix your audio devices or ignore the warning.
-                                                The warning is (was?) overblown and the audio is not actually low-quality.
+                                                If you are using Loopstream and it is yelling at you, either fix your audio devices or ignore the warning. The warning is (was?) overblown and the audio is not actually low-quality.
                                             </blockquote>
                                         </div>
                                         <div class="block">
@@ -69,25 +74,26 @@
                                     <div class="content cell is-col-span-8">
                                         <div class="block">
                                             <span class="is-uppercase is-box-title">Protip</span>
-                                            <blockquote>Commands should be used in the main IRC channel.</blockquote>
+                                            <blockquote>Commands should be used in the main IRC channel. That's the stuff prefixed with a dot, such as <code>.thread</code>.</blockquote>
                                         </div>
                                         <blockquote>
                                             <span class="is-uppercase is-box-title">Before Connecting</span>
                                             <dl>
-                                                <dt>Use <code>.kill</code> to make Hanyuu-sama stop streaming</dt>
+                                                <dt>Use <code>.kill</code> or the <code>Kill Hanyuu</code> button to the right to make Hanyuu-sama stop streaming</dt>
                                                 <dd>only needed if Hanyuu is the current DJ.</dd>
-                                                <dd>you should do this while there is <strong>at least</strong> 15 seconds left in the current song to be safe.</dd>
-                                                <dd>you can keep an eye on how much time is left in a song on the site.</dd>
-                                                <dd>connect when there are 30 seconds left in the current song but DO NOT start your music.</dd>
-                                                <dd>start your music when the current song ends.</dd>
+                                                <dd><code>connect</code> when there are <strong style="color:lightcoral;">30 seconds or more</strong> left in the current song but <strong>DO NOT</strong> start your music.</dd>
+                                                <dd>you <strong>can</strong> <code>connect</code> and <code>kill</code> <strong>at any point</strong> during a song as long as you are prepared to start playing when it ends.</dd>
+                                                <dd>you <strong>should</strong> <code>kill</code> while there is <strong style="color:lightcoral;">at least 15 seconds</strong> left in the current song to be safe.</dd>
+                                                <dd>you can see how much time is left in the current song on this page.</dd>
+                                                <dd>start playing your music when you're <code>connected</code>, have <code>killed</code> (if hanyuu was on), and the current song ends.</dd>
                                             </dl>
                                         </blockquote>
                                         <blockquote>
                                             <span class="is-uppercase is-box-title">When You Connect</span>
                                             <dl>
-                                                <dt>Use of <code>.dj</code> is <strong>no longer needed</strong></dt>
+                                                <dt>Use of <code>.dj</code> before you connect is <strong>no longer necessary</strong></dt>
                                                 <dd>you will be set as DJ when you go live on the stream automatically</dd>
-                                                <dd><strong>you still need to use the below command to set Hanyuu-sama after you're done.</strong></dd>
+                                                <dd><strong style="color:lightcoral;">you still need to use the below command to set Hanyuu-sama after you're done.</strong></dd>
                                             </dl>
                                         </blockquote>
                                         <blockquote>
@@ -104,6 +110,25 @@
                                                 <dd>example: <code>.thread https://fake.imageboard.net/a/8169743</code></dd>
                                                 <dd>using <code>.thread none</code> unsets the thread</dd>
                                                 <dd>you can also set the thread on this page</dd>
+                                            </dl>
+                                        </blockquote>
+                                    </div>
+                                </div>
+                                <div id="connection-info" class="grid is-hidden">
+                                    <div class="content cell is-col-span-8">
+                                        <div class="block">
+                                            <span class="is-uppercase is-box-title">Address and Port</span>
+                                            <blockquote>The connection address is {{"Replaceme.Address"}} and the port is {{"Replaceme.Port"}}.</blockquote>
+                                        </div>
+                                        <blockquote>
+                                            <span class="is-uppercase is-box-title">Mountpoint</span>
+                                            <dl>
+                                                <dt>The mountpoint depends on which software you are using to connect.</dt>
+                                                <dd>for <strong>Loopstream</strong>, this is <code>mountpoint</code></dd>
+                                                <dd>if using <strong>VirtualDJ</strong>, this is <code>mountpoint.mp3</code></dd>
+                                                <dd>it might even be <code>/mountpoint[.mp3]</code> with the preceding <code>/</code>, though this is unlikely</dd>
+                                                <dd>replace<code>mountpoint</code> with the actual mountpoint: <code>main</code> for streaming and <code>test</code> for testing.</dd>
+                                                <dd>when streaming to the <code>test</code> mount, you can listen to the stream <a href="#" target="_blank" onclick="window.open('//relay1.' + window.location.hostname + '/test.mp3'); return false;">here</a>.</dd>
                                             </dl>
                                         </blockquote>
                                     </div>
