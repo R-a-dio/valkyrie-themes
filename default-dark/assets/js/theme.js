@@ -366,6 +366,14 @@ function saveNowPlayingTagsState(checkbox) {
     document.body.classList.add(checkbox.checked ? 'tags-visible' : 'tags-hidden');
 }
 
+function handleVolumeScroll(event) {
+    event.preventDefault();
+    const input = event.target;
+    const newValue = Math.min(Math.max(parseInt(input.value) + (event.deltaY < 0 ? 2 : -2), 0), 100);
+    input.value = newValue;
+    input.dispatchEvent(new Event('input'));
+}
+
 const initializeLoadElements = () => {
     const functionRegistry = {
         showOrHideOnLoad: showOrHideOnLoad,

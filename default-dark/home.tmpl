@@ -23,7 +23,7 @@
                             <button id="stream-play-pause" class="is-hidden-without-js button is-info is-fullwidth">Play Stream</button>
                         </div>
                         <div class="field mb-2">
-                            <button class="button is-fullwidth"><input id="stream-volume" class="is-fullwidth" type="range" min="0" max="100" step="1" value="80"></button>
+                            <button class="button is-fullwidth"><input id="stream-volume" class="is-fullwidth" type="range" min="0" max="100" step="1" value="80" onwheel="handleVolumeScroll(event)"></button>
                         </div>
                         <div class="field has-addons dropdown-parent">
                                 <input type="checkbox" id="toggle-options-button-dropdown">
