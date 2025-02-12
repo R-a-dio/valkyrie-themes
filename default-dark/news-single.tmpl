@@ -53,10 +53,13 @@
                 <div class="column pr-0" style="text-align:end">{{.CreatedAt | AbsoluteDate}}</div>
                 <div class="column is-narrow-mobile is-narrow mr-1 pl-2"><a class="post-id is-clickable" onclick="quotePost({{.ID}})">#{{.ID}}</a></div>
             </div>
-            <div class="block has-background-radio-primary-2 content-border-top-light disable-border-radius">
+            <div class="block has-background-radio-primary-2 content-border-top-light disable-border-radius" style="position:relative;">
                 <div class="p-4">
                     {{.Body}}
                 </div>
+                {{if and $.User (or ($.User.UserPermissions.Has "dev") ($.User.UserPermissions.Has "staff") ($.User.UserPermissions.Has "admin"))}}
+                <button style="position:absolute;bottom:0.5rem;right:0.5rem;" class="column is-narrow button box p-2 is-warning">Delete</button>
+                {{end}}
             </div>
         </div>
         {{end}}
