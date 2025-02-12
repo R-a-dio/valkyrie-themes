@@ -49,6 +49,26 @@ function unhideNotification (elementIdOrClass) {
     }, 6000)
 }
 
+function quotePost(postId) {
+    const commentInput = document.getElementById('news-comment-input-2');
+    let currentText = commentInput.value.trimEnd();
+    const quoteText = '>>' + postId + '\n';
+    
+    // add newline before quote only if there's existing text and it doesn't end with a newline
+    if (currentText) {
+        if (!currentText.endsWith('\n')) {
+            currentText += '\n';
+        }
+    }
+    
+    commentInput.value = currentText + quoteText;
+    commentInput.focus();
+    
+    // cursor at the end of text
+    const len = commentInput.value.length;
+    commentInput.setSelectionRange(len, len);
+}
+
 // Needed to display the right help page for mobile users (and whatever else it does now)
 htmx.onLoad((event) => {
     url = window.location;
