@@ -541,8 +541,7 @@ input:focus {
     display: none;
 }
 
-#toggle-options-button-dropdown:checked ~ .dropdown-container,
-#toggle-now-playing-tags:checked ~ #now-playing-tags {
+#toggle-options-button-dropdown:checked ~ .dropdown-container {
     display: block !important;
 }
 
@@ -675,4 +674,30 @@ form.htmx-settling > .notification-temporary,
 #theme-tab:checked ~ #preferences-theme-content,
 #other-settings-tab:checked ~ #preferences-other-settings {
     display: block;
+}
+
+/* Stupid now playing tags handling */
+/* Base state */
+#toggle-now-playing-tags {
+    display: none;
+}
+
+/* Initial states based on body class */
+.tags-visible #now-playing-tags {
+    display: block;
+}
+
+.tags-hidden #now-playing-tags {
+    display: none;
+}
+
+/* Icon states */
+.tags-visible #current-song label svg[data-state="minus"],
+.tags-hidden #current-song label svg[data-state="plus"] {
+    display: block;
+}
+
+.tags-visible #current-song label svg[data-state="plus"],
+.tags-hidden #current-song label svg[data-state="minus"] {
+    display: none;
 }

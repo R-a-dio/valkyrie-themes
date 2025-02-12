@@ -313,16 +313,77 @@ function closeAllModals() {
 }
 
 // Function to show one-time notifications; see chat page for an example
-function initOneTimeNotification(element) {
-    element = element.parentElement;
+function showOrHideOnLoad(element) {
     if (!localStorage.getItem(element.dataset.storageKey)) {
-      element.dataset.visible = 'true';
+        element.dataset.visible = 'true';
     }
-    
+
     element.onclick = (event) => {
-      if (event.target.matches('.delete')) {
-        localStorage.setItem(element.dataset.storageKey, 'dismissed');
-        element.dataset.visible = 'false';
-      }
+        if (event.target.matches('.delete')) {
+            localStorage.setItem(element.dataset.storageKey, 'dismissed');
+            element.dataset.visible = 'false';
+        }
     };
-  }
+}
+
+  function initNowPlayingTags() {
+    const checkbox = document.getElementById('toggle-now-playing-tags');
+    if (!checkbox) return;
+
+    const savedState = localStorage.getItem('nowPlayingTagsState') === 'true';
+    checkbox.checked = savedState;
+
+    // set initial state in body to avoid pop-in
+    document.body.classList.add(savedState ? 'tags-visible' : 'tags-hidden');
+}
+
+function saveNowPlayingTagsState(checkbox) {
+    localStorage.setItem('nowPlayingTagsState', checkbox.checked);
+    document.body.classList.remove('tags-visible', 'tags-hidden');
+    document.body.classList.add(checkbox.checked ? 'tags-visible' : 'tags-hidden');
+}
+
+const initializeLoadElements = () => {
+    const functionRegistry = {
+        showOrHideOnLoad: showOrHideOnLoad,
+        initNowPlayingTags: initNowPlayingTags
+    };
+
+    const executeFunction = (element) => {
+        const functionName = element.getAttribute('data-run-on-load');
+        if (functionName && functionRegistry[functionName]) {
+            try {
+                functionRegistry[functionName](element);
+                element.removeAttribute('data-run-on-load');
+            } catch (error) {
+                console.error(`Error executing ${functionName}:`, error);
+            }
+        }
+    };
+
+    const observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+            mutation.addedNodes.forEach((node) => {
+                if (node.nodeType === Node.ELEMENT_NODE) {
+                    if (node.hasAttribute('data-run-on-load')) {
+                        executeFunction(node);
+                    }
+                    node.querySelectorAll('[data-run-on-load]').forEach(executeFunction);
+                }
+            });
+        });
+    });
+
+    observer.observe(document.documentElement || document.body, {
+        childList: true,
+        subtree: true
+    });
+
+    document.querySelectorAll('[data-run-on-load]').forEach(executeFunction);
+};
+
+function sneed(element) {
+    console.log(element);
+}
+
+initializeLoadElements();
