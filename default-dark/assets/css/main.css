@@ -730,3 +730,7 @@ form.htmx-settling > .notification-temporary,
 .is-spoiler:hover {
     background-color: white !important;
 }
+
+input[name="ip"]:invalid {
+    border: 3px solid var(--red);
+}

@@ -72,7 +72,7 @@
         </div>
         <div class="field-body"><div class="field has-addons">
             <div class="control is-expanded">
-                <input class="input" type="text" name="ip" value="{{.IP}}">
+                <input class="input" type="text" name="ip" value="{{.IP}}" pattern="^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$|^$">
             </div>
             <div class="control is-static">
                 <button class="button" type="button" onclick="document.querySelector('input[name=ip]').value = '{{.CurrentIP}}'">(You)</button>
