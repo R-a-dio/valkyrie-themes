@@ -108,13 +108,13 @@
 {{end}}
 
 {{define "lastplayed"}}
-<p class="title is-4 has-text-centered is-hidden-touch">Last Played</p>
+<p class="title is-4 has-text-centered is-hidden-tablet-only is-hidden-desktop-only">Last Played</p>
 <div class="notification fixed-grid has-1-cols py-3">
     <ul id="lastplayed" class="grid">
         {{range $song := .}}
         <div class="cell is-align-content-center">
             <li class="lp-item columns is-mobile is-vcentered">
-                <time class="lp-time column is-narrow has-text-left" datetime="{{$song.LastPlayed.Unix}}" data-type="pretty">{{Until $song.LastPlayed | PrettyDuration}}</time>
+                <time class="lp-time column is-narrow has-text-left is-hidden-mobile" datetime="{{$song.LastPlayed.Unix}}" data-type="pretty">{{Until $song.LastPlayed | PrettyDuration}}</time>
                 <span class="lp-meta column has-text-centered">{{$song.Metadata}}</span>
             </li>
         </div>
@@ -147,7 +147,7 @@
 
 {{if (Status.User | IsRobot)}}
 <div id="thread-container" hx-swap-oob="innerHTML"></div>
-<p class="title is-4 has-text-centered is-hidden-touch">Queue</p>
+<p class="title is-4 has-text-centered is-hidden-tablet-only is-hidden-desktop-only">Queue</p>
 <div class="notification fixed-grid has-1-cols py-3">
     <ul id="queue" class="grid">
         {{range $song := (.Limit 5)}}
@@ -155,10 +155,10 @@
             <li class="columns is-mobile is-vcentered">
             {{if not $song.IsUserRequest}}
             <span class="column queue-meta has-text-centered">{{$song.Metadata}}</span>
-            <time class="column is-narrow has-text-right" datetime="{{$song.ExpectedStartTime.Unix}}" data-type="pretty">{{Until $song.ExpectedStartTime | PrettyDuration}}</time>
+            <time class="column is-narrow has-text-right is-hidden-mobile" datetime="{{$song.ExpectedStartTime.Unix}}" data-type="pretty">{{Until $song.ExpectedStartTime | PrettyDuration}}</time>
             {{else}}
             <span class="column queue-meta has-text-centered is-request">{{$song.Metadata}}</span>
-            <time class="column is-narrow has-text-right is-request" datetime="{{$song.ExpectedStartTime.Unix}}" data-type="pretty">{{Until $song.ExpectedStartTime | PrettyDuration}}</time>
+            <time class="column is-narrow has-text-right is-request is-hidden-mobile" datetime="{{$song.ExpectedStartTime.Unix}}" data-type="pretty">{{Until $song.ExpectedStartTime | PrettyDuration}}</time>
             {{end}}
             </li>
         </div>
