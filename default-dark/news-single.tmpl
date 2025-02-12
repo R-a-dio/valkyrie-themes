@@ -50,8 +50,8 @@
         <div id="{{.ID}}" class="column block has-background-radio-secondary-1 mb-4">
             <div class="columns is-flex-mobile">
                 <div class="column is-narrow ml-2">{{with .User}}{{.Username}}{{else}}Anonymous ({{.Identifier}}){{end}} #{{.ID}}</div>
-                <div class="column is-hidden-mobile"></div>
-                <div class="column is-narrow mr-2" style="text-align:end">{{.CreatedAt | AbsoluteDate}}</div>
+                <div class="column pr-0" style="text-align:end">{{.CreatedAt | AbsoluteDate}}</div>
+                <div class="column is-narrow-mobile is-narrow mr-1 pl-2"><a class="post-id is-clickable" onclick="quotePost({{.ID}})">#{{.ID}}</a></div>
             </div>
             <div class="block has-background-radio-primary-2 content-border-top-light disable-border-radius">
                 <div class="p-4">
