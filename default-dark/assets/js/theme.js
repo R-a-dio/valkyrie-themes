@@ -36,9 +36,12 @@ function preferencesResetNotifications() {
     Object.keys(localStorage)
     .filter(key => key.startsWith('notification-'))
     .forEach(key => localStorage.removeItem(key));
-    
-    let prefsNotification = document.getElementById('preferences-notification-notifications-reset');
 
+    unhideNotification('#preferences-notification-notifications-reset');
+}
+
+function unhideNotification (elementIdOrClass) {
+    prefsNotification = document.querySelector(elementIdOrClass);
     prefsNotification.classList.toggle('is-hidden');
     prefsNotification.classList.toggle('fake-temporary-notification');
     setTimeout(() => {
