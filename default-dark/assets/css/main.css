@@ -701,3 +701,15 @@ form.htmx-settling > .notification-temporary,
 .tags-hidden #current-song label svg[data-state="minus"] {
     display: none;
 }
+
+.is-color-dj {
+    color: var(--blue);
+}
+
+.is-color-dev {
+    color: var(--red);
+}
+
+.is-color-staff {
+    color: var(--green);
+}

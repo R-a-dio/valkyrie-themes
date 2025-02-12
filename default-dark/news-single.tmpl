@@ -49,7 +49,7 @@
         {{range .Post.Comments}}
         <div id="{{.ID}}" class="column block has-background-radio-secondary-1 mb-4">
             <div class="columns is-flex-mobile">
-                <div class="column is-narrow ml-2">{{with .User}}{{.Username}}{{else}}Anonymous ({{.Identifier}}){{end}} #{{.ID}}</div>
+                <div class="column is-narrow ml-1 {{with .User}}{{if .DJ.Role}}is-color-{{.DJ.Role}}{{end}}{{end}}">{{with .User}}{{.Username}} <span class="is-uppercase is-size-7">## {{.DJ.Role}}</span>{{else}}Anonymous ({{.Identifier}}){{end}}</div>
                 <div class="column pr-0" style="text-align:end">{{.CreatedAt | AbsoluteDate}}</div>
                 <div class="column is-narrow-mobile is-narrow mr-1 pl-2"><a class="post-id is-clickable" onclick="quotePost({{.ID}})">#{{.ID}}</a></div>
             </div>
