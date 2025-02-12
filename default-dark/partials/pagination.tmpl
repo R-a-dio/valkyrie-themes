@@ -40,6 +40,10 @@
             {{end}}
         </ul>
     </nav>
+    <form action="{{.BaseURL}}" class="column control is-2 is-flex is-hidden-mobile" hx-boost="true" hx-push-url="true" hx-target="#content">
+        <input class="input" type="text" id="page" name="page" placeholder="Enter Page Number">
+        <input class="is-hidden" type="submit">
+    </form>
 </div>
 {{end}}
 {{end}}{{end}}
