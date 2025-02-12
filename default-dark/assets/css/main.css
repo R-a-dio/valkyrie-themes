@@ -609,7 +609,7 @@ label>svg[data-state="minus"] {
     background-color: hsla(14, 27%, 39%, 0.2) !important;
 }
 
-form:not(.htmx-settling) > .notification-temporary,
+/*form:not(.htmx-settling) > .notification-temporary,
 #content:not(.htmx-settling) .notification-temporary {
     display: none;
 }
@@ -624,7 +624,7 @@ form.htmx-settling > .notification-temporary,
     transform: scaleY(0);
     animation-name: notification-temporary;
     animation-duration: 6s;
-}
+}*/
 
 .fake-temporary-notification {
     z-index: 1;

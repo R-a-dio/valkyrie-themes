@@ -1,6 +1,9 @@
 {{define "content"}}
 <div class="container" hx-ext="sse" sse-connect="/admin/booth/sse">
     <div class="section">
+        <div id="booth-notification-killed-hanyuu" class="notification notification-temporary is-success has-text-centered is-hidden mb-6">
+            Tried killing Hanyuu, connect before the song ends.
+        </div>
         <div class="fixed-grid has-10-cols">
             <div class="grid">
                 <div class="cell fixed-grid has-8-cols is-col-span-8">
@@ -173,7 +176,7 @@
         <p class="column p-4">This kills the Hanyuu. You must connect within <b style="color:lightcoral">{{.ConnectTimeout}}</b> after the song ends.</p>
         <form hx-post="{{.FormAction}}" hx-target="#stop-streamer">
             {{.CSRFTokenInput}}
-            <button type="submit" class="button mt-0 mb-4 mx-4 is-warning" {{if not .AllowedToKill}}disabled{{end}} style="width:calc(100% - 2rem)">Kill Hanyuu</button>
+            <button type="submit" class="button mt-0 mb-4 mx-4 is-warning" {{if not .AllowedToKill}}disabled{{end}} style="width:calc(100% - 2rem)" hx-on:click="unhideNotification('#booth-notification-killed-hanyuu')">Kill Hanyuu</button>
         </form>
     {{else}}
         <p class="column p-4">Another DJ is currently streaming, communicate with them.</p>
