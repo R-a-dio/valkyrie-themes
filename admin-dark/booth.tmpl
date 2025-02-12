@@ -238,7 +238,7 @@
                 {{template "booth-circle" safeCSS "hsl(121, 40%, 40%)"}}<div class="ml-2">LIVE</div>
             {{else}}
                 {{template "booth-circle" safeCSS "hsl(232, 40%, 40%)"}}<div class="ml-2">CONNECTED</div>
-            {{end}}<div class="ml-2">at <a href="{{.MountName}}">{{.MountName}}</a></div>
+            {{end}}<div class="ml-2">at <a href="#" target="_blank" onclick="window.open('//relay1.' + window.location.hostname + '{{.MountName}}'); return false;">{{.MountName}}</a></div>
         </div>
         <div class="column is-narrow box is-flex is-justify-content-center is-align-items-center has-background-radio-secondary-1 mb-0 ml-3">
             {{template "booth-circle" safeCSS "hsl(121, 40%, 40%)"}}<div class="ml-2">Connected for <time data-type="small" datetime="{{.Start.Unix}}">{{.Start | Since | HumanDuration}}</time></div>
