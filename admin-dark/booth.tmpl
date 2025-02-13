@@ -119,7 +119,11 @@
                                     <div class="content cell is-col-span-8">
                                         <div class="block">
                                             <span class="is-uppercase is-box-title">Address and Port</span>
-                                            <blockquote>The connection address is {{"Replaceme.Address"}} and the port is {{"Replaceme.Port"}}.</blockquote>
+                                            {{with .BoothStreamURL}}
+                                            <blockquote>The connection address is <b>{{.Hostname}}</b> and the port is <b>{{.Port}}</b>.</blockquote>
+                                            {{else}}
+                                            <blockquote>The connection address is not configured by the admins.</blockquote>
+                                            {{end}}
                                         </div>
                                         <blockquote>
                                             <span class="is-uppercase is-box-title">Mountpoint</span>
