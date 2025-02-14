@@ -1,17 +1,78 @@
 let checkingInterval = null;
 
+// default patterns to check for
+let patterns = ['/r/', '/r/ing', 'requesting'];
+
 const altUrls = [
     'monm.ooo',
     'shamik.ooo',
-    'shamiko.org'    
+    'shamiko.org'
 ];
 
 const urlTransformers = [
     {
         name: '4chan thread to JSON',
-        match: /boards\.4chan\.org\/\w+\/thread\/\d+$/,
-        transform: url => `${url}.json`,
-        useResponse: false
+        match: /boards\.4chan\.org\/\w+\/thread\/\d+/,
+        transformUrl: url => url.replace(/\.json$/, '') + '.json',
+        useResponse: true,
+        transform: async (response) => {
+            try {
+                const text = await response.text();
+                const json = JSON.parse(text);
+    
+                if (!json.posts || !Array.isArray(json.posts)) {
+                    throw new Error('Invalid 4chan JSON format');
+                }
+
+                let val = json.posts
+                    .filter(post => post?.com)
+                    .map(post => {
+                        const parser = new DOMParser();
+                        const doc = parser.parseFromString(post.com, 'text/html');
+    
+                        // remove all HTML elements but keep their text content
+                        const walkNode = (node) => {
+                            if (node.nodeType === 3) { // = text node
+                                return node.textContent;
+                            }
+                            if (node.nodeType === 1) { // = element node
+                                return Array.from(node.childNodes)
+                                    .map(child => walkNode(child))
+                                    .join('');
+                            }
+                            return '';
+                        };
+    
+                        let text = walkNode(doc.body);
+    
+                        // cleanup on aisle 3
+                        return text
+                            // replace HTML entities
+                            .replace(/&gt;/g, '')
+                            .replace(/&lt;/g, '')
+                            .replace(/&quot;/g, '')
+                            .replace(/&amp;/g, '')
+                            .replace(/&#039;/g, "")
+                            // remove quote references
+                            .replace(/>>?\d+/g, '')
+                            // remove multiple spaces
+                            .replace(/\s+/g, ' ')
+                            // remove greentext markers
+                            .replace(/^>\s*/gm, '')
+                            // trim whitespace
+                            .trim();
+                    })
+                    .filter(Boolean) // remove empty strings
+                    .join('\n\n');
+
+                console.log(val);
+                return val;
+    
+            } catch (e) {
+                console.error('Transform error:', e);
+                throw e;
+            }
+        }
     },
     {
         name: 'meguca JSON extractor',
@@ -19,13 +80,21 @@ const urlTransformers = [
         useResponse: true, 
         transform: async (response) => {
             const text = await response.text();
-            const tempDiv = document.createElement('div');
-            tempDiv.innerHTML = text;
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(text, 'text/html');
             
-            const scriptTag = tempDiv.querySelector('script#post-data[type="application/json"]');
+            const scriptTag = doc.querySelector('script#post-data[type="application/json"]');
             if (scriptTag && scriptTag.textContent) {
                 try {
-                    return JSON.parse(scriptTag.textContent);
+                    const data = JSON.parse(scriptTag.textContent);
+                    if (data && Array.isArray(data.posts)) {
+                        // extract all post bodies into a single string
+                        return data.posts
+                            .filter(post => post && typeof post.body === 'string')
+                            .map(post => post.body)
+                            .join('\n\n');
+                    }
+                    throw new Error('No valid posts found in JSON data');
                 } catch (e) {
                     console.error('Error parsing script JSON:', e);
                     throw new Error('Invalid script JSON data');
@@ -33,8 +102,63 @@ const urlTransformers = [
             }
             return text;
         }
+    },
+    {
+        name: 'r-a-d.io static content',
+        match: /static\.r-a-d\.io/,
+        useResponse: true,
+        transform: async (response) => {
+            const text = await response.text();
+            return text;
+        }
+    },
+    {   // todo: not use this
+        name: 'deny-other-urls',
+        // match everything not matched by previous transformers
+        match: url => {
+            const allowed = urlTransformers
+                .slice(0, -1) // Exclude self from check
+                .some(t => t.match.test(url));
+            return !allowed;
+        },
+        useResponse: true,
+        transform: async () => {
+            throw new Error('URL not allowed');
+        }
     }
 ];
+
+function sanitizeJsonText(text) {
+    return text
+        // escape inner quotes that are preceded by a word boundary or space
+        .replace(/(\w|^|\s)"(\w)/g, '$1\\"$2')
+        // escape inner quotes that are followed by a word boundary or space
+        .replace(/(\w)"(\s|$|\w)/g, '$1\\"$2')
+        // remove any remaining unescaped double quotes that aren't at start/end of string
+        .replace(/([^\\])"/g, '$1\\"')
+        // clean up any double escapes that might have been created
+        .replace(/\\\\/g, '\\');
+}
+
+function sanitizeText(text) {
+    if (typeof text !== 'string') return '';
+    return text
+        .replace(/&quot;/g, '')
+        .replace(/&amp;/g, '')
+        .replace(/&#39;/g, '')
+        .replace(/&#96;/g, '')
+        .replace(/&#36;/g, '')
+        .replace(/[<>]/g, '')
+        .replace(/["'`$]/g, '')
+        .trim();
+}
+
+function sanitizeHTML(text) {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(text, 'text/html');
+    doc.querySelectorAll('script, style, meta, link, iframe, object, embed').forEach(el => el.remove());
+    return doc;
+}
 
 // save and load box states so that requests are not lost
 function saveBoxState() {
@@ -55,20 +179,26 @@ function saveBoxState() {
 function loadBoxState() {
     const savedState = localStorage.getItem('requestHelperBoxes');
     if (savedState) {
-        const boxes = JSON.parse(savedState);
-        
-        // Restore items to their respective boxes
-        Object.entries(boxes).forEach(([boxId, items]) => {
-            const box = document.getElementById(boxId);
-            items.forEach(text => {
-                if (!textExists(text)) {
-                    const item = createResultItem(text);
-                    box.appendChild(item);
+        try {
+            const boxes = JSON.parse(savedState);
+            
+            Object.entries(boxes).forEach(([boxId, items]) => {
+                const box = document.getElementById(boxId);
+                if (box && Array.isArray(items)) {
+                    items.forEach(text => {
+                        const sanitizedText = sanitizeText(text);
+                        if (!textExists(sanitizedText)) {
+                            const item = createResultItem(sanitizedText);
+                            box.appendChild(item);
+                        }
+                    });
                 }
             });
-        });
-        
-        updateStatus();
+            
+            updateStatus();
+        } catch (error) {
+            console.error('Error loading box state:', error);
+        }
     }
 }
 
@@ -91,43 +221,32 @@ function exportBoxes() {
     document.getElementById('importData').value = exportData;
 }
 
+// clear requests
+function clearBox(boxId) {
+    const box = document.getElementById(boxId);
+    while (box.firstChild) {
+        box.removeChild(box.firstChild);
+    }
+    updateStatus();
+    saveBoxState();
+}
+
 function importBoxes() {
     try {
         const importData = document.getElementById('importData').value.trim();
         if (!importData) return;
         
-        const boxes = JSON.parse(atob(importData));
+        const decoded = atob(importData);
+        if (decoded.length > 100000) {
+            throw new Error('Import data too large');
+        }
         
-        document.getElementById('leftBox').innerHTML = '';
-        document.getElementById('middleBox').innerHTML = '';
-        document.getElementById('rightBox').innerHTML = '';
+        const boxes = JSON.parse(decoded);
+        
+        clearBox('leftBox');
+        clearBox('middleBox');
+        clearBox('rightBox');
         patterns = [];
-        
-        if (boxes.patterns) {
-            patterns = boxes.patterns;
-            updatePatternsDisplay();
-        }
-        
-        if (boxes.leftBox) {
-            boxes.leftBox.forEach(text => {
-                const item = createResultItem(text);
-                document.getElementById('leftBox').appendChild(item);
-            });
-        }
-        
-        if (boxes.middleBox) {
-            boxes.middleBox.forEach(text => {
-                const item = createResultItem(text);
-                document.getElementById('middleBox').appendChild(item);
-            });
-        }
-        
-        if (boxes.rightBox) {
-            boxes.rightBox.forEach(text => {
-                const item = createResultItem(text);
-                document.getElementById('rightBox').appendChild(item);
-            });
-        }
         
         updateStatus();
         saveBoxState();
@@ -137,6 +256,7 @@ function importBoxes() {
         alert('Invalid import data');
     }
 }
+
 
 // create result items, (=requests)
 function createResultItem(text, sourceBox) {
@@ -198,13 +318,6 @@ function textExists(text) {
     );
 }
 
-// clear requests
-function clearBox(boxId) {
-    document.getElementById(boxId).innerHTML = '';
-    updateStatus();
-    saveBoxState();
-}
-
 // update request count
 function updateStatus() {
     const leftCount = document.getElementById('leftBox').children.length;
@@ -233,9 +346,6 @@ function toggleChecking() {
         btn.textContent = 'Stop Checking';
     }
 }
-
-// default patterns to check for
-let patterns = ['/r/', '/r/ing', 'requesting'];
 
 function addPattern() {
     const input = document.getElementById('pattern');
@@ -275,11 +385,9 @@ async function checkPatterns() {
     // get the transformer first without transforming
     const transformer = urlTransformers.find(t => t.match.test(targetUrl));
     
-    // transform URL only for non-response transformers
-    if (transformer && !transformer.useResponse) {
-        console.log(`Applying URL transformer: ${transformer.name}`);
-        targetUrl = transformer.transform(targetUrl);
-        console.log(`Transformed URL: ${targetUrl}`);
+    // always transform URL if transformer exists and has transformUrl method
+    if (transformer && transformer.transformUrl) {
+        targetUrl = transformer.transformUrl(targetUrl);
     }
 
     const useProxy = document.getElementById('useCorsproxy').checked;
@@ -289,12 +397,9 @@ async function checkPatterns() {
         targetUrl;
     
     try {
-        console.log('Fetching URL:', targetUrl);
         const results = await findPatternsInPage(proxyUrl, {
             patterns: patterns
         });
-        
-        console.log('Results found:', results.length);
 
         const leftBox = document.getElementById('leftBox');
 
@@ -334,23 +439,19 @@ async function findPatternsInPage(url, options = {}) {
 
     try {
         const response = await fetch(url);
+        
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
 
-        // get the actual target URL if using a CORS proxy
         const actualUrl = url.includes('?url=') ? 
             decodeURIComponent(url.split('?url=')[1]) : 
             url;
 
-        // check for response transformers first
+        // check for response transformers
         for (const transformer of urlTransformers) {
             if (transformer.useResponse && transformer.match.test(actualUrl)) {
-                console.log(`Applying response transformer: ${transformer.name}`);
                 const transformedData = await transformer.transform(response);
-                if (typeof transformedData === 'object') {
-                    return processText(JSON.stringify(transformedData, null, 2), options);
-                }
                 return processText(transformedData, options);
             }
         }
@@ -386,70 +487,48 @@ async function findPatternsInPage(url, options = {}) {
 
 function processText(text, options) {
     const matches = new Set();
-    
-    const isJSON = text.trim().startsWith('{') || text.trim().startsWith('[');
-    console.log(`Processing content as: ${isJSON ? 'JSON' : 'HTML'}`);
-    
-    // temp div to parse HTML properly
-    const tempDiv = document.createElement('div');
-    // replace <br> tags with newlines before setting innerHTML
-    text = text.replace(/<br\s*\/?>/gi, '\n');
-    tempDiv.innerHTML = text;
-    
-    // process text nodes separately
-    const textNodes = [];
-    const treeWalker = document.createTreeWalker(
-        tempDiv,
-        NodeFilter.SHOW_TEXT,
-        null,
-        false
-    );
-
-    let node;
-    while (node = treeWalker.nextNode()) {
-        textNodes.push(node.textContent.trim());
-    }
-    
     const wordLimit = parseInt(document.getElementById('wordLimit').value) || 3;
     
-    for (const nodeText of textNodes) {
-        if (!nodeText) continue;
+    // split into individual comments
+    const lines = text.split(/\r?\n/).filter(line => line.trim());
+    
+    for (const line of lines) {
+        const cleanedLine = line
+            .replace(/['"]\w+['"]:\s*/g, '')
+            .replace(/[\u0000-\u001F\u007F-\u009F]/g, '')
+            .replace(/\\(?!["\\/bfnrt])/g, '\\\\')
+            .replace(/[^\x20-\x7E]/g, '')
+            .trim();
         
-        // split into lines and remove empty ones, keeping the newlines
-        const lines = nodeText.split(/(?<=\n)|(?=\n)/).filter(line => line.trim());
-        
-        for (const line of lines) {
-            let processedLine = line.trim().replace(/\s+/g, ' ');
+        for (const pattern of options.patterns) {
+            // escape pattern if it contains forward slashes
+            const escapedPattern = pattern.replace(/\//g, '\\/');
             
-            // process each pattern separately for the line
-            for (const pattern of options.patterns) {
-                // create stop patterns string including all other patterns
-                const stopPatterns = options.patterns
-                    .filter(p => p !== pattern)  // exclude current pattern
-                    .map(p => p.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))  // escape regex special chars
-                    .join('|');
-                
-                // capture everything up to any stop condition, including other patterns
-                const regex = new RegExp(
-                    `${pattern}\\s+([^<"]*?)(?=\\\\n|\\n|<br>|<br\\/>|<|\\.|,|\\||"|${stopPatterns}|$)`,
-                    'gi'
-                );
-                let match;
-                
-                while ((match = regex.exec(processedLine)) !== null) {
-                    const matchText = match[1].trim();
-                    if (matchText) {
-                        const limitedText = matchText.split(/\s+/).slice(0, wordLimit).join(' ');
-                        matches.add(limitedText);
+            // match pattern+words within the same line
+            const regex = new RegExp(
+                `${escapedPattern}\\s*([^\\n]*)`,
+                'gi'
+            );
+            
+            let match;
+            while ((match = regex.exec(cleanedLine)) !== null) {
+                if (match[1]) { 
+                    const followingWords = match[1].trim().split(/\s+/);
+                    if (followingWords.length > 0) {
+                        const limitedText = followingWords
+                            .slice(0, wordLimit)
+                            .join(' ');
+                        if (limitedText) {
+                            matches.add(limitedText);
+                        }
                     }
                 }
+                regex.lastIndex = match.index + 1;
             }
         }
     }
 
-    return Array.from(matches).map(match => ({
-        match: match
-    }));
+    return Array.from(matches).map(match => ({ match }));
 }
 
 document.querySelectorAll('.droppable').forEach(box => {
