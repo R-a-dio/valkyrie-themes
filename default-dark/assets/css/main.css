@@ -181,16 +181,6 @@ article a {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    max-height: 3rem;
-    transition: max-height 0.4s ease-out;
-}
-
-.word-break-ellipsis:hover,
-.word-break-ellipsis:active {
-    max-height: 100px;
-    white-space: normal;
-    transition: max-height 0.4s ease-in-out;
-    overflow: visible;
 }
 
 .word-break-all {
