@@ -4,6 +4,7 @@
         <div class="content">
             <div class="fixed-grid has-1-cols">
                 <div class="grid">
+                    {{if not ($.Status.StreamUser.UserPermissions.Has "robot")}}<div class="cell box is-col-span-1 is-size-5 has-text-centered has-background-radio-secondary-1 px-6">A DJ is streaming. This is the queue for the AFK streamer, who will continue playing after the DJ is done. If there is a thread up, you may be able to request something there.</div>{{end}}
                     {{range $song := $.Queue}}
                     {{template "song" $song}}
                     {{end}}
@@ -15,20 +16,21 @@
 {{end}}
 
 {{define "song"}}
+{{$not_afk := (Status.StreamUser.UserPermissions.Has "robot")}}
 <div class="cell dropdown-parent">
     <div class="fixed-grid has-12-cols">
         <div class="grid">
             {{if not $.IsUserRequest}}
-            <div class="cell is-col-span-2 has-background-radio-secondary-1 is-col-span-0-mobile is-align-content-center has-text-centered is-hidden-mobile p-4"><time datetime="{{$.ExpectedStartTime.Unix}}" data-type="pretty">{{Until $.ExpectedStartTime | PrettyDuration}}</time></div>
-            <div class="cell is-col-span-10 is-col-span-12-mobile has-background-radio-secondary-1 is-align-content-center has-text-centered p-4">{{$.Metadata}}
-                <div class="tag is-small is-pulled-right px-0 no-background"><svg class="svg-icon" data-state="plus"  onclick="toggleDropdown(this)"><use href="assets/default-dark/svg/sprites.svg#plus"></use></svg></div>
-            </div>
+            {{if $not_afk}}<div class="cell is-col-span-2 has-background-radio-secondary-1 is-col-span-0-mobile is-align-content-center has-text-centered is-hidden-mobile p-4"><time datetime="{{$.ExpectedStartTime.Unix}}" data-type="pretty">{{Until $.ExpectedStartTime | PrettyDuration}}</time></div>{{end}}
+            <div class="cell is-col-span-{{if $not_afk}}9{{else}}11{{end}} is-col-span-12-mobile has-background-radio-secondary-1 is-align-content-center has-text-centered p-4">{{$.Metadata}}</div>
+            <div class="cell is-col-span-1 has-background-radio-secondary-1 is-align-content-center has-text-centered ml-2 is-hidden-mobile"><svg class="svg-icon" data-state="plus" onclick="toggleDropdown(this)"><use href="assets/default-dark/svg/sprites.svg#plus"></use></svg></div>
             {{else}}
-            <div class="cell is-col-span-2 has-background-radio-secondary-1 is-align-content-center has-text-centered p-4 is-hidden-mobile is-request"><time datetime="{{$.ExpectedStartTime.Unix}}" data-type="pretty">{{Until $.ExpectedStartTime | PrettyDuration}}</time></div>
-            <div class="cell is-col-span-9 is-col-span-12-mobile has-background-radio-secondary-1 is-align-content-center has-text-centered p-4 is-request" style="color:var(--blue)">{{$.Metadata}}
-                <div class="tag is-small is-pulled-right px-0 no-background"><svg class="svg-icon" data-state="plus"  onclick="toggleDropdown(this);"><use href="assets/default-dark/svg/sprites.svg#plus"></use></svg></div>
+            {{if $not_afk}}<div class="cell is-col-span-2 has-background-radio-secondary-1 is-align-content-center has-text-centered p-4 is-hidden-mobile is-request"><time datetime="{{$.ExpectedStartTime.Unix}}" data-type="pretty">{{Until $.ExpectedStartTime | PrettyDuration}}</time></div>{{end}}
+            <div class="cell is-col-span-{{if $not_afk}}8{{else}}10{{end}} is-col-span-12-mobile has-background-radio-secondary-1 is-align-content-center has-text-centered p-4 is-request" style="color:var(--blue)">{{$.Metadata}}
+                
             </div>
-            <div class="cell is-col-span-1 column has-background-radio-secondary-1 is-align-content-center has-text-centered ml-2 is-hidden-mobile is-request">/r/</div>
+            <div class="cell is-col-span-1 has-background-radio-secondary-1 is-align-content-center has-text-centered ml-2 is-hidden-mobile is-request">/r/</div>
+            <div class="cell is-col-span-1 has-background-radio-secondary-1 is-align-content-center has-text-centered ml-2 is-hidden-mobile"><svg class="svg-icon" data-state="plus" onclick="toggleDropdown(this);"><use href="assets/default-dark/svg/sprites.svg#plus"></use></svg></div>
             {{end}}
         </div>
     </div>
