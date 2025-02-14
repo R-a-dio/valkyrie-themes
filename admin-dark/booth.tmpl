@@ -319,11 +319,19 @@
 </div>
 <div class="cell is-col-span-12 control-panel fixed-grid has-12-cols p-0 mb-0">
     <div class="grid" style="width:calc(100% - 2 * var(--bulma-grid-gap))">
-        <div class="cell is-col-span-1">
-            <label for="interval" class="is-box-title">Timer (s)</label>
-            <input class="input is-fullwidth" type="number" id="interval" value="60" min="30" max="600">
+        <div class="cell is-col-span-4">
+            <div class="grid">
+                <div class="cell">
+                    <label for="interval" class="is-box-title">Timer (s)</label>
+                    <input class="input is-fullwidth mb-2" type="number" id="interval" value="60" min="30" max="600">
+                </div>
+                <div class="cell">
+                    <label for="wordLimit" class="is-box-title">Words after pattern</label>
+                    <input class="input is-fullwidth" type="number" id="wordLimit" value="3" min="1" max="20">
+                </div>
+            </div>
         </div>
-        <div class="cell is-col-span-3">
+        <div class="cell is-col-span-2">
             <label for="pattern" class="is-box-title">Add pattern:</label>
             <div class="field has-addons">
                 <div class="cell control">
@@ -334,7 +342,7 @@
             </div>
             </div>
         </div>
-        <div class="cell is-col-span-6">
+        <div class="cell is-col-span-4">
             <label for="url" class="is-box-title">URL:</label>
             <input class="input" type="text" id="url" value="https://static.r-a-d.io/exci/test-requests.html">
         </div>

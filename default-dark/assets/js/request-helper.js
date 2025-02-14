@@ -1,11 +1,39 @@
 let checkingInterval = null;
 
+const altUrls = [
+    'monm.ooo',
+    'shamik.ooo',
+    'shamiko.org'    
+];
+
 const urlTransformers = [
     {
         name: '4chan thread to JSON',
         match: /boards\.4chan\.org\/\w+\/thread\/\d+$/,
-        transform: url => `${url}.json`
+        transform: url => `${url}.json`,
+        useResponse: false
     },
+    {
+        name: 'meguca JSON extractor',
+        match: new RegExp(`(?:${altUrls.map(url => url.replace('.', '\\.')).join('|')})\/a\/\\d+`),
+        useResponse: true, 
+        transform: async (response) => {
+            const text = await response.text();
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = text;
+            
+            const scriptTag = tempDiv.querySelector('script#post-data[type="application/json"]');
+            if (scriptTag && scriptTag.textContent) {
+                try {
+                    return JSON.parse(scriptTag.textContent);
+                } catch (e) {
+                    console.error('Error parsing script JSON:', e);
+                    throw new Error('Invalid script JSON data');
+                }
+            }
+            return text;
+        }
+    }
 ];
 
 // save and load box states so that requests are not lost
@@ -244,14 +272,14 @@ function updatePatternsDisplay() {
 async function checkPatterns() {
     let targetUrl = document.getElementById('url').value;
     
-    // apply URL transformations
-    for (const transformer of urlTransformers) {
-        if (transformer.match.test(targetUrl)) {
-            console.log(`Applying transformer: ${transformer.name}`);
-            targetUrl = transformer.transform(targetUrl);
-            console.log(`Transformed URL: ${targetUrl}`);
-            break; // only apply first matching transformer
-        }
+    // get the transformer first without transforming
+    const transformer = urlTransformers.find(t => t.match.test(targetUrl));
+    
+    // transform URL only for non-response transformers
+    if (transformer && !transformer.useResponse) {
+        console.log(`Applying URL transformer: ${transformer.name}`);
+        targetUrl = transformer.transform(targetUrl);
+        console.log(`Transformed URL: ${targetUrl}`);
     }
 
     const useProxy = document.getElementById('useCorsproxy').checked;
@@ -310,6 +338,23 @@ async function findPatternsInPage(url, options = {}) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
 
+        // get the actual target URL if using a CORS proxy
+        const actualUrl = url.includes('?url=') ? 
+            decodeURIComponent(url.split('?url=')[1]) : 
+            url;
+
+        // check for response transformers first
+        for (const transformer of urlTransformers) {
+            if (transformer.useResponse && transformer.match.test(actualUrl)) {
+                console.log(`Applying response transformer: ${transformer.name}`);
+                const transformedData = await transformer.transform(response);
+                if (typeof transformedData === 'object') {
+                    return processText(JSON.stringify(transformedData, null, 2), options);
+                }
+                return processText(transformedData, options);
+            }
+        }
+
         const contentType = response.headers.get('content-type');
         const text = await response.text();
 
@@ -341,24 +386,56 @@ async function findPatternsInPage(url, options = {}) {
 
 function processText(text, options) {
     const matches = new Set();
-    const lines = text.split('\n');
     
-    for (const line of lines) {
-        let processedLine = line.trim();
-        let matched = false;
+    const isJSON = text.trim().startsWith('{') || text.trim().startsWith('[');
+    console.log(`Processing content as: ${isJSON ? 'JSON' : 'HTML'}`);
+    
+    // temp div to parse HTML properly
+    const tempDiv = document.createElement('div');
+    // replace <br> tags with newlines before setting innerHTML
+    text = text.replace(/<br\s*\/?>/gi, '\n');
+    tempDiv.innerHTML = text;
+    
+    // process text nodes separately
+    const textNodes = [];
+    const treeWalker = document.createTreeWalker(
+        tempDiv,
+        NodeFilter.SHOW_TEXT,
+        null,
+        false
+    );
 
-        for (const pattern of options.patterns) {
-            if (matched) break;
-
-            const regex = new RegExp(`${pattern}\\s+([^/\\r\\n]+)`, 'i');
-            const match = processedLine.match(regex);
-
-            if (match) {
-                const matchText = match[1].trim();
-                if (matchText) {
-                    const limitedText = matchText.split(/\s+/).slice(0, 10).join(' ');
-                    matches.add(limitedText);
-                    matched = true;
+    let node;
+    while (node = treeWalker.nextNode()) {
+        textNodes.push(node.textContent.trim());
+    }
+    
+    const wordLimit = parseInt(document.getElementById('wordLimit').value) || 3;
+    
+    for (const nodeText of textNodes) {
+        if (!nodeText) continue;
+        
+        // split into lines and remove empty ones, keeping the newlines
+        const lines = nodeText.split(/(?<=\n)|(?=\n)/).filter(line => line.trim());
+        
+        for (const line of lines) {
+            let processedLine = line.trim().replace(/\s+/g, ' ');
+            
+            // process each pattern separately for the line
+            for (const pattern of options.patterns) {
+                // capture everything up to any stop condition, excluding quotes
+                const regex = new RegExp(
+                    `${pattern}\\s+([^<"]*?)(?=\\\\n|\\n|<br>|<br\\/>|<|\\.|,|\\||"|$)`,
+                    'gi'
+                );
+                let match;
+                
+                while ((match = regex.exec(processedLine)) !== null) {
+                    const matchText = match[1].trim();
+                    if (matchText) {
+                        const limitedText = matchText.split(/\s+/).slice(0, wordLimit).join(' ');
+                        matches.add(limitedText);
+                    }
                 }
             }
         }
