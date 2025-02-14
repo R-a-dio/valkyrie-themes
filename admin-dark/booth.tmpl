@@ -31,7 +31,7 @@
                                     <li class="is-active"><a class="tab-button" data-target="streaming-info" onclick="switchTab(this)">Stream Settings</a></li>
                                     <li><a class="tab-button" data-target="irc-info" onclick="switchTab(this)">IRC Commands</a></li>
                                     <li><a class="tab-button" data-target="connection-info" onclick="switchTab(this)">Connection Info</a></li>
-
+                                    <li><a class="tab-button" data-target="request-helper-info" onclick="switchTab(this)">Request Helper</a></li>
                                 </ul>
                             </div>
                             <div class="box is-flex-1 has-background-radio-secondary-1 remove-top-border-radius">
@@ -137,6 +137,9 @@
                                             </dl>
                                         </blockquote>
                                     </div>
+                                </div>
+                                <div id="request-helper-info" class="grid is-hidden">
+                                    {{template "request-helper"}}
                                 </div>
                             </div>
                         </div>
@@ -286,4 +289,131 @@
     {{end}}
     </ul>
 </div>
+{{end}}
+
+{{define "request-helper"}}
+<div class="cell content is-col-span-12" style="width:calc(100% - 3 * var(--bulma-grid-gap))">
+    <input type="checkbox" id="toggle-request-helper-explanation" checked/>
+    <div class="explanation-container" style="position:relative;">
+        <blockquote>
+            <span class="is-uppercase is-box-title">Explanation</span>
+            <label for="toggle-request-helper-explanation">
+                <svg class="svg-icon" data-state="plus" style="position:absolute;right:1rem;top:0.5rem;font-weight:900;">
+                    <use href="/assets/default-dark/svg/sprites.svg#plus"></use>
+                </svg>
+                <svg class="svg-icon" data-state="minus" style="position:absolute;right:1rem;top:0.5rem;font-weight:900;">
+                    <use href="/assets/default-dark/svg/sprites.svg#minus"></use>
+                </svg>
+            </label>
+            <dl class="explanation-content">
+                <dt>Enter URL of a website and set the timer, then press "start checking"</dt>
+                <dd>every (timer value) seconds, the website in the URL will be checked for new /r/s matching the patterns below</dd>
+                <dd>you can drag the requests from one box to another</dd>
+                <dd>duplicate requests won't be added if they are in any of the boxes</dd>
+                <dd>this thing is just for keeping track of requests, it doesn't really do anything else</dd>
+                <dd>you usually want to keep the "CORS" checkbox and the url next to it as they are</dd>
+                <dd>the test page is <a target="_blank" href="https://static.r-a-d.io/exci/test-requests.html">here</a></dd>
+            </dl>
+        </blockquote>
+    </div>
+</div>
+<div class="cell is-col-span-12 control-panel fixed-grid has-12-cols p-0 mb-0">
+    <div class="grid" style="width:calc(100% - 2 * var(--bulma-grid-gap))">
+        <div class="cell is-col-span-1">
+            <label for="interval" class="is-box-title">Timer (s)</label>
+            <input class="input is-fullwidth" type="number" id="interval" value="60" min="30" max="600">
+        </div>
+        <div class="cell is-col-span-3">
+            <label for="pattern" class="is-box-title">Add pattern:</label>
+            <div class="field has-addons">
+                <div class="cell control">
+                    <input class="input" type="text" id="pattern" placeholder="/example/" style="min-width:10ch">
+            </div>
+            <div class="control">
+                <button onclick="addPattern()" class="button">Add</button>
+            </div>
+            </div>
+        </div>
+        <div class="cell is-col-span-6">
+            <label for="url" class="is-box-title">URL:</label>
+            <input class="input" type="text" id="url" value="https://static.r-a-d.io/exci/test-requests.html">
+        </div>
+        <div class="cell is-col-span-2">
+            <button onclick="toggleChecking()" id="toggleBtn" class="cell is-col-span-2 button" style="color:white!important;">Start Checking</button>
+        </div>
+    </div>
+</div>
+<div class="cell is-col-span-12 fixed-grid has-12-cols p-0 mb-0">
+    <div class="grid" style="width:calc(100% - 2 * var(--bulma-grid-gap))">
+        <div class="cell is-col-span-3">
+            <label for="manualRequest" class="is-box-title">Add request manually:</label>
+            <div class="field has-addons">
+                <div class="cell control">
+                    <input class="input" type="text" id="manualRequest" placeholder="Enter request name" style="font-size:0.875rem;">
+                </div>
+                <div class="control">
+                    <button onclick="addManualRequest()" class="button"  style="font-size:0.875rem;">Add</button>
+                </div>
+            </div>
+        </div>
+        <div class="cell">
+            <div class="field">
+                <label class="checkbox button mb-2" style="max-height:35px;">
+                    <input type="checkbox" id="useCorsproxy" style="font-size:0.875rem;" checked>
+                    CORS
+                </label>
+            </div>
+        </div>
+        <div class="cell is-col-span-3">
+            <input class="input" type="text" id="corsProxyUrl" 
+                value="https://api.allorigins.win/raw?url=" 
+                placeholder="Enter CORS proxy URL"
+                style="font-size: 0.875rem;">
+        </div>
+        <div id="patterns-list" class="cell is-col-span-5 patterns-list"></div>
+    </div>
+</div>
+<div class="cell is-col-span-12 fixed-grid has-12-cols" style="width:calc(100% - 3 * var(--bulma-grid-gap));">
+    <div class="grid">
+        <div class="cell box-req-helper is-col-span-12-mobile is-col-span-12-tablet is-col-span-4-desktop is-col-span-4-widescreen is-col-span-4-fullhd">
+            <h3 class="is-size-5 pl-2 pb-2 is-uppercase is-family-code has-text-centered">Requests</h3>
+            <div id="leftBox" class="droppable box"></div>
+            <button class="button clear is-warning is-small is-pulled-left mx-4" onclick="clearBox('leftBox')">Clear All</button>
+            <div id="leftStatus" class="status is-size-5"></div>
+        </div>
+
+        <div class="cell box-req-helper is-col-span-12-mobile is-col-span-12-tablet is-col-span-4-desktop is-col-span-4-widescreen is-col-span-4-fullhd">
+            <h3 class="is-size-5 pl-2 pb-2 is-uppercase is-family-code has-text-centered">Added</h3>
+            <div id="middleBox" class="droppable box"></div>
+            <button class="button clear is-warning is-small is-pulled-left mx-4" onclick="clearBox('middleBox')">Clear All</button>
+            <div id="middleStatus" class="status is-size-5"></div>
+        </div>
+
+        <div class="cell box-req-helper is-col-span-12-mobile is-col-span-12-tablet is-col-span-4-desktop is-col-span-4-widescreen is-col-span-4-fullhd">
+            <h3 class="is-size-5 pl-2 pb-2 is-uppercase is-family-code has-text-centered">Ignored</h3>
+            <div id="rightBox" class="droppable box"></div>
+            <button class="button clear is-warning is-small is-pulled-left mx-4" onclick="clearBox('rightBox')">Clear All</button>
+            <div id="rightStatus" class="status is-size-5"></div>
+        </div>
+    </div>
+</div>
+<div class="cell is-col-span-12 fixed-grid has-12-cols p-0 mb-0">
+    <div class="grid" style="width:calc(100% - 3 * var(--bulma-grid-gap))">
+        <div class="cell is-col-span-12">
+            <label for="importData" class="is-box-title">Import/Export Request Data:</label>
+            <div class="field has-addons">
+                <div class="cell control is-expanded">
+                    <input class="input" type="text" id="importData" placeholder="Paste exported data here" style="font-size:0.875rem;">
+                </div>
+                <div class="control">
+                    <button onclick="importBoxes()" class="button" style="font-size:0.875rem;">Import</button>
+                </div>
+                <div class="control">
+                    <button onclick="exportBoxes()" class="button" style="font-size:0.875rem;">Export</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/assets/default-dark/js/request-helper.js"></script>
 {{end}}

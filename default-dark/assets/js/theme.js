@@ -413,8 +413,4 @@ const initializeLoadElements = () => {
     document.querySelectorAll('[data-run-on-load]').forEach(executeFunction);
 };
 
-function sneed(element) {
-    console.log(element);
-}
-
 initializeLoadElements();
