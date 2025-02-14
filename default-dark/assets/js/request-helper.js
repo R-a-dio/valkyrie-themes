@@ -423,9 +423,15 @@ function processText(text, options) {
             
             // process each pattern separately for the line
             for (const pattern of options.patterns) {
-                // capture everything up to any stop condition, excluding quotes
+                // create stop patterns string including all other patterns
+                const stopPatterns = options.patterns
+                    .filter(p => p !== pattern)  // exclude current pattern
+                    .map(p => p.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))  // escape regex special chars
+                    .join('|');
+                
+                // capture everything up to any stop condition, including other patterns
                 const regex = new RegExp(
-                    `${pattern}\\s+([^<"]*?)(?=\\\\n|\\n|<br>|<br\\/>|<|\\.|,|\\||"|$)`,
+                    `${pattern}\\s+([^<"]*?)(?=\\\\n|\\n|<br>|<br\\/>|<|\\.|,|\\||"|${stopPatterns}|$)`,
                     'gi'
                 );
                 let match;
