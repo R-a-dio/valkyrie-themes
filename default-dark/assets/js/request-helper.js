@@ -1,5 +1,13 @@
 let checkingInterval = null;
 
+const urlTransformers = [
+    {
+        name: '4chan thread to JSON',
+        match: /boards\.4chan\.org\/\w+\/thread\/\d+$/,
+        transform: url => `${url}.json`
+    },
+];
+
 // save and load box states so that requests are not lost
 function saveBoxState() {
     const boxes = {
@@ -119,7 +127,7 @@ function createResultItem(text, sourceBox) {
         e.stopPropagation();
         item.remove();
         updateStatus();
-        saveBoxState(); // Add this line
+        saveBoxState();
     };
 
     item.appendChild(textSpan);
@@ -166,7 +174,7 @@ function textExists(text) {
 function clearBox(boxId) {
     document.getElementById(boxId).innerHTML = '';
     updateStatus();
-    saveBoxState(); // Add this line
+    saveBoxState();
 }
 
 // update request count
@@ -234,10 +242,22 @@ function updatePatternsDisplay() {
 
 // fetch and check patterns
 async function checkPatterns() {
-    const targetUrl = document.getElementById('url').value;
+    let targetUrl = document.getElementById('url').value;
+    
+    // apply URL transformations
+    for (const transformer of urlTransformers) {
+        if (transformer.match.test(targetUrl)) {
+            console.log(`Applying transformer: ${transformer.name}`);
+            targetUrl = transformer.transform(targetUrl);
+            console.log(`Transformed URL: ${targetUrl}`);
+            break; // only apply first matching transformer
+        }
+    }
+
     const useProxy = document.getElementById('useCorsproxy').checked;
+    const corsProxyUrl = document.getElementById('corsProxyUrl').value;
     const proxyUrl = useProxy ? 
-        `https://api.allorigins.win/raw?url=${encodeURIComponent(targetUrl)}` : 
+        `${corsProxyUrl}${encodeURIComponent(targetUrl)}` : 
         targetUrl;
     
     try {
@@ -290,62 +310,63 @@ async function findPatternsInPage(url, options = {}) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
 
+        const contentType = response.headers.get('content-type');
         const text = await response.text();
+
         if (!text) {
             throw new Error('Empty response received');
         }
 
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(text, 'text/html');
-        doc.querySelectorAll('script, style, meta, link').forEach(el => el.remove());
-        
-        const matches = new Set();
-        const walker = document.createTreeWalker(
-            doc.body,
-            NodeFilter.SHOW_TEXT,
-            {
-                acceptNode: function(node) {
-                    return node.textContent.trim() ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT;
-                }
-            }
-        );
-
-        while (walker.nextNode()) {
-            const node = walker.currentNode;
-            const lines = node.textContent.split('\n');
-            
-            for (const line of lines) {
-                let processedLine = line.trim();
-                let matched = false;
-
-                for (const pattern of options.patterns) {
-                    if (matched) break;
-
-                    const regex = new RegExp(`${pattern}\\s+([^/\\r\\n]+)`, 'i');
-                    const match = processedLine.match(regex);
-
-                    if (match) {
-                        const matchText = match[1].trim();
-                        if (matchText) {
-                            const limitedText = matchText.split(/\s+/).slice(0, 10).join(' ');
-                            matches.add(limitedText);
-                            matched = true;
-                        }
-                    }
-                }
+        // JSON response
+        if (contentType && contentType.includes('application/json')) {
+            try {
+                const json = JSON.parse(text);
+                // convert JSON to searchable text
+                const jsonText = JSON.stringify(json, null, 2);
+                return processText(jsonText, options);
+            } catch (e) {
+                console.error('JSON parse error:', e);
+                throw new Error('Invalid JSON response');
             }
         }
 
-        doc.body.innerHTML = '';
-        
-        return Array.from(matches).map(match => ({
-            match: match
-        }));
+        // HTML response
+        return processText(text, options);
 
     } catch (error) {
         console.error('Error in findPatternsInPage:', error);
         throw error;
     }
+}
+
+function processText(text, options) {
+    const matches = new Set();
+    const lines = text.split('\n');
+    
+    for (const line of lines) {
+        let processedLine = line.trim();
+        let matched = false;
+
+        for (const pattern of options.patterns) {
+            if (matched) break;
+
+            const regex = new RegExp(`${pattern}\\s+([^/\\r\\n]+)`, 'i');
+            const match = processedLine.match(regex);
+
+            if (match) {
+                const matchText = match[1].trim();
+                if (matchText) {
+                    const limitedText = matchText.split(/\s+/).slice(0, 10).join(' ');
+                    matches.add(limitedText);
+                    matched = true;
+                }
+            }
+        }
+    }
+
+    return Array.from(matches).map(match => ({
+        match: match
+    }));
 }
 
 document.querySelectorAll('.droppable').forEach(box => {
