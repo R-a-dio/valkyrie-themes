@@ -1,0 +1,196 @@
+/* Source Sans 3 */
+/* Extra Light */
+@font-face {
+    font-family: 'Source Sans 3';
+    font-weight: 200;
+    font-style: normal;
+    src: url('/assets/default-dark/fonts/SourceSans3/SourceSans3-ExtraLight.otf.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Source Sans 3';
+    font-weight: 200;
+    font-style: italic;
+    src: url('/assets/default-dark/fonts/SourceSans3/SourceSans3-ExtraLightIt.otf.woff2') format('woff2');
+}
+
+/* Light */
+@font-face {
+    font-family: 'Source Sans 3';
+    font-weight: 300;
+    font-style: normal;
+    src: url('/assets/default-dark/fonts/SourceSans3/SourceSans3-Light.otf.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Source Sans 3';
+    font-weight: 300;
+    font-style: italic;
+    src: url('/assets/default-dark/fonts/SourceSans3/SourceSans3-LightIt.otf.woff2') format('woff2');
+}
+
+/* Regular */
+@font-face {
+    font-family: 'Source Sans 3';
+    font-weight: 400;
+    font-style: normal;
+    src: url('/assets/default-dark/fonts/SourceSans3/SourceSans3-Regular.otf.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Source Sans 3';
+    font-weight: 400;
+    font-style: italic;
+    src: url('/assets/default-dark/fonts/SourceSans3/SourceSans3-It.otf.woff2') format('woff2');
+}
+
+/* Medium */
+@font-face {
+    font-family: 'Source Sans 3';
+    font-weight: 500;
+    font-style: normal;
+    src: url('/assets/default-dark/fonts/SourceSans3/SourceSans3-Medium.otf.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Source Sans 3';
+    font-weight: 500;
+    font-style: italic;
+    src: url('/assets/default-dark/fonts/SourceSans3/SourceSans3-MediumIt.otf.woff2') format('woff2');
+}
+
+/* Semibold */
+@font-face {
+    font-family: 'Source Sans 3';
+    font-weight: 600;
+    font-style: normal;
+    src: url('/assets/default-dark/fonts/SourceSans3/SourceSans3-Semibold.otf.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Source Sans 3';
+    font-weight: 600;
+    font-style: italic;
+    src: url('/assets/default-dark/fonts/SourceSans3/SourceSans3-SemiboldIt.otf.woff2') format('woff2');
+}
+
+/* Bold */
+@font-face {
+    font-family: 'Source Sans 3';
+    font-weight: 700;
+    font-style: normal;
+    src: url('/assets/default-dark/fonts/SourceSans3/SourceSans3-Bold.otf.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Source Sans 3';
+    font-weight: 700;
+    font-style: italic;
+    src: url('/assets/default-dark/fonts/SourceSans3/SourceSans3-BoldIt.otf.woff2') format('woff2');
+}
+
+/* Black */
+@font-face {
+    font-family: 'Source Sans 3';
+    font-weight: 900;
+    font-style: normal;
+    src: url('/assets/default-dark/fonts/SourceSans3/SourceSans3-Black.otf.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Source Sans 3';
+    font-weight: 900;
+    font-style: italic;
+    src: url('/assets/default-dark/fonts/SourceSans3/SourceSans3-BlackIt.otf.woff2') format('woff2');
+}
+
+/* Roboto */
+/* Thin */
+@font-face {
+    font-family: 'Roboto';
+    src: url('/assets/default-dark/fonts/Roboto/Roboto-Thin.woff2') format('woff2');
+    font-weight: 100;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('/assets/default-dark/fonts/Roboto/Roboto-ThinItalic.woff2') format('woff2');
+    font-weight: 100;
+    font-style: italic;
+}
+
+/* Light */
+@font-face {
+    font-family: 'Roboto';
+    src: url('/assets/default-dark/fonts/Roboto/Roboto-Light.woff2') format('woff2');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('/assets/default-dark/fonts/Roboto/Roboto-LightItalic.woff2') format('woff2');
+    font-weight: 300;
+    font-style: italic;
+}
+
+/* Regular */
+@font-face {
+    font-family: 'Roboto';
+    src: url('/assets/default-dark/fonts/Roboto/Roboto-Regular.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('/assets/default-dark/fonts/Roboto/Roboto-RegularItalic.woff2') format('woff2');
+    font-weight: 400;
+    font-style: italic;
+}
+
+/* Medium */
+@font-face {
+    font-family: 'Roboto';
+    src: url('/assets/default-dark/fonts/Roboto/Roboto-Medium.woff2') format('woff2');
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('/assets/default-dark/fonts/Roboto/Roboto-MediumItalic.woff2') format('woff2');
+    font-weight: 500;
+    font-style: italic;
+}
+
+/* Bold */
+@font-face {
+    font-family: 'Roboto';
+    src: url('/assets/default-dark/fonts/Roboto/Roboto-Bold.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('/assets/default-dark/fonts/Roboto/Roboto-BoldItalic.woff2') format('woff2');
+    font-weight: 700;
+    font-style: italic;
+}
+
+/* Black */
+@font-face {
+    font-family: 'Roboto';
+    src: url('/assets/default-dark/fonts/Roboto/Roboto-Black.woff2') format('woff2');
+    font-weight: 900;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('/assets/default-dark/fonts/Roboto/Roboto-BlackItalic.woff2') format('woff2');
+    font-weight: 900;
+    font-style: italic;
+}
