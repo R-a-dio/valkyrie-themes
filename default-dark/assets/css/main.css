@@ -484,6 +484,23 @@ input>:has(.is-box-title) {
     transform: translateX(-50%);
 }
 
+.mock-box-title {
+    --stroke-color: var(--radio-secondary-1);
+    --stroke-width: 2px;
+
+    font-size: 0.75rem;
+    font-weight: bold;
+    text-shadow: 
+        calc(-1 * var(--stroke-width)) calc(-1 * var(--stroke-width)) 0 var(--stroke-color),  
+        calc(1 * var(--stroke-width)) calc(-1 * var(--stroke-width)) 0 var(--stroke-color),
+        calc(-1 * var(--stroke-width)) calc(1 * var(--stroke-width)) 0 var(--stroke-color),
+        calc(1 * var(--stroke-width)) calc(1 * var(--stroke-width)) 0 var(--stroke-color),
+        calc(-1 * var(--stroke-width)) 0 var(--stroke-color),
+        calc(1 * var(--stroke-width)) 0 var(--stroke-color),
+        0 calc(-1 * var(--stroke-width)) var(--stroke-color),
+        0 calc(1 * var(--stroke-width)) var(--stroke-color);
+}
+
 [aria-description] {
     position: relative;
     cursor: help;
