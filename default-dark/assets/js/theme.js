@@ -413,13 +413,9 @@ const initializeLoadElements = () => {
     document.querySelectorAll('[data-run-on-load]').forEach(executeFunction);
 };
 
-// font loader
-(function() { 
-    let storedFont = localStorage.getItem("preferredFont");
-    if (storedFont) {
-        let styleTag = document.getElementById("dynamic-font");
-        styleTag.innerHTML = `:root { --bulma-family-primary: ${storedFont}; }`;
-    }
-})();
+function loadFonts() {
+    document.documentElement.setAttribute("data-font", localStorage.getItem("preferredFont") || "Default");
+}
 
+loadFonts();
 initializeLoadElements();

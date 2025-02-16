@@ -94,10 +94,10 @@
                                 <label class="label">Select Font</label>
                                 <div class="control">
                                     <div class="select is-fullwidth">
-                                        <select id="fontSelector" onchange="localStorage.setItem('preferredFont', this.value); document.documentElement.style.setProperty('--bulma-family-primary', this.value);">
-                                            <option value="Roboto, Inter, 'SF Pro', 'Segoe UI', Oxygen, Ubuntu, 'Helvetica Neue', Helvetica, Arial, sans-serif !important">Default</option>
-                                            <option value="'Source Sans 3', Helvetica, Arial, sans-serif !important">Old</option>
-                                            <option value="Consolas, 'Courier New', monospace !important">Monospace</option>
+                                        <select id="fontSelector" onchange="localStorage.setItem('preferredFont', this.value); document.documentElement.style.setProperty('--bulma-family-primary', this.value); loadFonts();">
+                                            <option value="Default">Default</option>
+                                            <option value="Old">Old</option>
+                                            <option value="monospace">monospace</option>
                                         </select>
                                         <script>document.getElementById("fontSelector").value = localStorage.getItem("preferredFont") || document.getElementById("fontSelector").options[0].value;</script>
                                     </div>
