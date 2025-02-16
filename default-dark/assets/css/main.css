@@ -842,3 +842,47 @@ input[name="ip"]:invalid {
     color: #dc3545;
 }
 /* Request helper end */
+
+.dropdown-cbox-parent {
+    position: relative;
+}
+
+.dropdown-cbox-parent input[type="checkbox"] {
+    display: none;
+}
+
+.dropdown-cbox-parent .dropdown-cbox-container {
+    display: none;
+    position: relative;
+    width: 100%;
+    margin-top: 0.5rem;
+}
+
+.dropdown-cbox-parent input[type="checkbox"]:checked ~ .dropdown-cbox-container {
+    display: block;
+}
+
+.dropdown-cbox-parent svg[data-state="plus"] {
+    display: block;
+}
+
+.dropdown-cbox-parent svg[data-state="minus"] {
+    display: none;
+}
+
+.dropdown-cbox-parent input[type="checkbox"]:checked ~ label svg[data-state="plus"] {
+    display: none;
+}
+
+.dropdown-cbox-parent input[type="checkbox"]:checked ~ label svg[data-state="minus"] {
+    display: block;
+}
+
+.dropdown-cbox-parent label.button {
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.dropdown-cbox-parent label.button:hover {
+    background-color: var(--bulma-background-hover);
+}

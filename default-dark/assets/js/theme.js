@@ -417,5 +417,10 @@ function loadFonts() {
     document.documentElement.setAttribute("data-font", localStorage.getItem("preferredFont") || "Default");
 }
 
+function loadCustomCSS() {
+    document.getElementById("custom-css").textContent = localStorage.getItem("customCss") || "";
+}
+
 loadFonts();
+loadCustomCSS();
 initializeLoadElements();
