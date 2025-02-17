@@ -69,7 +69,7 @@
                                 <input class="input is-small" name="reason" type="text" placeholder="Reason">
                             </div>
                             <div class="control">
-                                <button class="button is-small is-danger" style="height:calc(2rem - 2px);min-width:70px;" type="submit" name="action" value="decline">Decline</button>
+                                <button class="button is-small is-danger" style="height:calc(2rem - 2px);min-width:70px;" type="submit" name="action" value="decline" hx-post="/admin/pending" hx-confirm="Are you sure?">Decline</button>
                             </div>
                         </div>
                     </div>
