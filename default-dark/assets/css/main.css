@@ -752,7 +752,7 @@ form.htmx-settling > .notification-temporary,
     background-color: white !important;
 }
 
-input[name="ip"]:invalid {
+input:invalid {
     border: 3px solid var(--red);
 }
 

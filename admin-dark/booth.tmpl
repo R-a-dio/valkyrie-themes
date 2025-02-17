@@ -310,13 +310,13 @@
                 </svg>
             </label>
             <dl class="explanation-content">
-                <dt>Enter URL of a website and set the timer, then press "start checking"</dt>
-                <dd>every (timer value) seconds, the website in the URL will be checked for new /r/s matching the patterns below</dd>
+                <dt>Enter URL of an imageboard and set the timer, then press "start checking"</dt>
+                <dd>currently supports <strong>https://shamiko.org/[board]/[thread][?last=100]</strong> (the last part is optional; you may miss requests if your timer is high or you started the checking late) and <strong>https://boards.4chan(nel).org/[board]/[thread]</strong></dd>
+                <dd>every [timer value] seconds, the thread will be checked for posts with text matching the patterns below</dd>
                 <dd>you can drag the requests from one box to another</dd>
                 <dd>duplicate requests won't be added if they are in any of the boxes</dd>
                 <dd>this thing is just for keeping track of requests, it doesn't really do anything else</dd>
                 <dd>you usually want to keep the "CORS" checkbox and the url next to it as they are</dd>
-                <dd>the test page is <a target="_blank" href="https://static.r-a-d.io/exci/test-requests2.html">here</a></dd>
             </dl>
         </blockquote>
     </div>
@@ -348,7 +348,7 @@
         </div>
         <div class="cell is-col-span-4">
             <label for="url" class="is-box-title">URL:</label>
-            <input class="input" type="text" id="url" value="https://static.r-a-d.io/exci/test-requests2.html">
+            <input class="input" type="text" id="thread-url" placeholder="Enter thread URL" value="https://static.r-a-d.io/exci/test-requests.json" pattern="^(?:https:\/\/shamiko\.org\/[a-z0-9]+\/\d+(?:\?last=\d+)?|https:\/\/boards\.4chan(?:nel)?\.org\/[a-z0-9]+\/thread\/\d+|https:\/\/static\.r-a-d\.io\/exci\/test-requests\.json)$" oninput="validateThreadUrl()">
         </div>
         <div class="cell is-col-span-2">
             <button onclick="toggleChecking()" id="toggleBtn" class="cell is-col-span-2 button" style="color:white!important;">Start Checking</button>
@@ -415,13 +415,13 @@
             <label for="importData" class="is-box-title">Import/Export Request Data:</label>
             <div class="field has-addons">
                 <div class="cell control is-expanded">
-                    <input class="input" type="text" id="importData" placeholder="Paste exported data here" style="font-size:0.875rem;" disabled>
+                    <input class="input" type="text" id="importData" placeholder="Paste exported data here" style="font-size:0.875rem;" />
                 </div>
                 <div class="control">
-                    <button onclick="importBoxes()" class="button" style="font-size:0.875rem;" disabled>Import</button>
+                    <button onclick="importBoxes()" class="button" style="font-size:0.875rem;">Import</button>
                 </div>
                 <div class="control">
-                    <button onclick="exportBoxes()" class="button" style="font-size:0.875rem;" disabled>Export</button>
+                    <button onclick="exportBoxes()" class="button" style="font-size:0.875rem;">Export</button>
                 </div>
             </div>
         </div>

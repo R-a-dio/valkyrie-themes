@@ -3,175 +3,104 @@ let checkingInterval = null;
 // default patterns to check for
 let patterns = ['/r/', '/r/ing', 'requesting'];
 
-const altUrls = [
-    'monm.ooo',
-    'shamik.ooo',
-    'shamiko.org'
-];
-
+// used to change the thread urls to the API urls
 const urlTransformers = [
     {
         name: '4chan thread to JSON',
-        match: /boards\.4chan\.org\/\w+\/thread\/\d+/,
-        transformUrl: url => url.replace(/\.json$/, '') + '.json',
-        useResponse: true,
-        transform: async (response) => {
-            try {
-                const text = await response.text();
-                const json = JSON.parse(text);
-    
-                if (!json.posts || !Array.isArray(json.posts)) {
-                    throw new Error('Invalid 4chan JSON format');
-                }
-
-                let val = json.posts
-                    .filter(post => post?.com)
-                    .map(post => {
-                        const parser = new DOMParser();
-                        const doc = parser.parseFromString(post.com, 'text/html');
-    
-                        // remove all HTML elements but keep their text content
-                        const walkNode = (node) => {
-                            if (node.nodeType === 3) { // = text node
-                                return node.textContent;
-                            }
-                            if (node.nodeType === 1) { // = element node
-                                return Array.from(node.childNodes)
-                                    .map(child => walkNode(child))
-                                    .join('');
-                            }
-                            return '';
-                        };
-    
-                        let text = walkNode(doc.body);
-    
-                        // cleanup on aisle 3
-                        return text
-                            // replace HTML entities
-                            .replace(/&gt;/g, '')
-                            .replace(/&lt;/g, '')
-                            .replace(/&quot;/g, '')
-                            .replace(/&amp;/g, '')
-                            .replace(/&#039;/g, "")
-                            // remove quote references
-                            .replace(/>>?\d+/g, '')
-                            // remove multiple spaces
-                            .replace(/\s+/g, ' ')
-                            // remove greentext markers
-                            .replace(/^>\s*/gm, '')
-                            // trim whitespace
-                            .trim();
-                    })
-                    .filter(Boolean) // remove empty strings
-                    .join('\n\n');
-
-                console.log(val);
-                return val;
-    
-            } catch (e) {
-                console.error('Transform error:', e);
-                throw e;
-            }
+        match: /boards\.4chan(?:nel)?\.org\/([a-z0-9]+)\/thread\/(\d+)/,
+        transformUrl: url => {
+            const parts = url.match(/boards\.4chan(?:nel)?\.org\/([a-z0-9]+)\/thread\/(\d+)/);
+            if (!parts) return url;
+            const [_, board, thread] = parts;
+            return `https://a.4cdn.org/${board}/thread/${thread}.json`;
         }
     },
     {
-        name: 'meguca JSON extractor',
-        match: new RegExp(`(?:${altUrls.map(url => url.replace('.', '\\.')).join('|')})\/a\/\\d+`),
-        useResponse: true, 
-        transform: async (response) => {
-            const text = await response.text();
-            const parser = new DOMParser();
-            const doc = parser.parseFromString(text, 'text/html');
-            
-            const scriptTag = doc.querySelector('script#post-data[type="application/json"]');
-            if (scriptTag && scriptTag.textContent) {
-                try {
-                    const data = JSON.parse(scriptTag.textContent);
-                    if (data && Array.isArray(data.posts)) {
-                        // extract all post bodies into a single string
-                        return data.posts
-                            .filter(post => post && typeof post.body === 'string')
-                            .map(post => post.body)
-                            .join('\n\n');
-                    }
-                    throw new Error('No valid posts found in JSON data');
-                } catch (e) {
-                    console.error('Error parsing script JSON:', e);
-                    throw new Error('Invalid script JSON data');
-                }
-            }
-            return text;
+        name: 'meguca transformer',
+        match: /shamiko\.org\/([a-z0-9]{1,30})\/([0-9]{1,12})(?:\?last=\d+)?$/, // match board(a-z0-9 up to 30 chars), thread(0-9 up to 12 chars), optional ?last=[number]
+        transformUrl: url => {
+            const parts = url.match(/shamiko\.org\/([a-z0-9]{1,30})\/([0-9]{1,12})(?:\?last=(\d+))?$/);
+            if (!parts) return url;
+            const [_, board, thread, lastParam] = parts;
+            const baseUrl = `shamiko.org/json/boards/${board}/${thread}`;
+            return lastParam ? `https://${baseUrl}?last=${lastParam}` : 'https://' + baseUrl;
         }
     },
     {
-        name: 'r-a-d.io static content',
-        match: /static\.r-a-d\.io/,
-        useResponse: true,
-        transform: async (response) => {
-            const text = await response.text();
-            return text;
-        }
-    },
-    {   // todo: not use this
-        name: 'deny-other-urls',
-        // match everything not matched by previous transformers
-        match: url => {
-            const allowed = urlTransformers
-                .slice(0, -1) // Exclude self from check
-                .some(t => t.match.test(url));
-            return !allowed;
-        },
-        useResponse: true,
-        transform: async () => {
-            throw new Error('URL not allowed');
-        }
+        name: 'test url',
+        match: /static\.r-a-d\.io\/exci\/test-requests.json/,
+        transformUrl: url => { return url; }
     }
 ];
 
-function sanitizeJsonText(text) {
-    return text
-        // escape inner quotes that are preceded by a word boundary or space
-        .replace(/(\w|^|\s)"(\w)/g, '$1\\"$2')
-        // escape inner quotes that are followed by a word boundary or space
-        .replace(/(\w)"(\s|$|\w)/g, '$1\\"$2')
-        // remove any remaining unescaped double quotes that aren't at start/end of string
-        .replace(/([^\\])"/g, '$1\\"')
-        // clean up any double escapes that might have been created
-        .replace(/\\\\/g, '\\');
-}
-
-function sanitizeText(text) {
+function sanitizePostContent(text) {
     if (typeof text !== 'string') return '';
-    return text
-        .replace(/&quot;/g, '')
-        .replace(/&amp;/g, '')
-        .replace(/&#39;/g, '')
-        .replace(/&#96;/g, '')
-        .replace(/&#36;/g, '')
-        .replace(/[<>]/g, '')
-        .replace(/["'`$]/g, '')
-        .trim();
-}
 
-function sanitizeHTML(text) {
     const parser = new DOMParser();
-    const doc = parser.parseFromString(text, 'text/html');
-    doc.querySelectorAll('script, style, meta, link, iframe, object, embed').forEach(el => el.remove());
-    return doc;
+    const decoded = parser.parseFromString(`<!doctype html><body>${text}`, 'text/html').body.textContent;
+
+    return decoded
+        .replace(/>>\d+/g, '')           // remove imageboard quotes
+        .replace(/\\n/g, ' ')            // remove literal "\n"
+        .replace(/[\x00-\x1F\x7F]/g, '') // remove null bytes and other control characters
+        .replace(/\s+/g, ' ')            // collapse multiple spaces
+        .trim();
 }
 
 // save and load box states so that requests are not lost
 function saveBoxState() {
     const boxes = {
-        leftBox: Array.from(document.getElementById('leftBox').children).map(item => 
-            item.querySelector('.result-text').textContent
-        ),
-        middleBox: Array.from(document.getElementById('middleBox').children).map(item => 
-            item.querySelector('.result-text').textContent
-        ),
-        rightBox: Array.from(document.getElementById('rightBox').children).map(item => 
-            item.querySelector('.result-text').textContent
-        )
+        patterns: patterns,
+        leftBox: Array.from(document.getElementById('leftBox').children).map(item => {
+            const textSpan = item.querySelector('.result-text');
+            const postContent = textSpan.querySelector('.post-content');
+            const postLink = textSpan.querySelector('.post-link');
+            const time = textSpan.querySelector('time');
+
+            if (postContent && postLink && time) {
+                // fetched requests have metadata
+                return {
+                    postId: postLink.href.split('#p')[1],
+                    baseUrl: postLink.href.split('#')[0],
+                    timestamp: time.dateTime,
+                    text: postContent.textContent
+                };
+            }
+            // manual requests do not
+            return { text: textSpan.textContent };
+        }),
+        middleBox: Array.from(document.getElementById('middleBox').children).map(item => {
+            const textSpan = item.querySelector('.result-text');
+            const postContent = textSpan.querySelector('.post-content');
+            const postLink = textSpan.querySelector('.post-link');
+            const time = textSpan.querySelector('time');
+
+            if (postContent && postLink && time) {
+                return {
+                    postId: postLink.href.split('#p')[1],
+                    baseUrl: postLink.href.split('#')[0],
+                    timestamp: time.dateTime,
+                    text: postContent.textContent
+                };
+            }
+            return { text: textSpan.textContent };
+        }),
+        rightBox: Array.from(document.getElementById('rightBox').children).map(item => {
+            const textSpan = item.querySelector('.result-text');
+            const postContent = textSpan.querySelector('.post-content');
+            const postLink = textSpan.querySelector('.post-link');
+            const time = textSpan.querySelector('time');
+
+            if (postContent && postLink && time) {
+                return {
+                    postId: postLink.href.split('#p')[1],
+                    baseUrl: postLink.href.split('#')[0],
+                    timestamp: time.dateTime,
+                    text: postContent.textContent
+                };
+            }
+            return { text: textSpan.textContent };
+        })
     };
     localStorage.setItem('requestHelperBoxes', JSON.stringify(boxes));
 }
@@ -182,14 +111,21 @@ function loadBoxState() {
         try {
             const boxes = JSON.parse(savedState);
             
+            // load patterns if any were addded
+            if (Array.isArray(boxes.patterns)) {
+                patterns = boxes.patterns;
+                updatePatternsDisplay();
+            }
+            
             Object.entries(boxes).forEach(([boxId, items]) => {
+                if (boxId === 'patterns') return;
+                
                 const box = document.getElementById(boxId);
                 if (box && Array.isArray(items)) {
-                    items.forEach(text => {
-                        const sanitizedText = sanitizeText(text);
-                        if (!textExists(sanitizedText)) {
-                            const item = createResultItem(sanitizedText);
-                            box.appendChild(item);
+                    items.forEach(item => {
+                        if (!textExists(JSON.stringify(item))) {
+                            const resultItem = createResultItem(JSON.stringify(item));
+                            box.appendChild(resultItem);
                         }
                     });
                 }
@@ -204,31 +140,61 @@ function loadBoxState() {
 
 // request list export/import functions
 function exportBoxes() {
+    // same format as saveBoxState
     const boxes = {
         patterns: patterns,
-        leftBox: Array.from(document.getElementById('leftBox').children).map(item => 
-            item.querySelector('.result-text').textContent
-        ),
-        middleBox: Array.from(document.getElementById('middleBox').children).map(item => 
-            item.querySelector('.result-text').textContent
-        ),
-        rightBox: Array.from(document.getElementById('rightBox').children).map(item => 
-            item.querySelector('.result-text').textContent
-        )
+        leftBox: Array.from(document.getElementById('leftBox').children).map(item => {
+            const textSpan = item.querySelector('.result-text');
+            const postContent = textSpan.querySelector('.post-content');
+            const postLink = textSpan.querySelector('.post-link');
+            const time = textSpan.querySelector('time');
+
+            if (postContent && postLink && time) {
+                return {
+                    postId: postLink.href.split('#p')[1],
+                    baseUrl: postLink.href.split('#')[0],
+                    timestamp: time.dateTime,
+                    text: postContent.textContent
+                };
+            }
+            return { text: textSpan.textContent };
+        }),
+        middleBox: Array.from(document.getElementById('middleBox').children).map(item => {
+            const textSpan = item.querySelector('.result-text');
+            const postContent = textSpan.querySelector('.post-content');
+            const postLink = textSpan.querySelector('.post-link');
+            const time = textSpan.querySelector('time');
+
+            if (postContent && postLink && time) {
+                return {
+                    postId: postLink.href.split('#p')[1],
+                    baseUrl: postLink.href.split('#')[0],
+                    timestamp: time.dateTime,
+                    text: postContent.textContent
+                };
+            }
+            return { text: textSpan.textContent };
+        }),
+        rightBox: Array.from(document.getElementById('rightBox').children).map(item => {
+            const textSpan = item.querySelector('.result-text');
+            const postContent = textSpan.querySelector('.post-content');
+            const postLink = textSpan.querySelector('.post-link');
+            const time = textSpan.querySelector('time');
+
+            if (postContent && postLink && time) {
+                return {
+                    postId: postLink.href.split('#p')[1],
+                    baseUrl: postLink.href.split('#')[0],
+                    timestamp: time.dateTime,
+                    text: postContent.textContent
+                };
+            }
+            return { text: textSpan.textContent };
+        })
     };
     
     const exportData = btoa(JSON.stringify(boxes));
     document.getElementById('importData').value = exportData;
-}
-
-// clear requests
-function clearBox(boxId) {
-    const box = document.getElementById(boxId);
-    while (box.firstChild) {
-        box.removeChild(box.firstChild);
-    }
-    updateStatus();
-    saveBoxState();
 }
 
 function importBoxes() {
@@ -243,10 +209,30 @@ function importBoxes() {
         
         const boxes = JSON.parse(decoded);
         
+        // clear existing
         clearBox('leftBox');
         clearBox('middleBox');
         clearBox('rightBox');
         patterns = [];
+        
+        // import patterns if they exist (todo: fix this)
+        if (Array.isArray(boxes.patterns)) {
+            patterns = boxes.patterns;
+            updatePatternsDisplay();
+        }
+        
+        // import boxes
+        Object.entries(boxes).forEach(([boxId, items]) => {
+            if (boxId === 'patterns') return;
+            
+            const box = document.getElementById(boxId);
+            if (box && Array.isArray(items)) {
+                items.forEach(item => {
+                    const resultItem = createResultItem(JSON.stringify(item));
+                    box.appendChild(resultItem);
+                });
+            }
+        });
         
         updateStatus();
         saveBoxState();
@@ -257,16 +243,65 @@ function importBoxes() {
     }
 }
 
+// clear requests
+function clearBox(boxId) {
+    const box = document.getElementById(boxId);
+    while (box.firstChild) {
+        box.removeChild(box.firstChild);
+    }
+    updateStatus();
+    saveBoxState();
+}
 
 // create result items, (=requests)
-function createResultItem(text, sourceBox) {
+function createResultItem(textOrData) {
     const item = document.createElement('div');
     item.className = 'result-item';
     item.draggable = true;
 
     const textSpan = document.createElement('span');
     textSpan.className = 'result-text';
-    textSpan.textContent = text;
+
+    let data;
+    try {
+        data = JSON.parse(textOrData);
+    } catch {
+        data = { text: textOrData };
+    }
+
+    if (data.postId && data.baseUrl) {
+        // link container
+        const linkContainer = document.createElement('div');
+        linkContainer.className = 'post-link-container';
+        
+        // post link
+        const link = document.createElement('a');
+        link.href = `${data.baseUrl}#p${data.postId}`;
+        link.target = '_blank';
+        link.className = 'post-link';
+        linkContainer.appendChild(link);
+        textSpan.appendChild(linkContainer);
+
+        // timestamp
+        if (data.timestamp) {
+            const time = document.createElement('time');
+            time.dateTime = data.timestamp;
+            time.dataset.type = "medium";
+            time.className = 'post-time has-timeago';
+            link.appendChild(time);
+        }
+
+        // post content
+        const contentSpan = document.createElement('span');
+        contentSpan.className = 'post-content';
+        contentSpan.textContent = data.text;
+        textSpan.appendChild(contentSpan);
+
+        // update times after adding stuff or they won't show up until next check
+        updateTimes();
+    } else {
+        textSpan.textContent = data.text;
+    }
 
     const removeBtn = document.createElement('button');
     removeBtn.className = 'button remove-btn is-warning px-2 py-0';
@@ -281,10 +316,11 @@ function createResultItem(text, sourceBox) {
     item.appendChild(textSpan);
     item.appendChild(removeBtn);
 
+    // event listeners for dragging boxes
     item.addEventListener('dragstart', (e) => {
         e.stopPropagation();
         item.classList.add('dragging');
-        e.dataTransfer.setData('text/plain', text);
+        e.dataTransfer.setData('text/plain', '');
         e.dataTransfer.effectAllowed = 'move';
     });
 
@@ -310,12 +346,22 @@ function addManualRequest() {
     }
 }
 
-// check if request exists in any box
-function textExists(text) {
-    const allItems = [...document.querySelectorAll('.result-item')];
-    return allItems.some(item =>
-        item.querySelector('.result-text').textContent === text
-    );
+// check if request exists in any box by comparing post content
+function textExists(textOrData) {
+    let content;
+    try {
+        // If it's JSON data, get the text property
+        const data = JSON.parse(textOrData);
+        content = data.text;
+    } catch {
+        // If it's plain text, use it directly
+        content = textOrData;
+    }
+
+    if (!content) return false;
+
+    const allContentElements = [...document.querySelectorAll('.post-content')];
+    return allContentElements.some(element => element.textContent === content);
 }
 
 // update request count
@@ -334,6 +380,10 @@ function updateStatus() {
 
 // main toggle for the checking
 function toggleChecking() {
+    if (!isValidUrl(document.getElementById('thread-url').value)) {
+        return;
+    }
+
     const btn = document.getElementById('toggleBtn');
     if (checkingInterval) {
         clearInterval(checkingInterval);
@@ -380,13 +430,11 @@ function updatePatternsDisplay() {
 
 // fetch and check patterns
 async function checkPatterns() {
-    let targetUrl = document.getElementById('url').value;
+    let targetUrl = document.getElementById('thread-url').value;
     
-    // get the transformer first without transforming
+    // turn url from the input into an API url
     const transformer = urlTransformers.find(t => t.match.test(targetUrl));
-    
-    // always transform URL if transformer exists and has transformUrl method
-    if (transformer && transformer.transformUrl) {
+    if (transformer?.transformUrl) {
         targetUrl = transformer.transformUrl(targetUrl);
     }
 
@@ -397,25 +445,24 @@ async function checkPatterns() {
         targetUrl;
     
     try {
-        const results = await findPatternsInPage(proxyUrl, {
-            patterns: patterns
-        });
-
-        const leftBox = document.getElementById('leftBox');
-
-        if (Array.isArray(results) && results.length > 0) {
-            results.forEach(result => {
-                if (result?.match) {
-                    const resultText = result.match;
-                    if (!textExists(resultText)) {
-                        const item = createResultItem(resultText);
-                        leftBox.appendChild(item);
-                    }
-                }
-            });
-            saveBoxState();
+        const response = await fetch(proxyUrl);
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
         }
 
+        const json = await response.json();
+        const posts = normalizeJsonPosts(json);
+        const results = findMatchesInPosts(posts);
+        const leftBox = document.getElementById('leftBox');
+
+        results.forEach(result => {
+            if (!textExists(result)) {
+                const item = createResultItem(result);
+                leftBox.appendChild(item);
+            }
+        });
+
+        saveBoxState();
         updateStatus();
     } catch (error) {
         console.error('Error checking patterns:', error);
@@ -426,109 +473,95 @@ async function checkPatterns() {
     }
 }
 
-async function findPatternsInPage(url, options = {}) {
-    const defaultOptions = {
-        requireStartsWith: false,
-        wordsAfter: 0,
-        patterns: patterns
-    };
-
-    options = { ...defaultOptions, ...options };
-    options.patterns = options.patterns.filter(pattern => pattern);
-    options.patterns.sort((a, b) => b.length - a.length);
-
-    try {
-        const response = await fetch(url);
-        
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        const actualUrl = url.includes('?url=') ? 
-            decodeURIComponent(url.split('?url=')[1]) : 
-            url;
-
-        // check for response transformers
-        for (const transformer of urlTransformers) {
-            if (transformer.useResponse && transformer.match.test(actualUrl)) {
-                const transformedData = await transformer.transform(response);
-                return processText(transformedData, options);
-            }
-        }
-
-        const contentType = response.headers.get('content-type');
-        const text = await response.text();
-
-        if (!text) {
-            throw new Error('Empty response received');
-        }
-
-        // JSON response
-        if (contentType && contentType.includes('application/json')) {
-            try {
-                const json = JSON.parse(text);
-                // convert JSON to searchable text
-                const jsonText = JSON.stringify(json, null, 2);
-                return processText(jsonText, options);
-            } catch (e) {
-                console.error('JSON parse error:', e);
-                throw new Error('Invalid JSON response');
-            }
-        }
-
-        // HTML response
-        return processText(text, options);
-
-    } catch (error) {
-        console.error('Error in findPatternsInPage:', error);
-        throw error;
+// turn each json response into a normalized format
+function normalizeJsonPosts(json) {
+    if (json.hasOwnProperty('abbrev') && json.hasOwnProperty('update_time') && Array.isArray(json.posts)) {
+        console.log("Detected meguca format");
+        return json.posts.map(post => ({
+            postId: post.id?.toString(),
+            timestamp: post.time,
+            content: sanitizePostContent(post.body || '')
+        }));
     }
+    
+    if (Array.isArray(json.posts) && json.posts.length > 0 && 
+        (json.posts[0].hasOwnProperty('semantic_url') || json.posts[0].hasOwnProperty('custom_spoiler'))) {
+        console.log("Detected 4chan format");
+        return json.posts.map(post => ({
+            postId: post.no?.toString(),
+            timestamp: post.time,
+            content: sanitizePostContent(post.com || '')
+        }));
+    }
+
+    if (Array.isArray(json.posts) && json.posts.length > 0 &&
+    json.posts[0].hasOwnProperty('no') && json.posts[0].hasOwnProperty('time') &&
+    json.posts.some(post => post.name === 'Test Suite')) {
+        console.log("Detected test format");
+        return json.posts.map(post => ({
+            postId: post.no?.toString(),
+            timestamp: post.time,
+            content: sanitizePostContent(post.com || '')
+        }));
+    }
+
+    throw new Error('Unsupported JSON format');
 }
 
-function processText(text, options) {
-    const matches = new Set();
+function findMatchesInPosts(posts) {
     const wordLimit = parseInt(document.getElementById('wordLimit').value) || 3;
-    
-    // split into individual comments
-    const lines = text.split(/\r?\n/).filter(line => line.trim());
-    
-    for (const line of lines) {
-        const cleanedLine = line
-            .replace(/['"]\w+['"]:\s*/g, '')
-            .replace(/[\u0000-\u001F\u007F-\u009F]/g, '')
-            .replace(/\\(?!["\\/bfnrt])/g, '\\\\')
-            .replace(/[^\x20-\x7E]/g, '')
-            .trim();
-        
-        for (const pattern of options.patterns) {
-            // escape pattern if it contains forward slashes
-            const escapedPattern = pattern.replace(/\//g, '\\/');
-            
-            // match pattern+words within the same line
-            const regex = new RegExp(
-                `${escapedPattern}\\s*([^\\n]*)`,
-                'gi'
-            );
+    const matches = new Set();
+    const baseUrl = document.getElementById('thread-url').value.split('?')[0];
+
+    for (const post of posts) {
+        if (!post.content) continue;
+
+        for (const pattern of patterns) {
+            // special handling for "/r/" since dumbasses sometimes post "/r/song" instead of "/r/ song"
+            const escapedPattern = pattern === '/r/' ?
+                '(?:^|\\s)\/r\/(?:\\s|$)' :                           // match at start or after whitespace, with optional space after
+                '(?:^|\\s)' + pattern.replace(/\//g, '\\/') + '\\s+'; // other patterns must start with pattern or have whitespace before, and space after
+
+            const regex = new RegExp(`${escapedPattern}([^\\n]*)`, 'gi');
             
             let match;
-            while ((match = regex.exec(cleanedLine)) !== null) {
-                if (match[1]) { 
-                    const followingWords = match[1].trim().split(/\s+/);
+            while ((match = regex.exec(post.content)) !== null) {
+                const followingText = match[1];
+                if (followingText) {
+                    const followingWords = followingText.trim().split(/\s+/);
                     if (followingWords.length > 0) {
                         const limitedText = followingWords
                             .slice(0, wordLimit)
                             .join(' ');
                         if (limitedText) {
-                            matches.add(limitedText);
+                            matches.add(JSON.stringify({
+                                postId: post.postId,
+                                timestamp: post.timestamp,
+                                text: limitedText,
+                                baseUrl: baseUrl
+                            }));
                         }
                     }
                 }
-                regex.lastIndex = match.index + 1;
             }
         }
     }
 
-    return Array.from(matches).map(match => ({ match }));
+    return Array.from(matches);
+}
+
+function isValidUrl(url) {
+    return urlTransformers.some(transformer => transformer.match.test(url));
+}
+
+function validateThreadUrl() {
+    const urlInput = document.getElementById('thread-url');
+    const toggleBtn = document.getElementById('toggleBtn');
+    
+    const isValid = isValidUrl(urlInput.value);
+    
+    toggleBtn.disabled = !isValid;
+    urlInput.classList.toggle('is-danger', !isValid);
 }
 
 document.querySelectorAll('.droppable').forEach(box => {
