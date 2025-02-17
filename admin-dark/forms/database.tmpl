@@ -7,12 +7,12 @@
     <div class="grid box{{if .Song.NeedReplacement}} page-db-needreplacement{{end}}">
         {{if .Success}}<div class="cell is-col-span-12 is-success has-text-centered">Song has been updated</div>{{end}}
         {{if .Song.NeedReplacement}}
-        <span class="is-uppercase is-box-title">Needs Replacement</span>
+        <span class="is-uppercase is-uppercase is-box-title">Needs Replacement</span>
         {{end}}
         <div class="cell is-col-span-12 fixed-grid has-12-cols mb-0">
             <div class="grid is-align-items-end">
                 <div class="cell is-col-span-1-desktop is-col-span-3-mobile is-col-span-3-tablet tag is-size-7-mobile is-medium">
-                    <label class="label is-small is-box-title is-box-title">ID</label>
+                    <label class="label is-small is-uppercase is-box-title is-uppercase is-box-title">ID</label>
                     {{.Song.TrackID}}</div>
                 <div class="cell is-col-span-8-desktop is-col-span-9-mobile is-col-span-9-tablet tag is-size-7-mobile is-medium" style="overflow:hidden;text-overflow:ellipsis;">
                     {{.Song.Metadata}}</div>
@@ -28,13 +28,13 @@
         <div class="cell is-col-span-4 is-col-span-6-mobile">
             <div class="field">
                 <div class="control">
-                    <label class="label is-small is-box-title is-box-title-center">Artist</label>
+                    <label class="label is-small is-uppercase is-box-title is-uppercase is-box-title-center">Artist</label>
                     <input class="input is-small" name="artist" type="text" value="{{.Song.Artist}}" {{if not .HasEdit}}disabled{{end}}>
                 </div>
             </div>
             <div class="field">
                 <div class="control">
-                    <label class="label is-small is-box-title is-box-title-center">Title</label>
+                    <label class="label is-small is-uppercase is-box-title is-uppercase is-box-title-center">Title</label>
                     <input class="input is-small" name="title" type="text" value="{{.Song.Title}}" {{if not .HasEdit}}disabled{{end}}>
                 </div>
             </div>
@@ -42,13 +42,13 @@
         <div class="cell is-col-span-4 is-col-span-6-mobile">
             <div class="field">
                 <div class="control">
-                    <label class="label is-small is-box-title is-box-title-center">Album</label>
+                    <label class="label is-small is-uppercase is-box-title is-uppercase is-box-title-center">Album</label>
                     <input class="input is-small" name="album" type="text" value="{{.Song.Album}}" {{if not .HasEdit}}disabled{{end}}>
                 </div>
             </div>
             <div class="field">
                 <div class="control">
-                    <label class="label is-small is-box-title is-box-title-center">Tags</label>
+                    <label class="label is-small is-uppercase is-box-title is-uppercase is-box-title-center">Tags</label>
                     <input class="input is-small" name="tags" type="text" value="{{.Song.Tags}}" {{if not .HasEdit}}disabled{{end}}>
                 </div>
             </div>
@@ -70,13 +70,13 @@
         <div class="cell is-col-span-4 is-col-span-12-mobile">
             <div class="field">
                 <div class="control">
-                    <label class="label is-small is-box-title is-box-title-center">LP / LR</label>
+                    <label class="label is-small is-uppercase is-box-title is-uppercase is-box-title-center">LP / LR</label>
                     <div class="input is-small is-overflow-auto" style="scrollbar-width:none;" disabled>{{.Song.LastPlayed | Since | HumanDuration}} / {{.Song.LastRequested | Since | HumanDuration}}</div>
                 </div>
             </div>
             <div class="field">
                 <div class="control">
-                    <label class="label is-small is-box-title is-box-title-center">Acceptor (Editor)</label>
+                    <label class="label is-small is-uppercase is-box-title is-uppercase is-box-title-center">Acceptor (Editor)</label>
                     <div class="input is-small is-overflow-auto" style="scrollbar-width:none;" disabled>{{.Song.Acceptor}} ({{.Song.LastEditor}})</div>
                 </div>
             </div>
