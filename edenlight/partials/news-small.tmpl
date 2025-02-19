@@ -1,0 +1,32 @@
+{{define "news-post-home"}}
+<div class="cell">
+    <article class="message">
+        <a href="/news/{{.ID}}" hx-boost="true" hx-push-url="true" hx-target="#content" style="text-decoration:none!important;">
+            <div class="message-header box on-hover-darken py-2" style="background-color: var(--bulma-body-background-color);color:var(--bulma-box-color);">
+                <span class="news-title has-word-break-all pr-2" style="text-overflow: ellipsis;overflow:hidden;white-space:nowrap;">{{.Title}}</span>
+                <span class="page-home-news-author is-hidden-tablet-only is-hidden-desktop-only" style="display:flex;flex-direction:column;text-decoration:none;font-size:0.8rem;text-align:right;">{{.User.Username}}<time class="has-text-weight-bold pl-2" datetime="{{.CreatedAt.Unix}}">on {{.CreatedAt.Format "2006-01-02"}}</time></span>
+            </div>
+        </a>
+        <div class="message-body has-background-radio-secondary-1 disable-message-border pt-3 is-hidden">
+            {{.Header}}
+        </div>
+    </article>
+</div>
+{{end}}
+
+{{define "news-post-news"}}
+<div class="column is-12">
+    <article class="message m-0 p-0">
+        <a href="/news/{{.ID}}">
+            <div class="message-header has-background-radio-primary-2 on-hover-darken py-2">
+                <span class="news-title has-word-break-all pr-2">{{.Title}}</span>
+                <span class="page-home-news-author" style="display:flex;flex-direction:column;text-decoration:none;font-size:0.8rem;text-align:right;">{{.User.Username}}<time class="has-text-weight-bold page-home-news-date pl-2" datetime="{{.CreatedAt.Unix}}">on {{.CreatedAt.Format "2006-01-02"}}</time></span>
+            </div>
+
+        </a>
+        <div class="message-body has-background-radio-secondary-1 disable-message-border">
+            {{.Header}}
+        </div>
+    </article>
+</div>
+{{end}}
