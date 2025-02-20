@@ -1,6 +1,6 @@
 module github.com/R-a-dio/valkyrie-themes
 
-go 1.23
+go 1.24
 
 require (
 	github.com/R-a-dio/valkyrie v0.0.0-20240403220643-ea2a1d03a0df
