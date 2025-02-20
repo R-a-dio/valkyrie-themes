@@ -4,7 +4,7 @@
         <div class="content">
             <div class="fixed-grid has-1-cols">
                 <div class="grid">
-                    {{if not ($.Status.StreamUser.UserPermissions.Has "robot")}}<div class="cell box is-col-span-1 is-size-5 has-text-centered has-background-radio-secondary-1 px-6">A DJ is streaming. This is the queue for the AFK streamer, who will continue playing after the DJ is done. If there is a thread up, you may be able to request something there.</div>{{end}}
+                    {{if not (IsRobot $.Status.StreamUser)}}<div class="cell box is-col-span-1 is-size-5 has-text-centered has-background-radio-secondary-1 px-6">A DJ is streaming. This is the queue for the AFK streamer, who will continue playing after the DJ is done. If there is a thread up, you may be able to request something there.</div>{{end}}
                     {{range $song := $.Queue}}
                     {{template "song" $song}}
                     {{end}}
@@ -16,7 +16,7 @@
 {{end}}
 
 {{define "song"}}
-{{$not_afk := (Status.StreamUser.UserPermissions.Has "robot")}}
+{{$not_afk := IsRobot Status.StreamUser}}
 <div class="cell dropdown-parent">
     <div class="fixed-grid has-12-cols">
         <div class="grid">
