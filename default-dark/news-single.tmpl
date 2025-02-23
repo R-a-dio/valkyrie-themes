@@ -47,7 +47,7 @@
     <div class="column is-8 m-0 p-0">
         {{if .Post.Comments}}
         {{range .Post.Comments}}
-        <div id="{{.ID}}" class="column block has-background-radio-secondary-1 mb-4">
+        <div id="comment-{{.ID}}" class="column block has-background-radio-secondary-1 mb-4">
             <div class="columns is-flex-mobile">
                 <div class="column is-narrow ml-1 {{with .User}}{{if .DJ.Role}}is-color-{{.DJ.Role}}{{end}}{{end}}">{{with .User}}{{.Username}} <span class="is-uppercase is-size-7">## {{.DJ.Role}}</span>{{else}}Anonymous ({{.Identifier}}){{end}}</div>
                 <div class="column pr-0" style="text-align:end">{{.CreatedAt | AbsoluteDate}}</div>
@@ -55,8 +55,11 @@
             </div>
             <div class="block has-background-radio-primary-2 content-border-top-light disable-border-radius">
                 <div class="p-4">
-                    {{if and $.User (or ($.User.UserPermissions.Has "dev") ($.User.UserPermissions.Has "staff") ($.User.UserPermissions.Has "admin"))}}
-                    <button class="button is-small p-2 is-warning is-pulled-right" style="margin-top:-0.5rem;margin-right:-0.5rem;">Delete</button>
+                    {{if and $.User (or ($.User.UserPermissions.Has "staff") ($.User.UserPermissions.Has "admin"))}}
+                    <form method="POST" action="/admin/news/comments/remove?id={{.ID}}" hx-post="/admin/news/comments/remove?id={{.ID}}" hx-push-url="false" hx-swap="outerHTML" hx-target="#comment-{{.ID}}">
+                        {{$.CSRFTokenInput}}
+                        <button type="submit" class="button is-small p-2 is-warning is-pulled-right" style="margin-top:-0.5rem;margin-right:-0.5rem;">Delete</button>
+                    </form>
                     {{end}}
                     {{.Body}}
                 </div>
