@@ -12,14 +12,14 @@
             <div class="fixed-grid has-1-cols">
                 <div class="grid" style="min-height:3rem;">
                     {{range .Faves}}
-                    <div class="cell">
+                    <div class="cell dropdown-parent">
                         <div class="fixed-grid has-12-cols">
                             <div class="grid">
                                 {{if .HasTrack}}
-                                <div class="cell is-col-span-11 has-background-radio-secondary-1 is-align-content-center has-text-centered">
-                                    {{.Metadata}}
+                                <div class="cell is-col-span-11 has-background-radio-secondary-1 is-align-content-center has-text-centered p-3">{{.Metadata}}
+                                    <div class="tag is-small is-pulled-right no-background"><svg class="svg-icon" data-state="plus" onclick="toggleDropdown(this)"><use href="assets/default-dark/svg/sprites.svg#plus"></use></svg></div>
                                 </div>
-                                <div class="cell is-col-span-1 is-align-content-center">
+                                <div class="cell is-col-span-1 is-align-content-center p-0 m-0">
                                     {{block "request-form" SongPair . $}}
                                     <form method="POST" action="/v1/request?trackid={{.TrackID}}&nick={{.Data.Nickname}}&page={{.Data.Page.Nr}}&s=fave"
                                         hx-post="/v1/request?trackid={{.TrackID}}&nick={{.Data.Nickname}}&page={{.Data.Page.Nr}}&s=fave"
@@ -45,6 +45,9 @@
                             </div>
                         </div>
                     </div>
+                    {{if .HasTrack}}
+                    {{template "song-info-extra" .}}
+                    {{end}}
                     {{end}}
                 </div>
             </div>
