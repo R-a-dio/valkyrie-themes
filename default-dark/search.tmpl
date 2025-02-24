@@ -3,7 +3,7 @@
     <div class="container">
         <div class="content">
             {{if .Message}}
-            <div class="notification notification-temporary is-success has-text-centered">
+            <div class="notification notification-temporary {{if .IsError}}is-warning{{else}}is-success{{end}} has-text-centered">
                 {{.Message}}
             </div>
             {{end}}
