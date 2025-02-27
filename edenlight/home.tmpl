@@ -25,7 +25,7 @@
                     </div>
                     <div class="cell is-col-span-1">
                         <div id="djcontainer" class="">
-                            {{template "streamer" .User}}
+                            {{template "streamer" .Status.User}}
                         </div>
                     </div>
                     {{with .News}}
@@ -65,9 +65,11 @@
                     </div>        
                 </div>
                 <div class="column is-flex is-flex-direction-column is-justify-content-end pl-2 pb-2">
+                    {{if .Song.HasTrack}}
                     <div class="is-size-7 has-word-break-all" style="cursor:help;" title="Album">{{.Song.Album}}</div>
                     <div class="is-size-6 has-word-break-all" style="cursor:help;" title="Song Title">{{.Song.Title}}</div>
                     <div class="is-size-7 has-word-break-all" style="cursor:help;" title="Artist">{{.Song.Artist}}</div>
+                    {{end}}
                 </div>
             </div>
         </div>
@@ -91,7 +93,7 @@
 <div class="cell box is-col-span-1 is-flex is-align-items-center p-2 m-0"><img src="/assets/images/logotitle_2.png" alt="r/a/dio"></div>
 <div class="cell box is-col-span-11 is-flex is-align-items-center is-col-span-8-mobile p-2 m-0">
     <div class="m-0">
-        There are currently <span class="has-text-weight-medium">{{Status.Listeners}}</span> listeners tuned in to <span class="has-text-weight-medium">{{Status.StreamUser.DJ.Name}}'s</span> stream.
+        There are currently <span class="has-text-weight-medium">{{Status.Listeners}}</span> listeners tuned in to <span class="has-text-weight-medium">{{Status.User.DJ.Name}}'s</span> stream.
     </div>
     <div class="buttons ml-auto">
         <input type="checkbox" id="stream-state" class="is-hidden">
