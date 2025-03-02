@@ -886,3 +886,30 @@ input:invalid {
 .dropdown-cbox-parent label.button:hover {
     background-color: var(--bulma-background-hover);
 }
+
+/* submit page form thing, should be replaced with the form knowing the cooldown status instead */
+.cooldown-status {
+    color: var(--text-secondary);
+}
+
+.cooldown-status:hover {
+    border-color: hsla(0, 0%, 100%, 0.25);
+    color: hsl(0, 0%, 80%) !important;
+    transition: 0.125s all ease-in-out;
+}
+
+[data-oncooldown="true"] .cooldown-status {
+    background-color: var(--red);
+}
+
+[data-oncooldown="false"] .cooldown-status {
+    background-color: var(--green);
+}
+/* --- */
+
+.borderless-tab {
+    border: none !important;
+    margin-bottom: 0px !important;
+    border-radius: 0px !important;
+    filter: brightness(1.2);
+}

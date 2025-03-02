@@ -41,7 +41,7 @@
                     </div>
                 </div>
                 <div class="cell">
-                    <div class="fixed-grid box is-fullheight has-1-cols has-background-radio-secondary-1">
+                    <div class="fixed-grid box is-fullheight has-1-cols has-background-radio-secondary-1" data-oncooldown="{{if or (or (eq $cooldown 0) (.IsUser)) (.Form.IsDaypass)}}false{{else}}true{{end}}">
                         {{template "form_submit" .Form}}
                     </div>
                 </div>

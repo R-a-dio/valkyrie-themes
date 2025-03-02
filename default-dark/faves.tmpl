@@ -10,7 +10,7 @@
             <div class="columns is-centered mb-5">
                 <form action="/faves" class="column is-8 control is-flex" hx-boost="true" hx-push-url="true" hx-target="#content">
                     <input class="input" type="text" name="nick" placeholder="Enter a username..." value="{{.Nickname}}">
-                    <input class="submit button is-link ml-3" type="submit" value="Submit">
+                    <input class="submit button is-link ml-3 is-info" type="submit" value="Submit">
                 </form>
             </div>
             {{template "pagination" .Page}}
