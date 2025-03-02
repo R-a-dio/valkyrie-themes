@@ -4,6 +4,7 @@
         <a class="navbar-item" href="/">
             <img src="/assets/images/logotitle_2.png" alt="r/a/dio logo">
         </a>
+        {{if .IsUser}}<button class="navbar-switch on-hover-darken" onclick="toggleNavbarState('public')"></button>{{end}}
         <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="public-navbar" onclick="this.classList.toggle('is-active'); document.getElementById(this.dataset.target).classList.toggle('is-active')">
             <span aria-hidden="true"></span>
             <span aria-hidden="true"></span>
@@ -28,6 +29,7 @@
                 <div id="search-bar" style="position: absolute;"></div>
             </div>
         </div>
+        {{if .IsUser}}<button class="navbar-switch on-hover-darken" onclick="toggleNavbarState('public')"></button>{{end}}
     </div>
 </nav>
 <progress id="loading-indicator" class="progress is-small is-primary htmx-indicator"></progress>

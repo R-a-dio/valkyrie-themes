@@ -36,6 +36,7 @@
     {{block "partial-page" .}}
         {{if .IsHTMX}}{{template "full-head" .}}{{end}}
         {{ block "navbar" . }}{{end}}
+        {{if .IsUser}}<script>loadAdminNavbar();</script>{{end}}
         <div id="error-container">
         {{ block "error-template" . }}{{end}}
         </div>

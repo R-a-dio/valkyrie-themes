@@ -41,13 +41,29 @@
                 </div>
                 {{end}}
                 {{if .CanKillStreamer}}
-                <div id="kill-streamer" class="cell notification">
+                <div id="kill-streamer" class="cell notification is-align-content-center">
                     <form hx-post="/admin/api/streamer/stop" hx-target="#kill-streamer" hx-swap="outerHTML">
                         {{.CSRFTokenInput}}
                         <button type="submit" class="button is-fullwidth is-warning">Force Kill Hanyuu</button>
                     </form>
                 </div>
                 {{end}}
+                <div id="user-options" class="cell notification">
+                    <fieldset>
+                        <legend class="has-text-centered is-fullwidth is-size-5 mb-4">Logged in user options</legend>
+                        <div>
+                            <div class="label">Admin navbar position</div>
+                            <div class="select is-fullwidth">
+                                <select id="admin-navbar-position" onchange="localStorage.setItem('adminNavbarPosition', this.value); loadAdminNavbar();">
+                                    <option value="bottom">bottom</option>
+                                    <option value="top">top</option>
+                                </select>
+                            </div>
+                            <script>document.getElementById("admin-navbar-position").value = localStorage.getItem("adminNavbarPosition") || document.getElementById("admin-navbar-position").options[0].value;</script>
+                        </div>
+                      </fieldset>
+                      
+                </div>
             </div>
         </div>
     </div>

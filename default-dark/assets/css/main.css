@@ -914,3 +914,43 @@ input:invalid {
     border-radius: 0px !important;
     filter: brightness(1.2);
 }
+
+.navbar-position {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: var(--bulma-navbar-fixed-z);
+    transition: 0.15s all cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+[data-admin-navbar="top"] .navbar-position {
+    top: calc(-1 * var(--bulma-navbar-height)) !important;
+    bottom: unset;
+}
+
+.navbar-switch {
+    display: none;
+}
+
+[data-admin-navbar="top"] .navbar-switch {
+    display: inline-block;
+}
+
+[data-admin-navbar="top"] #admin-player-container {
+    bottom: 0px !important;
+}
+
+/* svg icons */
+.navbar-switch::before {
+    content: '';
+    color: var(--text-secondary) !important;
+    display: inline-block;
+    width: 1.5rem;
+    height: 1.5rem;
+    vertical-align: middle;
+    background-color: var(--text-primary);
+    margin-left: var(--bulma-column-gap);
+    mask: url("/assets/default-dark/svg/outline/arrow-path.svg") center/contain no-repeat;
+}
+/* --- */

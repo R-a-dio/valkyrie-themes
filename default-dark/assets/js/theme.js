@@ -417,6 +417,24 @@ function loadFonts() {
     document.documentElement.setAttribute("data-font", localStorage.getItem("preferredFont") || "Default");
 }
 
+function loadAdminNavbar() {
+    let navbarPosition = localStorage.getItem("adminNavbarPosition");
+    document.documentElement.setAttribute("data-admin-navbar", navbarPosition || "bottom");
+    if (localStorage.getItem("navbarState") === "admin" && navbarPosition === "top") {
+        document.querySelector('#admin-navbar-container').style='top:0px!important;';
+    }
+}
+
+function toggleNavbarState(isAdminOrPublic) {
+    if (isAdminOrPublic === "public") {
+        document.querySelector('#admin-navbar-container').style='top:0px!important;';
+        localStorage.setItem("navbarState", "admin");
+    } else {
+        document.querySelector('#admin-navbar-container').style='top:calc(-1 * var(--bulma-navbar-height))!important;'
+        localStorage.setItem("navbarState", "public")
+    }
+}
+
 function loadCustomCSS() {
     document.getElementById("custom-css").textContent = localStorage.getItem("customCss") || "";
 }
