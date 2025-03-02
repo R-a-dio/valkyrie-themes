@@ -1,8 +1,9 @@
 {{define "form_admin_pending"}}
-<form class="{{if len .Errors}}is-warning {{end}}pending-entry fixed-grid has-12-cols" method="post" hx-target="this" hx-post="/admin/pending" hx-swap="outerHTML swap:1s">
+<form class="pending-entry fixed-grid has-12-cols" method="post" hx-target="this" hx-post="/admin/pending" hx-swap="outerHTML swap:1s">
     <input class="is-hidden" type="number" name="id" value="{{.ID}}">
     {{.CSRFTokenInput}}
     <div class="grid box">
+        {{if len .Errors}}<div class="cell is-col-span-12 is-warning has-text-centered">This song already exists in the database.</div>{{end}}
         <div class="cell is-col-span-12">
             <div class="fixed-grid has-12-cols">
                 <div class="grid">
