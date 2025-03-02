@@ -4,6 +4,9 @@
         <div id="booth-notification-killed-hanyuu" class="notification notification-temporary is-success has-text-centered is-hidden mb-6">
             Tried killing Hanyuu, connect before the song ends.
         </div>
+        <div id="booth-notification-resurrected-hanyuu" class="notification notification-temporary is-success has-text-centered is-hidden mb-6">
+            Tried resurrecting Hanyuu, you can now drop the stream.
+        </div>
         <div class="fixed-grid has-10-cols">
             <div class="grid">
                 <div class="cell fixed-grid has-8-cols is-col-span-8">
@@ -206,9 +209,13 @@
 {{define "stop-streamer"}}
     <span class="is-uppercase is-box-title">Kill Stream</span>
     {{if not Status.StreamUser}}
-        <p class="column p-4 is-warning">Nobody is currently streaming</p>
+        <p class="column p-4 is-warning">Nobody is currently streaming.</p>
     {{else if .UserIsLive}}
-        <p class="column p-4 is-success">You are currently streaming</p>
+        <p class="column p-4 is-success">You are currently streaming. Use this button to put Hanyuu back in the dj cage right before you drop the stream.</p>
+        <form hx-post="{{.FormAction}}" hx-target="#stop-streamer">
+            {{.CSRFTokenInput}}
+            <button type="submit" class="button mt-0 mb-4 mx-4 is-success" style="width:calc(100% - 2rem)" hx-on:click="unhideNotification('#booth-notification-resurrected-hanyuu')">Resurrect Hanyuu</button>
+        </form>
     {{else if .CurrentIsRobot}}
         <p class="column p-4">This kills the Hanyuu. You must connect within <b style="color:lightcoral">{{.ConnectTimeout}}</b> after the song ends.</p>
         <form hx-post="{{.FormAction}}" hx-target="#stop-streamer">
