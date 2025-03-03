@@ -2,7 +2,7 @@
 <div class="cell">
     <article class="message">
         <a href="/news/{{.ID}}" hx-boost="true" hx-push-url="true" hx-target="#content" style="text-decoration:none!important;">
-            <div class="message-header box on-hover-darken py-2" style="background-color: var(--bulma-body-background-color);color:var(--bulma-box-color);">
+            <div class="message-header box on-hover-darken py-2" style="background-color: var(--bulma-body-background-color);">
                 <span class="news-title has-word-break-all pr-2" style="text-overflow: ellipsis;overflow:hidden;white-space:nowrap;">{{.Title}}</span>
                 <span class="page-home-news-author is-hidden-tablet-only is-hidden-desktop-only" style="display:flex;flex-direction:column;text-decoration:none;font-size:0.8rem;text-align:right;">{{.User.Username}}<time class="has-text-weight-bold pl-2" datetime="{{.CreatedAt.Unix}}">on {{.CreatedAt.Format "2006-01-02"}}</time></span>
             </div>

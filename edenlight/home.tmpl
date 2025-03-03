@@ -1,4 +1,4 @@
-{{define "footer"}}<div class="is-hidden"></div>{{end}}
+{{define "footer"}}<div class="footer is-hidden"></div>{{end}}
 
 {{define "content"}}
 <div class="hero is-fullheight" style="margin-top: calc(-1 * var(--bulma-navbar-height))">
@@ -75,7 +75,7 @@
         </div>
         <div class="cell is-col-span-12 is-flex is-align-items-center is-justify-content-space-between">
             <div id="progress-current" class="is-flex is-align-items-center" data-start="{{.SongInfo.Start.UnixMilli}}">{{$progress | MediaDuration}}</div>
-            <progress id="current-song-progress" class="is-available-width is-flex is-align-items-center mx-2" value="{{$progress | ToSecond}}" max="{{.Song.Length.Seconds}}"></progress>
+            <progress id="current-song-progress" class="progress is-edenlight is-available-width is-flex is-align-items-center my-0 mx-2" value="{{$progress | ToSecond}}" max="{{.Song.Length.Seconds}}"></progress>
             <div id="progress-max" class="is-flex is-align-items-center">{{.Song.Length | MediaDuration}}</div>
         </div>
     </div>
@@ -95,21 +95,18 @@
     <div class="m-0">
         There are currently <span class="has-text-weight-medium">{{Status.Listeners}}</span> listeners tuned in to <span class="has-text-weight-medium">{{Status.User.DJ.Name}}'s</span> stream.
     </div>
-    <div class="buttons ml-auto">
+    <div class="buttons ml-auto" hx-preserve>
         <input type="checkbox" id="stream-state" class="is-hidden">
         <button id="stream-play-pause-container" class="button is-small">
             <span class="icon-wrapper"></span>
-            <label for="stream-state" id="stream-play-pause" style="position:relative;top:-1px;" hx-preserve>
+            <label for="stream-state" id="stream-play-pause" style="position:relative;top:-1px;">
                 Start stream
             </label>
         </button>
         <button id="direct-link" class="button is-small">
             <a href="/main" class="disable-link-color" style="position:relative;top:-1px;">Direct link</a>
         </button>
-        <details id="prefs-dropdown" class="button is-small" hx-preserve>
-            <summary class="is-hidden-mobile">Preferences</summary>
-            <a class="button" style="position:absolute;top:calc(100% + var(--bulma-grid-gap));right:0rem;">sneed's feed and seed</a>
-        </details>
+        <button id="prefs-dropdown" class="button is-small" onclick="toggleClassOnClick(this)" data-class="is-active" data-target="prefs-modal">Preferences</buttons>
         <button id="help-button" class="button is-small">
             <a id="help-link" href="/help#stream-help" class="disable-link-color">Help</a>
         </button>

@@ -1,7 +1,7 @@
 {{define "content"}}
 <section class="section">
     <div class="container">
-        <div class="content">
+        <div id="page-faves" class="content">
             {{if .Message}}
             <div class="notification notification-temporary {{if .IsError}}is-warning{{else}}is-success{{end}} has-text-centered">
                 {{.Message}}

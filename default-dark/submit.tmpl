@@ -1,7 +1,7 @@
 {{define "content"}}
 <section class="section">
     <div class="container">
-        <div class="content fixed-grid has-2-cols-fullhd has-1-cols-mobile">
+        <div id="page-submit" class="content fixed-grid has-2-cols-fullhd has-1-cols-mobile">
             {{$cooldown := CalculateSubmissionCooldown .Stats.LastSubmissionTime}}
             {{if or (or (eq $cooldown 0) (.IsUser)) (.Form.IsDaypass)}}
             <div id="submit-cooldown" class="notification one-time-notification is-primary has-text-centered mb-6" data-storage-key="notification-youcanupload" data-run-on-load="showOrHideOnLoad">
@@ -50,23 +50,22 @@
             <div class="grid">
                 <div class="cell">
                     <div class="box has-background-radio-secondary-1">
-                        <div class="content has-text-success has-text-centered">
+                        <div class="has-text-success has-text-centered">
                             <h2>Accepts</h2>            
                             <div>{{.Stats.AcceptedTotal}} accepted submissions.</div>
                             <div>{{.Stats.AcceptedLastTwoWeeks}} accepted in the last 2 weeks.</div>
                             <div>{{.Stats.AcceptedYou}} accepted submissions from (You).</div>
                         </div>
-                        <div class="content">
+                        <div class="mt-5">
                             {{range $song := .Stats.RecentAccepts}}
-                            <hr>
-                            <p class="has-text-centered">{{$song.Metadata}}</p>
+                            <p class="has-text-centered has-border-top pt-5 pb-2 mt-2 mb-4">{{$song.Metadata}}</p>
                             {{end}}
                         </div>
                     </div>
                 </div>
                 <div class="cell">
                     <div class="box has-background-radio-secondary-1">
-                        <div class="content has-text-danger has-text-centered">
+                        <div class="has-text-danger has-text-centered mb-5">
                             <h2>Declines</h2>
                             <div>{{.Stats.DeclinedTotal}} declined submissions.</div>
                             <div>{{.Stats.DeclinedLastTwoWeeks}} declined in the last 2 weeks.</div>
@@ -74,12 +73,11 @@
                         </div>
                         {{range $song := .Stats.RecentDeclines}}
                         {{if $song.DeclineReason }}
-                        <hr>
-                        <div class="columns content">
-                            <div class="column">
+                        <div class="columns has-border-top pt-3 pb-1 mt-0 mb-2">
+                            <div class="column is-align-content-center">
                                 <p class="has-text-centered">{{$song.Metadata}}</p>
                             </div>
-                            <div class="column">
+                            <div class="column is-align-content-center">
                                 <p class="has-text-centered has-text-danger">{{$song.DeclineReason}}</p>
                             </div>
                         </div>

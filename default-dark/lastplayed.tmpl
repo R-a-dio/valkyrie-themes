@@ -1,7 +1,7 @@
 {{define "content"}}
 <section class="section">
     <div class="container">
-        <div class="content">
+        <div id="page-lastplayed" class="content">
             {{template "pagination-last-played" .Page}}
                     {{range $song := $.Songs}}
                     {{template "song" $song}}

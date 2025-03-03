@@ -954,3 +954,7 @@ input:invalid {
     mask: url("/assets/default-dark/svg/outline/arrow-path.svg") center/contain no-repeat;
 }
 /* --- */
+
+.has-border-top {
+    border-top: 2px solid var(--text-primary);
+}
