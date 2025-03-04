@@ -293,10 +293,20 @@ article a {
     .navbar-container {
         position: absolute;
         background-color: hsl(0, 0%, 96%);
-        border-bottom: 2px solid hsl(0, 0%, 90%);
+        border-top: 2px solid rgb(0, 0, 0, 0.2);
+        border-bottom: 2px solid rgb(0, 0, 0, 0.2);
         z-index: 99;
         width: 100vw;
         top: 3.25rem
+    }
+
+    #admin-navbar {
+        padding: unset !important;
+    }
+
+    #admin-navbar .navbar-container {
+        top: unset !important;
+        bottom: var(--bulma-navbar-height);
     }
 }
 
