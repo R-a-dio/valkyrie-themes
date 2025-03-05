@@ -42,6 +42,14 @@
     </nav>
     <form action="{{.BaseURL}}" class="column control is-2 is-flex is-hidden-mobile" hx-boost="true" hx-push-url="true" hx-target="#content">
         <input class="input" type="text" id="page" name="page" placeholder="Enter Page Number">
+        {{if .RawURL}}
+            {{range $name, $values := .RawURL.Query}}
+                {{if eq $name "page"}}{{continue}}{{end}}
+                {{range $value := $values}}
+                    <input class="input is-hidden" name="{{$name}}" value="{{$value}}">
+                {{end}}
+            {{end}}
+        {{end}}
         <input class="is-hidden" type="submit">
     </form>
 </div>
