@@ -56,33 +56,40 @@
                             <div>{{.Stats.AcceptedLastTwoWeeks}} accepted in the last 2 weeks.</div>
                             <div>{{.Stats.AcceptedYou}} accepted submissions from (You).</div>
                         </div>
-                        <div class="mt-5">
+                        <div id="accepts-list" class="mt-4">
                             {{range $song := .Stats.RecentAccepts}}
-                            <p class="has-text-centered has-border-top pt-5 pb-2 mt-2 mb-4">{{$song.Metadata}}</p>
+                            <div class="level tag is-size-7-mobile is-size-6 p-2">
+                                <div class="has-text-centered-mobile" title="{{$song.Metadata}}">{{$song.Metadata}}</div>
+                                <time class="has-text-right has-text-centered-mobile" style="min-width:25%;" datetime="{{$song.ReviewedAt}}">{{ TimeAgo $song.ReviewedAt "%yy%dd%hh%mm" }} ago</time>
+                            </div>
                             {{end}}
                         </div>
                     </div>
                 </div>
                 <div class="cell">
                     <div class="box has-background-radio-secondary-1">
-                        <div class="has-text-danger has-text-centered mb-5">
+                        <div class="has-text-centered has-text-danger">
                             <h2>Declines</h2>
                             <div>{{.Stats.DeclinedTotal}} declined submissions.</div>
                             <div>{{.Stats.DeclinedLastTwoWeeks}} declined in the last 2 weeks.</div>
                             <div>{{.Stats.DeclinedYou}} declined submissions from (You).</div>
                         </div>
-                        {{range $song := .Stats.RecentDeclines}}
-                        {{if $song.DeclineReason }}
-                        <div class="columns has-border-top pt-3 pb-1 mt-0 mb-2">
-                            <div class="column is-align-content-center">
-                                <p class="has-text-centered">{{$song.Metadata}}</p>
-                            </div>
-                            <div class="column is-align-content-center">
-                                <p class="has-text-centered has-text-danger">{{$song.DeclineReason}}</p>
-                            </div>
+                        <div id="declines-list" class="mt-4">
+                            {{range $song := .Stats.RecentDeclines}}
+                            {{if $song.DeclineReason }}
+                                <div class="level tag is-size-7-mobile is-size-6 p-2 mb-0">
+                                    <div class="has-text-centered-mobile" title="{{$song.Metadata}}">{{$song.Metadata}}</div>
+                                    <time class="has-text-right has-text-centered-mobile" style="min-width:25%;" datetime="{{$song.ReviewedAt}}">{{ TimeAgo $song.ReviewedAt "%yy%dd%hh%mm" }} ago</time>
+                                </div>
+                                <div class="level">
+                                    <div class="decline-reason is-flex">
+                                        {{template "svg-icon" "arrow-turn-down-right"}}
+                                        <div class="has-text-danger">{{$song.DeclineReason}}</div>
+                                    </div>
+                                </div>
+                            {{end}}
+                            {{end}}
                         </div>
-                        {{end}}
-                        {{end}}
                     </div>
                 </div>
             </div>

@@ -963,8 +963,20 @@ input:invalid {
     margin-left: var(--bulma-column-gap);
     mask: url("/assets/default-dark/svg/outline/arrow-path.svg") center/contain no-repeat;
 }
+
 /* --- */
 
-.has-border-top {
-    border-top: 2px solid var(--text-primary);
+#accepts-list .level, #declines-list .level {
+    white-space: normal !important;
+    height: unset;
+    min-height: 2em;
+}
+
+.decline-reason > svg {
+    margin-left: 0.25rem;
+}
+
+.decline-reason > div {
+    margin-top: 0.15rem;
+    margin-left: 0.25rem;
 }
