@@ -14,7 +14,7 @@
         <div class="cell is-col-span-2-mobile is-col-span-1-desktop">{{template "staff-row-title" "staff"}}</div>
         <div class="cell is-col-span-2-mobile is-col-span-1-desktop is-hidden-touch">{{template "staff-row-title" "dev"}}</div>
         <div class="cell is-col-span-2-mobile is-col-span-2-tablet is-col-span-1-desktop has-background-radio-secondary-1 content-border-top">
-            <div class="fixed-grid has-2-cols">
+            <div id="staff" class="fixed-grid has-2-cols">
                 <div class="grid is-gap-3 px-5 pt-5 pb-3">
                 {{range $user := $.Users}}
                     {{if and $user.DJ.Visible (eq $user.DJ.Role "staff")}}
@@ -26,7 +26,7 @@
         </div>
         <div class="cell is-col-span-2-mobile is-col-span-1-desktop is-hidden-desktop">{{template "staff-row-title" "dev"}}</div>
         <div class="cell is-col-span-2-mobile is-col-span-2-tablet is-col-span-1-desktop has-background-radio-secondary-1 content-border-top">
-            <div class="fixed-grid has-2-cols">
+            <div id="dev" class="fixed-grid has-2-cols">
                 <div class="grid is-gap-3 px-5 pt-5 pb-3">
                 {{range $user := $.Users}}
                     {{if and $user.DJ.Visible (eq $user.DJ.Role "dev")}}
@@ -40,7 +40,7 @@
 </div>
 <div class="fixed-grid has-4-cols has-2-cols-mobile">
     {{template "staff-row-title" "dj"}}
-    <div id="djs" class="grid has-background-radio-secondary-1 content-border-top is-gap-3 px-5 pt-5 pb-3">
+    <div id="dj" class="grid has-background-radio-secondary-1 content-border-top is-gap-3 px-5 pt-5 pb-3">
     {{range $user := $.Users}}
         {{if and $user.DJ.Visible (eq $user.DJ.Role "dj")}}
             {{template "djcard" $user}}
