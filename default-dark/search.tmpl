@@ -31,9 +31,12 @@
                     {{else}}
                     <p>The request cooldown is 30 minutes. You can request again <time datetime="{{(.Now.Add .RequestCooldown).Unix}}" data-type="pretty">{{.RequestCooldown | PrettyDuration}}</time>.</p>
                     {{end}}
+                    {{if len .Songs}}
+                    {{end}}
                 </div>
                 {{if len .Songs}}
-                    {{template "pagination" .Page}}
+                {{template "pagination" .Page}}
+                <div class="block has-background-radio-secondary-1 has-text-centered is-size-5 py-4 mb-3">Search found {{.TotalHits}} results</div>
                 {{end}}
 
                 <div class="fixed-grid has-1-cols">
@@ -96,6 +99,7 @@
         <div class="column">{{.Message}}</div>
     </div>
 {{else}}
+    <div class="block has-text-centered is-size-5 mb-4">Search found {{.TotalHits}} results</div>
     {{with .Songs}}
         {{range .}}
         <div class="columns is-vcentered">
