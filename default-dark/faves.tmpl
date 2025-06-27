@@ -13,6 +13,9 @@
                     <input class="submit button is-link ml-3 is-info" type="submit" value="Submit">
                 </form>
             </div>
+            {{if not (eq .Nickname "")}}
+            <div class="block has-text-centered is-size-5 mb-4">Search found {{.FaveCount}} results</div>
+            {{end}}
             {{template "pagination" .Page}}
             <div class="fixed-grid has-1-cols">
                 <div class="grid" style="min-height:3rem;">
@@ -60,4 +63,5 @@
         </div>
     </div>
 </section>
+{{printjson .}}
 {{end}}
