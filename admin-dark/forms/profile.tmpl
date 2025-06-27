@@ -141,6 +141,7 @@
             <input class="input" type="text" name="dj.regex" value="{{.DJ.Regex}}">
         </div></div></div>
     </div>
+    {{if .IsAdmin}}
     <div class="field is-horizontal">
         <div class="field-label">
             <label class="label" for="dj.theme.name">Theme:</label>
@@ -156,6 +157,7 @@
             </div>
         </div></div></div>
     </div>
+    {{end}}
     {{end}}
     {{if (and .IsAdmin (eq .DJ.ID 0))}}
     <div class="field is-horizontal">
