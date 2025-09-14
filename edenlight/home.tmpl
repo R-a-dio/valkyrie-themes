@@ -59,23 +59,11 @@
 {{define "nowplaying"}}
 <div class="fixed-grid has-12-cols is-fullheight">
     <div class="grid box has-shadow is-fullheight">
-        <div class="cell is-col-span-12 is-row-span-2 is-fullheight is-flex is-flex-direction-column is-align-items-center">
+        <div class="cell is-col-span-12 is-fullheight">
             {{$progress := .SongInfo.Start | Since}}
-            <div class="columns is-fullwidth mt-auto">
-                <div class="column is-narrow is-align-content-end p-0 pb-2">
-                    <div id="albumart" class="">
-                        {{template "albumart" .User}}
-                    </div>        
-                </div>
-                <div class="column is-flex is-flex-direction-column is-justify-content-end pl-2 pb-2">
-                    <div class="is-size-7 has-word-break-all">{{.Song.Metadata}}</div>
-<!--                    
-                    {{if .Song.HasTrack}}
-                    <div class="is-size-7 has-word-break-all" style="cursor:help;" title="Album">{{.Song.Album}}</div>
-                    <div class="is-size-6 has-word-break-all" style="cursor:help;" title="Song Title">{{.Song.Title}}</div>
-                    <div class="is-size-7 has-word-break-all" style="cursor:help;" title="Artist">{{.Song.Artist}}</div>
-                    {{end}}
--->
+            <div class="is-fullwidth is-fullheight">
+                <div class="is-fullheight">
+                    <div class=" is-size-5 is-fullheight is-align-content-center has-text-centered has-word-break-all">{{.Song.Metadata}}</div>
                 </div>
             </div>
         </div>
@@ -146,7 +134,7 @@
 {{if not (Status.User | IsRobot)}}
 <div id="queue-container" hx-swap-oob="innerHTML"></div>
 <div class="notification fixed-grid has-1-cols py-3" style="min-height:unset;">
-    <div id="thread" class="grid is-align-content-center title has-text-centered" style="min-height: unset;">
+    <div id="thread" class="grid is-align-content-center title has-text-centered" style="min-height: unset;color:var(--edenlight-text-secondary)">
         {{if Status.Thread | IsValidThread}}
             {{if Status.Thread | IsImageThread}}
             <img src="{{(slice Status.Thread 6) | safeURL}}" alt="">

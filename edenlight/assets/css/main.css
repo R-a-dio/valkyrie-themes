@@ -286,6 +286,10 @@ label#stream-play-pause {
     border-top: 2px solid var(--edenlight-border-darker) !important;
 }
 
+#notdjs > .grid {
+    border-top:unset !important;;
+}
+
 .navbar-item:hover {
     --bulma-navbar-item-background-l-delta: unset !important;
     --bulma-navbar-item-background-a: unset !important;
