@@ -129,7 +129,28 @@
 </div>
 {{end}}
 
+{{define "thread"}}
+{{if not (Status.User | IsRobot)}}
+<div id="queue-container" hx-swap-oob="innerHTML"></div>
+<p class="title is-4 has-text-centered is-hidden-touch">Thread</p>
+<div class="notification fixed-grid has-1-cols py-3">
+    <div id="thread" class="grid is-align-content-center title has-text-centered">
+        {{if Status.Thread | IsValidThread}}
+            {{if Status.Thread | IsImageThread}}
+            <img src="{{(slice Status.Thread 6) | safeURL}}" alt="">
+            {{else}}
+            <a class="has-text-link" href="{{Status.Thread | safeURL}}" target="_blank">Thread up!</a>
+            {{end}}
+        {{else}}
+            There is no thread up.
+        {{end}}
+    </div>
+</div>
+{{end}}
+{{end}}
+
 {{define "queue"}}
+<div id="thread-container" hx-swap-oob="innerHTML"></div>
 <div class="fixed-grid has-12-cols">
     <div class="grid">
         {{range $idx, $queue := (.Limit 3)}}
