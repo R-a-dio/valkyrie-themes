@@ -63,10 +63,8 @@
             {{$progress := .SongInfo.Start | Since}}
             <div class="columns is-fullwidth">
                 <div class="column is-flex is-flex-direction-column is-justify-content-end is-fullheight">
-                    {{if .Song.HasTrack}}
                     <div class="is-size-5 has-word-break-all" style="cursor:help;" title="Song Title">{{.Song.Title}}</div>
                     <div class="is-size-6 has-word-break-all" style="cursor:help;" title="Artist">by {{.Song.Artist}}</div>
-                    {{end}}
                 </div>
             </div>
         </div>
