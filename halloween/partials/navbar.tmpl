@@ -1,0 +1,33 @@
+{{define "public-navbar"}}
+<nav class="navbar has-bg-none is-hidden" role="navigation" {{.NavBar.Attr}}>
+    <div class="navbar-brand is-hidden-desktop">
+        <a class="navbar-item" href="/">
+            Home
+        </a>
+        {{if .IsUser}}<button class="navbar-switch on-hover-darken" onclick="toggleNavbarState('public')"></button>{{end}}
+        <a role="button" class="navbar-burger" style="color: #FFF;" aria-label="menu" aria-expanded="false" data-target="public-navbar" onclick="this.classList.toggle('is-active'); document.getElementById(this.dataset.target).classList.toggle('is-active')">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+    </div>
+    <div id="public-navbar" class="navbar-menu is-justify-content-center">
+        <div class="navbar-container is-flex is-justify-content-space-evenly">
+            <a id="radio-logo" class="navbar-item is-hidden-touch" href="/">
+                Home
+            </a>
+            <div class="navbar-start has-text-centered">
+            {{with .NavBar.Values}}{{range slice . 1}}
+                <a class="navbar-item" {{.Attr}}>{{.Name}}</a>
+            {{end}}{{end}}
+            </div>
+
+        </div>
+        {{if .IsUser}}<button class="navbar-switch on-hover-darken" onclick="toggleNavbarState('public')"></button>{{end}}
+    </div>
+</nav>
+<progress id="loading-indicator" class="progress is-small is-primary htmx-indicator is-hidden"></progress>
+{{if .IsUser}}{{template "admin-navbar" .}}{{end}}
+{{end}}
+{{define "navbar"}}{{template "public-navbar" .}}{{end}}

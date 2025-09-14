@@ -1,0 +1,254 @@
+@charset "utf-8";
+@use "../../../bulma/versions/bulma-no-dark-mode.scss";
+
+:root {
+  --text-link: var(--blue);
+  --text-link-hover: var(--blue-darker);
+
+  --color-lighter: 59%;
+  --color-darker: 39%;
+  --orange: hsl(14, 47%, var(--color-lighter));
+  --orange-dark: hsl(14, 47%, var(--color-darker));
+  --yellow: hsl(44, 47%, var(--color-lighter));
+  --yellow-dark: hsl(44, 47%, var(--color-darker));
+  --green: hsl(153, 47%, var(--color-lighter));
+  --green-dark: hsl(153, 47%, var(--color-darker));
+  --turquoise: hsl(171, 47%, 70%);
+  --turquoise-darker: hsl(171, 47%, 50%);
+  --cyan: hsl(207, 47%, var(--color-lighter));
+  --cyan-darker: hsl(207, 47%, var(--color-darker));
+  --blue: hsl(208, 47%, var(--color-lighter));
+  --blue-darker: hsl(208, 47%, var(--color-darker));
+  --purple: hsl(271, 47%, var(--color-lighter));
+  --purple-dark: hsl(271, 47%, var(--color-darker));
+  --red: hsl(348, 47%, 70%);
+  --red-darker: hsl(348, 47%, 50%);
+
+  --radio-border: var(--radio-primary-2);
+  --radio-border-radius-1: 4px;
+  --radio-border-radius-2: 6px;
+
+  --bulma-text: var(----edenlight-text-primary);
+  --bulma-text-strong: var(--bulma-text);
+  --bulma-link-text: var(--blue);
+
+  --bulma-block-spacing: 0.75rem;
+
+  --bulma-card-shadow: hsl(0, 0%, 0%);
+
+  --bulma-progress-value-background-color: #38A8E4 !important;
+}
+
+.is-request {
+  color: var(--blue);
+}
+
+.notification {
+  color: var(----edenlight-text-primary);
+}
+
+// button
+
+button.is-danger:hover,
+button.is-info:hover,
+button.is-primary:hover,
+button.is-request:hover,
+button.is-success:hover,
+button.is-warning:hover {
+  border-color: hsla(0, 0%, 100%, 25%);
+  color: hsl(0, 0%, 80%) !important;
+  transition: .125s all ease-in-out;
+}
+
+a .button {
+  color: var(----edenlight-text-primary);
+}
+
+// input
+
+.input:focus,
+.textarea:focus {
+  box-shadow: var(--bulma-input-focus-shadow-size) hsla(208, 47%, 39%, var(--bulma-input-focus-shadow-alpha))
+}
+
+// message
+
+.message-header {
+  background-color: hsl(var(--bulma-scheme-h), var(--bulma-scheme-s), var(--bulma-scheme-main-ter-l));
+  color: var(--edenlight-text-secondary);
+}
+
+.message-body {
+  position: relative;
+}
+
+.message-body::before:not(#page-chat .message-body) {
+  content: '';
+  position: absolute;
+  left: 1rem; /* 10px from the left edge */
+  right: 1rem; /* 10px from the right edge */
+  top: 0;
+  height: 2px; /* Border thickness */
+  background: var(--edenlight-border); /* Or any color/gradient */
+}
+
+.message-body:not(#page-chat .message-body) {
+  border-radius: 0 0 var(--bulma-message-body-radius) var(--bulma-message-body-radius);
+}
+
+// navbar
+
+// generic elements
+
+a {
+  color: var(--text-link);
+}
+
+a:hover {
+  color: var(--text-link-hover);
+}
+// other elements
+
+.pagination-link:not(.is-current),
+.pagination-next,
+.pagination-previous {
+  background-color: var(--radio-primary-3);
+}
+
+.pagination-link.is-current {
+  background-color: var(--blue);
+  border-color: var(--blue);
+  color: var(----edenlight-text-secondary);
+}
+
+.pagination-link.is-current:hover {
+  filter: brightness(0.8);
+  transition: 0.125s all ease-in-out;
+}
+
+.pagination a.button:not(.is-current):not(.is-disabled):hover {
+  filter: brightness(0.8);
+  color: var(----edenlight-text-secondary);
+  transition: 0.125s all ease-in-out;
+}
+
+
+// song info
+
+.song-info {
+  color: var(----edenlight-text-primary) !important;
+}
+
+.song-info:hover {
+  background-color: unset !important;
+}
+
+.song-info:hover>.columns>.column,
+.song-info:hover>.fixed-grid>.grid>.cell {
+  background-color: var(--radio-secondary-2) !important;
+  transition: 0.125s all ease-in-out;
+}
+
+
+// misc or wip,
+
+#search-bar-popup>.columns:nth-child(even) {
+  background-color: var(--radio-secondary-3) !important;
+  border-top: unset !important;
+}
+
+#search-bar-popup {
+  border: 2px solid var(--radio-primary-3) !important;
+}
+
+#options-button-dropdown {
+  border: 1px solid var(--radio-border);
+}
+
+.content-border-top {
+  border-top: 2px solid var(--radio-primary-3) !important;
+  border-radius: 0px 0px 6px 6px;
+}
+
+.lp-dj-image {
+  border: 6px solid var(--radio-secondary-1);
+}
+
+.title {
+  color: var(--edenlight-text-primary);
+}
+
+.box > .title {
+  color: var(--edenlight-text-secondary);
+}
+
+.content h1,
+.content h2,
+.content h3,
+.content h4,
+.content h5,
+.content h6 {
+  color: unset;
+}
+
+// button colors
+
+.is-primary {
+  color: var(----edenlight-text-secondary);
+  background-color: var(--green);
+}
+
+.is-info {
+  color: var(----edenlight-text-secondary);
+  background-color: var(--blue);
+}
+
+.is-danger {
+  color: var(----edenlight-text-secondary);
+  background-color: var(--red);
+}
+
+.is-warning {
+  color: var(----edenlight-text-secondary);
+  background-color: var(--orange);
+}
+
+.is-success {
+  color: var(----edenlight-text-secondary);
+  background-color: var(--turquoise);
+}
+
+// text colors
+
+.has-text-primary {
+  color: var(--green-darker) !important;
+}
+
+.has-text-info {
+  color: var(--blue-darker) !important;
+}
+
+.has-text-danger {
+  color: var(--red-darker) !important;
+}
+
+.has-text-warning {
+  color: var(--orange-darker) !important;
+}
+
+.has-text-success {
+  color: var(--turquoise-darker) !important;
+}
+
+.disable-message-border {
+  border: none !important;
+}
+
+.message a {
+  color: var(--blue) !important;
+  text-decoration: none !important;
+}
+
+.card {
+  box-shadow: none !important;
+}
