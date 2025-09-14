@@ -68,9 +68,14 @@
                     </div>        
                 </div>
                 <div class="column is-flex is-flex-direction-column is-justify-content-end pl-2 pb-2">
+                    <div class="is-size-7 has-word-break-all">{{.Song.Metadata}}</div>
+<!--                    
+                    {{if .Song.HasTrack}}
                     <div class="is-size-7 has-word-break-all" style="cursor:help;" title="Album">{{.Song.Album}}</div>
                     <div class="is-size-6 has-word-break-all" style="cursor:help;" title="Song Title">{{.Song.Title}}</div>
                     <div class="is-size-7 has-word-break-all" style="cursor:help;" title="Artist">{{.Song.Artist}}</div>
+                    {{end}}
+-->
                 </div>
             </div>
         </div>
@@ -140,8 +145,7 @@
 {{define "thread"}}
 {{if not (Status.User | IsRobot)}}
 <div id="queue-container" hx-swap-oob="innerHTML"></div>
-<p class="title is-4 has-text-centered is-hidden-touch">Thread</p>
-<div class="notification fixed-grid has-1-cols py-3">
+<div class="notification fixed-grid has-1-cols py-3" style="min-height:unset;">
     <div id="thread" class="grid is-align-content-center title has-text-centered">
         {{if Status.Thread | IsValidThread}}
             {{if Status.Thread | IsImageThread}}

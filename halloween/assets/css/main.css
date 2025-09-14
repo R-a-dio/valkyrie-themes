@@ -307,7 +307,7 @@ label#stream-play-pause {
 
 /* Halloween start */
 
-.box, .button {
+.box, .button, .glass {
     background-color: rgba(0, 0, 0, 0.5) !important;
     color: #FFF;
     box-shadow: 0px 0px 3px 3px rgba(0,0,0,0.5);

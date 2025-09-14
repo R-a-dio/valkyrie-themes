@@ -59,12 +59,18 @@
 {{define "nowplaying"}}
 <div class="fixed-grid has-12-cols is-fullheight">
     <div class="grid box has-shadow is-fullheight">
-        <div class="cell is-col-span-12 is-row-span-2 is-fullheight is-flex is-flex-direction-column is-align-items-center">
+        <div class="cell is-col-span-12 is-fullheight">
             {{$progress := .SongInfo.Start | Since}}
-            <div class="columns is-fullwidth">
-                <div class="column is-flex is-flex-direction-column is-justify-content-end is-fullheight">
-                    <div class="is-size-5 has-word-break-all" style="cursor:help;" title="Song Title">{{.Song.Title}}</div>
-                    <div class="is-size-6 has-word-break-all" style="cursor:help;" title="Artist">by {{.Song.Artist}}</div>
+            <div class="is-fullwidth is-fullheight">
+                <div class="is-fullheight">
+                    <div class=" is-size-5 is-fullheight is-align-content-center has-text-centered has-word-break-all">{{.Song.Metadata}}</div>
+<!--                    
+                    {{if .Song.HasTrack}}
+                    <div class="is-size-7 has-word-break-all" style="cursor:help;" title="Album">{{.Song.Album}}</div>
+                    <div class="is-size-6 has-word-break-all" style="cursor:help;" title="Song Title">{{.Song.Title}}</div>
+                    <div class="is-size-7 has-word-break-all" style="cursor:help;" title="Artist">{{.Song.Artist}}</div>
+                    {{end}}
+-->
                 </div>
             </div>
         </div>
@@ -114,13 +120,13 @@
     {{range $idx, $lp := Reverse .}}
     {{if gt $idx 1}}
     {{if eq $idx 4}}
-    <div class="cell is-size-{{Sub 9 $idx}} is-col-span-2 has-text-left has-text-shadow glass">Just Played</div>
-    <div class="cell is-col-span-10 has-text-right glass">
+    <div class="cell is-size-{{Sub 9 $idx}} is-col-span-2 has-text-left has-text-shadow">Just Played</div>
+    <div class="cell is-col-span-10 has-text-right">
         <div class="is-size-{{Sub 9 $idx}} has-text-shadow">{{$lp.Metadata}}</div>
     </div>
     {{else}}
-    <div class="cell is-size-{{Sub 9 $idx}} is-col-span-2 has-text-left is-size-5 has-text-shadow glass"><time datetime="{{$lp.LastPlayed.Unix}}" data-type="pretty">{{Until $lp.LastPlayed | PrettyDuration}}</time></div>
-    <div class="cell is-col-span-10 has-text-right glass">
+    <div class="cell is-size-{{Sub 9 $idx}} is-col-span-2 has-text-left is-size-5 has-text-shadow"><time datetime="{{$lp.LastPlayed.Unix}}" data-type="pretty">{{Until $lp.LastPlayed | PrettyDuration}}</time></div>
+    <div class="cell is-col-span-10 has-text-right">
         <div class="is-size-{{Sub 9 $idx}} has-text-shadow">{{$lp.Metadata}}</div>
     </div>
     {{end}}
@@ -133,8 +139,7 @@
 {{define "thread"}}
 {{if not (Status.User | IsRobot)}}
 <div id="queue-container" hx-swap-oob="innerHTML"></div>
-<p class="title is-4 has-text-centered is-hidden-touch">Thread</p>
-<div class="notification fixed-grid has-1-cols py-3">
+<div class="notification fixed-grid has-1-cols py-3 glass" style="min-height: unset;">
     <div id="thread" class="grid is-align-content-center title has-text-centered">
         {{if Status.Thread | IsValidThread}}
             {{if Status.Thread | IsImageThread}}
@@ -158,15 +163,15 @@
     <div class="grid">
         {{range $idx, $queue := (.Limit 3)}}
         {{if eq $idx 0}}
-        <div class="cell is-col-span-10 has-text-left glass">
+        <div class="cell is-col-span-10 has-text-left">
             <div class="is-size-{{Sub 5 (Sub 0 $idx)}} has-text-shadow">{{$queue.Metadata}}</div>
         </div>
-        <div class="cell is-size-{{Sub 5 (Sub 0 $idx)}} is-col-span-2 has-text-right is-size-5 has-text-shadow glass">Coming Up Next</div>
+        <div class="cell is-size-{{Sub 5 (Sub 0 $idx)}} is-col-span-2 has-text-right is-size-5 has-text-shadow">Coming Up Next</div>
         {{else}}
-        <div class="cell is-col-span-10 has-text-left glass">
+        <div class="cell is-col-span-10 has-text-left">
             <div class="is-size-{{Sub 5 (Sub 0 $idx)}} has-text-shadow">{{$queue.Metadata}}</div>
         </div>
-        <div class="cell is-size-{{Sub 5 (Sub 0 $idx)}} is-col-span-2 has-text-right is-size-5 has-text-shadow glass"><time datetime="{{$queue.ExpectedStartTime.Unix}}" data-type="pretty">{{Until $queue.ExpectedStartTime | PrettyDuration}}</time></div>
+        <div class="cell is-size-{{Sub 5 (Sub 0 $idx)}} is-col-span-2 has-text-right is-size-5 has-text-shadow"><time datetime="{{$queue.ExpectedStartTime.Unix}}" data-type="pretty">{{Until $queue.ExpectedStartTime | PrettyDuration}}</time></div>
         {{end}}
         {{end}}
     </div>
