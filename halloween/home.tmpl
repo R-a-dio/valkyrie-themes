@@ -153,6 +153,8 @@
 {{end}}
 
 {{define "queue"}}
+
+{{if (Status.User | IsRobot)}}
 <div id="thread-container" hx-swap-oob="innerHTML"></div>
 <div class="fixed-grid has-12-cols">
     <div class="grid">
@@ -171,6 +173,7 @@
         {{end}}
     </div>
 </div>
+{{end}}
 {{end}}
 
 {{define "streamer"}}
