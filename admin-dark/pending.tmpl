@@ -11,9 +11,7 @@
     </div>
     <div id="pending" class="container grid">
         {{range $song := .Submissions}}
-            <div class="cell">
-            {{template "form_admin_pending" $song}}
-            </div>
+        {{template "form_admin_pending" $song}}
         {{end}}
     </div>
 </section>
