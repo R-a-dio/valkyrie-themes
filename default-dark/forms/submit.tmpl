@@ -28,7 +28,7 @@
     </div>
     <div class="cell field">
         <div class="block select is-fullwidth">
-            <select class="is-fullwidth">
+            <select class="is-fullwidth" name="replacement">
                 <option value="0">No replacement</option>
                 {{range .NeedReplacementList}}
                 <option value="{{.TrackID}}">{{.Metadata}}</option>
