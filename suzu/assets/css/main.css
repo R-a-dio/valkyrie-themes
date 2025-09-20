@@ -1,0 +1,31 @@
+.ball {
+	position: fixed;
+	border-radius: 50%;
+	width: var(--d);
+	height: var(--d);
+	left: 0;
+	top: 0;
+	overflow: hidden;
+	transform-origin: center;
+	will-change: left, top, transform
+}
+
+.ball.pop {
+	animation: pop .25s cubic-bezier(.2, .9, .25, 1.1)
+}
+
+@keyframes pop {
+	from {
+		transform: scale(.01);
+		opacity: .7
+	}
+
+	50% {
+		transform: scale(1.15)
+	}
+
+	to {
+		transform: none;
+		opacity: 1
+	}
+}

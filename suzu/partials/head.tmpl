@@ -1,0 +1,13 @@
+{{define "head"}}
+<link rel="stylesheet" href="{{WithVersion "/assets/default-dark/css/bulma.min.css"}}" />
+<link rel="preload" href="{{WithVersion "/assets/default-dark/css/fonts.css"}}" as="style" />
+<link rel="preload" href="{{WithVersion "/assets/default-dark/css/main.css"}}" as="style" />
+<link rel="stylesheet" href="{{WithVersion "/assets/default-dark/css/fonts.css"}}" />
+<link rel="stylesheet" href="{{WithVersion "/assets/default-dark/css/main.css"}}" />
+<link rel="stylesheet" href="{{WithVersion "/assets/suzu/css/main.css"}}" />
+
+<style id="custom-css"></style>
+<script src="{{WithVersion "/assets/default-dark/js/theme.js"}}"></script>
+<script src="{{WithVersion "/assets/suzu/js/theme.js"}}"></script>
+{{end}}
+{{define "full-page-body"}}class="theme-dark"{{end}}
