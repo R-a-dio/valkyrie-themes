@@ -29,3 +29,18 @@
 		opacity: 1
 	}
 }
+
+@media (hover: hover) {
+  img[src="/assets/images/logo_image_small.png"]{
+    cursor: pointer;
+    will-change: transform, box-shadow;
+  }
+  img[src="/assets/images/logo_image_small.png"]:hover,
+  img[src="/assets/images/logo_image_small.png"]:focus-visible {
+    transform: scale(1.03);
+  }
+  img[src="/assets/images/logo_image_small.png"]:active {
+    transform: scale(.985);
+    transition-duration: 80ms;
+  }
+}
