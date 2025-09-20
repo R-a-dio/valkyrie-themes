@@ -5,7 +5,7 @@ const C = { // C(onfig)
   initSpeedMin: 2.5, initSpeedMax: 5.0, spawnSpeedMin: 12.5, spawnSpeedMax: 13.5,
   minBalls: 2, maxBalls: 5, minSize: 25, maxSize: 75,
   minLaunch: Math.PI*0.15, maxLaunch: Math.PI*0.85,
-  imageUrl: '/api/dj-image/1',
+  imageUrl: '/api/dj-image/50',
   minBounceVel: 0.9, separation: 0.5, damping: 0.8, upwardImpulse: 5
 };
 const rnd=(a,b)=>a+Math.random()*(b-a), rInt=(a,b)=>Math.floor(rnd(a,b+1));
