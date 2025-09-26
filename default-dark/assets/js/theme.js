@@ -164,77 +164,132 @@ const togglePlayPauseAdmin = (element, songIdentifier) => {
     }
 }
 
-function addTimezoneContext(text, weekday = null) {
-  const userOffset = -(new Date().getTimezoneOffset()) / 60;
-  const estOffset = -5;
-  const diffFromEST = userOffset - estOffset;
-  
-  const weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-  const weekdayIndex = weekday ? weekdays.indexOf(weekday) : new Date().getDay();
-
-  const baseDate = new Date();
-  const currentDayIndex = baseDate.getDay();
-  const diff = weekdayIndex - currentDayIndex;
-  baseDate.setDate(baseDate.getDate() + diff);
-  
-  return text.replace(
-      /\b(\d{1,2}(?::\d{2})?(?:\s*[AaPp][Mm])?|\d{2}:\d{2})\b/g, 
-      (match) => {
-          let hour = 0;
-          let minutes = 0;
-          
-          if (match.includes(':')) {
-              const [h, m] = match.split(':');
-              hour = parseInt(h);
-              minutes = parseInt(m);
-              if (match.toLowerCase().includes('pm') && hour < 12) hour += 12;
-              if (match.toLowerCase().includes('am') && hour === 12) hour = 0;
-          } else {
-              hour = parseInt(match);
-              if (match.toLowerCase().includes('pm') && hour < 12) hour += 12;
-              if (match.toLowerCase().includes('am') && hour === 12) hour = 0;
-          }
-          
-          const oldDate = new Date(baseDate);
-          oldDate.setHours(hour, minutes, 0, 0);
-          
-          const newDate = new Date(oldDate);
-          newDate.setHours(hour + diffFromEST, minutes, 0, 0);
-          
-          let newHour = newDate.getHours();
-          let period = 'AM';
-          
-          if (newHour >= 12) {
-              period = 'PM';
-              if (newHour > 12) newHour -= 12;
-          }
-          if (newHour === 0) newHour = 12;
-          
-          const formattedNewTime = `${newHour}${minutes ? ':' + String(minutes).padStart(2, '0') : ''} ${period}`;
-          
-          const oldDay = weekdays[oldDate.getDay()];
-          const newDay = weekdays[newDate.getDay()];
-          const dayChanged = oldDate.getDay() !== newDate.getDay();
-          
-          if (dayChanged) {
-              return `${match} <b style="font-size:0.8rem;">(${formattedNewTime} on ${newDay} for (You))</b>`;
-          } else {
-              return `${match} <b style="font-size:0.8rem;">(${formattedNewTime} for (You))</b>`;
-          }
-      }
-  );
+// determine if a given date falls within DST:
+// 2nd sunday in Mar to 1st sunday in Nov (US)
+function isDaylightSavingTime(date) {
+    const year = date.getFullYear();
+    
+    const march1 = new Date(year, 2, 1);
+    const march1Day = march1.getDay();
+    
+    let firstSundayMarch;
+    if (march1Day === 0) {
+        firstSundayMarch = 1;
+    } else {
+        firstSundayMarch = 8 - march1Day;
+    }
+    
+    const secondSundayMarch = firstSundayMarch + 7;
+    const dstStart = new Date(year, 2, secondSundayMarch);
+    
+    const november1 = new Date(year, 10, 1);
+    const november1Day = november1.getDay();
+    
+    let firstSundayNovember;
+    if (november1Day === 0) {
+        firstSundayNovember = 1;
+    } else {
+        firstSundayNovember = 8 - november1Day;
+    }
+    
+    const dstEnd = new Date(year, 10, firstSundayNovember);
+    
+    return date >= dstStart && date < dstEnd;
 }
 
+// get utc offset for ET (-4 for EDT, -5 for EST) 
+// based on whether the date is in DST
+function getETOffset(date) {
+    return isDaylightSavingTime(date) ? -4 : -5;
+}
+
+// convert all time mentions in input from ET to user's 
+// local timezone, accounting for DST in both zones
+function addTimezoneContext(text, weekday = null) {
+    const weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    const weekdayIndex = weekday ? weekdays.indexOf(weekday) : new Date().getDay();
+    
+    const baseDate = new Date();
+    const currentDayIndex = baseDate.getDay();
+    const diff = weekdayIndex - currentDayIndex;
+    baseDate.setDate(baseDate.getDate() + diff);
+    
+    return text.replace(
+        /\b(\d{1,2}(?::\d{2})?(?:\s*[AaPp][Mm])?|\d{2}:\d{2})\b/g, 
+        (match) => {
+            let hour = 0;
+            let minutes = 0;
+            
+            if (match.includes(':')) {
+                const [h, m] = match.split(':');
+                hour = parseInt(h);
+                minutes = parseInt(m);
+                if (match.toLowerCase().includes('pm') && hour < 12) hour += 12;
+                if (match.toLowerCase().includes('am') && hour === 12) hour = 0;
+            } else {
+                hour = parseInt(match);
+                if (match.toLowerCase().includes('pm') && hour < 12) hour += 12;
+                if (match.toLowerCase().includes('am') && hour === 12) hour = 0;
+            }
+            
+            const etDate = new Date(baseDate);
+            etDate.setHours(hour, minutes, 0, 0);
+            
+            const etOffset = getETOffset(etDate);
+            
+            const userRefDate = new Date(baseDate);
+            userRefDate.setHours(hour, minutes, 0, 0);
+            const userOffset = -(userRefDate.getTimezoneOffset()) / 60;
+            
+            const diffFromET = userOffset - etOffset;
+            
+            const userDate = new Date(etDate);
+            userDate.setHours(hour + diffFromET, minutes, 0, 0);
+            
+            const finalUserOffset = -(userDate.getTimezoneOffset()) / 60;
+            const finalDiff = finalUserOffset - etOffset;
+            
+            const finalUserDate = new Date(etDate);
+            finalUserDate.setHours(hour + finalDiff, minutes, 0, 0);
+            
+            let newHour = finalUserDate.getHours();
+            let period = 'AM';
+            
+            if (newHour >= 12) {
+                period = 'PM';
+                if (newHour > 12) newHour -= 12;
+            }
+            if (newHour === 0) newHour = 12;
+            
+            const formattedNewTime = `${newHour}${minutes ? ':' + String(minutes).padStart(2, '0') : ''} ${period}`;
+            
+            const oldDay = weekdays[etDate.getDay()];
+            const newDay = weekdays[finalUserDate.getDay()];
+            const dayChanged = etDate.getDay() !== finalUserDate.getDay();
+            
+            const timezoneLabel = isDaylightSavingTime(etDate) ? 'EDT' : 'EST';
+            
+            if (dayChanged) {
+                return `${match} ${timezoneLabel} <b style="font-size:0.8rem;">(${formattedNewTime} on ${newDay} for (You))</b>`;
+            } else {
+                return `${match} ${timezoneLabel} <b style="font-size:0.8rem;">(${formattedNewTime} for (You))</b>`;
+            }
+        }
+    );
+}
+
+// convert times in DOM elements with the specified class 
+// and process the text to add timezone conversions
 function processElementTimezones(className) {
-  const elementsToProcess = document.querySelectorAll(`${className}:not([data-timezone-processed])`);
-  
-  elementsToProcess.forEach(element => {
-      const originalText = element.textContent || element.innerText;
-      const weekday = element.dataset.weekday;
-      const processedText = addTimezoneContext(originalText, weekday);
-      element.innerHTML = processedText;
-      element.setAttribute('data-timezone-processed', 'true');
-  });
+    const elementsToProcess = document.querySelectorAll(`${className}:not([data-timezone-processed])`);
+    
+    elementsToProcess.forEach(element => {
+        const originalText = element.textContent || element.innerText;
+        const weekday = element.dataset.weekday;
+        const processedText = addTimezoneContext(originalText, weekday);
+        element.innerHTML = processedText;
+        element.setAttribute('data-timezone-processed', 'true');
+    });
 }
 
 function switchTab(button) {
