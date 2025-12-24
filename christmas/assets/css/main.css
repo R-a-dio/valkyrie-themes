@@ -1,0 +1,310 @@
+:root {
+    --eden-border-radius: 4px;
+    --edenlight-text-primary: hsl(0, 0%, 100%);
+    --edenlight-text-primary-darker: hsl(0, 0%, 75%);
+    --edenlight-text-secondary: hsl(222, 14%, 29%);
+    --edenlight-text-secondary-darker: hsl(222, 14%, 20%);
+    --edenlight-bg-color: #2A7CD3;
+    --edenlight-box-color: #FFF;
+
+    --bulma-body-color: var(--edenlight-text-primary);
+    --text-primary: var(--edenlight-text-primary);
+    --text-secondary: var(--edenlight-text-secondary);
+
+    --edenlight-color: #38A8E4;
+
+    --edenlight-border: rgba(0, 0, 0, 0.2);
+    --edenlight-border-darker: rgba(0, 0, 0, 0.4);
+}
+
+
+.progress.is-edenlight {
+    --bulma-progress-value-background-color: var(--edenlight-color) !important;
+}
+
+.select select::placeholder, .input::placeholder, .textarea::placeholder {
+    --bulma-input-placeholder-color: hsla(211, 14%, 21%, 0.6);
+}
+
+.footer {
+    display: none !important;
+}
+
+.content {
+    color: var(--edenlight-text-primary);
+}
+
+#page-news-single, 
+#page-help, 
+#page-chat, 
+#page-faves, 
+#page-lastplayed, 
+#page-news, 
+#page-queue, 
+#page-schedule, 
+#page-staff, 
+#page-submit {
+    color: var(--edenlight-text-secondary);
+}
+
+#page-search {
+    color: var(--edenlight-text-primary);
+}
+
+#page-search a {
+    filter: brightness(1.75);
+}
+
+#page-search p, #page-staff .title {
+    text-shadow: 0 2px 6px rgba(0,0,0,.3), 0 1px 2px rgba(0,0,0,.6);
+}
+
+.box, .button, .column, .dropdown-parent {
+    color: var(--edenlight-text-secondary);
+}
+
+button.is-danger,
+button.is-info,
+button.is-primary,
+button.is-request,
+button.is-success,
+button.is-warning {
+    color: var(--edenlight-text-primary);
+}
+
+body, html {
+    height: unset !important;
+    min-height: 100vh !important;
+}
+
+body {
+    background: var(--edenlight-bg-color) url("/assets/christmas/images/christmas.jpg") center/cover no-repeat fixed;
+}
+
+.is-available-width {
+    min-width: unset !important;
+    width: -moz-available;
+    width: -webkit-fill-available;
+}
+
+.is-rounded {
+    border-radius: var(--eden-border-radius) !important;
+}
+
+.has-border-faint {
+    border: 1px solid rgba(0, 0, 0, 0.25);
+}
+
+.svg-icon {
+    width: 1.5rem !important;
+    height: 1.5rem !important;
+}
+
+.box {
+    border-radius: var(--eden-border-radius);
+}
+
+#public-navbar.is-active .navbar-item {
+    color: #000 !important;
+}
+
+.navbar-item {
+    color: #FFF;
+}
+
+.has-bg-none {
+    background: none;
+    background-image: none;
+    backdrop-filter: none;
+    border: none;
+}
+
+.has-bg-glass {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.has-shadow { 
+    box-shadow: 0 10px 30px rgba(0,0,0,.1),
+                0 1px 8px rgba(0,0,0,.2)
+}
+
+.has-text-shadow {
+    text-shadow: 0 2px 6px rgba(0,0,0,.3),
+                 0 1px 2px rgba(0,0,0,.6);
+}
+
+#home-container {
+    max-width: 1100px;
+}
+
+#current-song-progress {
+    height: 1rem;
+    border-radius: 2px;
+}
+
+#start-stream::before {
+    content: '';
+    display: inline-block;
+    width: 1.5rem;
+    height: 1.5rem;
+    vertical-align: middle;
+    margin-right: 0.5rem;
+    background: url("/assets/default-dark/svg/outline/play.svg") center/contain no-repeat;
+}
+
+/*needed if the prefs button is turned into a dropdown
+#prefs-dropdown, #prefs-dropdown-box {
+    z-index: 2;
+}
+
+#prefs-dropdown-box {
+    background-color: var(--edenlight-box-color);
+}
+
+#prefs-dropdown summary {
+    list-style: none;
+    position: relative;
+    top: 1px;
+}
+
+#prefs-dropdown summary::-webkit-details-marker {
+    display: none;
+}
+
+#prefs-dropdown summary::before {
+    content: '';
+    display: inline-block;
+    width: 1.25rem;
+    height: 1.25rem;
+    vertical-align: middle;
+    margin-right: 0.25rem;
+    background: url("/assets/default-dark/svg/outline/adjustments-horizontal.svg") center/contain no-repeat;
+    position: relative;
+    top: -1px;
+}*/
+
+#prefs-dropdown::before {
+    content: '';
+    display: inline-block;
+    width: 1.25rem;
+    height: 1.25rem;
+    vertical-align: middle;
+    margin-right: 0.25rem;
+    background: url("/assets/default-dark/svg/outline/adjustments-horizontal.svg") center/contain no-repeat;
+    position: relative;
+    top: -1px;
+}
+
+#direct-link::before {
+    content: '';
+    display: inline-block;
+    width: 1.25rem;
+    height: 1.25rem;
+    vertical-align: middle;
+    margin-right: 0.25rem;
+    background: url("/assets/default-dark/svg/outline/musical-note.svg") center/contain no-repeat;
+}
+
+#help-button::before {
+    content: '';
+    display: inline-block;
+    width: 1.25rem;
+    height: 1.25rem;
+    vertical-align: middle;
+    margin-right: 0.25rem;
+    background: url("/assets/default-dark/svg/outline/question-mark-circle.svg") center/contain no-repeat;
+}
+
+.icon-wrapper {
+    display: inline-block;
+    width: 1.25rem;
+    height: 1.25rem;
+    vertical-align: middle;
+    margin-right: 0.25rem;
+    background: url("/assets/default-dark/svg/outline/play-circle.svg") center/contain no-repeat;
+}
+
+#stream-state:checked ~ button .icon-wrapper {
+    background-image: url("/assets/default-dark/svg/outline/pause-circle.svg");
+}
+
+label#stream-play-pause {
+    cursor: pointer;
+    user-select: none;
+}
+
+#lastplayed, #queue {
+    min-height: unset;
+}
+
+#lastplayed li, #queue li {
+}
+
+#dj-title {
+    border-bottom: 2px solid rgba(0, 0, 0, 0.25);
+    padding-bottom: 0;
+    margin-bottom: calc(var(--bulma-grid-gap) + 1px);
+    margin-right: calc(-0.25 * var(--bulma-grid-gap));
+}
+
+#listener-count {
+    white-space: pre;
+}
+
+.navbar-switch::before {
+    background-color: var(--edenlight-text-primary);
+}
+
+#prefs-modal {
+    color: var(--edenlight-text-secondary);
+}
+
+.is-color-dj {
+    color: var(--blue-darker);
+}
+
+.is-color-dev {
+    color: var(--red-darker);
+}
+
+.is-color-staff {
+    color: var(--green-darker);
+}
+
+.on-hover-darken:hover {
+    filter: brightness(0.95)
+}
+
+.has-border-top {
+    border-top: 2px solid var(--edenlight-border);
+}
+
+#page-staff .grid {
+    border-top: 2px solid var(--edenlight-border-darker) !important;
+}
+
+#notdjs > .grid {
+    border-top:unset !important;;
+}
+
+.navbar-item:hover {
+    --bulma-navbar-item-background-l-delta: unset !important;
+    --bulma-navbar-item-background-a: unset !important;
+    color: var(--edenlight-text-primary-darker);
+}
+
+.pagination .button:not(.is-current) {
+    background-color: var(--edenlight-box-color);
+}
+
+.pagination .button.is-current {
+    color: var(--edenlight-text-primary);
+}
+
+.is-targeted {
+    border-color: var(--red);
+    border-width: 5px;
+}

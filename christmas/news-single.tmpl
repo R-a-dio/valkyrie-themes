@@ -1,0 +1,60 @@
+{{define "news-comments"}}
+<div class="columns">
+    <div class="column is-hidden-tablet has-background-radio-secondary-1 is-align-self-flex-start mb-4">
+        <form method="POST" action="{{.RequestURL}}" hx-post="{{.RequestURL}}" hx-push-url="false" hx-target="#content">
+            {{.CSRFTokenInput}}
+            <textarea id="news-comment-input-1" name="comment" rows="4" class="textarea mb-4" placeholder="Enter a comment..." onkeyup="countNewsInputCharacters(event)"></textarea>
+            <div class="columns">
+                <div class="column is-8 has-text-centered">
+                    <p>{{if .User}}Logged in (as {{.User.Username}}){{else}}Not logged in{{end}}</p>
+                    <p>Comments use markdown formatting (<a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet">guide</a>)</p>
+                    <p><span id="news-comment-character-counter-1">500</span> characters remaining.</p>
+                </div>
+                <div class="column is-narrow is-flex is-align-self-flex-end">
+                    <button class="submit button is-primary is-fullwidth">Submit</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="column is-8 m-0 p-0">
+        {{if .Post.Comments}}
+        {{range .Post.Comments}}
+        <div id="comment-{{.ID}}" class="column block has-background-radio-secondary-1 mb-4">
+            <div class="columns is-flex-mobile">
+                <div class="column is-narrow ml-1 {{with .User}}{{if .DJ.Role}}is-color-{{.DJ.Role}}{{end}}{{end}} pb-1">{{with .User}}{{.Username}} <span class="is-uppercase is-size-7">## {{.DJ.Role}}</span>{{else}}Anonymous ({{.Identifier}}){{end}}</div>
+                <div class="column pr-0 pb-1" style="text-align:end">{{.CreatedAt | AbsoluteDate}}</div>
+                <div class="column is-narrow-mobile is-narrow mr-1 pl-2 pb-1"><a class="post-id is-clickable" onclick="quotePost({{.ID}})">#{{.ID}}</a></div>
+            </div>
+            <div class="block has-background-radio-primary-2 content-border-top-light disable-border-radius">
+                <div class="p-4">
+                    {{if and $.User (or ($.User.UserPermissions.Has "staff") ($.User.UserPermissions.Has "admin"))}}
+                    <form method="POST" action="/admin/news/comments/remove?id={{.ID}}" hx-post="/admin/news/comments/remove?id={{.ID}}" hx-push-url="false" hx-swap="outerHTML" hx-target="#comment-{{.ID}}">
+                        {{$.CSRFTokenInput}}
+                        <button type="submit" class="button is-small p-2 is-warning is-pulled-right" style="margin-top:-0.5rem;margin-right:-0.5rem;">Delete</button>
+                    </form>
+                    {{end}}
+                    {{.Body}}
+                </div>
+            </div>
+        </div>
+        {{end}}
+        {{else}}
+        <div class="column block is-fullheight has-background-radio-secondary-1 mb-4">
+                <div class="is-fullheight has-centered-content p-4">
+                    There are no comments to show yet. Be the first one to comment!
+                </div>
+        </div>
+        {{end}}
+    </div>
+    <div class="column box is-hidden-mobile has-background-radio-secondary-1 is-align-self-flex-start ml-4">
+        <form method="POST" action="{{.RequestURL}}" hx-post="{{.RequestURL}}" hx-push-url="false" hx-target="#content">
+            {{.CSRFTokenInput}}
+            <textarea id="news-comment-input-2" name="comment" rows="4" class="textarea mb-4" placeholder="Enter a comment..." onkeyup="countNewsInputCharacters(event)"></textarea>
+            <button class="submit button is-primary" style="position:relative;float:right;">Submit</button>
+            <p>{{if .User}}Logged in (as {{.User.Username}}){{else}}Not logged in{{end}}</p>
+            <p>Comments use markdown formatting (<a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet">guide</a>)</p>
+            <p><span id="news-comment-character-counter-2">500</span> characters remaining.</p>
+        </form>
+    </div>
+</div>
+{{end}}
