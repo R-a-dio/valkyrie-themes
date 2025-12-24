@@ -84,26 +84,26 @@
 {{end}}
 
 {{define "info-above-np"}}
-<div class="cell box is-col-span-1 is-flex is-align-items-center p-2 m-0"><img src="/assets/images/logotitle_2.png" alt="r/a/dio"></div>
+<!--<div class="cell box is-col-span-1 is-flex is-align-items-center p-2 m-0">-->
+    <!--<img src="/assets/images/logotitle_2.png" alt="r/a/dio">-->
+    <button id="is-col-span-1- is-flex p-2 m-0 stream-play-pause-container" class="button is-small">
+        <span class="icon-wrapper"></span>
+        <label for="stream-state" id="stream-play-pause" style="position:relative;top:-1px;">
+            Start stream
+        </label>
+    </button>
+<!--</div>-->
 <div class="cell box is-col-span-11 is-flex is-align-items-center is-col-span-8-mobile p-2 m-0">
     <div class="m-0">
         There are currently <span class="has-text-weight-medium">{{Status.Listeners}}</span> listeners tuned in to <span class="has-text-weight-medium">{{Status.User.DJ.Name}}'s</span> stream.
     </div>
     <div class="buttons ml-auto" hx-preserve>
         <input type="checkbox" id="stream-state" class="is-hidden">
-        <button id="stream-play-pause-container" class="button is-small">
-            <span class="icon-wrapper"></span>
-            <label for="stream-state" id="stream-play-pause" style="position:relative;top:-1px;">
-                Start stream
-            </label>
-        </button>
+        <button class="button is-small" style="border:unset;background-color:unset;backdrop-filter:unset;box-shadow:unset;"><input id="stream-volume" class="is-fullwidth" type="range" min="0" max="100" step="1" value="80" onwheel="handleVolumeScroll(event)"></button>
         <button id="direct-link" class="button is-small">
             <a href="/main" class="disable-link-color" style="position:relative;top:-1px;">Direct link</a>
         </button>
         <button id="prefs-dropdown" class="button is-small" onclick="toggleClassOnClick(this)" data-class="is-active" data-target="prefs-modal">Preferences</buttons>
-        <button id="help-button" class="button is-small">
-            <a id="help-link" href="/help#stream-help" class="disable-link-color">Help</a>
-        </button>
     </div>
 </div>
 {{end}}
