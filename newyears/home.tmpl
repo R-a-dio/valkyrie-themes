@@ -1,0 +1,208 @@
+{{define "footer"}}<div class="footer is-hidden"></div>{{end}}
+
+{{define "content"}}
+<div class="hero is-fullheight" style="margin-top: calc(-1 * var(--bulma-navbar-height))">
+    <div class="hero-body">
+        <div id="home-container" class="container" hx-ext="sse" sse-connect="/v1/sse">
+            <div class="fixed-grid has-12-cols">
+                <div class="grid">
+                    <div class="cell is-col-span-12">
+                        <div id="lastplayed" class="" sse-swap="lastplayed">
+                            {{template "lastplayed" .LastPlayed}}
+                        </div>
+                    </div>
+                    <div class="cell is-col-span-12">
+                        <div class="fixed-grid has-12-cols">
+                            <div class="grid">
+                                {{template "info-above-np" .}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="cell is-col-span-1 is-col-span-12-mobile is-hidden-tablet">
+                        <div id="djcontainer" class="">
+                            {{template "streamer" .Status.User}}
+                        </div>
+                    </div>
+                    <div class="cell is-col-span-11 is-col-span-12-mobile">
+                        <div id="nowplaying" class="is-fullheight" sse-swap="metadata">
+                            {{template "nowplaying" .Status}}
+                        </div>
+                    </div>
+                    <div class="cell is-col-span-1 is-hidden-mobile">
+                        <div id="djcontainer" class="">
+                            {{template "streamer" .Status.User}}
+                        </div>
+                    </div>
+                    {{with .News}}
+                    <div class="cell is-col-span-12 is-hidden">
+                        <div class="fixed-grid has-12-cols">
+                            <div class="grid">
+                                {{range .}}
+                                <div class="news-title cell is-col-span-4 is-col-span-12-mobile">
+                                    {{template "news-post-home" .}}
+                                </div>
+                                {{end}}
+                            </div>
+                        </div>
+                    </div>
+                    {{end}}
+                    <div class="cell is-col-span-12">
+                        <div id="thread-container" sse-swap="thread">
+                            {{template "thread" .Status.Thread}}
+                        </div>
+                        <div id="queue" class="" sse-swap="queue">
+                            {{template "queue" .Queue}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{end}}
+
+{{define "nowplaying"}}
+<div class="fixed-grid has-12-cols is-fullheight">
+    <div class="grid box has-shadow is-fullheight">
+        <div class="cell is-col-span-12 is-fullheight">
+            {{$progress := .SongInfo.Start | Since}}
+            <div class="is-fullwidth is-fullheight">
+                <div class="is-fullheight">
+                    <div class=" is-size-5 is-fullheight is-align-content-center has-text-centered has-word-break-all">{{.Song.Metadata}}</div>
+                </div>
+            </div>
+        </div>
+        <div class="cell is-col-span-12 is-flex is-align-items-center is-justify-content-space-between">
+            <div id="progress-current" class="is-flex is-align-items-center" data-start="{{.SongInfo.Start.UnixMilli}}">{{$progress | MediaDuration}}</div>
+            <progress id="current-song-progress" class="progress is-edenlight is-available-width is-flex is-align-items-center my-0 mx-5" value="{{$progress | ToSecond}}" max="{{.Song.Length.Seconds}}">
+            </progress>
+            <div id="progress-max" class="is-flex is-align-items-center">{{.Song.Length | MediaDuration}}</div>                
+        </div>
+    </div>
+</div>
+{{end}}
+
+{{define "listeners"}}
+    <span id="listener-count"> {{.}} </span>
+{{end}}
+
+{{define "footer"}}
+{{end}}
+
+{{define "info-above-np"}}
+<!--<div class="cell box is-col-span-1 is-flex is-align-items-center p-2 m-0"><img src="/assets/images/logotitle_2.png" alt="r/a/dio"></div>-->
+<!--<div class="cell box is-col-span-1 is-flex is-align-items-center p-2 m-0" style="background-color:unset;">-->
+<!--</div>-->
+<button id="stream-play-pause-container" class="cell box p-2 m-0 button is-small is-col-span-1 is-col-span-12-mobile on-hover-darken-darker" style="border:unset;">
+    <label for="stream-state" id="stream-play-pause" style="position:relative;top:-1px;">
+        Start Stream
+    </label>
+</button>
+<div class="cell box is-col-span-6 is-flex is-align-items-center is-col-span-12-mobile p-2 m-0">
+    <div class="m-auto has-text-centered">
+        There are currently <span class="has-text-weight-medium">{{Status.Listeners}}</span> bots "listening" to <span class="has-text-weight-medium">{{Status.User.DJ.Name}}</span>'s stream.
+    </div>
+</div>
+<div class="cell box is-col-span-5 is-flex is-align-items-center is-col-span-12-mobile p-2 m-0">
+    <div class="buttons is-fullwidth is-justify-content-center" hx-preserve>
+        <input type="checkbox" id="stream-state" class="is-hidden">
+        <button class="button is-width-50" style="border:unset;background-color:unset!important;backdrop-filter:unset;box-shadow:unset;"><input id="stream-volume" class="is-fullwidth" type="range" min="0" max="100" step="1" value="80" onwheel="handleVolumeScroll(event)"></button>
+        <button id="direct-link" class="button is-small" style="border:unset;background-color:unset!important;backdrop-filter:unset;box-shadow:unset;">
+            <a href="/main" class="disable-link-color on-hover-darken-darker" style="position:relative;top:-1px;">Direct link</a>
+        </button>
+        <button id="prefs-dropdown" class="button is-small on-hover-darken-darker" style="border:unset;background-color:unset!important;backdrop-filter:unset;box-shadow:unset;" onclick="toggleClassOnClick(this)" data-class="is-active" data-target="prefs-modal">Preferences</buttons>
+    </div>
+</div>
+{{end}}
+
+{{define "lastplayed"}}
+<div class="fixed-grid has-12-cols">
+    <div class="grid">
+    {{range $idx, $lp := Reverse .}}
+    {{if gt $idx 1}}
+    {{if eq $idx 4}}
+    <div class="cell is-size-{{Sub 9 $idx}} is-col-span-2 has-text-left has-text-shadow">Just Played</div>
+    <div class="cell is-col-span-10 has-text-right">
+        <div class="is-size-{{Sub 9 $idx}} has-text-shadow">{{$lp.Metadata}}</div>
+    </div>
+    {{else}}
+    <div class="cell is-size-{{Sub 9 $idx}} is-col-span-2 has-text-left is-size-5 has-text-shadow"><time datetime="{{$lp.LastPlayed.Unix}}" data-type="pretty">{{Until $lp.LastPlayed | PrettyDuration}}</time></div>
+    <div class="cell is-col-span-10 has-text-right">
+        <div class="is-size-{{Sub 9 $idx}} has-text-shadow">{{$lp.Metadata}}</div>
+    </div>
+    {{end}}
+    {{end}}
+    {{end}}
+    </div>
+</div>
+{{end}}
+
+{{define "thread"}}
+{{if not (Status.User | IsRobot)}}
+<div id="queue-container" hx-swap-oob="innerHTML"></div>
+<div class="notification fixed-grid has-1-cols py-3 glass">
+    <div id="thread" class="grid is-align-content-center title has-text-centered" style="min-height: unset;">
+        {{if (Status.Thread | IsValidThread)}}
+            {{if Status.Thread | IsImageThread}}
+            <img src="{{(slice Status.Thread 6) | safeURL}}" alt="">
+            {{else}}
+            <a class="has-text-link on-hover-darken-darker" href="{{Status.Thread | safeURL}}" style="text-decoration:none;color:hsl(225,25%,50%)!important;" target="_blank">Thread up!</a>
+            {{end}}
+        {{else}}
+            There is no thread up.
+        {{end}}
+    </div>
+</div>
+{{end}}
+{{end}}
+
+{{define "queue"}}
+
+{{if (Status.User | IsRobot)}}
+<div id="thread-container" hx-swap-oob="innerHTML"></div>
+<div class="fixed-grid has-12-cols">
+    <div class="grid">
+        {{range $idx, $queue := (.Limit 3)}}
+        {{if eq $idx 0}}
+        <div class="cell is-col-span-10 has-text-left">
+            <div class="is-size-{{Sub 5 (Sub 0 $idx)}} has-text-shadow">{{$queue.Metadata}}</div>
+        </div>
+        <div class="cell is-size-{{Sub 5 (Sub 0 $idx)}} is-col-span-2 has-text-right is-size-5 has-text-shadow">Coming Up Next</div>
+        {{else}}
+        <div class="cell is-col-span-10 has-text-left">
+            <div class="is-size-{{Sub 5 (Sub 0 $idx)}} has-text-shadow">{{$queue.Metadata}}</div>
+        </div>
+        <div class="cell is-size-{{Sub 5 (Sub 0 $idx)}} is-col-span-2 has-text-right is-size-5 has-text-shadow"><time datetime="{{$queue.ExpectedStartTime.Unix}}" data-type="pretty">{{Until $queue.ExpectedStartTime | PrettyDuration}}</time></div>
+        {{end}}
+        {{end}}
+    </div>
+</div>
+{{end}}
+{{end}}
+
+{{define "streamer"}}
+{{if not (Status.User | IsRobot)}}
+<div style="display: none;">
+    <div id="thread-container" sse-swap="thread" hx-swap-oob="true">
+        {{template "thread" Status.Thread}}
+    </div>
+</div>
+{{end}}
+<div class="box p-2">
+    <div class="card-image">
+        <figure class="image m-auto is-square is-128x128">
+            <img src="/api/dj-image/{{.DJ.Image}}" class="is-rounded has-shadow" style="border: 2px solid rgba(0, 0, 0, 0.25);" />
+        </figure>
+    </div>
+</div>
+{{end}}
+
+{{define "albumart"}}
+<div id="page-home-album-art">
+    <div class="card-image">
+        <figure class="image is-square is-64x64 has-border-faint has-shadow">
+            <img src="/assets/images/mystery-dj.png" class="is-rounded" />
+        </figure>
+    </div>
+</div>
+{{end}}
