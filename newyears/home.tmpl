@@ -19,7 +19,7 @@
                         </div>
                     </div>
                     <div class="cell is-col-span-1 is-col-span-12-mobile is-hidden-tablet">
-                        <div id="djcontainer" class="">
+                        <div id="djcontainer" class="" sse-swap="streamer">
                             {{template "streamer" .Status.User}}
                         </div>
                     </div>
@@ -29,7 +29,7 @@
                         </div>
                     </div>
                     <div class="cell is-col-span-1 is-hidden-mobile">
-                        <div id="djcontainer" class="">
+                        <div id="djcontainer" class="" sse-swap="streamer">
                             {{template "streamer" .Status.User}}
                         </div>
                     </div>
@@ -129,7 +129,7 @@
 </div>
 <div class="cell box is-col-span-8 is-flex is-align-items-center is-col-span-12-mobile p-2 m-0">
     <div class="m-auto has-text-centered">
-        There are currently <span class="has-text-weight-medium">{{Status.Listeners}}</span> bots "listening" to <span class="has-text-weight-medium">{{Status.User.DJ.Name}}</span>'s stream.
+        There are currently <span class="has-text-weight-medium" sse-swap="listeners">{{Status.Listeners}}</span> bots "listening" to <span class="has-text-weight-medium">{{Status.User.DJ.Name}}</span>'s stream.
     </div>
 </div>
 {{end}}
