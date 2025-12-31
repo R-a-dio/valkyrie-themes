@@ -46,7 +46,11 @@
                         </div>
                     </div>
                     {{end}}
+                    {{if (Status.Thread | IsValidThread)}}
+                    <div class="cell is-col-span-10 is-col-span-12-mobile">
+                    {{else}}
                     <div class="cell is-col-span-12">
+                    {{end}}
                         <div id="thread-container" sse-swap="thread">
                             {{template "thread" .Status.Thread}}
                         </div>
@@ -54,6 +58,17 @@
                             {{template "queue" .Queue}}
                         </div>
                     </div>
+                    {{if (Status.Thread | IsValidThread)}}
+                    <div class="cell is-col-span-2 is-col-span-12-mobile">
+                        <div id="schedule">
+                            <div class="notification fixed-grid has-1-cols py-3 glass">
+                                <div class="grid is-align-content-center title has-text-centered">
+                                    <a href="/news/81" class="on-hover-darken-darker" style="text-decoration:none;color:hsl(225,25%,50%)!important;">Schedule</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {{end}}
                 </div>
             </div>
         </div>
@@ -94,23 +109,27 @@
 <!--<div class="cell box is-col-span-1 is-flex is-align-items-center p-2 m-0" style="background-color:unset;">-->
 <!--</div>-->
 <button id="stream-play-pause-container" class="cell box p-2 m-0 button is-small is-col-span-1 is-col-span-12-mobile on-hover-darken-darker" style="border:unset;">
-    <label for="stream-state" id="stream-play-pause" style="position:relative;top:-1px;">
+    <label for="stream-state" id="stream-play-pause">
         Start Stream
     </label>
 </button>
-<div class="cell box is-col-span-6 is-flex is-align-items-center is-col-span-12-mobile p-2 m-0">
-    <div class="m-auto has-text-centered">
-        There are currently <span class="has-text-weight-medium">{{Status.Listeners}}</span> bots "listening" to <span class="has-text-weight-medium">{{Status.User.DJ.Name}}</span>'s stream.
-    </div>
-</div>
-<div class="cell box is-col-span-5 is-flex is-align-items-center is-col-span-12-mobile p-2 m-0">
-    <div class="buttons is-fullwidth is-justify-content-center" hx-preserve>
-        <input type="checkbox" id="stream-state" class="is-hidden">
-        <button class="button is-width-50" style="border:unset;background-color:unset!important;backdrop-filter:unset;box-shadow:unset;"><input id="stream-volume" class="is-fullwidth" type="range" min="0" max="100" step="1" value="80" onwheel="handleVolumeScroll(event)"></button>
+<div class="cell box is-flex is-align-items-center is-justify-content-space-around is-col-span-12-mobile p-2 m-0">
+    <!--<div class="buttons is-fullwidth is-justify-content-center" hx-preserve>-->
         <button id="direct-link" class="button is-small" style="border:unset;background-color:unset!important;backdrop-filter:unset;box-shadow:unset;">
-            <a href="/main" class="disable-link-color on-hover-darken-darker" style="position:relative;top:-1px;">Direct link</a>
+            <a href="/main" class="disable-link-color on-hover-darken-darker">Direct link</a>
         </button>
         <button id="prefs-dropdown" class="button is-small on-hover-darken-darker" style="border:unset;background-color:unset!important;backdrop-filter:unset;box-shadow:unset;" onclick="toggleClassOnClick(this)" data-class="is-active" data-target="prefs-modal">Preferences</buttons>
+    <!--</div>-->
+</div>
+<div class="cell box is-col-span-2 is-flex is-align-items-center is-col-span-12-mobile p-2 m-0">
+    <div class="buttons is-fullwidth is-justify-content-center" hx-preserve>
+        <input type="checkbox" id="stream-state" class="is-hidden">
+        <button class="button is-fullwidth p-0 m-0" style="border:unset;background-color:unset!important;backdrop-filter:unset;box-shadow:unset;"><input id="stream-volume" class="is-fullwidth" type="range" min="0" max="100" step="1" value="80" onwheel="handleVolumeScroll(event)"></button>
+    </div>
+</div>
+<div class="cell box is-col-span-8 is-flex is-align-items-center is-col-span-12-mobile p-2 m-0">
+    <div class="m-auto has-text-centered">
+        There are currently <span class="has-text-weight-medium">{{Status.Listeners}}</span> bots "listening" to <span class="has-text-weight-medium">{{Status.User.DJ.Name}}</span>'s stream.
     </div>
 </div>
 {{end}}
@@ -140,11 +159,11 @@
 {{define "thread"}}
 {{if not (Status.User | IsRobot)}}
 <div id="queue-container" hx-swap-oob="innerHTML"></div>
-<div class="notification fixed-grid has-1-cols py-3 glass">
-    <div id="thread" class="grid is-align-content-center title has-text-centered" style="min-height: unset;">
+<div class="notification fixed-grid has-1-cols py-3 glass" style="max-height:50vh">
+    <div id="thread" class="grid is-align-content-center title has-text-centered" style="min-height:unset;max-height:inherit;">
         {{if (Status.Thread | IsValidThread)}}
-            {{if Status.Thread | IsImageThread}}
-            <img src="{{(slice Status.Thread 6) | safeURL}}" alt="">
+            {{if (Status.Thread | IsImageThread)}}
+            <img src="{{(slice Status.Thread 6) | safeURL}}" class="m-auto p-0" style="max-height:calc(50vh - 5vh);" alt="">
             {{else}}
             <a class="has-text-link on-hover-darken-darker" href="{{Status.Thread | safeURL}}" style="text-decoration:none;color:hsl(225,25%,50%)!important;" target="_blank">Thread up!</a>
             {{end}}
