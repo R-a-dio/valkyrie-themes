@@ -129,7 +129,7 @@
 </div>
 <div class="cell box is-col-span-8 is-flex is-align-items-center is-col-span-12-mobile p-2 m-0">
     <div class="m-auto has-text-centered">
-        There are currently <span class="has-text-weight-medium" sse-swap="listeners">{{Status.Listeners}}</span> bots "listening" to <span class="has-text-weight-medium">{{Status.User.DJ.Name}}</span>'s stream.
+        There are currently <span class="has-text-weight-medium" sse-swap="listeners">{{Status.Listeners}}</span> bots "listening" to <span id="streamer-name" class="has-text-weight-medium" hx-on:htmx:sse-message="if(event.detail.type === 'streamer') updateStreamerName()">{{Status.User.DJ.Name}}</span>'s stream.
     </div>
 </div>
 {{end}}
