@@ -44,7 +44,7 @@
         {{ block "content" . }}{{end}}
     {{end}}
     </div>
-{{template "preferences"}}
+{{template "preferences" .}}
 {{template "footer"}}
 </body>
 </html>
@@ -66,17 +66,42 @@
                 </div>
 
                 <div id="preferences-theme-content" class="cell is-col-span-2 p-4">
-                    <div class="fixed-grid has-1-cols">
-                        <div class="grid">
-                            <div class="cell has-text-centered">Click one the buttons below the select the site theme.</div>
-                            <div class="cell">
-                                <div class="grid">
-                                    <a class="cell" hx-boost="true" hx-push-url="false" href="/set-theme?theme=default-light"><button class="button is-fullwidth">Light</button></a>
-                                    <a class="cell" hx-boost="true" hx-push-url="false" href="/set-theme?theme=default-dark"><button class="button is-fullwidth">Dark</button></a>
+                    <form hx-get="/set-theme" hx-target="body">
+                        <div class="fixed-grid has-1-cols">
+                            <div class="grid">
+                                <div class="cell has-text-centered">Select your preferred theme and options below.</div>
+                                <div class="cell">
+                                    <div class="field">
+                                        <label class="checkbox">
+                                            <input type="checkbox" name="overwrite-dj" value="true" {{if .OverwriteDJ}}checked{{end}}>
+                                            Override DJ themes
+                                        </label>
+                                    </div>
+                                    <div class="field">
+                                        <label class="checkbox">
+                                            <input type="checkbox" name="overwrite-holiday" value="true" {{if .OverwriteHoliday}}checked{{end}}>
+                                            Override holiday themes
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="cell">
+                                    <div class="grid">
+                                    {{range PublicThemes}}
+                                        <div class="cell">
+                                            <label class="radio">
+                                                <input type="radio" name="theme" value="{{.Name}}" {{if eq .Name $.Theme}}checked{{end}}>
+                                                {{.DisplayName}}
+                                            </label>
+                                        </div>
+                                    {{end}}
+                                    </div>
+                                </div>
+                                <div class="cell">
+                                    <button type="submit" class="button is-fullwidth is-primary">Save</button>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
                 
                 <div id="preferences-other-settings" class="cell is-col-span-2 p-4 is-hidden">
