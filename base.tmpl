@@ -66,29 +66,32 @@
                 </div>
 
                 <div id="preferences-theme-content" class="cell is-col-span-2 p-4">
-                    <form hx-get="/set-theme" hx-target="body">
+                    <form action="/set-theme" method="get" hx-push-url="false" hx-boost="true">
                         <div class="fixed-grid has-1-cols">
                             <div class="grid">
                                 <div class="cell has-text-centered">Select your preferred theme and options below.</div>
                                 <div class="cell">
+                                    <div class="grid">
                                     <div class="field">
-                                        <label class="checkbox">
+                                        <label class="checkbox button">
                                             <input type="checkbox" name="overwrite-dj" value="true" {{if .OverwriteDJ}}checked{{end}}>
-                                            Override DJ themes
+                                            Opt out of DJ themes
                                         </label>
                                     </div>
                                     <div class="field">
-                                        <label class="checkbox">
+                                        <label class="checkbox button">
                                             <input type="checkbox" name="overwrite-holiday" value="true" {{if .OverwriteHoliday}}checked{{end}}>
-                                            Override holiday themes
+                                            Opt out of holiday themes
                                         </label>
+                                    </div>
                                     </div>
                                 </div>
+                                <hr class="m-0">
                                 <div class="cell">
                                     <div class="grid">
                                     {{range PublicThemes}}
                                         <div class="cell">
-                                            <label class="radio">
+                                            <label class="radio button">
                                                 <input type="radio" name="theme" value="{{.Name}}" {{if eq .Name $.Theme}}checked{{end}}>
                                                 {{.DisplayName}}
                                             </label>

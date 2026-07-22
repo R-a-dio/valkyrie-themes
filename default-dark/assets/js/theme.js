@@ -347,49 +347,6 @@ function countDuplicateListeners() {
     }
 }
 
-htmx.onLoad((content) => {
-    // Add a keyboard event to close all modals
-    document.addEventListener('keydown', escToCloseModals, {passive: true});
-});
-
-function removeTargetOnClick(e) {
-    el = e.closest(e.dataset.target);
-    el.parentNode.removeChild(el);
-}
-
-function toggleClassOnClick(e) {
-    htmx.toggleClass(htmx.find(`#${e.dataset.target}`), e.dataset.class);
-}
-
-function removeClassOnClick(e) {
-    htmx.removeClass(htmx.find(`#${e.dataset.target}`), e.dataset.class);
-}
-
-function addClassOnClick(e) {
-    htmx.addClass(htmx.find(`#${e.dataset.target}`), e.dataset.class);
-}
-
-// Functions to open and close modals
-function escToCloseModals(event) {
-    if(event.key === "Escape") {
-        closeAllModals();
-    }
-}
-
-function openModal($el) {
-    $el.classList.add('is-active');
-}
-
-function closeModal($el) {
-    $el.classList.remove('is-active');
-}
-
-function closeAllModals() {
-    (document.querySelectorAll('.modal') || []).forEach(($modal) => {
-        closeModal($modal);
-    });
-}
-
 // Function to show one-time notifications; see chat page for an example
 function showOrHideOnLoad(element) {
     if (!localStorage.getItem(element.dataset.storageKey)) {
