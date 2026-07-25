@@ -16,7 +16,7 @@
 {{end}}
 
 {{define "content"}}
-<div class="container full-width tui-bg-cyan-black" hx-ext="sse" sse-connect="/v1/sse">
+<div class="container full-width tui-bg-cyan-black" hx-ext="sse" sse-connect="/v1/sse?theme={{.Theme}}">
     <div class="row">
         {{with .StreamURL}}
         <noscript>
@@ -61,6 +61,7 @@
     <fieldset class="tui-fieldset tui-border-solid">
         <legend>Now Playing</legend>
         <div class="tui-fieldset-button right">
+            <a class="tui-button" href="/set-theme?theme=default-dark" hx-boost="true" hx-push-url="false">Revert Theme</a>
             <button id="stream-play-pause" hx-preserve class="is-hidden-without-js tui-button">Play Stream</button>
         </div>
         <ul class="container full-width">
@@ -121,3 +122,5 @@
     </fieldset>
 </div>
 {{end}}
+
+{{define "preferences"}}<div></div>{{end}}
