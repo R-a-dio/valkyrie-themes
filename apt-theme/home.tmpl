@@ -1,0 +1,126 @@
+{{define "content"}}
+<main class="apt-home-layout" hx-ext="sse" sse-connect="/v1/sse?theme={{.Theme}}">
+    <div class="apt-sidebar-column">
+    <aside class="apt-sidebar">
+        <div class="apt-player">
+            {{with .StreamURL}}<noscript><audio preload="none" controls src="{{.}}"></audio></noscript>{{end}}
+            <header class="apt-player-header">
+                <img src="/assets/images/logo_image_small.png" alt="R/a/dio">
+                <button id="stream-play-pause" class="button is-info is-fullwidth is-hidden-without-js">Play Stream</button>
+            </header>
+            <label class="apt-volume" for="stream-volume">Volume <input id="stream-volume" type="range" min="0" max="100" step="1" value="80" onwheel="handleVolumeScroll(event)"></label>
+            <div class="apt-player-buttons-n-links">
+                <button class="button" title="Preferences" aria-label="Preferences" onclick="toggleClassOnClick(this)" data-class="is-active" data-target="prefs-modal"><svg class="svg-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="/assets/default-dark/svg/sprites.svg#cog"></use></svg></button>
+                <a class="button" href="/help#stream-help" title="Help" aria-label="Help"><svg class="svg-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="/assets/apt-theme/svg/sprites.svg#question-mark-circle"></use></svg></a>
+                <a class="button" href="/main" title="Direct stream link" aria-label="Direct stream link"><svg class="svg-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="/assets/apt-theme/svg/sprites.svg#link"></use></svg></a>
+            </div>
+        </div>
+        <section class="apt-last-played" sse-swap="lastplayed">{{template "lastplayed" .LastPlayed}}</section>
+    </aside>
+    <section class="apt-news">
+        <h2>Latest news</h2>
+        <ul class="apt-list">
+            {{range .News}}
+            <li>
+                <a href="/news/{{.ID}}">{{.Title}}</a><time datetime="{{.CreatedAt.Format "2006-01-02"}}">{{.CreatedAt.Format "2006/01/02"}}</time>
+                <div class="apt-news-blurb">{{.Header}}</div>
+            </li>
+            {{else}}<li class="apt-empty-state">No news yet.</li>{{end}}
+        </ul>
+        <a href="/news">All news</a>
+    </section>
+    {{template "footer"}}
+    </div>
+    <div class="apt-broadcast-column">
+        <div class="apt-broadcast-panel">
+            <div id="now-playing" sse-swap="metadata">{{template "nowplaying" .Status}}</div>
+            <div sse-swap="streamer">{{template "streamer" .Status.User}}</div>
+            <section id="queue-container" sse-swap="queue">{{template "queue" .Queue}}</section>
+        </div>
+        <div class="apt-thread-area">
+            <div id="thread-container" sse-swap="thread">{{template "thread" .Status.Thread}}</div>
+        </div>
+    </div>
+</main>
+{{end}}
+
+{{define "nowplaying"}}
+<div class="apt-playback-details">
+<div class="apt-now-playing-heading">Now playing</div>
+<input type="checkbox" id="toggle-now-playing-tags" onchange="saveNowPlayingTagsState(this)">
+<div id="current-song" class="apt-song-row">
+    <h2 id="metadata">{{if .Song.Metadata}}{{.Song.Metadata}}{{else}}Waiting for the stream{{end}}</h2>
+    {{if .Song.HasTrack}}{{if .Song.Tags}}
+    <label class="apt-tags-toggle" for="toggle-now-playing-tags" aria-label="Show or hide song tags" role="button" tabindex="0" onkeydown="if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); this.click(); }">
+        <svg class="svg-icon" viewBox="0 0 24 24" data-state="plus" aria-hidden="true"><use href="/assets/default-dark/svg/sprites.svg#plus"></use></svg>
+        <svg class="svg-icon" viewBox="0 0 24 24" data-state="minus" aria-hidden="true"><use href="/assets/default-dark/svg/sprites.svg#minus"></use></svg>
+    </label>
+    {{end}}{{end}}
+</div>
+{{if not .SongInfo.Start.IsZero}}
+{{$progress := .SongInfo.Start | Since}}
+<progress id="current-song-progress" class="progress" value="{{$progress | ToSecond}}" max="{{.Song.Length.Seconds}}"></progress>
+<div class="apt-playback-status">
+    <span sse-swap="listeners">{{template "listeners" .Listeners}}</span>
+    <span><span id="progress-current" data-start="{{.SongInfo.Start.UnixMilli}}">{{$progress | MediaDuration}}</span> / <span id="progress-max">{{.Song.Length | MediaDuration}}</span></span>
+</div>
+{{else}}<div class="apt-playback-status"><span sse-swap="listeners">{{template "listeners" .Listeners}}</span><span>Offline</span></div>{{end}}
+</div>
+<div id="now-playing-tags" data-run-on-load="initNowPlayingTags">{{if .Song.HasTrack}}{{.Song.Tags}}{{end}}</div>
+{{end}}
+
+{{define "listeners"}}
+    Listeners: <span id="listener-count">{{.}}</span>
+{{end}}
+
+{{define "lastplayed"}}
+<h2>Last played</h2>
+<ul id="lastplayed" class="apt-list">
+    {{range .}}<li><span>{{.Metadata}}</span><time datetime="{{.LastPlayed.Unix}}" data-type="pretty">{{Until .LastPlayed | PrettyDuration}}</time></li>{{else}}<li class="apt-empty-state">No recent tracks.</li>{{end}}
+</ul>
+{{end}}
+
+{{define "thread"}}
+{{if not (Status.User | IsRobot)}}
+<div id="queue-container" hx-swap-oob="innerHTML"></div>
+<div class="apt-thread">
+    <div id="thread">
+        {{if Status.Thread | IsValidThread}}
+            {{if Status.Thread | IsImageThread}}
+            <img src="{{(slice Status.Thread 6) | safeURL}}" alt="">
+            {{else}}
+            <a class="button is-fullwidth apt-thread-link" href="{{Status.Thread | safeURL}}" target="_blank" rel="noopener">Thread up!</a>
+            {{end}}
+        {{else}}
+            <span class="apt-thread-empty">There is no thread up... (´･ω･`)</span>
+        {{end}}
+    </div>
+</div>
+{{end}}
+{{end}}
+
+{{define "queue"}}
+
+{{if (Status.User | IsRobot)}}
+<div id="thread-container" hx-swap-oob="innerHTML"></div>
+<h2>Coming up</h2>
+<ul id="queue" class="apt-list">
+    {{range (.Limit 5)}}<li{{if .IsUserRequest}} class="is-request"{{end}}><span>{{.Metadata}}</span><time datetime="{{.ExpectedStartTime.Unix}}" data-type="pretty">{{Until .ExpectedStartTime | PrettyDuration}}</time></li>{{else}}<li class="apt-empty-state">The queue is empty.</li>{{end}}
+</ul>
+{{end}}
+{{end}}
+
+{{define "streamer"}}
+{{if not (Status.User | IsRobot)}}
+<div style="display: none;">
+    <div id="thread-container" sse-swap="thread" hx-swap-oob="true">
+        {{template "thread" Status.Thread}}
+    </div>
+</div>
+{{end}}
+<div class="apt-dj" id="page-home-dj-image">
+    {{if .DJ.Image}}<img src="/api/dj-image/{{.DJ.Image}}" alt="{{.DJ.Name}}">{{end}}
+    <div><div id="dj-name">{{if .DJ.Name}}{{.DJ.Name}}{{else}}No active DJ{{end}}</div></div>
+    <img class="apt-mobile-logo" src="/assets/images/logo_image_small.png" alt="R/a/dio">
+</div>
+{{end}}
