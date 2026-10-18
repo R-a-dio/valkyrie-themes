@@ -159,6 +159,7 @@
 /* notifications */
 
 .apt-theme .notification, .apt-theme .box, .apt-theme .card { background: rgba(255, 255, 255, .08); color: #eee; border-radius: 4.4px; box-shadow: none; }
+.apt-theme .notification { background: #202020; }
 
 /* footer
    there's more stuff for deciding how it's sized in playback-state.js */
