@@ -22,17 +22,22 @@
         if (!footerResizeObserver) {
             const updateWidth = () => {
                 const thread = homeLayout.querySelector('#thread-container');
+                const broadcastPanel = homeLayout.querySelector('.apt-broadcast-panel');
                 const footer = homeLayout.querySelector('.apt-sidebar-column > .footer');
                 const homeLayoutBounds = homeLayout.getBoundingClientRect();
                 const threadBounds = thread.getBoundingClientRect();
+                const broadcastPanelBounds = broadcastPanel.getBoundingClientRect();
                 const footerBounds = footer.getBoundingClientRect();
                 const gap = parseFloat(getComputedStyle(homeLayout).columnGap);
                 const imageBesideFooter = thread.querySelector('#thread > img')
                     && threadBounds.bottom > footerBounds.top
                     && threadBounds.top < footerBounds.bottom;
-                const width = imageBesideFooter
+                let width = imageBesideFooter
                     ? Math.max(0, threadBounds.left - homeLayoutBounds.left - gap)
                     : homeLayoutBounds.width;
+                if (broadcastPanelBounds.bottom > footerBounds.top && broadcastPanelBounds.top < footerBounds.bottom) {
+                    width = Math.min(width, Math.max(0, broadcastPanelBounds.left - homeLayoutBounds.left - gap));
+                }
                 homeLayout.style.setProperty('--apt-footer-width', `${width}px`);
             };
             footerResizeObserver = new ResizeObserver(() => {
