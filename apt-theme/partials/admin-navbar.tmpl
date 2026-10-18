@@ -1,0 +1,23 @@
+{{define "admin-navbar"}}
+<nav id="admin-navbar-container" class="navbar navbar-position is-dark" role="navigation" {{.AdminNavBar.Attr}} hx-preserve>
+    <div class="navbar-brand is-hidden-desktop">
+        {{if .IsUser}}<button class="navbar-switch on-hover-darken" onclick="toggleNavbarState('admin')"></button>{{end}}
+        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="admin-navbar" onclick="this.classList.toggle('is-active'); document.getElementById(this.dataset.target).classList.toggle('is-active')">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+    </div>
+    <div id="admin-navbar" class="navbar-menu is-justify-content-center">
+        <div class="navbar-container has-background-radio-primary-2 is-flex is-justify-content-space-evenly">
+            <div class="navbar-start">
+            {{range .AdminNavBar.Values}}
+                <a class="navbar-item" {{.Attr}}>{{.Name}}</a>
+            {{end}}
+            </div>
+        </div>
+        {{if .IsUser}}<button class="navbar-switch on-hover-darken" onclick="toggleNavbarState('admin')"></button>{{end}}
+    </div>
+</nav>
+{{end}}
