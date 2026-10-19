@@ -1,0 +1,51 @@
+{{define "public-navbar"}}
+<svg width="0" height="0" aria-hidden="true" focusable="false" style="position: absolute;">
+    <defs>
+        <filter id="apt-radio-logo-grayscale" color-interpolation-filters="sRGB">
+            <feColorMatrix type="matrix" values=".6 .3 .1 0 0  .6 .3 .1 0 0  .6 .3 .1 0 0  0 0 0 1 0"/>
+        </filter>
+    </defs>
+</svg>
+<nav class="navbar is-dark" role="navigation" {{.NavBar.Attr}}>
+    <div class="navbar-brand is-hidden-desktop">
+        <a class="navbar-item apt-home-link" href="/" aria-label="Home">
+            <span class="apt-radio-logo">
+                <img src="/assets/images/logotitle_2.png" alt="R/a/dio">
+                <img class="apt-radio-logo-color" src="/assets/images/logotitle_2.png" alt="" aria-hidden="true">
+            </span>
+        </a>
+        {{if .IsUser}}<button class="navbar-switch on-hover-darken" onclick="toggleNavbarState('public')"></button>{{end}}
+        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="public-navbar" onclick="this.classList.toggle('is-active'); this.setAttribute('aria-expanded', String(this.classList.contains('is-active'))); document.getElementById(this.dataset.target).classList.toggle('is-active')">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+    </div>
+    <div id="public-navbar" class="navbar-menu is-justify-content-center">
+        <div class="navbar-container has-background-radio-primary-2 is-flex is-justify-content-space-evenly">
+            <a id="radio-logo" class="navbar-item apt-home-link is-hidden-touch" href="/" aria-label="Home">
+                <span class="apt-radio-logo">
+                    <img src="/assets/images/logotitle_2.png" alt="R/a/dio">
+                    <img class="apt-radio-logo-color" src="/assets/images/logotitle_2.png" alt="" aria-hidden="true">
+                </span>
+            </a>
+            <div class="navbar-start has-text-centered">
+            {{with .NavBar.Values}}{{range slice . 1}}
+                <a class="navbar-item" {{.Attr}}>{{.Name}}</a>
+            {{end}}{{end}}
+            </div>
+            <div class="pl-3 navbar-end is-hidden-touch">
+                <form class="my-auto" method="GET" action="/search" accept-charset="UTF-8">
+                    <input id="navbarinput" hx-push-url="false" hx-get="/v1/search" hx-trigger="input changed delay:250ms" hx-target="#search-bar" class="input has-text-centered" type="text" name="q" placeholder="Type to search and request" role="search" onblur="clearNavbarSearchValue(event)" style="font-size: 0.95rem;">
+                </form>
+                <div id="search-bar" style="position: absolute;"></div>
+            </div>
+        </div>
+        {{if .IsUser}}<button class="navbar-switch on-hover-darken" onclick="toggleNavbarState('public')"></button>{{end}}
+    </div>
+</nav>
+<progress id="loading-indicator" class="progress is-small is-primary htmx-indicator"></progress>
+{{if .IsUser}}{{template "admin-navbar" .}}{{end}}
+{{end}}
+{{define "navbar"}}{{template "public-navbar" .}}{{end}}

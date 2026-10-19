@@ -1,0 +1,23 @@
+{{define "content"}}
+<section class="section">
+    <div id="page-news" class="container content">
+        <div id="news-content" hx-boost="true" hx-push-url="true" hx-target="#content" class="columns is-multiline">
+            {{range $news := $.News}}
+                {{template "news-post-news" $news}}
+            {{end}}
+            {{with .Page}}{{with .Next 1}}
+            <div id="news-scroll"
+                hx-push-url="false"
+                hx-trigger="intersect once"
+                hx-get="{{.URL}}"
+                hx-select="#news-content>div"
+                hx-target="#news-content"
+                hx-swap="beforeend"></div>
+            {{end}}{{end}}
+        </div>
+        <div class="is-hidden-with-js">
+            {{template "pagination" .Page}}
+        </div>
+    </div>
+</section>
+{{end}}
